@@ -542,8 +542,8 @@
     </h2>
     <div id="siteCards"></div>
     <div class="legend">
-      <span><span class="sw" style="background:var(--invoiced)"></span>Completed &mdash; Approved</span>
-      <span><span class="sw" style="background:var(--review)"></span>In Process</span>
+      <span><span class="sw" style="background:var(--invoiced)"></span>Completed Pay Requests</span>
+      <span><span class="sw" style="background:var(--review)"></span>In Process Pay Requests</span>
       <span><span class="sw" style="background:var(--ink-3)"></span>Remaining to Be Invoiced</span>
       <span><span class="sw" style="background:var(--track)"></span>Uncommitted Budget</span>
       <span style="color:var(--ink-3)">Donut = share of each site&rsquo;s estimated budget; the three committed slices sum to Committed PO's. Uncommitted = Est. Budget &minus; Committed; <b>over budget</b> means PO's exceed the current estimate, so Uncommitted runs negative until the budget is trued up.</span>
@@ -583,69 +583,69 @@
 <script>
 // ---- Raw data pulled from Transcend PM (2026-07-23) ----
 let PROJECTS = [
-  {pid:463,  name:"Administration Beautifications", budget:1200, site:"DW"},
+  {pid:463, name:"Administration Beautifications", budget:1200, site:"DW"},
   {pid:1638, name:"Athletic Field Scoreboard", budget:690877, site:"SMHS"},
-  {pid:462,  name:"Auditorium and Security Fencing Phase I", budget:79350, site:"SMHS"},
+  {pid:462, name:"Auditorium and Security Fencing Phase I", budget:79350, site:"SMHS"},
   {pid:1636, name:"Auditorium and Security Fencing Phase II", budget:250000, site:"SMHS"},
   {pid:1806, name:"Carver Drop off, Loading and Traffic Reroute", budget:2000000, site:"CES"},
-  {pid:1610, name:"Carver ES New TK & KG Building", budget:21500000, site:"CES"},
-  {pid:1864, name:"Carver ES Roofing", budget:4790000, site:"CES"},
-  {pid:1633, name:"Carver ES &mdash; Playground Replacement", budget:151800, site:"CES"},
-  {pid:402,  name:"Concessions Restroom Refresh", budget:228770, site:"SMHS"},
-  {pid:533,  name:"Districtwide Basic Information", budget:902675, site:"DW"},
+  {pid:1610, name:"Carver Elementary School New TK & KG Building", budget:21500000, site:"CES"},
+  {pid:1864, name:"Carver Elementary School Roofing", budget:4790000, site:"CES"},
+  {pid:1633, name:"Carver ES - Playground Replacement", budget:151800, site:"CES"},
+  {pid:402, name:"Concessions Restroom Refresh", budget:228770, site:"SMHS"},
+  {pid:533, name:"Districtwide Basic Information", budget:902675, site:"DW"},
   {pid:1637, name:"Gymnasium HVAC Upgrade", budget:2977500, site:"SMHS"},
-  {pid:1865, name:"Huntington MS Roofing", budget:3702616.31, site:"HMS"},
-  {pid:1805, name:"Interim Housing (SMHS)", budget:0, site:"SMHS"},
-  {pid:467,  name:"Roofing: HMS Portables (207, 208, OT & APE)", budget:0, site:"HMS"},
-  {pid:1808, name:"San Marino HS Roofing", budget:6620000, site:"SMHS"},
-  {pid:1608, name:"SMHS Two-Story Medical Arts Classroom Building", budget:29500000, site:"SMHS"},
-  {pid:1853, name:"SMHS &mdash; Interim Housing", budget:0, site:"SMHS"},
+  {pid:1865, name:"Huntington Middle School Roofing", budget:3702616.31, site:"HMS"},
+  {pid:1805, name:"Interim Housing", budget:0, site:"SMHS"},
+  {pid:467, name:"Roofing: Huntington Middle School Portables (207, 208, and the OT & APE).", budget:0, site:"HMS"},
+  {pid:1808, name:"San Marino High School Roofing", budget:6620000, site:"SMHS"},
+  {pid:1608, name:"San Marino High School Two-Story Medical Arts Classroom Building", budget:29500000, site:"SMHS"},
+  {pid:1853, name:"SMHS - Interim Housing", budget:0, site:"SMHS"},
   {pid:1300, name:"Synthetic Turf & Track Replacement", budget:1699559, site:"SMHS"},
   {pid:1866, name:"Valentine Elementary Roofing", budget:3630000.01, site:"VES"},
-  {pid:1947, name:"Valentine ES &mdash; Entry Shade Structures", budget:100000, site:"VES"},
-  {pid:1609, name:"Valentine ES Two-Story Classroom Building", budget:31357143, site:"VES"},
-  {pid:1634, name:"Valentine ES &mdash; Playground Replacement", budget:780951, site:"VES"}
+  {pid:1947, name:"Valentine Elementary School - Entry Shade Structures", budget:100000, site:"VES"},
+  {pid:1609, name:"Valentine Elementary School Two-Story Classroom Building", budget:31357143, site:"VES"},
+  {pid:1634, name:"Valentine ES - Playground Replacement", budget:780951, site:"VES"}
 ];
 // [pid, poNumber, vendor, rfp, package, amount, approvedInv, openInv, remaining]
 let POS = [
-  [533,"PO1-260000001714","Cardinal Environmental Consultants, Inc","26-27 MM-004","SMHS, CES - Asbestos Testing",4250,4250,0,0],
-  [1633,"PO1-260000001702","Westgroup Designs","25-26 MM-041","CES - Architectural Design Services",131200,57068,0,74132],
-  [1609,"PO1-260000001709","Keystone Builders, Inc.","25-26 MM-086","VES - Interim Housing Construction - GC",797500,0,592420,205080],
-  [402,"PO1-260000001596","Murals for Schools","25-26 MM-032","SMHS - Painting Exterior Murals on Concessions Building",9270,9270,0,0],
-  [1610,"PO1-260000001248","GPRS","25-26 MM-021","CES - Additional Underground Surveying Services",7250,0,0,7250],
-  [1633,"PO1-260000001707","Tom's Construction Inc.","25-26 MM-033","CES - Playground Site Prep, Demolition and Cleanup",198628,0,108000,90628],
-  [1634,"PO1-260000001548","Zoom Recreation, Inc.","25-26 MM-030","VES - Playground Equipment & Installation - CMAS",780950.43,387868.87,0,393081.56],
-  [1633,"PO1-260000001505","Zoom Recreation, Inc.","25-26 MM-029","CES - Playground Equipment & Installation - CMAS",552355.13,219231.11,0,333124.02],
-  [402,"PO1-260000001340","The Garland Company","25-26 MM-020","SMHS - Concessions Bldg Roof - CMAS Roofing Materials",33828.74,0,0,33828.74],
-  [1608,"PO1-260000001711","Keystone Builders, Inc.","25-26 MM-087","SMHS - Interim Housing Construction - GC",660000,0,19950,640050],
-  [1608,"PO1-260000001508","Wilscott","25-26 MM-026","SMHS - Interim Housing Lease - Piggyback (4 CR BLDGS)",173200,0,0,173200],
-  [1300,"PO1-260000001597","Asphalt Fabric and Engineering, Inc.","25-26 MM-024","SMHS - Demolition of Synthetic Track and Field",78313,0,0,78313],
-  [1609,"PO1-260000001705","Wilscott","25-26 MM-027","VES - Interim Housing Lease - Piggyback",130700,0,0,130700],
-  [1608,"PO1-260000001708","Wilscott","(RFP deleted)","SMHS - Interim Housing Lease - Piggyback (1 CR BLDG)",43814,0,0,43814],
-  [1633,"PO1-260000001631","Westgroup Designs","25-26 MM-043","CES - Carver Elementary Arborist Field Evaluation",3950,0,0,3950],
-  [1808,"PO1-260000001629","Adco Roofing and Waterproofing","25-26 MM-038","SMHS - Boys Field House Roofing",68750,18270,0,50480],
-  [1638,"PO1-260000001598","Daktronics, Inc.","25-26 MM-088","SMHS - Athletic Field Scoreboard",270876.88,0,0,270876.88],
-  [533,"260000001335","Adkan Engineers","25-26 MM-023","SMHS/VES - Additional Topographical Survey",37200,0,0,37200],
-  [1637,"260000001278","Huckabee","25-26 MM-019","SMHS - High School Gymnasium HVAC Upgrade",277500,124875,0,152625],
-  [1608,"260000001332","Adkan Engineers","25-26 MM-018","SMHS - Additional Topographical Survey Requirements",4265,0,0,4265],
-  [1300,"260000001247","Asphalt Fabric and Engineering, Inc.","25-26 MM-016","SMHS - CMAS Astroturf/AFE: Track materials & installation",711280,0,74397.35,636882.65],
-  [1300,"260000001349","ASTROTURF CORPORATION","25-26 MM-014","SMHS - CMAS Astroturf/AFE: Field materials & installation",909966,0,0,909966],
-  [1608,"260000001402","Converse Consultants","25-26 MM-028","SMHS - Geotech & Fault Investigation - Additional Borings",91500,23900,0,67600],
-  [533,"260000001403","Tao Rossini, A Professional Corp.","25-26 MM-017","Districtwide CEQA Services",40998,0,0,40998],
-  [1609,"260000001339","Westgroup Designs","25-26 MM-002","VES - Architectural Design Services",1225750,14800.50,104389.12,1106560.38],
-  [1865,"PO1-260000001027","The Garland Company","25-26 MM-031","HMS - Roofing 207, 208, OT, APE - CMAS Roofing Materials",65076.30,0,0,65076.30],
-  [533,"PO1-260000001246","Adkan Engineers","25-26 MM-007","CES/HMS/SMHS/VES - Topographic Surveying Services",16500,0,0,16500],
-  [533,"PO1-260000001033","PQBids","25-26 MM-004","Pre-Qualification and Bid Services Software",20700,0,0,20700],
-  [463,"PO1-260000001022","Keystone Builders, Inc.","25-26 MM-012","DO - Administration Modernization",162800,16192.30,0,146607.70],
   [402,"PO1-260000001032","Keystone Builders, Inc.","25-26 MM-010","SMHS - Concession Restroom Refresh",151030,0,0,151030],
+  [402,"PO1-260000001340","The Garland Company","25-26 MM-020","SMHS - Concessions Bldg Roof - CMAS Roofing Materials",33828.74,0,0,33828.74],
+  [402,"PO1-260000001596","Murals for Schools","25-26 MM-032","SMHS - Painting Exterior Murals on Concessions Building",9270,9270,0,0],
   [462,"PO1-260000001163","J & A Engineering Corp. dba J & A Fence","25-26 MM-011","SMHS - Fencing Installation",79350,0,0,79350],
-  [533,"PO1-260000001165","GPRS","25-26 MM-008","CES/HMS/SMHS/VES - Underground Surveying Services",10075,2450,4625,3000],
-  [533,"PO1-260000001166","Converse Consultants","25-26 MM-009","Geotechnical Services (Soil Testing)",56480,0,56480,0],
-  [1865,"PO1-260000001031","AME Builders Inc","25-26 MM-015","HMS - Roofing 207, 208, OT, APE - Roofing Contractor",87540,43887.98,126815.07,-83163.05],
-  [1608,"PO1-260000001023","Huckabee","25-26 MM-003","SMHS - Architectural DPOR Services",1199426,0,83959.82,1115466.18],
-  [1610,"PO1-01035","Westgroup Designs","25-26 MM-001","CES - Architectural Design Services",898000,25382,147629.48,724988.52],
+  [463,"PO1-260000001022","Keystone Builders, Inc.","25-26 MM-012","DO - Administration Modernization",162800,16192.3,0,146607.7],
   [533,"PO1-260000001040","C. Financial Investment, Inc. DBA Key Analytics","25-26 MM-005","Bond Financial Software & Reporting",74000,0,0,74000],
-  [533,"P01-250000001431","Knowland Construction Services, Inc.","&mdash;","Construction Management Services",653120,0,0,653120]
+  [533,"PO1-260000001246","Adkan Engineers","25-26 MM-007","CES/HMS/SMHS/VES - Topographic Surveying Services",16500,16500,0,0],
+  [533,"PO1-260000001165","GPRS","25-26 MM-008","CES/HMS/SMHS/VES - Underground Surveying Services",10075,7075,0,3000],
+  [533,"260000001403","Tao Rossini, A Professional Corp.","25-26 MM-017","Districtwide CEQA Services",40998,0,0,40998],
+  [533,"PO1-260000001166","Converse Consultants","25-26 MM-009","Geotechnical Services (Soil Testing)",56480,56480,0,0],
+  [533,"PO1-260000001033","PQBids","25-26 MM-004","Pre-Qualification and Bid Services Software",20700,0,0,20700],
+  [533,"PO1-260000001714","Cardinal Environmental Consultants, Inc","26-27 MM-004","SMHS, CES - Asbestos Testing",4250,4250,0,0],
+  [533,"260000001335","Adkan Engineers","25-26 MM-023","SMHS/VES - Additional Topographical Survey",37200,0,0,37200],
+  [533,"P01-250000001431","Knowland Construction Services, Inc.","-","-",653120,0,0,653120],
+  [1300,"260000001349","ASTROTURF CORPORATION","25-26 MM-014","SMHS - CMAS Astroturf/AFE: Materials and installation of the field",909966,0,0,909966],
+  [1300,"260000001247","Asphalt Fabric and Engineering, Inc.","25-26 MM-016","SMHS - CMAS Astroturf/AFE: Materials and installation of the track",711280,0,74397.35,636882.65],
+  [1300,"PO1-260000001597","Asphalt Fabric and Engineering, Inc.","25-26 MM-024","SMHS - Demolition of Synthetic Track and Field",78313,0,0,78313],
+  [1608,"260000001332","Adkan Engineers","25-26 MM-018","SMHS - Additional Topographical Survey Requirements",4265,0,0,4265],
+  [1608,"PO1-260000001023","Huckabee","25-26 MM-003","SMHS - Architectural DPOR Services",1199426,23988.52,59971.299999999996,1115466.18],
+  [1608,"260000001402","Converse Consultants","25-26 MM-028","SMHS - Geotechnical and Fault Investigation - Additional Borings",91500,23900,0,67600],
+  [1608,"PO1-260000001711","Keystone Builders, Inc.","25-26 MM-087","SMHS - Interim Housing Construction - GC",660000,0,19950,640050],
+  [1608,"PO1-260000001708","Wilscott","DELETE","SMHS - Interim Housing Lease - Piggyback (1 CR BLDGS)",43814,0,0,43814],
+  [1608,"PO1-260000001508","Wilscott","25-26 MM-026","SMHS - Interim Housing Lease - Piggyback (4 CR BLDGS)",173200,0,0,173200],
+  [1609,"260000001339","Westgroup Designs","25-26 MM-002","VES - Architectural Design Services",1225750,119189.62,0,1106560.38],
+  [1609,"PO1-260000001709","Keystone Builders, Inc.","25-26 MM-086","VES - Interim Housing Construction - GC",797500,0,592420,205080],
+  [1609,"PO1-260000001705","Wilscott","25-26 MM-027","VES - Interim Housing Lease - Piggyback",130700,0,0,130700],
+  [1610,"PO1-260000001248","GPRS","25-26 MM-021","CES - Additional Underground Surveying Services",7250,0,0,7250],
+  [1610,"PO1-01035","Westgroup Designs","25-26 MM-001","CES - Architectural Design Services",898000,173011.48,0,724988.52],
+  [1633,"PO1-260000001702","Westgroup Designs","25-26 MM-041","CES - Architectural Design Services",131200,57068,0,74132],
+  [1633,"PO1-260000001631","Westgroup Designs","25-26 MM-043","CES - Carver Elementary Arborist Field Evaluation",3950,0,0,3950],
+  [1633,"PO1-260000001505","Zoom Recreation, Inc.","25-26 MM-029","CES - Playground Equipment & Installation - CMAS",552355.13,219231.11,0,333124.02],
+  [1633,"PO1-260000001707","Tom's Construction Inc.","25-26 MM-033","CES - Playground Site Prep, Demolition and Cleanup",198628,0,108000,90628],
+  [1634,"PO1-260000001548","Zoom Recreation, Inc.","25-26 MM-030","VES - Playground Equipment & Installation - CMAS",780950.43,387868.87,0,393081.56000000006],
+  [1637,"260000001278","Huckabee","25-26 MM-019","SMHS - High School Gymnasium HVAC Upgrade",277500,124875,0,152625],
+  [1638,"PO1-260000001598","Daktronics, Inc.","25-26 MM-088","SMHS - Athletic Field Scoreboard",270876.88,0,0,270876.88],
+  [1808,"PO1-260000001629","Adco Roofing and Waterproofing","25-26 MM-038","SMHS - Boys Field House Roofing",68750,18270,0,50480],
+  [1865,"PO1-260000001027","The Garland Company","25-26 MM-031","HMS - Roofing 207, 208, OT, APE - CMAS Roofing Materials",65076.3,0,0,65076.3],
+  [1865,"PO1-260000001031","AME Builders Inc","25-26 MM-015","HMS - Roofing 207, 208, OT, APE - Roofing Contractor",87540,87540,83163.04999999999,-83163.04999999999]
 ];
 const PROGRAM = {
   authorized: 200000000,
@@ -677,7 +677,7 @@ const siteFor = (pid, name) => SITE_BY_PID[pid] ||
    /valentine|\bVES\b/i.test(name) ? "VES" :
    /huntington|\bHMS\b/i.test(name) ? "HMS" :
    /SMHS|san marino high|gymnasium|auditorium|athletic|concession|turf|interim/i.test(name) ? "SMHS" : "DW");
-let ASOF = "July 23, 2026";
+let ASOF = "July 23, 2026, 10:18 PM";
 let LIVE = false;
 
 function setOpen(card, open) {
@@ -738,8 +738,8 @@ function renderAll() {
     uncommitted:{lbl: "Uncommitted Project Budgets", sub: "budgets &minus; committed, by site", v: T.budget - T.committed, stack: siteStack(s => s.budget - s.committed), vs: T.budget, vsLbl: "estimated project budgets", pctLabel: pct(T.budget - T.committed, T.budget) + " of budgets"},
     committed:  {lbl: "Committed (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vs: T.budget, vsLbl: "estimated project budgets", pctLabel: pct(T.committed, T.budget) + " of budgets"},
     committedP: {lbl: "Committed (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vsLbl: "authorization", pctLabel: pct(T.committed, PROGRAM.authorized) + " of auth. &middot; " + pct(T.committed, PROGRAM.released) + " of release"},
-    completed:  {lbl: "Completed &mdash; Approved", sub: "invoiced &amp; approved to date, by site", v: T.approved, stack: siteStack(s => s.approved), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.approved, T.committed) + " of committed"},
-    inProcess:  {lbl: "In Process", sub: "invoices in review, by site", v: T.open, stack: siteStack(s => s.open), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.open, T.committed) + " of committed"},
+    completed:  {lbl: "Completed Pay Requests", sub: "pay requests approved to date, by site", v: T.approved, stack: siteStack(s => s.approved), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.approved, T.committed) + " of committed"},
+    inProcess:  {lbl: "In Process Pay Requests", sub: "pay requests in review, by site", v: T.open, stack: siteStack(s => s.open), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.open, T.committed) + " of committed"},
     remainInv:  {lbl: "Remaining to Be Invoiced", sub: "work not yet billed, by site", v: T.remaining, stack: siteStack(s => s.remaining), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.remaining, T.committed) + " of committed"}
   };
   document.getElementById("ladder").innerHTML =
@@ -755,7 +755,7 @@ function renderAll() {
     </div>` +
     lRow(R.committedP) +
     `<div class="lgroup" style="--acc:var(--committed)">
-      <div class="gcap">Completed <span class="eq">+</span> In Process <span class="eq">+</span> Remaining to Be Invoiced <span class="eq">=</span> Committed PO's (${fmtC(T.committed)})</div>
+      <div class="gcap">Completed Pay Requests <span class="eq">+</span> In Process Pay Requests <span class="eq">+</span> Remaining to Be Invoiced <span class="eq">=</span> Committed PO's (${fmtC(T.committed)})</div>
       ${lRow(R.completed)}${lRow(R.inProcess)}${lRow(R.remainInv)}
     </div>`;
   document.getElementById("siteKey").innerHTML = siteList.map(s =>
@@ -774,7 +774,7 @@ function renderAll() {
     </tr>
     <tr class="dpdetail dphead dpof-${pid} dp-${pid}-${i}">
       <th></th><th></th><th>PO Amount</th>
-      <th>Completed &mdash; Approved</th><th>In Process</th><th>Remaining to Invoice</th>
+      <th>Completed Pay Requests</th><th>In Process Pay Requests</th><th>Remaining to Invoice</th>
     </tr>
     <tr class="dpdetail dpvals dpof-${pid} dp-${pid}-${i}">
       <td></td>
@@ -790,7 +790,7 @@ function renderAll() {
     </tr>
     <tr class="pdetail phead proj-${p.pid}">
       <th>Est. Budget</th><th>Uncommitted</th><th>Committed (PO's)</th>
-      <th>Completed &mdash; Approved</th><th>In Process</th><th>Remaining to Invoice</th>
+      <th>Completed Pay Requests</th><th>In Process Pay Requests</th><th>Remaining to Invoice</th>
     </tr>
     <tr class="pdetail pvals proj-${p.pid}">
       <td>${fmt(p.budget)}</td>
@@ -816,8 +816,8 @@ function renderAll() {
           <div class="sname">${s.name} <span class="cnt">&middot; ${s.nProjects} project${s.nProjects === 1 ? "" : "s"}</span>${over ? overChip(s.committed - s.budget) : ""}</div>
           ${isTotal ? "" : `<span class="siteline" style="background:${SITE_COLOR[s.key]}"></span>`}
           <div class="sinv">
-            <span class="dot" style="background:var(--invoiced)"></span>${fmt(s.approved)} completed
-            &nbsp;<span class="dot" style="background:var(--review)"></span>${fmt(s.open)} in process
+            <span class="dot" style="background:var(--invoiced)"></span>${fmt(s.approved)} completed pay requests
+            &nbsp;<span class="dot" style="background:var(--review)"></span>${fmt(s.open)} in process pay requests
             &nbsp;<span class="dot" style="background:var(--ink-3)"></span>${cellNeg(s.remaining)} to invoice
           </div>
         </div>
