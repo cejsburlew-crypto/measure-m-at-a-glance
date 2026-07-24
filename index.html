@@ -997,14 +997,11 @@ async function exportPdf(mode) {
   try {
     try { await document.fonts.ready; } catch (e) {}
     const root = document.documentElement;
-    const effTheme = root.getAttribute("data-theme") ||
-      (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     if (!isSite) flipped = setPrintState(mode);
     else root.setAttribute("data-export-prep", "1");
     document.body.style.width = W + "px";
     await new Promise(r => setTimeout(r, 80));
     const contentH = Math.ceil(document.body.scrollHeight) + 4;
-    const bgColor = getComputedStyle(document.body).backgroundColor;
     const bodyClone = document.body.cloneNode(true);
     bodyClone.style.width = "";
     bodyClone.querySelectorAll("script, iframe, #pdfOverlay").forEach(el => el.remove());
@@ -1029,7 +1026,7 @@ async function exportPdf(mode) {
     css = css.split(":root").join("html");
     css = css.split("&").join("&amp;").split("<").join("&lt;");
     const attrs = isSite
-      ? ' data-theme="' + effTheme + '"'
+      ? ' data-theme="light"'
       : ' data-theme="light" data-print-prep="1"' + (mode === "tabloid" ? ' data-paper="tabloid"' : "");
     const docStr = '<html xmlns="http://www.w3.org/1999/xhtml"' + attrs +
       '><head><style>' + css + '</style></head>' + new XMLSerializer().serializeToString(bodyClone) + '</html>';
@@ -1053,7 +1050,7 @@ async function exportPdf(mode) {
     const canvas = document.createElement("canvas");
     canvas.width = W * SC; canvas.height = Math.round(pagePxH * SC);
     const ctx = canvas.getContext("2d");
-    ctx.fillStyle = isSite ? bgColor : "#ffffff";
+    ctx.fillStyle = isSite ? "#f4f6f9" : "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     const s = Math.min(1, pagePxH / contentH);
     const dx = (W - W * s) / 2 * SC;
