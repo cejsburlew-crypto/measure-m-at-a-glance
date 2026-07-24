@@ -1,0 +1,1176 @@
+<title>Measure M &mdash; Financial Program at a Glance</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f4f6f9;
+    --surface: #ffffff;
+    --surface-2: #eef1f6;
+    --ink: #16304f;
+    --ink-2: #4a5b72;
+    --ink-3: #7b8899;
+    --line: #d8dee8;
+    --navy: #16304f;
+    --gold: #a9841e;
+    --committed: #2a78d6;
+    --invoiced: #008300;
+    --review: #b97e00;
+    --bad: #b23230;
+    --bad-bg: #fbeceb;
+    --good-bg: #ecf5ec;
+    --track: #e3e8f0;
+    --auth: #16304f;
+    --uncommitted: #4a3aa7;
+    --s-smhs: #2a78d6; --s-ves: #4a3aa7; --s-ces: #1baf7a; --s-hms: #eb6834; --s-dw: #e87ba4;
+    --masthead-ink: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --bg: #12161d;
+      --surface: #1a2029;
+      --surface-2: #212936;
+      --ink: #e8edf4;
+      --ink-2: #aeb9c9;
+      --ink-3: #7e8a9b;
+      --line: #2c3646;
+      --navy: #1d3457;
+      --gold: #cfa640;
+      --committed: #3987e5;
+      --invoiced: #35a835;
+      --review: #d99a1f;
+      --bad: #e66767;
+      --bad-bg: #3a2323;
+      --good-bg: #1f2f1f;
+      --track: #2c3646;
+      --auth: #5b7ba6;
+      --uncommitted: #9085e9;
+      --s-smhs: #3987e5; --s-ves: #9085e9; --s-ces: #199e70; --s-hms: #d95926; --s-dw: #d55181;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #12161d;
+    --surface: #1a2029;
+    --surface-2: #212936;
+    --ink: #e8edf4;
+    --ink-2: #aeb9c9;
+    --ink-3: #7e8a9b;
+    --line: #2c3646;
+    --navy: #1d3457;
+    --gold: #cfa640;
+    --committed: #3987e5;
+    --invoiced: #35a835;
+    --review: #d99a1f;
+    --bad: #e66767;
+    --bad-bg: #3a2323;
+    --good-bg: #1f2f1f;
+    --track: #2c3646;
+    --auth: #5b7ba6;
+    --uncommitted: #9085e9;
+    --s-smhs: #3987e5; --s-ves: #9085e9; --s-ces: #199e70; --s-hms: #d95926; --s-dw: #d55181;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f4f6f9;
+    --surface: #ffffff;
+    --surface-2: #eef1f6;
+    --ink: #16304f;
+    --ink-2: #4a5b72;
+    --ink-3: #7b8899;
+    --line: #d8dee8;
+    --navy: #16304f;
+    --gold: #a9841e;
+    --committed: #2a78d6;
+    --invoiced: #008300;
+    --review: #b97e00;
+    --bad: #b23230;
+    --bad-bg: #fbeceb;
+    --good-bg: #ecf5ec;
+    --track: #e3e8f0;
+    --auth: #16304f;
+    --uncommitted: #4a3aa7;
+    --s-smhs: #2a78d6; --s-ves: #4a3aa7; --s-ces: #1baf7a; --s-hms: #eb6834; --s-dw: #e87ba4;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.45 "Avenir Next", "Segoe UI", -apple-system, system-ui, sans-serif;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 36px; }
+
+  /* Masthead */
+  .masthead {
+    background: var(--navy);
+    color: var(--masthead-ink, #fff);
+    padding: 16px 0 13px;
+    border-bottom: 3px solid var(--gold);
+  }
+  .masthead .wrap { padding-bottom: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; }
+  .masthead h1 {
+    margin: 0;
+    font-family: "Iowan Old Style", Georgia, "Times New Roman", serif;
+    font-size: 30px; font-weight: 600; letter-spacing: 0.2px; color: #fff;
+    text-wrap: balance;
+  }
+  .masthead .sub { color: #c8d2e0; font-size: 13.5px; }
+  .masthead .asof {
+    margin-left: auto; color: #e6d9ac; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  section { margin-top: 18px; }
+  h2 {
+    font-size: 13px; font-weight: 700; color: var(--ink-2);
+    text-transform: uppercase; letter-spacing: 0.09em;
+    margin: 0 0 12px; display: flex; align-items: baseline; gap: 10px;
+  }
+  h2 .note { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--ink-3); font-size: 12.5px; }
+
+  /* Tiles */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(176px, 1fr)); gap: 10px; }
+  .tile {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 12px 14px 11px;
+  }
+  .tile .k { font-size: 11px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.07em; }
+  .tile .v { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; margin-top: 3px; overflow-wrap: anywhere; }
+  .tile .d { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; }
+  .tile.bad .v { color: var(--bad); }
+
+  /* Release ladder */
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .ladder { display: grid; gap: 11px; }
+  .lrow { display: block; }
+  .ltop { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 3px; }
+  .ltop b { color: var(--ink); font-weight: 600; font-size: 14.5px; }
+  .ltop .sublbl { font-size: 12px; color: var(--ink-3); }
+  .ltop .lamt { margin-left: auto; font-size: 14.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ltop .pct { color: var(--ink-3); font-weight: 400; font-size: 12px; }
+  .lrow .bar { height: 14px; background: var(--track); border-radius: 4px; position: relative; overflow: hidden; }
+  .lrow .fill { position: absolute; inset: 0 auto 0 0; border-radius: 4px 0 0 4px; min-width: 2px; }
+  .lrow .bar .seg { display: block; float: left; height: 100%; min-width: 2px; margin-right: 2px; }
+  .ladder-note { margin-top: 12px; font-size: 12.5px; color: var(--ink-3); }
+  .lgroup {
+    border: 1px solid var(--line); border-left: 3px solid var(--acc, var(--ink-3));
+    background: color-mix(in srgb, var(--acc, var(--ink-3)) 5%, transparent);
+    border-radius: 6px; padding: 8px 10px; display: grid; gap: 9px; margin: 2px 0;
+  }
+  .lgroup .gcap {
+    font-size: 11px; font-weight: 700; color: var(--ink-2);
+    text-transform: uppercase; letter-spacing: 0.07em;
+  }
+  .lgroup .gcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+
+  .bondfacts { display: flex; flex-wrap: wrap; gap: 6px 24px; margin-bottom: 12px; font-size: 13.5px; color: var(--ink-2); }
+  .bondfacts b { color: var(--ink); }
+
+  /* Program portfolio breakdown */
+  .pf-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
+  .pf-row .tile { flex: 1 1 170px; }
+  .pf-op { align-self: center; font-size: 20px; font-weight: 600; color: var(--ink-3); padding: 0 2px; }
+  .pf-cap {
+    font-size: 11.5px; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.07em;
+    font-weight: 700; margin: 0 0 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  }
+  .pf-cap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+  /* tree connectors: parent tile -> two children */
+  .pf-tree { position: relative; height: 30px; }
+  .pf-tree i { position: absolute; background: var(--ink-3); }
+  .pf-tree .tv { left: 50%; top: 0; width: 2px; height: 14px; margin-left: -1px; }
+  .pf-tree .th { left: 25%; right: 25%; top: 14px; height: 2px; }
+  .pf-tree .ts1 { left: 25%; top: 14px; width: 2px; height: 16px; margin-left: -1px; }
+  .pf-tree .ts2 { right: 25%; top: 14px; width: 2px; height: 16px; margin-right: -1px; }
+  .pf-tree .tcap {
+    position: absolute; left: calc(50% + 10px); top: 3px; background: none;
+    font-size: 11px; color: var(--ink-3); white-space: nowrap;
+  }
+  /* committed -> its breakdown */
+  .pf-substub { width: 3px; height: 18px; background: var(--committed); margin-left: calc(25% - 1px); }
+  .pf-sub {
+    border: 1px solid var(--line); border-left: 3px solid var(--committed); border-radius: 6px;
+    background: color-mix(in srgb, var(--committed) 5%, transparent);
+    padding: 12px 14px; margin-bottom: 2px;
+  }
+  .pf-total .v { font-size: 27px; }
+  .splitbar { height: 10px; border-radius: 4px; overflow: hidden; background: var(--track); display: flex; margin-top: 9px; }
+  .splitbar i { height: 100%; }
+  .tile .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+  .tile.ghost { background: transparent; border-style: dashed; }
+
+  /* Site rollup: donut cards with project-tree children */
+  #siteCards { display: grid; gap: 8px; }
+  .scard { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+  .scard.total { border-top: 3px solid var(--auth); }
+  .scard.ptotal { border-top: 3px solid var(--gold); background: color-mix(in srgb, var(--gold) 5%, var(--surface)); }
+  .shkv .k2n { display: block; font-size: 10.5px; color: var(--ink-3); }
+  .shead { display: flex; align-items: center; gap: 14px; padding: 11px 14px; }
+  .scard[data-site] .shead { cursor: pointer; }
+  .scard[data-site] .shead:hover { background: var(--surface-2); border-radius: 6px; }
+  .shead .caret { width: 12px; color: var(--ink-3); transition: transform 0.15s; flex: none; }
+  .scard.open .shead .caret { transform: rotate(90deg); }
+  .shead:focus-visible { outline: 2px solid var(--committed); outline-offset: -2px; border-radius: 6px; }
+  .donut { width: 58px; height: 58px; border-radius: 50%; position: relative; flex: none; }
+  .donut::after {
+    content: attr(data-c); position: absolute; inset: 8px; border-radius: 50%;
+    background: var(--surface); display: grid; place-items: center;
+    font-size: 10.5px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums;
+  }
+  .donut.over { box-shadow: 0 0 0 2px var(--bad); }
+  .sinfo { flex: 1; min-width: 160px; }
+  .sname { font-weight: 700; font-size: 14.5px; }
+  .siteline { display: block; width: 84px; height: 3px; border-radius: 2px; margin-top: 4px; }
+  .sname .cnt { font-weight: 400; color: var(--ink-3); font-size: 11.5px; }
+  .sinv { margin-top: 4px; font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+  .shkv { min-width: 128px; text-align: right; flex: none; }
+  .shkv .k2 { display: block; font-size: 10px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; }
+  .shkv .v2 { font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .shkv .spct { font-weight: 400; color: var(--ink-3); font-size: 11px; }
+  .sbody { display: none; border-top: 1px solid var(--line); }
+  .scard.open .sbody { display: block; }
+  .ptable th:first-child, .ptable td:first-child { padding-left: 40px; }
+
+  /* Site table */
+  .tablewrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+  table { border-collapse: collapse; width: 100%; min-width: 920px; font-variant-numeric: tabular-nums; }
+  th {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3);
+    text-align: right; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  th:first-child { text-align: left; }
+  td { padding: 8px 12px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td:first-child { text-align: left; white-space: normal; }
+  tr:last-child td { border-bottom: none; }
+
+  tr.site { background: var(--surface-2); cursor: pointer; }
+  tr.site td { font-weight: 700; font-size: 14.5px; padding: 11px 12px; }
+  tr.site .caret { display: inline-block; width: 14px; color: var(--ink-3); transition: transform 0.15s; }
+  tr.site.open .caret { transform: rotate(90deg); }
+  tr.site:hover { filter: brightness(0.985); }
+  tr.proj td { font-size: 13.5px; color: var(--ink-2); }
+  tr.proj td:first-child { padding-left: 34px; color: var(--ink); }
+  tr.proj { display: none; }
+  tr.proj.show { display: table-row; }
+  tr.proj .pos { font-size: 11.5px; color: var(--ink-3); }
+  tr.total td { font-weight: 700; border-top: 2px solid var(--ink-2); background: var(--surface-2); font-size: 14.5px; }
+
+  .neg { color: var(--bad); font-weight: 700; }
+  .chip {
+    display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em;
+    padding: 1px 7px; border-radius: 9px; margin-left: 8px; vertical-align: 1px;
+    background: var(--bad-bg); color: var(--bad); text-transform: uppercase;
+  }
+  .minibar { width: 120px; height: 8px; background: var(--track); border-radius: 3px; display: inline-block; position: relative; overflow: hidden; vertical-align: middle; }
+  .minibar i { position: absolute; inset: 0 auto 0 0; border-radius: 3px 0 0 3px; }
+
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 10px 2px 0; font-size: 12.5px; color: var(--ink-2); }
+  .legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .legend .sks { display: none; }
+
+  /* Watch list */
+  .watch { display: grid; gap: 8px; }
+  .watch .item {
+    background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--bad);
+    border-radius: 6px; padding: 10px 14px; font-size: 13.5px;
+  }
+  .watch .item b { font-weight: 600; }
+  .watch .amt { color: var(--bad); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  footer { margin-top: 34px; border-top: 1px solid var(--line); padding-top: 14px; font-size: 12.5px; color: var(--ink-3); }
+  footer a { color: var(--committed); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  footer ul { margin: 6px 0 0; padding-left: 18px; }
+  footer li { margin: 3px 0; }
+
+  button.expand-all {
+    font: 600 12px/1 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: var(--ink-2); background: var(--surface); border: 1px solid var(--line);
+    border-radius: 5px; padding: 6px 12px; cursor: pointer; margin-left: auto;
+  }
+  button.expand-all:hover { background: var(--surface-2); }
+  button.expand-all:focus-visible, tr.site:focus-visible { outline: 2px solid var(--committed); outline-offset: 1px; }
+  @media (prefers-reduced-motion: reduce) { tr.site .caret { transition: none; } }
+
+  /* Toolbar */
+  .toolbar { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .toolbar button {
+    font: 600 12.5px/1 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+    border-radius: 5px; padding: 8px 14px; cursor: pointer;
+  }
+  .toolbar button:hover { background: var(--surface-2); }
+  .toolbar button:disabled { opacity: 0.5; cursor: wait; }
+  .toolbar button:focus-visible { outline: 2px solid var(--committed); outline-offset: 1px; }
+  .toolbar #btnRefresh { border-color: var(--committed); color: var(--committed); }
+  .toolbar .tstatus { font-size: 12px; color: var(--ink-3); }
+
+  /* Challenges & Opportunities notes */
+  #coSection textarea {
+    width: 100%; min-height: 88px; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px;
+    font: inherit; font-size: 13.5px; resize: vertical;
+  }
+  #coSection textarea:focus-visible { outline: 2px solid var(--committed); outline-offset: 0; }
+  .cobtn {
+    font: 600 12.5px/1 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: var(--committed); background: var(--surface); border: 1px solid var(--committed);
+    border-radius: 5px; padding: 8px 14px; cursor: pointer;
+  }
+  .cobtn:hover { background: var(--surface-2); }
+  .cobtn:focus-visible { outline: 2px solid var(--committed); outline-offset: 1px; }
+  .co-vers { margin-top: 12px; display: grid; gap: 8px; max-height: 280px; overflow-y: auto; }
+  .co-ver { border: 1px solid var(--line); border-left: 3px solid var(--ink-3); border-radius: 6px; padding: 8px 12px; }
+  .co-ver.current { border-left-color: var(--invoiced); }
+  .co-meta { font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .co-meta .cur { color: var(--invoiced); font-weight: 700; }
+  .co-text { font-size: 13.5px; }
+  .co-empty { color: var(--ink-3); font-size: 12.5px; }
+  .colink { background: none; border: none; color: var(--committed); cursor: pointer; font: inherit; font-size: 11px; padding: 0; }
+  .colink:hover { text-decoration: underline; }
+  #coPrint { display: none; }
+  .tafake {
+    white-space: pre-wrap; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px;
+    font-size: 13.5px; min-height: 60px;
+  }
+  #pdfOverlay { position: fixed; inset: 0; z-index: 999; background: rgba(8, 11, 16, 0.88); display: flex; flex-direction: column; padding: 16px; gap: 10px; }
+  #pdfOverlay .pdfbar { display: flex; gap: 10px; align-items: center; color: #fff; flex-wrap: wrap; }
+  #pdfOverlay .pdfbar b { margin-right: auto; font-size: 14px; }
+  #pdfOverlay .pdfhint { color: #c8d2e0; font-size: 12px; }
+  #pdfOverlay .pdfscroll { flex: 1; overflow: auto; border-radius: 6px; background: #3a4150; padding: 10px; min-height: 200px; }
+  #pdfOverlay .pdfscroll img { display: block; width: 100%; max-width: 900px; margin: 0 auto; background: #fff; box-shadow: 0 2px 14px rgba(0,0,0,0.5); }
+  .co-print-head { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-2); }
+  .co-print-head span { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--ink-3); }
+  .co-print-body { font-size: 12.5px; margin-top: 3px; line-height: 1.3; }
+  /* live export-measurement state for as-shown exports */
+  :root[data-export-prep] .toolbar,
+  :root[data-export-prep] #watchSection,
+  :root[data-export-prep] #coSection,
+  :root[data-export-prep] .sbody,
+  :root[data-export-prep] #pdfOverlay { display: none !important; }
+  :root[data-export-prep] #coPrint { display: block; margin-top: 10px; border-top: 2px solid var(--gold); padding-top: 6px; }
+  /* live print-prep state (set by the PDF buttons; independent of @media print support) */
+  :root[data-print-prep] .toolbar,
+  :root[data-print-prep] #watchSection,
+  :root[data-print-prep] .sbody,
+  :root[data-print-prep] .shead .caret,
+  :root[data-print-prep] #coSection,
+  :root[data-print-prep] #pdfOverlay { display: none !important; }
+  :root[data-print-prep] #coPrint { display: block; margin-top: 8px; border-top: 2px solid var(--gold); padding-top: 5px; }
+
+  /* ---- Print: one page, always LIGHT (white paper). All fonts >= 8pt (10.7px). ---- */
+  @media print {
+    :root, :root[data-theme="dark"], :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #ffffff; --surface: #ffffff; --surface-2: #eef1f6;
+      --ink: #16304f; --ink-2: #44546b; --ink-3: #647185; --line: #cdd5e1;
+      --navy: #16304f; --gold: #a9841e; --committed: #2a78d6; --invoiced: #008300;
+      --review: #b97e00; --bad: #b23230; --bad-bg: #fbeceb; --track: #dfe5ee;
+      --auth: #16304f; --uncommitted: #4a3aa7;
+  --s-smhs: #2a78d6; --s-ves: #4a3aa7; --s-ces: #1baf7a; --s-hms: #eb6834; --s-dw: #e87ba4;
+    }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .toolbar, button.expand-all, .sbody, .shead .caret, #watchSection, #coSection, #pdfOverlay { display: none !important; }
+    #coPrint { display: block; margin-top: 5px; border-top: 2px solid var(--gold); padding-top: 3px; }
+    .co-print-head { font-size: 10.7px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-2); }
+    .co-print-head span { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--ink-3); }
+    .co-print-body { font-size: 10.7px; margin-top: 2px; line-height: 1.25; }
+    :root[data-paper="tabloid"] .co-print-head { font-size: 12px; }
+    :root[data-paper="tabloid"] .co-print-body { font-size: 12px; margin-top: 3px; }
+    body { font-size: 10.7px; line-height: 1.25; background: #fff; }
+    .wrap { max-width: none; padding: 0 4px 5px; }
+    .masthead { padding: 4px 0 4px; border-bottom-width: 2px; }
+    .masthead h1 { font-size: 19px; }
+    .masthead .sub { font-size: 10.7px; }
+    .masthead .asof { font-size: 10.7px; color: #e6d9ac; }
+    section { margin-top: 3px; }
+    h2 { font-size: 10.7px; margin-bottom: 3px; }
+    h2 .note { font-size: 10.7px; }
+    .card { padding: 7px 9px; }
+    .bondfacts { font-size: 10.7px; gap: 2px 16px; margin-bottom: 3px; }
+    .ladder { gap: 2px; }
+    .ltop { margin-bottom: 0; gap: 6px; }
+    .ltop b { font-size: 11px; }
+    .ltop .sublbl { font-size: 10.7px; }
+    .ltop .lamt { font-size: 11px; }
+    .ltop .pct { font-size: 10.7px; }
+    .lrow .bar { height: 6px; }
+    .lgroup { padding: 3px 7px 4px; gap: 2px; border-radius: 4px; }
+    .lgroup .gcap { font-size: 10.7px; }
+    .ladder-note { font-size: 10.7px; margin-top: 3px; line-height: 1.15; }
+    #siteCards { gap: 2px; }
+    .shkv .k2n { display: none; }
+    :root[data-paper="tabloid"] .shkv .k2n { display: block; font-size: 10.7px; }
+    .shead { padding: 1px 8px; gap: 9px; }
+    .donut { width: 30px; height: 30px; }
+    .donut::after { inset: 3px; font-size: 10.7px; letter-spacing: -0.05em; }
+    .sname { font-size: 10.7px; }
+    .sname .cnt { font-size: 10.7px; }
+    .sinv { font-size: 10.7px; margin-top: 0; }
+    .dot { width: 6px; height: 6px; margin-right: 2px; }
+    .shkv { min-width: 112px; }
+    .shkv .k2 { font-size: 10.7px; letter-spacing: 0.02em; }
+    .shkv .v2 { font-size: 11px; }
+    .shkv .spct { font-size: 10.7px; }
+    .chip { font-size: 10.7px; padding: 0 5px; margin-left: 5px; }
+    .legend { font-size: 10.7px; gap: 4px 10px; margin-top: 2px; line-height: 1.15; }
+    .legend .skl { display: none; }
+    .legend .sks { display: inline; }
+    :root[data-paper="tabloid"] .legend .skl { display: inline; }
+    :root[data-paper="tabloid"] .legend .sks { display: none; }
+    .card > .legend { margin: 0 0 2px !important; line-height: 1.15; }
+    .siteline { height: 2px; margin-top: 2px; width: 64px; }
+    .legend .sw { width: 8px; height: 8px; }
+    footer { margin-top: 2px; padding-top: 2px; font-size: 10.7px; line-height: 1.05; }
+    footer ul { columns: 3; column-gap: 12px; margin-top: 1px; padding-left: 11px; }
+    footer li { margin: 0; }
+
+    /* 11x17 scale-up (set via data-paper attribute; print media queries see default paper width) */
+    :root[data-paper="tabloid"] body { font-size: 13px; }
+    :root[data-paper="tabloid"] .wrap { padding: 0 10px 10px; }
+    :root[data-paper="tabloid"] .masthead { padding: 10px 0 8px; }
+    :root[data-paper="tabloid"] .masthead h1 { font-size: 25px; }
+    :root[data-paper="tabloid"] .masthead .sub { font-size: 12.5px; }
+    :root[data-paper="tabloid"] .masthead .asof { font-size: 12px; }
+    :root[data-paper="tabloid"] section { margin-top: 11px; }
+    :root[data-paper="tabloid"] h2 { font-size: 12px; margin-bottom: 7px; }
+    :root[data-paper="tabloid"] h2 .note { font-size: 12px; }
+    :root[data-paper="tabloid"] .card { padding: 11px 13px; }
+    :root[data-paper="tabloid"] .bondfacts { font-size: 12.5px; gap: 5px 20px; margin-bottom: 9px; }
+    :root[data-paper="tabloid"] .ladder { gap: 6px; }
+    :root[data-paper="tabloid"] .ltop { margin-bottom: 2px; }
+    :root[data-paper="tabloid"] .ltop b { font-size: 13.5px; }
+    :root[data-paper="tabloid"] .ltop .sublbl { font-size: 12px; }
+    :root[data-paper="tabloid"] .ltop .lamt { font-size: 13.5px; }
+    :root[data-paper="tabloid"] .ltop .pct { font-size: 12px; }
+    :root[data-paper="tabloid"] .lrow .bar { height: 12px; }
+    :root[data-paper="tabloid"] .lgroup { padding: 8px 11px; gap: 6px; border-radius: 6px; }
+    :root[data-paper="tabloid"] .lgroup .gcap { font-size: 12px; }
+    :root[data-paper="tabloid"] .ladder-note { font-size: 12px; margin-top: 8px; }
+    :root[data-paper="tabloid"] #siteCards { gap: 5px; }
+    :root[data-paper="tabloid"] .shead { padding: 6px 11px; gap: 12px; }
+    :root[data-paper="tabloid"] .donut { width: 46px; height: 46px; }
+    :root[data-paper="tabloid"] .donut::after { inset: 7px; font-size: 12px; }
+    :root[data-paper="tabloid"] .sname { font-size: 14px; }
+    :root[data-paper="tabloid"] .sname .cnt { font-size: 12px; }
+    :root[data-paper="tabloid"] .sinv { font-size: 12px; margin-top: 2px; }
+    :root[data-paper="tabloid"] .dot { width: 7px; height: 7px; margin-right: 3px; }
+    :root[data-paper="tabloid"] .shkv { min-width: 150px; }
+    :root[data-paper="tabloid"] .shkv .k2 { font-size: 12px; }
+    :root[data-paper="tabloid"] .shkv .v2 { font-size: 13.5px; }
+    :root[data-paper="tabloid"] .shkv .spct { font-size: 12px; }
+    :root[data-paper="tabloid"] .chip { font-size: 12px; padding: 1px 6px; }
+    :root[data-paper="tabloid"] .legend { font-size: 12px; gap: 16px; margin-top: 6px; }
+    :root[data-paper="tabloid"] .legend .sw { width: 10px; height: 10px; }
+    :root[data-paper="tabloid"] footer { margin-top: 8px; padding-top: 6px; font-size: 12px; }
+    :root[data-paper="tabloid"] footer ul { column-gap: 22px; }
+  }
+</style>
+
+<div class="masthead">
+  <div class="wrap">
+    <h1>Measure M &mdash; Financial Program at a Glance</h1>
+    <div class="sub">San Marino Unified School District &middot; Bond Program Rollup</div>
+    <div class="asof" id="asofLabel">Data as of July 23, 2026</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="toolbar">
+    <button type="button" id="btnRefresh">&#10227; Refresh Data</button>
+    <button type="button" id="btnPdfSite" style="border-color:var(--gold);color:var(--gold)">Export PDF &mdash; As Shown</button>
+    <button type="button" id="btnPdfLetter">White Print 8.5&times;11</button>
+    <button type="button" id="btnPdfTabloid">White Print 11&times;17</button>
+    <span id="refreshStatus" class="tstatus"></span>
+  </div>
+
+  <section>
+    <h2>Bond Authorization &amp; Release <span class="note">program level</span></h2>
+    <div class="card">
+      <div class="bondfacts">
+        <span><b>$200,000,000</b> Measure M Bond</span>
+        <span>Passed <b>November 2024</b> &middot; <b>71%</b> voter approval</span>
+        <span>Funds source: <b>2024 Measure M &mdash; Series A</b> (100% of released funds)</span>
+        <span id="bfCounts"><b>22</b> projects &middot; <b>121</b> RFPs &middot; <b>38</b> purchase orders &middot; <b>5</b> sites</span>
+        <span id="bfAsof">Data as of <b>July 23, 2026</b></span>
+      </div>
+      <div class="legend" style="margin:0 0 12px">
+        <span id="siteKey" style="display:contents"></span>
+        <span><span class="sw" style="background:var(--track)"></span>Full track = its parent total (the one named in the %)</span>
+      </div>
+      <div class="ladder" id="ladder"></div>
+      <div class="ladder-note" id="ladderNote"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 style="display:flex">Site Rollup
+      <span class="note">click a site to show its projects</span>
+      <button class="expand-all" id="toggleAll" type="button">Expand All</button>
+    </h2>
+    <div id="siteCards"></div>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--invoiced)"></span>Completed &mdash; Approved</span>
+      <span><span class="sw" style="background:var(--review)"></span>In Process</span>
+      <span><span class="sw" style="background:var(--ink-3)"></span>Remaining to Be Invoiced</span>
+      <span><span class="sw" style="background:var(--track)"></span>Uncommitted Budget</span>
+      <span style="color:var(--ink-3)">Donut = share of each site&rsquo;s estimated budget; the three committed slices sum to Committed PO's. Uncommitted = Est. Budget &minus; Committed; <b>over budget</b> means PO's exceed the current estimate, so Uncommitted runs negative until the budget is trued up.</span>
+    </div>
+
+  <section id="coSection">
+    <h2>Challenges and Opportunities <span class="note">saved with version history in this browser &mdash; the latest version prints at the bottom of the PDF</span></h2>
+    <div class="card">
+      <textarea id="coText" rows="4" placeholder="Add challenges, opportunities, and context for this reporting period&hellip;"></textarea>
+      <div style="display:flex;gap:10px;align-items:center;margin-top:9px;flex-wrap:wrap">
+        <button type="button" id="coSave" class="cobtn">Save Version</button>
+        <button type="button" id="coSaveNew" class="cobtn" style="display:none">Save as New Version</button>
+        <button type="button" id="coCancel" class="cobtn" style="display:none;color:var(--ink-3);border-color:var(--line)">Cancel Edit</button>
+        <span id="coStatus" class="tstatus"></span>
+      </div>
+      <div id="coVersions" class="co-vers"></div>
+    </div>
+  </section>
+    <div class="ladder-note" style="margin-top:10px">
+      <b>Necessary FMP Exclusions</b> &mdash; the Facilities Master Plan estimate excluded certain services that are
+      critical to delivering the program (construction management, CEQA, geotechnical and survey services,
+      pre-qualification and bond financial software, districtwide assessments). They are carried here as their own
+      cost center, which is why its commitments run ahead of the nominal budget line &mdash; a budget true-up, not an overrun.
+    </div>
+  </section>
+
+  <section id="watchSection">
+    <h2>Watch Items <span class="note">computed from the same data &mdash; shown on screen, excluded from PDF export</span></h2>
+    <div class="watch" id="watch"></div>
+  </section>
+
+
+
+  <div id="coPrint"></div>
+</div>
+
+<script>
+// ---- Raw data pulled from Transcend PM (2026-07-23) ----
+let PROJECTS = [
+  {pid:463,  name:"Administration Beautifications", budget:1200, site:"DW"},
+  {pid:1638, name:"Athletic Field Scoreboard", budget:690877, site:"SMHS"},
+  {pid:462,  name:"Auditorium and Security Fencing Phase I", budget:79350, site:"SMHS"},
+  {pid:1636, name:"Auditorium and Security Fencing Phase II", budget:250000, site:"SMHS"},
+  {pid:1806, name:"Carver Drop off, Loading and Traffic Reroute", budget:2000000, site:"CES"},
+  {pid:1610, name:"Carver ES New TK & KG Building", budget:21500000, site:"CES"},
+  {pid:1864, name:"Carver ES Roofing", budget:4790000, site:"CES"},
+  {pid:1633, name:"Carver ES &mdash; Playground Replacement", budget:151800, site:"CES"},
+  {pid:402,  name:"Concessions Restroom Refresh", budget:228770, site:"SMHS"},
+  {pid:533,  name:"Districtwide Basic Information", budget:902675, site:"DW"},
+  {pid:1637, name:"Gymnasium HVAC Upgrade", budget:2977500, site:"SMHS"},
+  {pid:1865, name:"Huntington MS Roofing", budget:3702616.31, site:"HMS"},
+  {pid:1805, name:"Interim Housing (SMHS)", budget:0, site:"SMHS"},
+  {pid:467,  name:"Roofing: HMS Portables (207, 208, OT & APE)", budget:0, site:"HMS"},
+  {pid:1808, name:"San Marino HS Roofing", budget:6620000, site:"SMHS"},
+  {pid:1608, name:"SMHS Two-Story Medical Arts Classroom Building", budget:29500000, site:"SMHS"},
+  {pid:1853, name:"SMHS &mdash; Interim Housing", budget:0, site:"SMHS"},
+  {pid:1300, name:"Synthetic Turf & Track Replacement", budget:1699559, site:"SMHS"},
+  {pid:1866, name:"Valentine Elementary Roofing", budget:3630000.01, site:"VES"},
+  {pid:1947, name:"Valentine ES &mdash; Entry Shade Structures", budget:100000, site:"VES"},
+  {pid:1609, name:"Valentine ES Two-Story Classroom Building", budget:31357143, site:"VES"},
+  {pid:1634, name:"Valentine ES &mdash; Playground Replacement", budget:780951, site:"VES"}
+];
+// [pid, poNumber, vendor, rfp, package, amount, approvedInv, openInv, remaining]
+let POS = [
+  [533,"PO1-260000001714","Cardinal Environmental Consultants, Inc","26-27 MM-004","SMHS, CES - Asbestos Testing",4250,4250,0,0],
+  [1633,"PO1-260000001702","Westgroup Designs","25-26 MM-041","CES - Architectural Design Services",131200,57068,0,74132],
+  [1609,"PO1-260000001709","Keystone Builders, Inc.","25-26 MM-086","VES - Interim Housing Construction - GC",797500,0,592420,205080],
+  [402,"PO1-260000001596","Murals for Schools","25-26 MM-032","SMHS - Painting Exterior Murals on Concessions Building",9270,9270,0,0],
+  [1610,"PO1-260000001248","GPRS","25-26 MM-021","CES - Additional Underground Surveying Services",7250,0,0,7250],
+  [1633,"PO1-260000001707","Tom's Construction Inc.","25-26 MM-033","CES - Playground Site Prep, Demolition and Cleanup",198628,0,108000,90628],
+  [1634,"PO1-260000001548","Zoom Recreation, Inc.","25-26 MM-030","VES - Playground Equipment & Installation - CMAS",780950.43,387868.87,0,393081.56],
+  [1633,"PO1-260000001505","Zoom Recreation, Inc.","25-26 MM-029","CES - Playground Equipment & Installation - CMAS",552355.13,219231.11,0,333124.02],
+  [402,"PO1-260000001340","The Garland Company","25-26 MM-020","SMHS - Concessions Bldg Roof - CMAS Roofing Materials",33828.74,0,0,33828.74],
+  [1608,"PO1-260000001711","Keystone Builders, Inc.","25-26 MM-087","SMHS - Interim Housing Construction - GC",660000,0,19950,640050],
+  [1608,"PO1-260000001508","Wilscott","25-26 MM-026","SMHS - Interim Housing Lease - Piggyback (4 CR BLDGS)",173200,0,0,173200],
+  [1300,"PO1-260000001597","Asphalt Fabric and Engineering, Inc.","25-26 MM-024","SMHS - Demolition of Synthetic Track and Field",78313,0,0,78313],
+  [1609,"PO1-260000001705","Wilscott","25-26 MM-027","VES - Interim Housing Lease - Piggyback",130700,0,0,130700],
+  [1608,"PO1-260000001708","Wilscott","(RFP deleted)","SMHS - Interim Housing Lease - Piggyback (1 CR BLDG)",43814,0,0,43814],
+  [1633,"PO1-260000001631","Westgroup Designs","25-26 MM-043","CES - Carver Elementary Arborist Field Evaluation",3950,0,0,3950],
+  [1808,"PO1-260000001629","Adco Roofing and Waterproofing","25-26 MM-038","SMHS - Boys Field House Roofing",68750,18270,0,50480],
+  [1638,"PO1-260000001598","Daktronics, Inc.","25-26 MM-088","SMHS - Athletic Field Scoreboard",270876.88,0,0,270876.88],
+  [533,"260000001335","Adkan Engineers","25-26 MM-023","SMHS/VES - Additional Topographical Survey",37200,0,0,37200],
+  [1637,"260000001278","Huckabee","25-26 MM-019","SMHS - High School Gymnasium HVAC Upgrade",277500,124875,0,152625],
+  [1608,"260000001332","Adkan Engineers","25-26 MM-018","SMHS - Additional Topographical Survey Requirements",4265,0,0,4265],
+  [1300,"260000001247","Asphalt Fabric and Engineering, Inc.","25-26 MM-016","SMHS - CMAS Astroturf/AFE: Track materials & installation",711280,0,74397.35,636882.65],
+  [1300,"260000001349","ASTROTURF CORPORATION","25-26 MM-014","SMHS - CMAS Astroturf/AFE: Field materials & installation",909966,0,0,909966],
+  [1608,"260000001402","Converse Consultants","25-26 MM-028","SMHS - Geotech & Fault Investigation - Additional Borings",91500,23900,0,67600],
+  [533,"260000001403","Tao Rossini, A Professional Corp.","25-26 MM-017","Districtwide CEQA Services",40998,0,0,40998],
+  [1609,"260000001339","Westgroup Designs","25-26 MM-002","VES - Architectural Design Services",1225750,14800.50,104389.12,1106560.38],
+  [1865,"PO1-260000001027","The Garland Company","25-26 MM-031","HMS - Roofing 207, 208, OT, APE - CMAS Roofing Materials",65076.30,0,0,65076.30],
+  [533,"PO1-260000001246","Adkan Engineers","25-26 MM-007","CES/HMS/SMHS/VES - Topographic Surveying Services",16500,0,0,16500],
+  [533,"PO1-260000001033","PQBids","25-26 MM-004","Pre-Qualification and Bid Services Software",20700,0,0,20700],
+  [463,"PO1-260000001022","Keystone Builders, Inc.","25-26 MM-012","DO - Administration Modernization",162800,16192.30,0,146607.70],
+  [402,"PO1-260000001032","Keystone Builders, Inc.","25-26 MM-010","SMHS - Concession Restroom Refresh",151030,0,0,151030],
+  [462,"PO1-260000001163","J & A Engineering Corp. dba J & A Fence","25-26 MM-011","SMHS - Fencing Installation",79350,0,0,79350],
+  [533,"PO1-260000001165","GPRS","25-26 MM-008","CES/HMS/SMHS/VES - Underground Surveying Services",10075,2450,4625,3000],
+  [533,"PO1-260000001166","Converse Consultants","25-26 MM-009","Geotechnical Services (Soil Testing)",56480,0,56480,0],
+  [1865,"PO1-260000001031","AME Builders Inc","25-26 MM-015","HMS - Roofing 207, 208, OT, APE - Roofing Contractor",87540,43887.98,126815.07,-83163.05],
+  [1608,"PO1-260000001023","Huckabee","25-26 MM-003","SMHS - Architectural DPOR Services",1199426,0,83959.82,1115466.18],
+  [1610,"PO1-01035","Westgroup Designs","25-26 MM-001","CES - Architectural Design Services",898000,25382,147629.48,724988.52],
+  [533,"PO1-260000001040","C. Financial Investment, Inc. DBA Key Analytics","25-26 MM-005","Bond Financial Software & Reporting",74000,0,0,74000],
+  [533,"P01-250000001431","Knowland Construction Services, Inc.","&mdash;","Construction Management Services",653120,0,0,653120]
+];
+const PROGRAM = {
+  authorized: 200000000,
+  released: 40000000,
+  allocated: 40000000,
+  combinedBudget: 110962441.32,
+  projects: 22, rfps: 121, pos: 38,
+  invoicesInReview: 1335165.84, invoicesInReviewCount: 31,
+  invoicesDraft: 97921.25, invoicesUnassigned: 115460.26,
+  availableOnRelease: 29282607.52
+};
+const SITES = {
+  SMHS: "San Marino High School",
+  VES:  "Valentine Elementary",
+  CES:  "Carver Elementary",
+  HMS:  "Huntington Middle School",
+  DW:   "Necessary FMP Exclusions"
+};
+
+// ---- Helpers & state ----
+const fmt = n => (n < 0 ? "&minus;$" : "$") + Math.abs(n).toLocaleString("en-US", {minimumFractionDigits: 0, maximumFractionDigits: 0});
+const fmtC = n => (n < 0 ? "&minus;$" : "$") + Math.abs(n).toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const pct = (a, b) => b ? (100 * a / b).toFixed(1) + "%" : "&mdash;";
+const cellNeg = v => v < 0 ? `<span class="neg">${fmt(v)}</span>` : fmt(v);
+const overChip = diff => `<span class="chip" title="Committed exceeds the estimated budget by ${fmt(diff)}. Committed + Uncommitted still equals Budget &mdash; uncommitted is simply negative until the budget is trued up.">over budget</span>`;
+const SITE_BY_PID = {463:"DW",533:"DW",1638:"SMHS",462:"SMHS",1636:"SMHS",402:"SMHS",1637:"SMHS",1808:"SMHS",1608:"SMHS",1853:"SMHS",1300:"SMHS",1805:"SMHS",1806:"CES",1610:"CES",1864:"CES",1633:"CES",1865:"HMS",467:"HMS",1866:"VES",1947:"VES",1609:"VES",1634:"VES"};
+const siteFor = (pid, name) => SITE_BY_PID[pid] ||
+  (/carver|\bCES\b/i.test(name) ? "CES" :
+   /valentine|\bVES\b/i.test(name) ? "VES" :
+   /huntington|\bHMS\b/i.test(name) ? "HMS" :
+   /SMHS|san marino high|gymnasium|auditorium|athletic|concession|turf|interim/i.test(name) ? "SMHS" : "DW");
+let ASOF = "July 23, 2026";
+let LIVE = false;
+
+function setOpen(card, open) {
+  card.classList.toggle("open", open);
+  card.querySelector(".shead").setAttribute("aria-expanded", open);
+}
+
+function renderAll() {
+  // ---- rollups ----
+  const byPid = {};
+  PROJECTS.forEach(p => { byPid[p.pid] = {...p, committed: 0, approved: 0, open: 0, remaining: 0, poCount: 0}; });
+  POS.forEach(([pid,,,,,amt,appr,open,rem]) => {
+    const p = byPid[pid]; if (!p) return;
+    p.committed += amt; p.approved += appr; p.open += open; p.remaining += rem; p.poCount++;
+  });
+  const sites = {};
+  Object.keys(SITES).forEach(k => sites[k] = {key: k, name: SITES[k], budget: 0, committed: 0, approved: 0, open: 0, remaining: 0, projects: []});
+  Object.values(byPid).forEach(p => {
+    const s = sites[p.site] || sites.DW;
+    s.budget += p.budget; s.committed += p.committed; s.approved += p.approved;
+    s.open += p.open; s.remaining += p.remaining; s.projects.push(p);
+  });
+  Object.values(sites).forEach(s => s.projects.sort((a, b) => b.budget - a.budget));
+  const siteList = Object.values(sites).filter(s => s.projects.length).sort((a, b) => b.budget - a.budget);
+  const T = siteList.reduce((t, s) => ({
+    budget: t.budget + s.budget, committed: t.committed + s.committed,
+    approved: t.approved + s.approved, open: t.open + s.open, remaining: t.remaining + s.remaining
+  }), {budget: 0, committed: 0, approved: 0, open: 0, remaining: 0});
+  const invoicedTotal = T.approved + T.open;
+
+  // ---- labels ----
+  document.getElementById("asofLabel").innerHTML = `Data as of ${ASOF}${LIVE ? " &middot; live" : ""}`;
+  document.getElementById("bfCounts").innerHTML =
+    `<b>${PROGRAM.projects}</b> projects &middot; <b>${PROGRAM.rfps}</b> RFPs &middot; <b>${PROGRAM.pos}</b> purchase orders &middot; <b>${siteList.length}</b> sites`;
+  document.getElementById("bfAsof").innerHTML = `Data as of <b>${ASOF}</b>`;
+
+  // ---- release ladder ----
+  const lRow = r => {
+    const vs = r.vs || PROGRAM.authorized;
+    return `
+  <div class="lrow">
+    <div class="ltop">
+      <b>${r.lbl}</b>${r.sub ? `<span class="sublbl">${r.sub}</span>` : ""}
+      <span class="lamt">${fmt(r.v)}${r.pctLabel ? ` <span class="pct">${r.pctLabel}</span>` : ""}</span>
+    </div>
+    <div class="bar" title="Full track = ${r.vsLbl || "authorized"} (${fmt(vs)})">${r.stack
+      ? r.stack.map((s, i) => `<i class="seg" title="${s.name ? s.name + ": " : ""}${fmt(s.v)}" style="width:${(100 * s.v / vs).toFixed(2)}%;background:${s.color};${i === 0 ? "border-radius:4px 0 0 4px;" : ""}"></i>`).join("")
+      : `<div class="fill" style="width:${(100 * r.v / vs).toFixed(2)}%;background:${r.color};"></div>`}</div>
+  </div>`;
+  };
+  const SITE_COLOR = {SMHS: "var(--s-smhs)", VES: "var(--s-ves)", CES: "var(--s-ces)", HMS: "var(--s-hms)", DW: "var(--s-dw)"};
+  const siteStack = f => siteList.map(s => ({v: Math.max(0, f(s)), color: SITE_COLOR[s.key], name: s.name})).filter(x => x.v > 0);
+  const R = {
+    auth:       {lbl: "Authorized (Measure M)", v: PROGRAM.authorized, color: "var(--auth)", pctLabel: ""},
+    pendingRel: {lbl: "Pending Release", sub: "future bond series", v: PROGRAM.authorized - PROGRAM.released, color: "var(--ink-3)", pctLabel: pct(PROGRAM.authorized - PROGRAM.released, PROGRAM.authorized) + " of auth."},
+    released:   {lbl: "Released &mdash; Series A", sub: "funds all active projects", v: PROGRAM.released, color: "var(--gold)", pctLabel: pct(PROGRAM.released, PROGRAM.authorized) + " of auth."},
+    budgets:    {lbl: "Estimated Project Budgets", sub: `all ${PROGRAM.projects} projects, segmented by site`, v: T.budget, stack: siteStack(s => s.budget), pctLabel: pct(T.budget, PROGRAM.authorized) + " of auth."},
+    uncommitted:{lbl: "Uncommitted Project Budgets", sub: "budgets &minus; committed, by site", v: T.budget - T.committed, stack: siteStack(s => s.budget - s.committed), vs: T.budget, vsLbl: "estimated project budgets", pctLabel: pct(T.budget - T.committed, T.budget) + " of budgets"},
+    committed:  {lbl: "Committed (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vs: T.budget, vsLbl: "estimated project budgets", pctLabel: pct(T.committed, T.budget) + " of budgets"},
+    committedP: {lbl: "Committed (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vsLbl: "authorization", pctLabel: pct(T.committed, PROGRAM.authorized) + " of auth. &middot; " + pct(T.committed, PROGRAM.released) + " of release"},
+    completed:  {lbl: "Completed &mdash; Approved", sub: "invoiced &amp; approved to date, by site", v: T.approved, stack: siteStack(s => s.approved), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.approved, T.committed) + " of committed"},
+    inProcess:  {lbl: "In Process", sub: "invoices in review, by site", v: T.open, stack: siteStack(s => s.open), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.open, T.committed) + " of committed"},
+    remainInv:  {lbl: "Remaining to Be Invoiced", sub: "work not yet billed, by site", v: T.remaining, stack: siteStack(s => s.remaining), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.remaining, T.committed) + " of committed"}
+  };
+  document.getElementById("ladder").innerHTML =
+    lRow(R.auth) +
+    `<div class="lgroup" style="--acc:var(--gold)">
+      <div class="gcap">Pending Release <span class="eq">+</span> Released <span class="eq">=</span> Authorized (${fmt(PROGRAM.authorized)})</div>
+      ${lRow(R.pendingRel)}${lRow(R.released)}
+    </div>` +
+    lRow(R.budgets) +
+    `<div class="lgroup" style="--acc:var(--uncommitted)">
+      <div class="gcap">Uncommitted <span class="eq">+</span> Committed (PO's) <span class="eq">=</span> Estimated Project Budgets (${fmtC(T.budget)})</div>
+      ${lRow(R.uncommitted)}${lRow(R.committed)}
+    </div>` +
+    lRow(R.committedP) +
+    `<div class="lgroup" style="--acc:var(--committed)">
+      <div class="gcap">Completed <span class="eq">+</span> In Process <span class="eq">+</span> Remaining to Be Invoiced <span class="eq">=</span> Committed PO's (${fmtC(T.committed)})</div>
+      ${lRow(R.completed)}${lRow(R.inProcess)}${lRow(R.remainInv)}
+    </div>`;
+  document.getElementById("siteKey").innerHTML = siteList.map(s =>
+    `<span><span class="sw" style="background:${SITE_COLOR[s.key]}"></span><span class="skl">${s.name}</span><span class="sks">${s.key === "DW" ? "FMP Excl." : s.key}</span></span>`).join("");
+  document.getElementById("ladderNote").innerHTML =
+    `Parent rows are scaled to the ${fmt(PROGRAM.authorized)} authorization; bars inside each box are scaled to that box's parent total, so each boxed pair fills its parent's track. <b>Projects are funded by the bond release:</b>
+     every purchase order draws against the ${fmt(PROGRAM.released)} Series A issuance, leaving ${fmtC(PROGRAM.released - T.committed)} available to commit.
+     Estimated Project Budgets (${fmt(T.budget)}) exceed the current release &mdash; later phases will be funded by future bond series.`;
+
+  // ---- site cards with project-tree children ----
+  const projRows = projects => projects.map(p => `
+    <tr>
+      <td>${p.name} <span class="pos">&middot; ${p.poCount} PO${p.poCount === 1 ? "" : "'s"}</span></td>
+      <td>${fmt(p.budget)}</td>
+      <td>${p.committed ? fmt(p.committed) : "&mdash;"}</td>
+      <td>${cellNeg(p.budget - p.committed)}${p.budget - p.committed < 0 ? overChip(p.committed - p.budget) : ""}</td>
+      <td>${p.approved ? fmt(p.approved) : "&mdash;"}</td>
+      <td>${p.open ? fmt(p.open) : "&mdash;"}</td>
+      <td>${p.committed ? cellNeg(p.remaining) : "&mdash;"}</td>
+    </tr>`).join("");
+  const siteCard = (s, isTotal) => {
+    const base = Math.max(s.budget, s.committed) || 1;
+    const over = s.budget - s.committed < 0;
+    const a = 100 * s.approved / base, b = a + 100 * s.open / base, c = b + 100 * Math.max(0, s.remaining) / base;
+    return `
+    <div class="scard${isTotal ? " total" : ""}"${isTotal ? "" : ` data-site="${s.key}"`}>
+      <div class="shead"${isTotal ? "" : ` role="button" tabindex="0" aria-expanded="false"`}>
+        <span class="caret">${isTotal ? "" : "&#9656;"}</span>
+        <div class="donut${over ? " over" : ""}" data-c="${pct(s.committed, s.budget)}"
+          title="Committed ${pct(s.committed, s.budget)} of estimated budget"
+          style="background:conic-gradient(var(--invoiced) 0 ${a.toFixed(2)}%, var(--review) ${a.toFixed(2)}% ${b.toFixed(2)}%, var(--ink-3) ${b.toFixed(2)}% ${c.toFixed(2)}%, var(--track) ${c.toFixed(2)}% 100%)"></div>
+        <div class="sinfo">
+          <div class="sname">${s.name} <span class="cnt">&middot; ${s.nProjects} project${s.nProjects === 1 ? "" : "s"}</span>${over ? overChip(s.committed - s.budget) : ""}</div>
+          ${isTotal ? "" : `<span class="siteline" style="background:${SITE_COLOR[s.key]}"></span>`}
+          <div class="sinv">
+            <span class="dot" style="background:var(--invoiced)"></span>${fmt(s.approved)} completed
+            &nbsp;<span class="dot" style="background:var(--review)"></span>${fmt(s.open)} in process
+            &nbsp;<span class="dot" style="background:var(--ink-3)"></span>${cellNeg(s.remaining)} to invoice
+          </div>
+        </div>
+        <div class="shkv"><span class="k2">Est. budget</span><span class="v2">${isTotal ? fmtC(s.budget) : fmt(s.budget)}</span></div>
+        <div class="shkv"><span class="k2">Committed (PO's)</span><span class="v2">${isTotal ? fmtC(s.committed) : fmt(s.committed)} <span class="spct">(${pct(s.committed, s.budget)})</span></span></div>
+        <div class="shkv"><span class="k2">Uncommitted</span><span class="v2">${isTotal ? fmtC(s.budget - s.committed) : cellNeg(s.budget - s.committed)}</span></div>
+      </div>
+      ${isTotal ? "" : `
+      <div class="sbody">
+        <div class="tablewrap" style="border:none;border-radius:0">
+          <table class="ptable">
+            <thead><tr>
+              <th>Project</th><th>Est. Budget</th><th>Committed (PO's)</th><th>Uncommitted</th>
+              <th>Completed &mdash; Approved</th><th>In Process</th><th>Remaining to Invoice</th>
+            </tr></thead>
+            <tbody>${projRows(s.projects)}</tbody>
+          </table>
+        </div>
+      </div>`}
+    </div>`;
+  };
+  const programCard = () => {
+    const cPct = 100 * T.committed / PROGRAM.authorized;
+    const bPct = 100 * T.budget / PROGRAM.authorized;
+    return `
+    <div class="scard ptotal">
+      <div class="shead">
+        <span class="caret"></span>
+        <div class="donut" data-c="${pct(T.budget, PROGRAM.authorized)}"
+          title="Estimated Project Budgets are ${pct(T.budget, PROGRAM.authorized)} of the $200,000,000 authorization; committed PO's are ${pct(T.committed, PROGRAM.authorized)}"
+          style="background:conic-gradient(var(--committed) 0 ${cPct.toFixed(2)}%, var(--auth) ${cPct.toFixed(2)}% ${bPct.toFixed(2)}%, var(--track) ${bPct.toFixed(2)}% 100%)"></div>
+        <div class="sinfo">
+          <div class="sname">Program Total <span class="cnt">&middot; $200,000,000 Measure M Authorization</span></div>
+          <div class="sinv">
+            <span class="dot" style="background:var(--auth)"></span>${fmtC(T.budget)} est. project budgets
+            &nbsp;<span class="dot" style="background:var(--committed)"></span>${fmtC(T.committed)} committed PO's
+          </div>
+        </div>
+        <div class="shkv"><span class="k2">Est. Remaining Budget</span><span class="v2">${fmtC(PROGRAM.authorized - T.budget)}</span><span class="k2n">authorization &minus; est. budgets</span></div>
+      </div>
+    </div>`;
+  };
+  document.getElementById("siteCards").innerHTML =
+    siteList.map(s => siteCard({...s, nProjects: s.projects.length}, false)).join("") +
+    siteCard({name: "Estimated Project Budgets", nProjects: PROGRAM.projects, budget: T.budget, committed: T.committed, approved: T.approved, open: T.open, remaining: T.remaining}, true) +
+    programCard();
+  document.querySelectorAll(".scard[data-site] .shead").forEach(head => {
+    const card = head.closest(".scard");
+    const toggle = () => setOpen(card, !card.classList.contains("open"));
+    head.addEventListener("click", toggle);
+    head.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  });
+
+  // ---- watch items (screen only) ----
+  const watch = [];
+  Object.values(byPid).filter(p => p.budget - p.committed < -0.005).forEach(p => {
+    const fmpNote = p.site === "DW"
+      ? " These are FMP-excluded services critical to the program (see note under Site Rollup) &mdash; a budget true-up, not an overrun."
+      : " Budget likely needs a true-up.";
+    watch.push(`<b>${p.name}</b> is committed <span class="amt">${fmt(p.committed - p.budget)}</span> beyond its estimated budget (budget ${fmt(p.budget)}, PO's ${fmt(p.committed)}).${fmpNote}`);
+  });
+  POS.filter(r => r[8] < 0).forEach(r => {
+    watch.push(`<b>${r[4]}</b> &mdash; PO ${r[1]} (${r[2]}) has invoices exceeding the PO amount by <span class="amt">${fmt(-r[8])}</span> (PO ${fmt(r[5])}, invoiced ${fmt(r[6] + r[7])}). A change order or PO increase may be needed.`);
+  });
+  watch.push(`Estimated Project Budgets (<b>${fmt(T.budget)}</b>) are ${pct(T.budget, PROGRAM.released)} of the ${fmt(PROGRAM.released)} Series A release &mdash; sequencing of the next bond series will gate the two-story building projects.`);
+  document.getElementById("watch").innerHTML = watch.map(w => `<div class="item">${w}</div>`).join("");
+}
+
+// ---- expand/collapse all ----
+let allOpen = false;
+document.getElementById("toggleAll").addEventListener("click", function () {
+  allOpen = !allOpen;
+  document.querySelectorAll(".scard[data-site]").forEach(c => setOpen(c, allOpen));
+  this.textContent = allOpen ? "Collapse All" : "Expand All";
+});
+
+// ---- live refresh from Transcend PM (works when served from app.transcendpm.com) ----
+async function refreshData() {
+  const btn = document.getElementById("btnRefresh");
+  const status = document.getElementById("refreshStatus");
+  btn.disabled = true; status.textContent = "Refreshing\u2026";
+  try {
+    const tree = await (await fetch("/program_budgets/get_program_budget_tree?program_id=1", {credentials: "include"})).json();
+    if (!Array.isArray(tree) || !tree.length) throw new Error("unexpected response");
+    const projects = tree.map(t => ({
+      pid: t.project_id, name: (t.project_name || "").trim(),
+      budget: (t.total_amount != null ? t.total_amount : t.project_budget) || 0,
+      site: siteFor(t.project_id, t.project_name || "")
+    }));
+    const body = projects.map(p => "projectIds%5B%5D=" + p.pid).join("&");
+    const log = await (await fetch("/project/get_purchase_order_log_byProjectIds_angular",
+      {method: "POST", credentials: "include", headers: {"Content-Type": "application/x-www-form-urlencoded"}, body})).json();
+    const pos = (log.rows || []).filter(r => r.po_number).map(r => [
+      r.project_id, r.po_number, r.awarded_company_name || "", r.rfp_no || "&mdash;", r.bid_package || "&mdash;",
+      +r.po_amount || 0, +r.approved_invoice_amount || 0, +r.open_invoices_amount || 0, +r.remaining_to_be_invoiced || 0]);
+    if (!pos.length) throw new Error("no purchase orders returned");
+    try {
+      const bp = await (await fetch("/program_bid_packages/get_program_bid_packages?program_id=1", {credentials: "include"})).json();
+      if (Array.isArray(bp)) PROGRAM.rfps = bp.length;
+    } catch (e) { /* keep previous count */ }
+    PROJECTS = projects; POS = pos;
+    PROGRAM.projects = projects.length; PROGRAM.pos = pos.length;
+    const now = new Date();
+    ASOF = now.toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric"}) + ", " +
+           now.toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit"});
+    LIVE = true;
+    renderAll();
+    status.textContent = "Live from Transcend PM";
+  } catch (e) {
+    status.innerHTML = "Live refresh needs this page served from <b>app.transcendpm.com</b> with an active session &mdash; showing the " +
+      (LIVE ? ASOF : "July 23, 2026") + " snapshot. Ask Claude to refresh &amp; republish anytime.";
+  } finally { btn.disabled = false; }
+}
+document.getElementById("btnRefresh").addEventListener("click", refreshData);
+
+// ---- PDF export (browser print with paper-size-specific scaling) ----
+let prevTheme = null;
+function setPrintState(size) {
+  const root = document.documentElement;
+  prevTheme = root.getAttribute("data-theme");
+  root.setAttribute("data-theme", "light");
+  root.setAttribute("data-print-prep", "1");
+  if (size === "tabloid") root.setAttribute("data-paper", "tabloid");
+  else root.removeAttribute("data-paper");
+  const flipped = [];
+  for (const sh of document.styleSheets) {
+    let rules; try { rules = sh.cssRules; } catch (e) { continue; }
+    for (const r of rules) {
+      if (r.media && r.media.mediaText.indexOf("print") !== -1) { flipped.push([r, r.media.mediaText]); r.media.mediaText = "all"; }
+    }
+  }
+  return flipped;
+}
+function clearPrintState(flipped) {
+  flipped.forEach(p => { try { p[0].media.mediaText = p[1]; } catch (e) {} });
+  const root = document.documentElement;
+  root.removeAttribute("data-print-prep");
+  root.removeAttribute("data-paper");
+  if (prevTheme === null) root.removeAttribute("data-theme");
+  else root.setAttribute("data-theme", prevTheme);
+}
+function buildPdf(jpegBytes, wPt, hPt, imgW, imgH) {
+  const enc = new TextEncoder();
+  const parts = []; const offsets = []; let pos = 0;
+  const push = x => { const b = typeof x === "string" ? enc.encode(x) : x; parts.push(b); pos += b.length; };
+  push("%PDF-1.4\n");
+  offsets[1] = pos; push("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+  offsets[2] = pos; push("2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n");
+  offsets[3] = pos; push("3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + wPt + " " + hPt + "] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>\nendobj\n");
+  offsets[4] = pos;
+  push("4 0 obj\n<< /Type /XObject /Subtype /Image /Width " + imgW + " /Height " + imgH + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + jpegBytes.length + " >>\nstream\n");
+  push(jpegBytes);
+  push("\nendstream\nendobj\n");
+  const content = "q " + wPt + " 0 0 " + hPt + " 0 0 cm /Im0 Do Q";
+  offsets[5] = pos; push("5 0 obj\n<< /Length " + content.length + " >>\nstream\n" + content + "\nendstream\nendobj\n");
+  const xref = pos;
+  let x = "xref\n0 6\n0000000000 65535 f \n";
+  for (let i = 1; i <= 5; i++) x += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
+  x += "trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF";
+  push(x);
+  return new Blob(parts, {type: "application/pdf"});
+}
+async function saveBlob(blob, name, mime, btn) {
+  const label = btn.textContent;
+  const setMsg = (m, keep) => { btn.textContent = m; if (!keep) setTimeout(() => { btn.textContent = label; }, 3000); };
+  // 1. real save dialog (File System Access API)
+  try {
+    if (window.showSaveFilePicker) {
+      const ext = name.slice(name.lastIndexOf("."));
+      const h = await window.showSaveFilePicker({suggestedName: name, types: [{description: ext.toUpperCase().slice(1) + " file", accept: {[mime]: [ext]}}]});
+      const w = await h.createWritable();
+      await w.write(blob); await w.close();
+      setMsg("Saved!");
+      return;
+    }
+  } catch (e) {
+    if (e && e.name === "AbortError") return; // user cancelled the dialog
+  }
+  const url = URL.createObjectURL(blob);
+  // 2. anchor download (silently blocked in some sandboxes)
+  try {
+    const a = document.createElement("a");
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+  } catch (e) {}
+  // 3. open in a new tab (native viewer there has its own download button)
+  try {
+    const w = window.open(url, "_blank");
+    if (w) { setMsg("Opened in new tab"); return; }
+  } catch (e) {}
+  setMsg("Blocked by this viewer \u2014 drag the preview to your desktop or right-click it and Save Image As", true);
+}
+async function deliverPdf(blob, name, canvas) {
+  const pngBlob = await new Promise(res => canvas.toBlob(res, "image/png"));
+  const pngUrl = URL.createObjectURL(pngBlob);
+  let ov = document.getElementById("pdfOverlay");
+  if (ov) ov.remove();
+  ov = document.createElement("div");
+  ov.id = "pdfOverlay";
+  ov.innerHTML = '<div class="pdfbar"><b>' + name + '</b>' +
+    '<button type="button" class="cobtn" id="pdfDl">Download PDF</button>' +
+    '<button type="button" class="cobtn" id="pdfDlImg">Download Image</button>' +
+    '<button type="button" class="cobtn" id="pdfCopy">Copy Image</button>' +
+    '<button type="button" class="cobtn" id="pdfClose">Close</button></div>' +
+    '<div class="pdfhint"><b>To save from this viewer:</b> drag the preview below onto your desktop, or right-click it and choose "Save Image As&hellip;" &mdash; both always work. The buttons above work when this page is opened outside the claude.ai viewer (e.g., the standalone file or your own site).</div>' +
+    '<div class="pdfscroll"><img alt="PDF preview" draggable="true" src="' + pngUrl + '"></div>';
+  document.body.appendChild(ov);
+  document.getElementById("pdfClose").addEventListener("click", () => ov.remove());
+  document.getElementById("pdfDl").addEventListener("click", function () { saveBlob(blob, name, "application/pdf", this); });
+  document.getElementById("pdfDlImg").addEventListener("click", function () { saveBlob(pngBlob, name.replace(/\.pdf$/, ".png"), "image/png", this); });
+  document.getElementById("pdfCopy").addEventListener("click", async function () {
+    try {
+      await navigator.clipboard.write([new ClipboardItem({"image/png": pngBlob})]);
+      this.textContent = "Copied!";
+    } catch (e) { this.textContent = "Copy blocked"; }
+    setTimeout(() => { this.textContent = "Copy Image"; }, 2500);
+  });
+}
+async function exportPdf(mode) {
+  // mode: "site" captures the page exactly as it looks on screen (current theme, current state).
+  //       "letter" / "tabloid" produce the compact white print layout on that paper size.
+  const status = document.getElementById("refreshStatus");
+  status.textContent = "Generating PDF\u2026";
+  const isSite = mode === "site";
+  const W = isSite ? 1120 : (mode === "tabloid" ? 1056 : 816);
+  let flipped = [];
+  try {
+    try { await document.fonts.ready; } catch (e) {}
+    const root = document.documentElement;
+    const effTheme = root.getAttribute("data-theme") ||
+      (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    if (!isSite) flipped = setPrintState(mode);
+    else root.setAttribute("data-export-prep", "1");
+    document.body.style.width = W + "px";
+    await new Promise(r => setTimeout(r, 80));
+    const contentH = Math.ceil(document.body.scrollHeight) + 4;
+    const bgColor = getComputedStyle(document.body).backgroundColor;
+    const bodyClone = document.body.cloneNode(true);
+    bodyClone.style.width = "";
+    bodyClone.querySelectorAll("script, iframe, #pdfOverlay").forEach(el => el.remove());
+    if (isSite) {
+      // exports always show the report view: toolbar, watch items and the note editor
+      // are removed, site cards are collapsed, and the latest saved note prints at the bottom
+      bodyClone.querySelectorAll(".toolbar, #watchSection, #coSection").forEach(el => el.remove());
+      bodyClone.querySelectorAll(".scard.open").forEach(c => c.classList.remove("open"));
+      const cp = bodyClone.querySelector("#coPrint");
+      if (cp && cp.innerHTML) cp.setAttribute("style", "display:block;margin-top:10px;border-top:2px solid var(--gold);padding-top:6px");
+    }
+    bodyClone.querySelectorAll("textarea").forEach(t => {
+      const live = t.id ? document.getElementById(t.id) : null;
+      const d = document.createElement("div");
+      d.className = "tafake";
+      d.textContent = (live && live.value) || t.textContent || t.getAttribute("placeholder") || "";
+      t.parentNode.replaceChild(d, t);
+    });
+    let css = "";
+    document.querySelectorAll("style").forEach(s => { css += s.textContent + "\n"; });
+    if (!isSite) css = css.split("@media print").join("@media all");
+    css = css.split(":root").join("html");
+    css = css.split("&").join("&amp;").split("<").join("&lt;");
+    const attrs = isSite
+      ? ' data-theme="' + effTheme + '"'
+      : ' data-theme="light" data-print-prep="1"' + (mode === "tabloid" ? ' data-paper="tabloid"' : "");
+    const docStr = '<html xmlns="http://www.w3.org/1999/xhtml"' + attrs +
+      '><head><style>' + css + '</style></head>' + new XMLSerializer().serializeToString(bodyClone) + '</html>';
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + contentH + '"><foreignObject width="100%" height="100%">' + docStr + '</foreignObject></svg>';
+    const img = new Image();
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    await img.decode();
+    document.body.style.width = "";
+    root.removeAttribute("data-export-prep");
+    if (flipped.length) { clearPrintState(flipped); flipped = []; }
+    const SC = 2;
+    let pagePxH, wPt, hPt;
+    if (isSite) {
+      pagePxH = contentH;
+      wPt = Math.round(W * 0.75); hPt = Math.round(contentH * 0.75);
+    } else {
+      const PPT = mode === "tabloid" ? [792, 1224] : [612, 792];
+      wPt = PPT[0]; hPt = PPT[1];
+      pagePxH = W * PPT[1] / PPT[0];
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = W * SC; canvas.height = Math.round(pagePxH * SC);
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = isSite ? bgColor : "#ffffff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const s = Math.min(1, pagePxH / contentH);
+    const dx = (W - W * s) / 2 * SC;
+    ctx.drawImage(img, dx, 0, W * s * SC, contentH * s * SC);
+    const jpeg = canvas.toDataURL("image/jpeg", 0.93);
+    const bin = atob(jpeg.split(",")[1]);
+    const jb = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) jb[i] = bin.charCodeAt(i);
+    const blob = buildPdf(jb, wPt, hPt, canvas.width, canvas.height);
+    await deliverPdf(blob, "Measure-M-At-A-Glance-" + (isSite ? "Site-View" : (mode === "tabloid" ? "11x17" : "8.5x11")) + ".pdf", canvas);
+    status.textContent = "PDF ready.";
+  } catch (e) {
+    document.body.style.width = "";
+    document.documentElement.removeAttribute("data-export-prep");
+    if (flipped.length) clearPrintState(flipped);
+    status.textContent = "PDF generation failed \u2014 opening the print dialog instead.";
+    try { window.print(); } catch (e2) {}
+  }
+}
+document.getElementById("btnPdfSite").addEventListener("click", () => exportPdf("site"));
+document.getElementById("btnPdfLetter").addEventListener("click", () => exportPdf("letter"));
+document.getElementById("btnPdfTabloid").addEventListener("click", () => exportPdf("tabloid"));
+
+// ---- Challenges & Opportunities notes (versioned, stored in this browser) ----
+const CO_KEY = "mm_challenges_opportunities_v1";
+// Versions baked into the page survive republishing; they seed browser storage on first load.
+const SEED_NOTES = [];
+let coMem = [];
+let editingIdx = null;
+const escapeHtml = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
+const coStamp = () => {
+  const now = new Date();
+  return now.toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric"}) + ", " +
+         now.toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit"});
+};
+function coLoad() {
+  let local = null;
+  try { local = JSON.parse(localStorage.getItem(CO_KEY)); } catch (e) { local = coMem.length ? coMem : null; }
+  if (local && local.length) return local;
+  if (coMem.length) return coMem;
+  return SEED_NOTES.slice();
+}
+function coStore(list) {
+  coMem = list;
+  try { localStorage.setItem(CO_KEY, JSON.stringify(list)); } catch (e) {}
+}
+function coUiState() {
+  const list = coLoad();
+  document.getElementById("coSave").textContent = editingIdx === null ? "Save Version" : "Update Version " + (editingIdx + 1);
+  document.getElementById("coSaveNew").style.display = editingIdx === null ? "none" : "";
+  document.getElementById("coCancel").style.display = editingIdx === null ? "none" : "";
+  document.getElementById("coStatus").textContent = editingIdx === null ? "" :
+    "Editing Version " + (editingIdx + 1) + " of " + list.length + ".";
+}
+function renderNotes() {
+  const list = coLoad();
+  const vers = document.getElementById("coVersions");
+  vers.innerHTML = list.length
+    ? list.slice().reverse().map((n, i) => {
+        const idx = list.length - 1 - i;
+        return `
+      <div class="co-ver${i === 0 ? " current" : ""}">
+        <div class="co-meta">${i === 0 ? `<span class="cur">current &middot; </span>` : ""}Version ${idx + 1} &middot; ${n.at}${n.ed ? ` &middot; edited ${n.ed}` : ""} &middot; <button type="button" class="colink" data-edit="${idx}">Edit</button></div>
+        <div class="co-text">${escapeHtml(n.t)}</div>
+      </div>`;
+      }).join("")
+    : `<div class="co-empty">No notes yet &mdash; the latest saved version will print at the bottom of the PDF.</div>`;
+  vers.querySelectorAll("[data-edit]").forEach(b => b.addEventListener("click", () => {
+    editingIdx = +b.dataset.edit;
+    document.getElementById("coText").value = coLoad()[editingIdx].t;
+    coUiState();
+    document.getElementById("coText").focus();
+  }));
+  const latest = list[list.length - 1];
+  document.getElementById("coPrint").innerHTML = latest
+    ? `<div class="co-print-head">Challenges and Opportunities <span>&middot; ${latest.ed || latest.at}</span></div>
+       <div class="co-print-body">${escapeHtml(latest.t)}</div>`
+    : "";
+}
+function coSaveNote(asNew) {
+  const ta = document.getElementById("coText");
+  const t = ta.value.trim();
+  const status = document.getElementById("coStatus");
+  if (!t) { status.textContent = "Nothing to save."; return; }
+  const list = coLoad();
+  if (editingIdx !== null && !asNew) {
+    list[editingIdx].t = t;
+    list[editingIdx].ed = coStamp();
+    coStore(list);
+    const n = editingIdx + 1;
+    editingIdx = null;
+    renderNotes(); coUiState();
+    status.textContent = "Updated Version " + n + ".";
+  } else {
+    list.push({t, at: coStamp()});
+    coStore(list);
+    editingIdx = null;
+    renderNotes(); coUiState();
+    status.textContent = "Saved Version " + list.length + ".";
+  }
+}
+document.getElementById("coSave").addEventListener("click", () => coSaveNote(false));
+document.getElementById("coSaveNew").addEventListener("click", () => coSaveNote(true));
+document.getElementById("coCancel").addEventListener("click", () => {
+  editingIdx = null;
+  const list = coLoad();
+  document.getElementById("coText").value = list.length ? list[list.length - 1].t : "";
+  coUiState();
+});
+(function () {
+  const list = coLoad();
+  if (list.length) {
+    document.getElementById("coText").value = list[list.length - 1].t;
+    try { if (!localStorage.getItem(CO_KEY) && SEED_NOTES.length) coStore(list); } catch (e) {}
+  }
+  renderNotes();
+})();
+
+renderAll();
+</script>
