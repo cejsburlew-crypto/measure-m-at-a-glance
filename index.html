@@ -236,6 +236,10 @@
   .scard.open .sbody { display: block; }
   .ptable th:first-child, .ptable td:first-child { padding-left: 40px; }
   .ptable .pdetail, .ptable .dpname, .ptable .dpdetail { display: none; }
+  .ptable .pvals td, .ptable .dpvals td { text-align: center; }
+  .ptable .phead th, .ptable .dphead th { text-align: center; }
+  .ptable .phead th:first-child, .ptable .pvals td:first-child { padding-left: 44px; text-align: center; }
+  .ptable .dphead th:first-child, .ptable .dpvals td:first-child { padding-left: 68px; }
   .ptable .pdetail.show, .ptable .dpname.show, .ptable .dpdetail.show { display: table-row; }
   .ptable .pname, .ptable .dpname { cursor: pointer; }
   .ptable .pname:hover td, .ptable .dpname:hover td { background: var(--surface-2); }
@@ -254,7 +258,7 @@
     text-align: left; font-weight: 600; font-size: 12.5px; color: var(--ink);
     padding: 6px 12px 4px 52px; border-bottom: none; white-space: normal;
   }
-  .ptable .dphead th { text-align: right; border-bottom: none; padding: 2px 12px 0; }
+  .ptable .dphead th { border-bottom: none; padding: 2px 12px 0; }
   .ptable .dpvals td { border-bottom: none; padding: 0 12px 10px; font-size: 12.5px; color: var(--ink-2); }
 
   /* Site table */
@@ -769,13 +773,13 @@ function renderAll() {
       <td colspan="6"><span class="tcaret">&#9656;</span>${r[3]} &middot; ${r[4]} <span class="pos">&middot; ${r[2]}${r[1] ? " &middot; PO " + r[1] : ""}</span></td>
     </tr>
     <tr class="dpdetail dphead dpof-${pid} dp-${pid}-${i}">
-      <th></th><th>PO Amount</th><th></th>
+      <th></th><th></th><th>PO Amount</th>
       <th>Completed &mdash; Approved</th><th>In Process</th><th>Remaining to Invoice</th>
     </tr>
     <tr class="dpdetail dpvals dpof-${pid} dp-${pid}-${i}">
       <td></td>
-      <td>${fmt(r[5])}</td>
       <td></td>
+      <td>${fmt(r[5])}</td>
       <td>${r[6] ? fmt(r[6]) : "&mdash;"}</td>
       <td>${r[7] ? fmt(r[7]) : "&mdash;"}</td>
       <td>${cellNeg(r[8])}</td>
@@ -785,13 +789,13 @@ function renderAll() {
       <td colspan="6"><span class="tcaret">&#9656;</span>${p.name} <span class="pos">&middot; ${p.poCount} PO${p.poCount === 1 ? "" : "'s"} &middot; ${fmt(p.budget)} budget</span>${p.budget - p.committed < 0 ? overChip(p.committed - p.budget) : ""}</td>
     </tr>
     <tr class="pdetail phead proj-${p.pid}">
-      <th>Est. Budget</th><th>Committed (PO's)</th><th>Uncommitted</th>
+      <th>Est. Budget</th><th>Uncommitted</th><th>Committed (PO's)</th>
       <th>Completed &mdash; Approved</th><th>In Process</th><th>Remaining to Invoice</th>
     </tr>
     <tr class="pdetail pvals proj-${p.pid}">
       <td>${fmt(p.budget)}</td>
-      <td>${p.committed ? fmt(p.committed) : "&mdash;"}</td>
       <td>${cellNeg(p.budget - p.committed)}</td>
+      <td>${p.committed ? fmt(p.committed) : "&mdash;"}</td>
       <td>${p.approved ? fmt(p.approved) : "&mdash;"}</td>
       <td>${p.open ? fmt(p.open) : "&mdash;"}</td>
       <td>${p.committed ? cellNeg(p.remaining) : "&mdash;"}</td>
@@ -818,8 +822,8 @@ function renderAll() {
           </div>
         </div>
         <div class="shkv"><span class="k2">Est. budget</span><span class="v2">${isTotal ? fmtC(s.budget) : fmt(s.budget)}</span></div>
-        <div class="shkv"><span class="k2">Committed (PO's)</span><span class="v2">${isTotal ? fmtC(s.committed) : fmt(s.committed)} <span class="spct">(${pct(s.committed, s.budget)})</span></span></div>
         <div class="shkv"><span class="k2">Uncommitted</span><span class="v2">${isTotal ? fmtC(s.budget - s.committed) : cellNeg(s.budget - s.committed)}</span></div>
+        <div class="shkv"><span class="k2">Committed (PO's)</span><span class="v2">${isTotal ? fmtC(s.committed) : fmt(s.committed)} <span class="spct">(${pct(s.committed, s.budget)})</span></span></div>
       </div>
       ${isTotal ? "" : `
       <div class="sbody">
@@ -863,7 +867,7 @@ function renderAll() {
     head.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
   });
   const bindRow = (row, toggle) => {
-    row.addEventListener("click", toggle);
+    row.addEventListener("click", () => { toggle(); row.blur(); });
     row.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
   };
   window.setProj = (row, open) => {
