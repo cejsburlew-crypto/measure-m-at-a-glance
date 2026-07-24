@@ -235,6 +235,27 @@
   .sbody { display: none; border-top: 1px solid var(--line); }
   .scard.open .sbody { display: block; }
   .ptable th:first-child, .ptable td:first-child { padding-left: 40px; }
+  .ptable .pdetail, .ptable .dpname, .ptable .dpdetail { display: none; }
+  .ptable .pdetail.show, .ptable .dpname.show, .ptable .dpdetail.show { display: table-row; }
+  .ptable .pname, .ptable .dpname { cursor: pointer; }
+  .ptable .pname:hover td, .ptable .dpname:hover td { background: var(--surface-2); }
+  .ptable .pname:focus-visible, .ptable .dpname:focus-visible { outline: 2px solid var(--committed); outline-offset: -2px; }
+  .tcaret { display: inline-block; width: 14px; color: var(--ink-3); transition: transform 0.15s; }
+  .pname.open .tcaret, .dpname.open .tcaret { transform: rotate(90deg); }
+  @media (prefers-reduced-motion: reduce) { .tcaret { transition: none; } }
+  .ptable .pname td {
+    text-align: left; font-weight: 700; color: var(--ink); font-size: 13.5px;
+    padding: 12px 12px 6px 28px; border-bottom: none; white-space: normal;
+  }
+  .ptable tr.pname:not(:first-child) td { border-top: 1px solid var(--line); }
+  .ptable .phead th { text-align: right; border-bottom: none; padding: 3px 12px 1px; }
+  .ptable .pvals td { border-bottom: none; padding: 1px 12px 12px; }
+  .ptable .dpname td {
+    text-align: left; font-weight: 600; font-size: 12.5px; color: var(--ink);
+    padding: 6px 12px 4px 52px; border-bottom: none; white-space: normal;
+  }
+  .ptable .dphead th { text-align: right; border-bottom: none; padding: 2px 12px 0; }
+  .ptable .dpvals td { border-bottom: none; padding: 0 12px 10px; font-size: 12.5px; color: var(--ink-2); }
 
   /* Site table */
   .tablewrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
@@ -512,7 +533,7 @@
 
   <section>
     <h2 style="display:flex">Site Rollup
-      <span class="note">click a site to show its projects</span>
+      <span class="note">click a site for its projects, a project for its delivery packages, a package for its PO detail</span>
       <button class="expand-all" id="toggleAll" type="button">Expand All</button>
     </h2>
     <div id="siteCards"></div>
@@ -741,16 +762,41 @@ function renderAll() {
      Estimated Project Budgets (${fmt(T.budget)}) exceed the current release &mdash; later phases will be funded by future bond series.`;
 
   // ---- site cards with project-tree children ----
+  const poByPid = {};
+  POS.forEach(r => { (poByPid[r[0]] = poByPid[r[0]] || []).push(r); });
+  const dpRows = pid => (poByPid[pid] || []).slice().sort((a, b) => b[5] - a[5]).map((r, i) => `
+    <tr class="dpname proj-${pid}" data-dp="${pid}-${i}" data-parent="${pid}" role="button" tabindex="0" aria-expanded="false">
+      <td colspan="6"><span class="tcaret">&#9656;</span>${r[3]} &middot; ${r[4]} <span class="pos">&middot; ${r[2]}${r[1] ? " &middot; PO " + r[1] : ""}</span></td>
+    </tr>
+    <tr class="dpdetail dphead dpof-${pid} dp-${pid}-${i}">
+      <th></th><th>PO Amount</th><th></th>
+      <th>Completed &mdash; Approved</th><th>In Process</th><th>Remaining to Invoice</th>
+    </tr>
+    <tr class="dpdetail dpvals dpof-${pid} dp-${pid}-${i}">
+      <td></td>
+      <td>${fmt(r[5])}</td>
+      <td></td>
+      <td>${r[6] ? fmt(r[6]) : "&mdash;"}</td>
+      <td>${r[7] ? fmt(r[7]) : "&mdash;"}</td>
+      <td>${cellNeg(r[8])}</td>
+    </tr>`).join("");
   const projRows = projects => projects.map(p => `
-    <tr>
-      <td>${p.name} <span class="pos">&middot; ${p.poCount} PO${p.poCount === 1 ? "" : "'s"}</span></td>
+    <tr class="pname" data-proj="${p.pid}" role="button" tabindex="0" aria-expanded="false">
+      <td colspan="6"><span class="tcaret">&#9656;</span>${p.name} <span class="pos">&middot; ${p.poCount} PO${p.poCount === 1 ? "" : "'s"} &middot; ${fmt(p.budget)} budget</span>${p.budget - p.committed < 0 ? overChip(p.committed - p.budget) : ""}</td>
+    </tr>
+    <tr class="pdetail phead proj-${p.pid}">
+      <th>Est. Budget</th><th>Committed (PO's)</th><th>Uncommitted</th>
+      <th>Completed &mdash; Approved</th><th>In Process</th><th>Remaining to Invoice</th>
+    </tr>
+    <tr class="pdetail pvals proj-${p.pid}">
       <td>${fmt(p.budget)}</td>
       <td>${p.committed ? fmt(p.committed) : "&mdash;"}</td>
-      <td>${cellNeg(p.budget - p.committed)}${p.budget - p.committed < 0 ? overChip(p.committed - p.budget) : ""}</td>
+      <td>${cellNeg(p.budget - p.committed)}</td>
       <td>${p.approved ? fmt(p.approved) : "&mdash;"}</td>
       <td>${p.open ? fmt(p.open) : "&mdash;"}</td>
       <td>${p.committed ? cellNeg(p.remaining) : "&mdash;"}</td>
-    </tr>`).join("");
+    </tr>
+    ${dpRows(p.pid)}`).join("");
   const siteCard = (s, isTotal) => {
     const base = Math.max(s.budget, s.committed) || 1;
     const over = s.budget - s.committed < 0;
@@ -779,10 +825,6 @@ function renderAll() {
       <div class="sbody">
         <div class="tablewrap" style="border:none;border-radius:0">
           <table class="ptable">
-            <thead><tr>
-              <th>Project</th><th>Est. Budget</th><th>Committed (PO's)</th><th>Uncommitted</th>
-              <th>Completed &mdash; Approved</th><th>In Process</th><th>Remaining to Invoice</th>
-            </tr></thead>
             <tbody>${projRows(s.projects)}</tbody>
           </table>
         </div>
@@ -820,6 +862,28 @@ function renderAll() {
     head.addEventListener("click", toggle);
     head.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
   });
+  const bindRow = (row, toggle) => {
+    row.addEventListener("click", toggle);
+    row.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  };
+  window.setProj = (row, open) => {
+    const tb = row.closest("tbody");
+    row.classList.toggle("open", open);
+    row.setAttribute("aria-expanded", open);
+    tb.querySelectorAll(".proj-" + row.dataset.proj).forEach(r => r.classList.toggle("show", open));
+    if (!open) {
+      tb.querySelectorAll(".dpof-" + row.dataset.proj).forEach(r => r.classList.remove("show"));
+      tb.querySelectorAll('.dpname[data-parent="' + row.dataset.proj + '"]').forEach(r => { r.classList.remove("open"); r.setAttribute("aria-expanded", "false"); });
+    }
+  };
+  window.setDp = (row, open) => {
+    const tb = row.closest("tbody");
+    row.classList.toggle("open", open);
+    row.setAttribute("aria-expanded", open);
+    tb.querySelectorAll(".dp-" + row.dataset.dp).forEach(r => r.classList.toggle("show", open));
+  };
+  document.querySelectorAll(".ptable .pname").forEach(row => bindRow(row, () => setProj(row, !row.classList.contains("open"))));
+  document.querySelectorAll(".ptable .dpname").forEach(row => bindRow(row, () => setDp(row, !row.classList.contains("open"))));
 
   // ---- watch items (screen only) ----
   const watch = [];
@@ -841,6 +905,8 @@ let allOpen = false;
 document.getElementById("toggleAll").addEventListener("click", function () {
   allOpen = !allOpen;
   document.querySelectorAll(".scard[data-site]").forEach(c => setOpen(c, allOpen));
+  document.querySelectorAll(".ptable .pname").forEach(r => setProj(r, allOpen));
+  document.querySelectorAll(".ptable .dpname").forEach(r => setDp(r, allOpen));
   this.textContent = allOpen ? "Collapse All" : "Expand All";
 });
 
