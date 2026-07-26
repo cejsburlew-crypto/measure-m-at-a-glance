@@ -170,6 +170,26 @@
   .bondfacts { display: flex; flex-wrap: wrap; gap: 6px 24px; margin-bottom: 12px; font-size: 13.5px; color: var(--ink-2); }
   .bondfacts b { color: var(--ink); }
 
+  /* 2024 FMP approved budgets by priority */
+  #fmpTiers {
+    margin: 2px 0 14px; padding: 12px 14px; border: 1px solid var(--line);
+    border-left: 3px solid var(--gold); border-radius: 6px;
+    background: color-mix(in srgb, var(--gold) 4%, transparent);
+  }
+  #fmpTiers .gcap { font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.07em; }
+  #fmpTiers .gcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+  .fmprow { margin-top: 12px; }
+  .fmptop { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; font-size: 13px; color: var(--ink-2); }
+  .fmptop b { color: var(--ink); }
+  .fmpvals { margin-left: auto; font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .fmpvals b { font-size: 13px; }
+  .fmpbar { position: relative; height: 11px; display: flex; margin-top: 5px; }
+  .fmpbar i { height: 100%; min-width: 2px; margin-right: 2px; }
+  .fmpbar i:first-child { border-radius: 3px 0 0 3px; }
+  .fmpbar i:last-child { border-radius: 0 3px 3px 0; margin-right: 0; }
+  .fmpmk { position: absolute; top: -3px; bottom: -3px; width: 3px; background: var(--gold); border-radius: 2px; box-shadow: 0 0 0 1px var(--surface); }
+  .fmpcap { font-size: 11.5px; color: var(--ink-3); margin-top: 4px; font-variant-numeric: tabular-nums; }
+
   /* Program portfolio breakdown */
   .pf-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
   .pf-row .tile { flex: 1 1 170px; }
@@ -427,6 +447,14 @@
     .ltop .pct { font-size: 10.7px; }
     .lrow .bar { height: 6px; }
     .lgroup { padding: 3px 7px 4px; gap: 2px; border-radius: 4px; }
+    #fmpTiers { padding: 5px 8px; margin: 2px 0 6px; }
+    #fmpTiers .gcap { font-size: 10.7px; }
+    .fmprow { margin-top: 4px; }
+    .fmptop { font-size: 10.7px; }
+    .fmpvals { font-size: 10.7px; }
+    .fmpbar { height: 6px; margin-top: 2px; }
+    .fmpmk { top: -2px; bottom: -2px; width: 2px; }
+    .fmpcap { font-size: 10.7px; margin-top: 1px; }
     .lgroup .gcap { font-size: 10.7px; }
     .ladder-note { font-size: 10.7px; margin-top: 3px; line-height: 1.15; }
     #siteCards { gap: 2px; }
@@ -525,6 +553,7 @@
         <span>Funds source: <b>2024 Measure M &mdash; Series A</b></span>
         <span id="bfAsof">Data as of <b>July 23, 2026</b></span>
       </div>
+      <div id="fmpTiers"></div>
       <div class="legend" style="margin:0 0 12px">
         <span id="siteKey" style="display:contents"></span>
         <span><span class="sw" style="background:var(--track)"></span>Full track = its parent total (the one named in the %)</span>
@@ -583,31 +612,42 @@
 // ---- Raw data pulled from Transcend PM (2026-07-23) ----
 let PROJECTS = [
   {pid:463, name:"Administration Beautifications", budget:1200, site:"DW"},
-  {pid:1638, name:"Athletic Field Scoreboard", budget:690877, site:"SMHS"},
-  {pid:462, name:"Auditorium and Security Fencing Phase I", budget:79350, site:"SMHS"},
-  {pid:1636, name:"Auditorium and Security Fencing Phase II", budget:250000, site:"SMHS"},
-  {pid:1806, name:"Carver Drop off, Loading and Traffic Reroute", budget:2000000, site:"CES"},
-  {pid:1610, name:"Carver Elementary School New TK & KG Building", budget:21500000, site:"CES"},
-  {pid:1864, name:"Carver Elementary School Roofing", budget:4790000, site:"CES"},
-  {pid:1633, name:"Carver ES - Playground Replacement", budget:151800, site:"CES"},
-  {pid:402, name:"Concessions Restroom Refresh", budget:228770, site:"SMHS"},
+  {pid:1640, name:"Carver Elementary School - Classroom Modernization", budget:0, site:"CES"},
+  {pid:1806, name:"Carver Elementary School - Drop off, Loading and Traffic Reroute", budget:2000000, site:"CES"},
+  {pid:1610, name:"Carver Elementary School - New TK/KG Building & Play yard", budget:21500000, site:"CES"},
+  {pid:1633, name:"Carver Elementary School - Playground Replacement", budget:151800, site:"CES"},
+  {pid:1864, name:"Carver Elementary School - Roofing", budget:4790000, site:"CES"},
   {pid:533, name:"Districtwide Basic Information", budget:902675, site:"DW"},
-  {pid:1637, name:"Gymnasium HVAC Upgrade", budget:2977500, site:"SMHS"},
-  {pid:1865, name:"Huntington Middle School Roofing", budget:3702616.31, site:"HMS"},
+  {pid:467, name:"Huntington Middle School - Modernization", budget:0, site:"HMS"},
+  {pid:1972, name:"Huntington Middle School - MPR, Kitchen and Food Service Modernization", budget:0, site:"HMS"},
+  {pid:1968, name:"Huntington Middle School - Network Infrastructure & Security Cameras", budget:0, site:"HMS"},
+  {pid:1639, name:"Huntington Middle School - New Asphalt, Patching and Slurry Coat, Phase I", budget:0, site:"HMS"},
+  {pid:1969, name:"Huntington Middle School - Parking Lot Solar Shade Structure", budget:0, site:"HMS"},
+  {pid:1967, name:"Huntington Middle School - Restroom Upgrades", budget:0, site:"HMS"},
+  {pid:1865, name:"Huntington Middle School - Roofing Projects", budget:3702616.31, site:"HMS"},
   {pid:1805, name:"Interim Housing", budget:0, site:"SMHS"},
-  {pid:467, name:"Roofing: Huntington Middle School Portables (207, 208, and the OT & APE).", budget:0, site:"HMS"},
-  {pid:1808, name:"San Marino High School Roofing", budget:6620000, site:"SMHS"},
-  {pid:1608, name:"San Marino High School Two-Story Medical Arts Classroom Building", budget:29500000, site:"SMHS"},
-  {pid:1853, name:"SMHS - Interim Housing", budget:0, site:"SMHS"},
-  {pid:1300, name:"Synthetic Turf & Track Replacement", budget:1699559, site:"SMHS"},
-  {pid:1866, name:"Valentine Elementary Roofing", budget:3630000.01, site:"VES"},
+  {pid:1638, name:"San Marino High School - Athletic Field Scoreboard", budget:690877, site:"SMHS"},
+  {pid:1637, name:"San Marino High School - Gymnasium HVAC Upgrade", budget:2977500, site:"SMHS"},
+  {pid:1853, name:"San Marino High School - Interim Housing", budget:0, site:"SMHS"},
+  {pid:1608, name:"San Marino High School - New Two-Story Medical Arts Classroom Building", budget:29500000, site:"SMHS"},
+  {pid:402, name:"San Marino High School - Restroom Upgrades, Concessions Building", budget:228770, site:"SMHS"},
+  {pid:1808, name:"San Marino High School - Roofing Projects", budget:6620000, site:"SMHS"},
+  {pid:462, name:"San Marino High School - Safety and Security Fencing", budget:79350, site:"SMHS"},
+  {pid:1636, name:"San Marino High School - Safety and Security Fencing, Phase II", budget:250000, site:"SMHS"},
+  {pid:1300, name:"San Marino High School - Synthetic Turf and Track Replacement", budget:1699559, site:"SMHS"},
+  {pid:1966, name:"Valentine Elementary School - Classroom Modernizations", budget:0, site:"VES"},
   {pid:1947, name:"Valentine Elementary School - Entry Shade Structures", budget:100000, site:"VES"},
-  {pid:1609, name:"Valentine Elementary School Two-Story Classroom Building", budget:31357143, site:"VES"},
-  {pid:1634, name:"Valentine ES - Playground Replacement", budget:780951, site:"VES"}
+  {pid:1962, name:"Valentine Elementary School - Grades 1-5 Hardcourts", budget:0, site:"VES"},
+  {pid:1634, name:"Valentine Elementary School - Grades 1-5 Playground Replacement", budget:780951, site:"VES"},
+  {pid:1609, name:"Valentine Elementary School - MPR, Kitchen, 1-5 Classrooms", budget:31357143, site:"VES"},
+  {pid:1965, name:"Valentine Elementary School - Network Infrastructure & Security Cameras", budget:0, site:"VES"},
+  {pid:1963, name:"Valentine Elementary School - Preschool/TK/Kindergarten Building & Play Yard", budget:0, site:"VES"},
+  {pid:1964, name:"Valentine Elementary School - Restroom Upgrades", budget:0, site:"VES"},
+  {pid:1866, name:"Valentine Elementary School - Roofing Projects", budget:3630000.01, site:"VES"}
 ];
 // [pid, poNumber, vendor, rfp, package, amount, approvedInv, openInv, remaining]
 let POS = [
-  [402,"PO1-260000001032","Keystone Builders, Inc.","25-26 MM-010","SMHS - Concession Restroom Refresh",151030,0,0,151030],
+  [402,"PO1-260000001032","Keystone Builders, Inc.","25-26 MM-010","SMHS - Concession Restroom Refresh",151030,97921.25,0,53108.75],
   [402,"PO1-260000001340","The Garland Company","25-26 MM-020","SMHS - Concessions Bldg Roof - CMAS Roofing Materials",33828.74,0,0,33828.74],
   [402,"PO1-260000001596","Murals for Schools","25-26 MM-032","SMHS - Painting Exterior Murals on Concessions Building",9270,9270,0,0],
   [462,"PO1-260000001163","J & A Engineering Corp. dba J & A Fence","25-26 MM-011","SMHS - Fencing Installation",79350,0,0,79350],
@@ -627,11 +667,11 @@ let POS = [
   [1608,"260000001332","Adkan Engineers","25-26 MM-018","SMHS - Additional Topographical Survey Requirements",4265,0,0,4265],
   [1608,"PO1-260000001023","Huckabee","25-26 MM-003","SMHS - Architectural DPOR Services",1199426,23988.52,59971.299999999996,1115466.18],
   [1608,"260000001402","Converse Consultants","25-26 MM-028","SMHS - Geotechnical and Fault Investigation - Additional Borings",91500,23900,0,67600],
-  [1608,"PO1-260000001711","Keystone Builders, Inc.","25-26 MM-087","SMHS - Interim Housing Construction - GC",660000,0,19950,640050],
+  [1608,"PO1-260000001711","Keystone Builders, Inc.","25-26 MM-087","SMHS - Interim Housing Construction - GC",660000,19950,0,640050],
   [1608,"PO1-260000001708","Wilscott","DELETE","SMHS - Interim Housing Lease - Piggyback (1 CR BLDGS)",43814,0,0,43814],
   [1608,"PO1-260000001508","Wilscott","25-26 MM-026","SMHS - Interim Housing Lease - Piggyback (4 CR BLDGS)",173200,0,0,173200],
   [1609,"260000001339","Westgroup Designs","25-26 MM-002","VES - Architectural Design Services",1225750,119189.62,0,1106560.38],
-  [1609,"PO1-260000001709","Keystone Builders, Inc.","25-26 MM-086","VES - Interim Housing Construction - GC",797500,0,592420,205080],
+  [1609,"PO1-260000001709","Keystone Builders, Inc.","25-26 MM-086","VES - Interim Housing Construction - GC",797500,500315.6,92104.4,205080],
   [1609,"PO1-260000001705","Wilscott","25-26 MM-027","VES - Interim Housing Lease - Piggyback",130700,0,0,130700],
   [1610,"PO1-260000001248","GPRS","25-26 MM-021","CES - Additional Underground Surveying Services",7250,0,0,7250],
   [1610,"PO1-01035","Westgroup Designs","25-26 MM-001","CES - Architectural Design Services",898000,173011.48,0,724988.52],
@@ -644,7 +684,7 @@ let POS = [
   [1638,"PO1-260000001598","Daktronics, Inc.","25-26 MM-088","SMHS - Athletic Field Scoreboard",270876.88,0,0,270876.88],
   [1808,"PO1-260000001629","Adco Roofing and Waterproofing","25-26 MM-038","SMHS - Boys Field House Roofing",68750,18270,0,50480],
   [1865,"PO1-260000001027","The Garland Company","25-26 MM-031","HMS - Roofing 207, 208, OT, APE - CMAS Roofing Materials",65076.3,0,0,65076.3],
-  [1865,"PO1-260000001031","AME Builders Inc","25-26 MM-015","HMS - Roofing 207, 208, OT, APE - Roofing Contractor",87540,87540,83163.04999999999,-83163.04999999999]
+  [1865,"PO1-260000001031","AME Builders Inc","25-26 MM-015","HMS - Roofing 207, 208, OT, APE - Roofing Contractor",87540,131192.02,0,-43652.01999999999]
 ];
 const PROGRAM = {
   authorized: 200000000,
@@ -676,7 +716,7 @@ const siteFor = (pid, name) => SITE_BY_PID[pid] ||
    /valentine|\bVES\b/i.test(name) ? "VES" :
    /huntington|\bHMS\b/i.test(name) ? "HMS" :
    /SMHS|san marino high|gymnasium|auditorium|athletic|concession|turf|interim/i.test(name) ? "SMHS" : "DW");
-let ASOF = "July 23, 2026, 10:28 PM";
+let ASOF = "July 25, 2026, 6:47 PM";
 let LIVE = false;
 
 function setOpen(card, open) {
@@ -755,6 +795,35 @@ function renderAll() {
       <div class="gcap">Completed Pay Requests <span class="eq">+</span> In Process Pay Requests <span class="eq">+</span> Remaining to Be Invoiced <span class="eq">=</span> Committed PO's (${fmtC(T.committed)})</div>
       ${lRow(R.completed)}${lRow(R.inProcess)}${lRow(R.remainInv)}
     </div>`;
+  const FMP_2024 = [
+    {key: "SMHS", name: "San Marino High School", high: 33236650, med: 111094900, low: 17635680},
+    {key: "VES", name: "Valentine Elementary School", high: 57427584, med: 0, low: 5049610},
+    {key: "CES", name: "Carver Elementary School", high: 29714942, med: 272650, low: 16972360},
+    {key: "HMS", name: "Huntington Middle School", high: 18152028, med: 204820, low: 32075860}
+  ];
+  const districtFmp = FMP_2024.reduce((a, s) => a + s.high + s.med + s.low, 0);
+  document.getElementById("fmpTiers").innerHTML =
+    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = High / Medium / Low tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimate lands.</span></div>' +
+    FMP_2024.map(fs => {
+      const total = fs.high + fs.med + fs.low;
+      const cur = (sites[fs.key] || {budget: 0}).budget;
+      let landing;
+      if (fs.high && cur <= fs.high) landing = pct(cur, fs.high) + " of the High tier";
+      else if (cur <= fs.high + fs.med) landing = "covers all High + " + pct(cur - fs.high, fs.med) + " of Medium";
+      else landing = "covers High &amp; Medium + " + pct(cur - fs.high - fs.med, fs.low) + " of Low";
+      const hw = 100 * fs.high / total, mw = 100 * fs.med / total, lw = 100 * fs.low / total;
+      const mk = Math.min(100, 100 * cur / total);
+      return `<div class="fmprow">
+        <div class="fmptop"><span class="dot" style="background:${SITE_COLOR[fs.key]}"></span><b>${fs.name}</b>
+          <span class="fmpvals">High ${fmt(fs.high)} &middot; Medium ${fmt(fs.med)} &middot; Low ${fmt(fs.low)} &middot; FMP Total <b>${fmt(total)}</b></span></div>
+        <div class="fmpbar" title="High ${fmt(fs.high)} / Medium ${fmt(fs.med)} / Low ${fmt(fs.low)}; marker = current baseline ${fmt(cur)}">
+          ${fs.high ? `<i style="width:${hw.toFixed(2)}%;background:var(--ink-2)"></i>` : ""}${fs.med ? `<i style="width:${mw.toFixed(2)}%;background:var(--ink-3)"></i>` : ""}${fs.low ? `<i style="width:${lw.toFixed(2)}%;background:var(--track);outline:1px solid var(--ink-3);outline-offset:-1px"></i>` : ""}
+          <span class="fmpmk" style="left:${mk.toFixed(2)}%"></span>
+        </div>
+        <div class="fmpcap">Current Baseline Estimate ${fmt(cur)} &mdash; ${landing}</div>
+      </div>`;
+    }).join("");
+
   document.getElementById("siteKey").innerHTML = siteList.map(s =>
     `<span><span class="sw" style="background:${SITE_COLOR[s.key]}"></span><span class="skl">${s.name}</span><span class="sks">${s.key === "DW" ? "FMP Excl." : s.key}</span></span>`).join("");
   document.getElementById("ladderNote").innerHTML =
@@ -949,7 +1018,7 @@ async function refreshData() {
       const fr = await fetch("data.json?t=" + Date.now(), {cache: "no-store"});
       const fd = await fr.json();
       if (fd && fd.asOf && fd.asOf !== ASOF && Array.isArray(fd.projects) && fd.projects.length) {
-        PROJECTS = fd.projects.map(p => ({pid: p.pid, name: p.name, budget: p.budget, site: siteFor(p.pid, p.name)}));
+        PROJECTS = fd.projects.filter(p => !/^ZZ DELETE/i.test(p.name)).map(p => ({pid: p.pid, name: p.name, budget: p.budget, site: siteFor(p.pid, p.name)}));
         POS = fd.pos;
         PROGRAM.projects = PROJECTS.length; PROGRAM.pos = POS.length;
         if (fd.rfps) PROGRAM.rfps = fd.rfps;
@@ -1263,7 +1332,7 @@ async function pollData() {
     const d = await r.json();
     if (!d || !d.asOf || d.asOf === ASOF) return;
     if (Array.isArray(d.projects) && d.projects.length && Array.isArray(d.pos) && d.pos.length) {
-      PROJECTS = d.projects.map(p => ({pid: p.pid, name: p.name, budget: p.budget, site: siteFor(p.pid, p.name)}));
+      PROJECTS = d.projects.filter(p => !/^ZZ DELETE/i.test(p.name)).map(p => ({pid: p.pid, name: p.name, budget: p.budget, site: siteFor(p.pid, p.name)}));
       POS = d.pos;
       PROGRAM.projects = PROJECTS.length;
       PROGRAM.pos = POS.length;
