@@ -195,7 +195,8 @@
   .fmpbar i:first-child { border-radius: 3px 0 0 3px; }
   .fmpbar i:last-child { border-radius: 0 3px 3px 0; margin-right: 0; }
   .fmpmk { position: absolute; top: -3px; bottom: -3px; width: 3px; background: var(--gold); border-radius: 2px; box-shadow: 0 0 0 1px var(--surface); }
-  .fmpcap { font-size: 11.5px; color: var(--ink-3); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .fmpcap { font-size: 11.5px; color: var(--ink); font-weight: 600; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .fmpcap .land { font-weight: 400; color: var(--ink-2); }
 
   /* FMP guidelines */
   #fmpGuide {
@@ -588,6 +589,7 @@
 
   <div class="toolbar">
     <button type="button" id="btnRefresh">&#10227; Refresh Data</button>
+    <button type="button" id="btnTheme" title="Switch between light and dark">&#9788; Light Mode</button>
     <button type="button" id="btnPdfSite" style="border-color:var(--gold);color:var(--gold)">Export PDF &mdash; As Shown</button>
     <button type="button" id="btnPdfLetter">White Print 8.5&times;11</button>
     <button type="button" id="btnPdfTabloid">White Print 11&times;17</button>
@@ -910,7 +912,7 @@ function renderAll() {
   ];
   const districtFmp = FMP_2024.reduce((a, s) => a + s.high + s.med + s.low, 0);
   document.getElementById("fmpTiers").innerHTML =
-    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimate lands.</span></div>' +
+    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimated Project Costs land.</span></div>' +
     FMP_2024.map(fs => {
       const total = fs.high + fs.med + fs.low;
       const cur = (sites[fs.key] || {budget: 0}).budget;
@@ -923,11 +925,11 @@ function renderAll() {
       return `<div class="fmprow">
         <div class="fmptop"><span class="dot" style="background:${SITE_COLOR[fs.key]}"></span><b>${fs.name}</b>
           <span class="fmpvals"><span class="tH">High ${fmt(fs.high)}</span> &middot; <span class="tM">Medium ${fmt(fs.med)}</span> &middot; <span class="tL">Low ${fmt(fs.low)}</span> &middot; FMP Total <b>${fmt(total)}</b></span></div>
-        <div class="fmpbar" title="High ${fmt(fs.high)} / Medium ${fmt(fs.med)} / Low ${fmt(fs.low)}; marker = current baseline ${fmt(cur)}">
+        <div class="fmpbar" title="High ${fmt(fs.high)} / Medium ${fmt(fs.med)} / Low ${fmt(fs.low)}; marker = current baseline estimated project costs ${fmt(cur)}">
           ${fs.high ? `<i title="High ${fmt(fs.high)}" style="width:${hw.toFixed(2)}%;background:var(--tier-high)"></i>` : ""}${fs.med ? `<i title="Medium ${fmt(fs.med)}" style="width:${mw.toFixed(2)}%;background:var(--tier-med)"></i>` : ""}${fs.low ? `<i title="Low ${fmt(fs.low)}" style="width:${lw.toFixed(2)}%;background:var(--tier-low)"></i>` : ""}
           <span class="fmpmk" style="left:${mk.toFixed(2)}%"></span>
         </div>
-        <div class="fmpcap">Current Baseline Estimate ${fmt(cur)} &mdash; ${landing}</div>
+        <div class="fmpcap">Current Baseline Estimated Project Costs ${fmt(cur)} <span class="land">&mdash; ${landing}</span></div>
       </div>`;
     }).join("");
 
@@ -1121,6 +1123,11 @@ async function refreshData() {
     status.textContent = "Live from Transcend PM";
   } catch (e) {
     // off-domain: pull the latest published feed instead
+    if (!FEED_HOST_OK) {
+      status.innerHTML = "Live refresh is not available in this viewer. Open the hosted copy " +
+        "(<b>cejsburlew-crypto.github.io/measure-m-at-a-glance</b>) for auto-updating data, or ask Claude to refresh. Current data: " + ASOF + ".";
+      return;
+    }
     try {
       const fr = await fetch("data.json?t=" + Date.now(), {cache: "no-store"});
       const fd = await fr.json();
@@ -1428,17 +1435,39 @@ document.getElementById("coCancel").addEventListener("click", () => {
   renderNotes();
 })();
 
+// ---- light / dark theme (defaults to light; choice is remembered per browser) ----
+const THEME_KEY = "mm_theme_v1";
+function applyTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  const b = document.getElementById("btnTheme");
+  if (b) b.innerHTML = t === "dark" ? "&#9788; Light Mode" : "&#9789; Dark Mode";
+  try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+}
+(function () {
+  let saved = null;
+  try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+  applyTheme(saved === "dark" ? "dark" : "light");
+})();
+document.getElementById("btnTheme").addEventListener("click", () => {
+  applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+});
+
 renderAll();
 
-// ---- live data feed: data.json is republished by automated refreshes; the page
-// picks it up within a minute (works when served from a web host, skipped on file://) ----
+// ---- live data feed: data.json is republished by automated refreshes and picked up here.
+// Only the hosted copy has the feed. We never poll from the claude.ai artifact viewer (the
+// request would miss there, and repeated misses can trip the host's bot protection), and a
+// single failure disables polling for the rest of the page load. ----
+const FEED_HOST_OK = !/(^|\.)claude\.ai$/i.test(location.hostname) && location.protocol !== "file:";
+let feedTimer = null;
 async function pollData() {
+  if (!FEED_HOST_OK) return false;
   try {
     const r = await fetch("data.json?t=" + Date.now(), {cache: "no-store"});
-    if (!r.ok) return;
+    if (!r.ok) throw new Error("feed " + r.status);
     const d = await r.json();
-    if (!d || !d.asOf || d.asOf === ASOF) return;
-    if (Array.isArray(d.projects) && d.projects.length && Array.isArray(d.pos) && d.pos.length) {
+    if (!d || !d.asOf) throw new Error("bad feed");
+    if (d.asOf !== ASOF && Array.isArray(d.projects) && d.projects.length && Array.isArray(d.pos) && d.pos.length) {
       PROJECTS = d.projects.filter(p => !/^ZZ DELETE/i.test(p.name)).map(p => ({pid: p.pid, name: p.name, budget: p.budget, site: siteFor(p.pid, p.name)}));
       POS = d.pos;
       PROGRAM.projects = PROJECTS.length;
@@ -1448,8 +1477,13 @@ async function pollData() {
       LIVE = true;
       renderAll();
     }
-  } catch (e) {}
+    return true;
+  } catch (e) {
+    if (feedTimer) { clearInterval(feedTimer); feedTimer = null; }
+    return false;
+  }
 }
-pollData();
-setInterval(pollData, 60000);
+if (FEED_HOST_OK) {
+  pollData().then(ok => { if (ok && !feedTimer) feedTimer = setInterval(pollData, 300000); });
+}
 </script>
