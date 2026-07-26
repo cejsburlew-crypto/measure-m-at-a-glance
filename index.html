@@ -167,7 +167,7 @@
   }
   .lgroup .gcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
 
-  .bondfacts { display: flex; flex-wrap: wrap; gap: 6px 24px; margin-bottom: 12px; font-size: 13.5px; color: var(--ink-2); }
+  .bondfacts { display: flex; flex-wrap: wrap; gap: 6px 24px; margin: 4px 0 10px; font-size: 13.5px; color: var(--ink-2); }
   .bondfacts b { color: var(--ink); }
 
   /* 2024 FMP approved budgets by priority */
@@ -189,6 +189,39 @@
   .fmpbar i:last-child { border-radius: 0 3px 3px 0; margin-right: 0; }
   .fmpmk { position: absolute; top: -3px; bottom: -3px; width: 3px; background: var(--gold); border-radius: 2px; box-shadow: 0 0 0 1px var(--surface); }
   .fmpcap { font-size: 11.5px; color: var(--ink-3); margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+  /* FMP guidelines */
+  #fmpGuide {
+    margin: 0 0 14px; padding: 12px 14px; border: 1px solid var(--line);
+    border-left: 3px solid var(--ink-3); border-radius: 6px;
+  }
+  #fmpGuide .gcap { font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.07em; }
+  #fmpGuide .gcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+  .gitem { display: flex; gap: 10px; margin-top: 11px; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
+  .gitem b { color: var(--ink); }
+  .gitem i { font-style: italic; color: var(--ink); }
+  .gnum {
+    flex: none; width: 19px; height: 19px; border-radius: 50%; background: var(--surface-2);
+    color: var(--ink-2); font-size: 11px; font-weight: 700; display: grid; place-items: center; margin-top: 1px;
+  }
+  .gtable { width: 100%; margin-top: 8px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .gtable th {
+    font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em;
+    text-align: right; padding: 0 10px 4px; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  .gtable th:first-child { text-align: left; }
+  .gtable th .thsub { text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .gtable td { padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+  .gtable tr:last-child td { border-bottom: none; }
+  .gtable td:first-child { color: var(--ink); font-weight: 600; }
+  .gtable .gsf { text-align: right; white-space: nowrap; font-weight: 700; color: var(--ink); }
+  .gtag {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.03em; padding: 1px 6px;
+    border-radius: 9px; margin-left: 6px; background: var(--good-bg); color: var(--invoiced); text-transform: uppercase;
+  }
+  .gtag.warn { background: var(--bad-bg); color: var(--bad); }
+  .gscale { position: relative; display: block; height: 9px; min-width: 150px; background: var(--track); border-radius: 3px; }
+  .gscale i { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
 
   /* Program portfolio breakdown */
   .pf-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
@@ -455,6 +488,15 @@
     .fmpbar { height: 6px; margin-top: 2px; }
     .fmpmk { top: -2px; bottom: -2px; width: 2px; }
     .fmpcap { font-size: 10.7px; margin-top: 1px; }
+    #fmpGuide { padding: 5px 8px; margin: 0 0 6px; }
+    #fmpGuide .gcap { font-size: 10.7px; }
+    .gitem { font-size: 10.7px; margin-top: 4px; gap: 7px; line-height: 1.3; }
+    .gnum { width: 14px; height: 14px; font-size: 10.7px; }
+    .gtable { margin-top: 4px; }
+    .gtable th { font-size: 10.7px; padding: 0 8px 2px; }
+    .gtable td { padding: 2px 8px; font-size: 10.7px; }
+    .gscale { height: 6px; min-width: 110px; }
+    .gtag { font-size: 10.7px; padding: 0 5px; }
     .lgroup .gcap { font-size: 10.7px; }
     .ladder-note { font-size: 10.7px; margin-top: 3px; line-height: 1.15; }
     #siteCards { gap: 2px; }
@@ -547,13 +589,64 @@
   <section>
     <h2>Bond Authorization &amp; Release <span class="note">program level</span></h2>
     <div class="card">
-      <div class="bondfacts">
-        <span><b>$200,000,000</b> Measure M Bond</span>
-        <span>Passed <b>November 2024</b> &middot; <b>71%</b> voter approval</span>
-        <span>Funds source: <b>2024 Measure M &mdash; Series A</b></span>
-        <span id="bfAsof">Data as of <b>July 23, 2026</b></span>
-      </div>
       <div id="fmpTiers"></div>
+
+      <div id="fmpGuide">
+        <div class="gcap">FMP Guidelines <span class="eq">&mdash; how to read the budgets above against how we are actually delivering the work</span></div>
+
+        <div class="gitem"><span class="gnum">1</span>
+          <div>
+            <b>The FMP was estimated on Design-Bid-Build, not Lease-Leaseback.</b>
+            Every High / Medium / Low total above carries DBB pricing assumptions. Projects delivered LLB should be
+            expected to land higher per square foot &mdash; not because the building changed, but because the delivery
+            method prices risk differently.
+            <table class="gtable">
+              <thead><tr>
+                <th>Delivery Method</th>
+                <th>Expected LA County DSA Cost<br><span class="thsub">new STEM / classroom</span></th>
+                <th style="text-align:left">$550 &mdash; $1,050+ / SF</th>
+              </tr></thead>
+              <tbody>
+                <tr>
+                  <td>Design-Bid-Build (DBB) <span class="gtag">FMP basis</span></td>
+                  <td class="gsf">$600&ndash;800 / SF</td>
+                  <td><span class="gscale"><i style="left:10%;width:40%;background:var(--invoiced)"></i></span></td>
+                </tr>
+                <tr>
+                  <td>Lease-Leaseback &mdash; Typical Market</td>
+                  <td class="gsf">$650&ndash;900 / SF</td>
+                  <td><span class="gscale"><i style="left:20%;width:50%;background:var(--review)"></i></span></td>
+                </tr>
+                <tr>
+                  <td>Lease-Leaseback &mdash; Heavy Risk Loading <span class="gtag warn">Balfour typically moderate&ndash;high</span></td>
+                  <td class="gsf">$750&ndash;1,000+ / SF</td>
+                  <td><span class="gscale"><i style="left:40%;width:60%;background:var(--bad)"></i></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="gitem"><span class="gnum">2</span>
+          <div>
+            <b>Risk loading is the variable that moves the number.</b> The question behind every Lease-Leaseback
+            proposal is simply: <i>how much uncertainty is each proposer asking the District to pay for?</i>
+            Unresolved scope, escalation, labor availability, subcontractor market, and schedule risk all get priced
+            into the GMP as contingency. That premium &mdash; not the physical building &mdash; is what carries a
+            $600&ndash;800/SF project into the $750&ndash;1,000+/SF band. Where a proposal lands in that range tells
+            you how much risk is being transferred to the District up front versus retained and managed by the builder.
+          </div>
+        </div>
+
+        <div class="gitem"><span class="gnum">3</span>
+          <div>
+            <b>What this does to FMP buying power.</b> At the midpoints &mdash; $700/SF DBB versus $875/SF heavily
+            loaded LLB &mdash; the same dollar buys roughly <b>20% less scope</b>. An FMP tier that was sized to
+            deliver a full scope list under DBB should be read as delivering about four-fifths of that list if the
+            work goes out as heavily risk-loaded Lease-Leaseback.
+          </div>
+        </div>
+      </div>
       <div class="legend" style="margin:0 0 12px">
         <span id="siteKey" style="display:contents"></span>
         <span><span class="sw" style="background:var(--track)"></span>Full track = its parent total (the one named in the %)</span>
@@ -564,6 +657,12 @@
       pre-qualification and bond financial software, districtwide assessments). They are carried here as their own
       cost center, which is why its commitments run ahead of the nominal budget line &mdash; a budget true-up, not an overrun.
     </div>
+      <div class="bondfacts">
+        <span><b>$200,000,000</b> Measure M Bond</span>
+        <span>Passed <b>November 2024</b> &middot; <b>71%</b> voter approval</span>
+        <span>Funds source: <b>2024 Measure M &mdash; Series A</b></span>
+        <span id="bfAsof">Data as of <b>July 23, 2026</b></span>
+      </div>
       <div class="ladder" id="ladder"></div>
       <div class="ladder-note" id="ladderNote"></div>
     </div>
