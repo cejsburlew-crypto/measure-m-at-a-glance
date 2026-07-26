@@ -928,7 +928,7 @@ function renderAll() {
   ];
   const districtFmp = FMP_2024.reduce((a, s) => a + s.high + s.med + s.low, 0);
   document.getElementById("fmpTiers").innerHTML =
-    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimated Project Costs land. The line under each bar gives the share of <i>each</i> tier the District&rsquo;s approved baseline project budgets address. Transcend baselines and FMP-tagged allocations are two different measures and will not match: FMP tags cover scope that is planned but not yet budgeted in Transcend, and Transcend carries work that was never an FMP line item.</span></div>' +
+    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimated Project Costs land. The line under each bar gives the share of <i>each</i> tier addressed in the District&rsquo;s Current Baseline Estimated Project Costs. Transcend baselines and FMP-tagged allocations are two different measures and will not match: FMP tags cover scope that is planned but not yet budgeted in Transcend, and Transcend carries work that was never an FMP line item.</span></div>' +
     FMP_2024.map(fs => {
       const total = fs.high + fs.med + fs.low;
       const cur = (sites[fs.key] || {budget: 0}).budget;
@@ -950,7 +950,7 @@ function renderAll() {
           ${fs.high ? `<i title="High ${fmt(fs.high)}" style="width:${hw.toFixed(2)}%;background:var(--tier-high)"></i>` : ""}${fs.med ? `<i title="Medium ${fmt(fs.med)}" style="width:${mw.toFixed(2)}%;background:var(--tier-med)"></i>` : ""}${fs.low ? `<i title="Low ${fmt(fs.low)}" style="width:${lw.toFixed(2)}%;background:var(--tier-low)"></i>` : ""}
           <span class="fmpmk" style="left:${mk.toFixed(2)}%"></span>
         </div>
-        <div class="fmpcap">District-approved baseline project budgets address ${coverage}</div>
+        <div class="fmpcap">Addressed in Current Baseline Estimated Project Costs: ${coverage}</div>
         <div class="fmpcap2">Current Baseline Estimated Project Costs <b>${fmt(cur)}</b> <span class="land">in Transcend &middot; FMP-tagged allocations total ${fmt(allocTotal)} (${pct(allocTotal, total)} of this site&rsquo;s FMP budget)</span></div>
       </div>`;
     }).join("");
