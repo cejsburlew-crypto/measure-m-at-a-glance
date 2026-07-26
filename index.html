@@ -21,6 +21,7 @@
     --auth: #16304f;
     --uncommitted: #4a3aa7;
     --s-smhs: #2a78d6; --s-ves: #4a3aa7; --s-ces: #1baf7a; --s-hms: #eb6834; --s-dw: #e87ba4;
+    --tier-high: #007a2f; --tier-med: #1d63c4; --tier-low: #b8201d;
     --masthead-ink: #ffffff;
   }
   @media (prefers-color-scheme: dark) {
@@ -45,6 +46,7 @@
       --auth: #5b7ba6;
       --uncommitted: #9085e9;
       --s-smhs: #3987e5; --s-ves: #9085e9; --s-ces: #199e70; --s-hms: #d95926; --s-dw: #d55181;
+      --tier-high: #3fbb54; --tier-med: #5c9ff0; --tier-low: #f07777;
     }
   }
   :root[data-theme="dark"] {
@@ -68,6 +70,7 @@
     --auth: #5b7ba6;
     --uncommitted: #9085e9;
     --s-smhs: #3987e5; --s-ves: #9085e9; --s-ces: #199e70; --s-hms: #d95926; --s-dw: #d55181;
+    --tier-high: #3fbb54; --tier-med: #5c9ff0; --tier-low: #f07777;
   }
   :root[data-theme="light"] {
     color-scheme: light;
@@ -90,6 +93,7 @@
     --auth: #16304f;
     --uncommitted: #4a3aa7;
     --s-smhs: #2a78d6; --s-ves: #4a3aa7; --s-ces: #1baf7a; --s-hms: #eb6834; --s-dw: #e87ba4;
+    --tier-high: #007a2f; --tier-med: #1d63c4; --tier-low: #b8201d;
   }
 
   * { box-sizing: border-box; }
@@ -183,6 +187,9 @@
   .fmptop b { color: var(--ink); }
   .fmpvals { margin-left: auto; font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
   .fmpvals b { font-size: 13px; }
+  .tH { color: var(--tier-high); font-weight: 700; }
+  .tM { color: var(--tier-med); font-weight: 700; }
+  .tL { color: var(--tier-low); font-weight: 700; }
   .fmpbar { position: relative; height: 11px; display: flex; margin-top: 5px; }
   .fmpbar i { height: 100%; min-width: 2px; margin-right: 2px; }
   .fmpbar i:first-child { border-radius: 3px 0 0 3px; }
@@ -451,6 +458,7 @@
       --navy: #16304f; --gold: #a9841e; --committed: #2a78d6; --invoiced: #008300;
       --review: #b97e00; --bad: #b23230; --bad-bg: #fbeceb; --track: #dfe5ee;
       --auth: #16304f; --uncommitted: #4a3aa7;
+      --tier-high: #007a2f; --tier-med: #1d63c4; --tier-low: #b8201d;
   --s-smhs: #2a78d6; --s-ves: #4a3aa7; --s-ces: #1baf7a; --s-hms: #eb6834; --s-dw: #e87ba4;
     }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -902,7 +910,7 @@ function renderAll() {
   ];
   const districtFmp = FMP_2024.reduce((a, s) => a + s.high + s.med + s.low, 0);
   document.getElementById("fmpTiers").innerHTML =
-    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = High / Medium / Low tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimate lands.</span></div>' +
+    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimate lands.</span></div>' +
     FMP_2024.map(fs => {
       const total = fs.high + fs.med + fs.low;
       const cur = (sites[fs.key] || {budget: 0}).budget;
@@ -914,9 +922,9 @@ function renderAll() {
       const mk = Math.min(100, 100 * cur / total);
       return `<div class="fmprow">
         <div class="fmptop"><span class="dot" style="background:${SITE_COLOR[fs.key]}"></span><b>${fs.name}</b>
-          <span class="fmpvals">High ${fmt(fs.high)} &middot; Medium ${fmt(fs.med)} &middot; Low ${fmt(fs.low)} &middot; FMP Total <b>${fmt(total)}</b></span></div>
+          <span class="fmpvals"><span class="tH">High ${fmt(fs.high)}</span> &middot; <span class="tM">Medium ${fmt(fs.med)}</span> &middot; <span class="tL">Low ${fmt(fs.low)}</span> &middot; FMP Total <b>${fmt(total)}</b></span></div>
         <div class="fmpbar" title="High ${fmt(fs.high)} / Medium ${fmt(fs.med)} / Low ${fmt(fs.low)}; marker = current baseline ${fmt(cur)}">
-          ${fs.high ? `<i style="width:${hw.toFixed(2)}%;background:var(--ink-2)"></i>` : ""}${fs.med ? `<i style="width:${mw.toFixed(2)}%;background:var(--ink-3)"></i>` : ""}${fs.low ? `<i style="width:${lw.toFixed(2)}%;background:var(--track);outline:1px solid var(--ink-3);outline-offset:-1px"></i>` : ""}
+          ${fs.high ? `<i title="High ${fmt(fs.high)}" style="width:${hw.toFixed(2)}%;background:var(--tier-high)"></i>` : ""}${fs.med ? `<i title="Medium ${fmt(fs.med)}" style="width:${mw.toFixed(2)}%;background:var(--tier-med)"></i>` : ""}${fs.low ? `<i title="Low ${fmt(fs.low)}" style="width:${lw.toFixed(2)}%;background:var(--tier-low)"></i>` : ""}
           <span class="fmpmk" style="left:${mk.toFixed(2)}%"></span>
         </div>
         <div class="fmpcap">Current Baseline Estimate ${fmt(cur)} &mdash; ${landing}</div>
