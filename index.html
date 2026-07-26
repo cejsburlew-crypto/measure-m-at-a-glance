@@ -522,14 +522,19 @@
       <div class="bondfacts">
         <span><b>$200,000,000</b> Measure M Bond</span>
         <span>Passed <b>November 2024</b> &middot; <b>71%</b> voter approval</span>
-        <span>Funds source: <b>2024 Measure M &mdash; Series A</b> (100% of released funds)</span>
-        <span id="bfCounts"><b>22</b> projects &middot; <b>121</b> RFPs &middot; <b>38</b> purchase orders &middot; <b>5</b> sites</span>
+        <span>Funds source: <b>2024 Measure M &mdash; Series A</b></span>
         <span id="bfAsof">Data as of <b>July 23, 2026</b></span>
       </div>
       <div class="legend" style="margin:0 0 12px">
         <span id="siteKey" style="display:contents"></span>
         <span><span class="sw" style="background:var(--track)"></span>Full track = its parent total (the one named in the %)</span>
       </div>
+      <div class="ladder-note" style="margin:0 0 14px">
+      <b>Necessary FMP Exclusions</b> &mdash; the Facilities Master Plan estimate excluded certain services that are
+      critical to delivering the program (construction management, CEQA, geotechnical and survey services,
+      pre-qualification and bond financial software, districtwide assessments). They are carried here as their own
+      cost center, which is why its commitments run ahead of the nominal budget line &mdash; a budget true-up, not an overrun.
+    </div>
       <div class="ladder" id="ladder"></div>
       <div class="ladder-note" id="ladderNote"></div>
     </div>
@@ -562,12 +567,6 @@
       <div id="coVersions" class="co-vers"></div>
     </div>
   </section>
-    <div class="ladder-note" style="margin-top:10px">
-      <b>Necessary FMP Exclusions</b> &mdash; the Facilities Master Plan estimate excluded certain services that are
-      critical to delivering the program (construction management, CEQA, geotechnical and survey services,
-      pre-qualification and bond financial software, districtwide assessments). They are carried here as their own
-      cost center, which is why its commitments run ahead of the nominal budget line &mdash; a budget true-up, not an overrun.
-    </div>
   </section>
 
   <section id="watchSection">
@@ -710,8 +709,6 @@ function renderAll() {
 
   // ---- labels ----
   document.getElementById("asofLabel").innerHTML = `Data as of ${ASOF}${LIVE ? " &middot; live" : ""}`;
-  document.getElementById("bfCounts").innerHTML =
-    `<b>${PROGRAM.projects}</b> projects &middot; <b>${PROGRAM.rfps}</b> RFPs &middot; <b>${PROGRAM.pos}</b> purchase orders &middot; <b>${siteList.length}</b> sites`;
   document.getElementById("bfAsof").innerHTML = `Data as of <b>${ASOF}</b>`;
 
   // ---- release ladder ----
@@ -947,8 +944,24 @@ async function refreshData() {
     renderAll();
     status.textContent = "Live from Transcend PM";
   } catch (e) {
-    status.innerHTML = "Live refresh needs this page served from <b>app.transcendpm.com</b> with an active session &mdash; showing the " +
-      (LIVE ? ASOF : "July 23, 2026") + " snapshot. Ask Claude to refresh &amp; republish anytime.";
+    // off-domain: pull the latest published feed instead
+    try {
+      const fr = await fetch("data.json?t=" + Date.now(), {cache: "no-store"});
+      const fd = await fr.json();
+      if (fd && fd.asOf && fd.asOf !== ASOF && Array.isArray(fd.projects) && fd.projects.length) {
+        PROJECTS = fd.projects.map(p => ({pid: p.pid, name: p.name, budget: p.budget, site: siteFor(p.pid, p.name)}));
+        POS = fd.pos;
+        PROGRAM.projects = PROJECTS.length; PROGRAM.pos = POS.length;
+        if (fd.rfps) PROGRAM.rfps = fd.rfps;
+        ASOF = fd.asOf; LIVE = true;
+        renderAll();
+        status.textContent = "Updated to the latest published pull: " + ASOF + ".";
+      } else {
+        status.textContent = "Already showing the latest published pull (" + ASOF + "). New Transcend activity appears here within about 15 minutes of the next automated pull.";
+      }
+    } catch (e2) {
+      status.textContent = "Could not reach the data feed - current data: " + ASOF + ".";
+    }
   } finally { btn.disabled = false; }
 }
 document.getElementById("btnRefresh").addEventListener("click", refreshData);
@@ -1240,4 +1253,27 @@ document.getElementById("coCancel").addEventListener("click", () => {
 })();
 
 renderAll();
+
+// ---- live data feed: data.json is republished by automated refreshes; the page
+// picks it up within a minute (works when served from a web host, skipped on file://) ----
+async function pollData() {
+  try {
+    const r = await fetch("data.json?t=" + Date.now(), {cache: "no-store"});
+    if (!r.ok) return;
+    const d = await r.json();
+    if (!d || !d.asOf || d.asOf === ASOF) return;
+    if (Array.isArray(d.projects) && d.projects.length && Array.isArray(d.pos) && d.pos.length) {
+      PROJECTS = d.projects.map(p => ({pid: p.pid, name: p.name, budget: p.budget, site: siteFor(p.pid, p.name)}));
+      POS = d.pos;
+      PROGRAM.projects = PROJECTS.length;
+      PROGRAM.pos = POS.length;
+      if (d.rfps) PROGRAM.rfps = d.rfps;
+      ASOF = d.asOf;
+      LIVE = true;
+      renderAll();
+    }
+  } catch (e) {}
+}
+pollData();
+setInterval(pollData, 60000);
 </script>
