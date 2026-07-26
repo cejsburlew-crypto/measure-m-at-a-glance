@@ -197,6 +197,9 @@
   .fmpmk { position: absolute; top: -3px; bottom: -3px; width: 3px; background: var(--gold); border-radius: 2px; box-shadow: 0 0 0 1px var(--surface); }
   .fmpcap { font-size: 11.5px; color: var(--ink); font-weight: 600; margin-top: 4px; font-variant-numeric: tabular-nums; }
   .fmpcap .land { font-weight: 400; color: var(--ink-2); }
+  .fmpcap2 { font-size: 11.5px; color: var(--ink-2); margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .fmpcap2 b { color: var(--ink); }
+  .fmpcap2 .land { color: var(--ink-3); }
 
   /* FMP guidelines */
   #fmpGuide {
@@ -497,6 +500,7 @@
     .fmpbar { height: 6px; margin-top: 2px; }
     .fmpmk { top: -2px; bottom: -2px; width: 2px; }
     .fmpcap { font-size: 10.7px; margin-top: 1px; }
+    .fmpcap2 { font-size: 10.7px; margin-top: 0; }
     #fmpGuide { padding: 5px 8px; margin: 0 0 6px; }
     #fmpGuide .gcap { font-size: 10.7px; }
     .gitem { font-size: 10.7px; margin-top: 4px; gap: 7px; line-height: 1.3; }
@@ -910,24 +914,35 @@ function renderAll() {
       <div class="gcap">Completed Pay Requests <span class="eq">+</span> In Process Pay Requests <span class="eq">+</span> Remaining to Be Invoiced <span class="eq">=</span> Committed PO's (${fmtC(T.committed)})</div>
       ${lRow(R.completed)}${lRow(R.inProcess)}${lRow(R.remainInv)}
     </div>`;
+  // FMP tier budgets and, per tier, the portion addressed by today's baseline project budgets
+  // (Transcend Allocation Tracking column of Proj List Mod).
   const FMP_2024 = [
-    {key: "SMHS", name: "San Marino High School", high: 33236650, med: 111094900, low: 17635680},
-    {key: "VES", name: "Valentine Elementary School", high: 57427584, med: 0, low: 5049610},
-    {key: "CES", name: "Carver Elementary School", high: 29714942, med: 272650, low: 16972360},
-    {key: "HMS", name: "Huntington Middle School", high: 18152028, med: 204820, low: 32075860}
+    {key: "SMHS", name: "San Marino High School", high: 33236650, med: 111094900, low: 17635680,
+     aHigh: 14188583, aMed: 14067410, aLow: 1534820},
+    {key: "VES", name: "Valentine Elementary School", high: 57427584, med: 0, low: 5049610,
+     aHigh: 49103114, aMed: 0, aLow: 183540},
+    {key: "CES", name: "Carver Elementary School", high: 29714942, med: 272650, low: 16972360,
+     aHigh: 26173152, aMed: 0, aLow: 0},
+    {key: "HMS", name: "Huntington Middle School", high: 18152028, med: 204820, low: 32075860,
+     aHigh: 8671788, aMed: 0, aLow: 1049370}
   ];
   const districtFmp = FMP_2024.reduce((a, s) => a + s.high + s.med + s.low, 0);
   document.getElementById("fmpTiers").innerHTML =
-    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimated Project Costs land.</span></div>' +
+    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimated Project Costs land. The line under each bar gives the share of <i>each</i> tier those baseline budgets address. Transcend baselines and FMP-tagged allocations are two different measures and will not match: FMP tags cover scope that is planned but not yet budgeted in Transcend, and Transcend carries work that was never an FMP line item.</span></div>' +
     FMP_2024.map(fs => {
       const total = fs.high + fs.med + fs.low;
       const cur = (sites[fs.key] || {budget: 0}).budget;
-      let landing;
-      if (fs.high && cur <= fs.high) landing = pct(cur, fs.high) + " of the High tier";
-      else if (cur <= fs.high + fs.med) landing = "covers all High + " + pct(cur - fs.high, fs.med) + " of Medium";
-      else landing = "covers High &amp; Medium + " + pct(cur - fs.high - fs.med, fs.low) + " of Low";
+      const tiers = [
+        {cls: "tH", lbl: "High", v: fs.high, a: fs.aHigh, c: "var(--tier-high)"},
+        {cls: "tM", lbl: "Medium", v: fs.med, a: fs.aMed, c: "var(--tier-med)"},
+        {cls: "tL", lbl: "Low", v: fs.low, a: fs.aLow, c: "var(--tier-low)"}
+      ];
       const hw = 100 * fs.high / total, mw = 100 * fs.med / total, lw = 100 * fs.low / total;
       const mk = Math.min(100, 100 * cur / total);
+      const coverage = tiers.map(t => t.v > 0
+        ? `<span class="${t.cls}">${pct(t.a, t.v)} of ${t.lbl}</span> <span class="land">(${fmt(t.a)} of ${fmt(t.v)})</span>`
+        : `<span class="land">no ${t.lbl} tier in FMP</span>`).join(" &middot; ");
+      const allocTotal = fs.aHigh + fs.aMed + fs.aLow;
       return `<div class="fmprow">
         <div class="fmptop"><span class="dot" style="background:${SITE_COLOR[fs.key]}"></span><b>${fs.name}</b>
           <span class="fmpvals"><span class="tH">High ${fmt(fs.high)}</span> &middot; <span class="tM">Medium ${fmt(fs.med)}</span> &middot; <span class="tL">Low ${fmt(fs.low)}</span> &middot; FMP Total <b>${fmt(total)}</b></span></div>
@@ -935,7 +950,8 @@ function renderAll() {
           ${fs.high ? `<i title="High ${fmt(fs.high)}" style="width:${hw.toFixed(2)}%;background:var(--tier-high)"></i>` : ""}${fs.med ? `<i title="Medium ${fmt(fs.med)}" style="width:${mw.toFixed(2)}%;background:var(--tier-med)"></i>` : ""}${fs.low ? `<i title="Low ${fmt(fs.low)}" style="width:${lw.toFixed(2)}%;background:var(--tier-low)"></i>` : ""}
           <span class="fmpmk" style="left:${mk.toFixed(2)}%"></span>
         </div>
-        <div class="fmpcap">Current Baseline Estimated Project Costs ${fmt(cur)} <span class="land">&mdash; ${landing}</span></div>
+        <div class="fmpcap">Baseline addresses ${coverage}</div>
+        <div class="fmpcap2">Current Baseline Estimated Project Costs <b>${fmt(cur)}</b> <span class="land">in Transcend &middot; FMP-tagged allocations total ${fmt(allocTotal)} (${pct(allocTotal, total)} of this site&rsquo;s FMP budget)</span></div>
       </div>`;
     }).join("");
 
