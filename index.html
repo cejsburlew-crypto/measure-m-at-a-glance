@@ -927,15 +927,18 @@
                 effectively priced as though it were the two-storey building. Scale explains part of it, but not a
                 two-storey coming in cheaper per foot than a one-storey; the rest points to Carver being overpriced.
                 <br><br>
-                <b>On corrected costs the variances converge.</b> As proposed, the spread ran from +70% at Carver down to
-                &minus;28% at the Career Center, which looked like a size effect. Corrected, every line sits between
-                <b>+45% and +70%</b> over the FMP rate, or <b>+33% to +58%</b> after escalation &mdash; because the
-                apparent bargains were omissions. SMHS moves from +26.9% to <b>+45.3%</b> and the Career Center from
-                &minus;28.0% to <b>+67.3%</b>.
+                <b>On corrected costs the variances converge.</b> As proposed, the spread ran across
+                <b id="fvAsRange">&hellip;</b> over the FMP rate, which looked like a size effect. Corrected, every line sits between
+                <b id="fvCorrRange">&hellip;</b> over the FMP rate, or <b id="fvEscRange">&hellip;</b> after escalation
+                &mdash; because the apparent bargains were omissions. SMHS moves from <b id="fvSmhsAs">&hellip;</b> to
+                <b id="fvSmhsCorr">&hellip;</b> and the Career Center from <b id="fvCcAs">&hellip;</b> to
+                <b id="fvCcCorr">&hellip;</b>.
                 <br><br>
                 <b>Carver remains the outlier, and now for a real reason.</b> Its divisions are complete and its GC is
-                covered, yet it still prices +70% over the FMP rate &mdash; $1,013/SF for single-storey work against
-                $1,011&ndash;1,039/SF for two-storey buildings. That is the finding to press: one rate card applied
+                covered, yet it still prices <b id="fvCarverPc">&hellip;</b> over the FMP rate &mdash;
+                <b id="fvCarverPsf">&hellip;</b>/SF for single-storey work against
+                <b id="fvTwoStoreyPsf">&hellip;</b>/SF for the two-storey buildings, with all three new builds now
+                landing inside <b id="fvNewBuildPsf">&hellip;</b>/SF. That is the finding to press: one rate card applied
                 regardless of building type, which penalises the smallest and simplest project hardest.
                 Against the FMP&rsquo;s type-correct rates, the gap falls steadily as area grows: 17,580 GSF &rarr; +70%,
                 22,044 GSF &rarr; +46%, 36,782 GSF &rarr; +23%. Balfour spreads one fixed monthly general-conditions crew
@@ -1245,6 +1248,60 @@
     </div>
   </section>
 
+  <section id="dbSection">
+    <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">District Budget vs Proposal vs Normalized
+      <span class="note">the July 28 rebudget, and what it independently says about the normalized estimates</span>
+      <span class="collsum" id="dbSum">&hellip;</span>
+      <button type="button" class="expand-all" id="dbToggle" style="margin-left:auto">Show Comparison</button>
+    </h2>
+    <div class="card coll" id="dbCard" hidden>
+      <div class="ladder-note" style="margin:0 0 14px">
+        <b>The District revised its budgets sharply on July 28, and the revised numbers land close to normalized
+        construction loaded at the FMP&rsquo;s own soft-cost factor.</b> That matters because it is corroboration from a
+        completely independent direction: these budgets were set by the District, not derived from Balfour&rsquo;s
+        proposal or from this analysis. Where the three buildings land against normalized cost plus the FMP&rsquo;s
+        <b>&times;1.33</b> soft-cost load is shown below. The &times;1.33 factor is not an assumption &mdash; it is the
+        FMP&rsquo;s own factor, the one that produces the &ldquo;Final Cost&rdquo; column of the 2024 project list.
+      </div>
+
+      <div class="llbcap">District budget against Balfour&rsquo;s proposal and against normalized cost
+        <span class="eq">&mdash; normalized construction &times; 1.33 is the comparison basis, since a District budget carries soft costs and a construction proposal does not</span>
+        <span class="cite">Sources: Transcend PM, 2026, July 28 (budgets); Balfour Beatty Construction, 2026b (proposal); San Marino Unified School District, 2024 (the &times;1.33 soft-cost factor)</span>
+      </div>
+      <table class="gctable">
+        <thead><tr>
+          <th>Project</th><th>District Budget<span class="thsub">July 28</span></th>
+          <th>BB Proposal</th><th>Budget &divide; BB</th>
+          <th>Normalized &times;1.33</th><th>Budget vs Normalized</th>
+        </tr></thead>
+        <tbody id="dbBody"></tbody>
+      </table>
+      <div class="llbhint" style="margin-bottom:12px" id="dbConcl"></div>
+
+      <div class="llbcap" style="margin-top:14px">What moved between July 26 and July 28
+        <span class="eq">&mdash; computed from the two published feeds, largest movements first</span>
+        <span class="cite">Source: Transcend PM, 2026, July 28, compared against the July 26 feed</span>
+      </div>
+      <table class="gctable">
+        <thead><tr><th>Project</th><th>July 26</th><th>July 28</th><th>Change</th></tr></thead>
+        <tbody id="dbMoveBody"></tbody>
+      </table>
+
+      <div class="llbcap" style="margin-top:14px">Roofing &mdash; reduced at three sites in the same update
+        <span class="eq">&mdash; shown against what the 2024 FMP originally carried for roofing at each site</span>
+        <span class="cite">Sources: Transcend PM, 2026, July 28; San Marino Unified School District, 2024 (ProjList_Mod roofing line items C3, V3, H3, HS3)</span>
+      </div>
+      <table class="gctable">
+        <thead><tr>
+          <th>Site</th><th>FMP Roofing Line<span class="thsub">construction &rarr; loaded +33%</span></th>
+          <th>Budget July 26</th><th>Budget July 28</th><th>Change</th><th>vs FMP Loaded</th>
+        </tr></thead>
+        <tbody id="dbRoofBody"></tbody>
+      </table>
+      <div class="llbhint" style="margin-bottom:12px" id="dbRoofNote"></div>
+    </div>
+  </section>
+
   <section id="tcSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">Evaluating True Project Cost <span class="note">Lease-Leaseback proposal checklist &mdash; what actually moves the final number</span>
       <span class="collsum" id="tcSum">&hellip;</span>
@@ -1427,6 +1484,13 @@
           <b>Estimator of record to be confirmed:</b> the RawExport header carries &ldquo;Building Partnerships&rdquo; and
           &ldquo;Prepared for LPA Design Studios,&rdquo; but the cost consultant who authored the workbook could not be
           established from the file, so it is attributed to the District pending confirmation.</span></p>
+        <p class="ref">Transcend PM. (2026, July 28). <i>Measure M program budget tree, revised project budgets</i>
+          [Database records]. San Marino Unified School District, Program ID 1.
+          <a href="https://app.transcendpm.com">https://app.transcendpm.com</a>
+          <span class="rnote">Feed timestamped July 28, 2026, 10:53 PM; 32 projects, 93 RFPs, $126,677,253 budgeted.
+          Source for the revised budgets in &ldquo;District Budget vs Proposal vs Normalized,&rdquo; and, compared against
+          the July 26 feed, for the budget-movement and roofing tables. Also the source for the project ID-tag
+          (<code>code</code>) fields and for the absence of a budgeted Library / Career Center project.</span></p>
         <p class="ref">Transcend PM. (2026, July 26). <i>Measure M program budget tree and purchase order log</i>
           [Database records]. San Marino Unified School District, Program ID 1.
           <a href="https://app.transcendpm.com">https://app.transcendpm.com</a>
@@ -1970,6 +2034,8 @@ function renderAll() {
     `<b>A one-storey and a two-storey building carry identical Division 07 dollars per gross square foot &mdash; they cannot both be right.</b> Balfour prices Thermal &amp; Moisture Protection at <b>$75.84/SF of gross area</b> at Carver ($1,333,228 on 17,580 GSF) and at exactly the same rate on gross area at Valentine ($1,671,767 on 22,044 GSF). Carver is single-storey, so its roof and slab areas do equal its gross area and $75.84/SF is appropriate there. Valentine is two-storey, so its footprint is roughly half its gross area and a footprint basis would give about <b>$835,908</b> &mdash; some <span class="amt">$836,000</span> less. Either Valentine&rsquo;s Division 07 is overpriced by roughly that amount or Carver&rsquo;s is underpriced; nothing in the proposal lets us tell which, so <b>no adjustment is made to either project here</b> &mdash; it is a question to put to Balfour. Either way it is further proof that one flat rate card was applied without regard to building geometry, the same conclusion already reached from the 12 byte-identical CSI divisions and the near-identical 22.0% markup ratios.
       <br><br><b>Balfour&rsquo;s own numbers confirm no footprint basis anywhere in the estimate.</b> Division 31 Earthwork is footprint-driven, yet dividing each project&rsquo;s Division 31 total by its own $20.32/SF rate returns the <i>gross</i> area every time: SMHS $641,236 &divide; $20.32 = 31,557 SF against 31,556 GSF, Valentine $447,947 &divide; $20.32 = 22,045 SF against 22,044 GSF, Carver $357,236 &divide; $20.32 = 17,580 SF against 17,580 GSF. Carver landing on gross validates the test, since for a single-storey building footprint and gross genuinely coincide &mdash; and it then shows that both two-storey buildings had earthwork priced on roughly twice the area that actually drives it.
       <br><br><b>The half-area basis is confirmed by the District&rsquo;s construction manager</b> and is applied here as a determination, not an assumption: for a two-storey building the roof and the underslab vapour barrier each serve two floors, so both are footprint-driven rather than gross-area-driven. It is corroborated by the District&rsquo;s own 2024 FMP raw export, which halves footprint-driven scope on every two-storey building without exception &mdash; Valentine&rsquo;s two-storey classroom priced on 20,760 SF with its building pad at 10,380 SF, and the San Marino HS two-storey gymnasium on 35,910 SF with its pad at 17,955 SF &mdash; while every single-storey line in the same export pairs 1:1. Note also that no footprint, first-floor area or roof area is stated anywhere in Balfour&rsquo;s three Project Comparison Reports; their Metrics blocks give gross square feet only.`,
+    `<b>Balfour&rsquo;s proposal bundles two separate District projects into one total &mdash; so their project total cannot be compared against any single District budget.</b> Their report is titled &ldquo;San Marino HS Med Arts Bldg. and Career Center&rdquo; and closes at a <b>Project Total of $29,135,996</b>, being the Medical Arts building at <b>$27,881,756</b> plus the Career Center as an &ldquo;Add For&rdquo; line at <b>$1,254,240</b>. The District carries the STEM / Medical Arts building and the Library / Career Center modernization as <b>two distinct projects</b>. Any comparison of Balfour&rsquo;s $29,135,996 against a single District project budget is therefore invalid, because their figure spans two projects while the budget covers one. It also means <b>the Career Center was never scoped as a project in its own right by Balfour</b> &mdash; it is an add-on line inside another project&rsquo;s proposal, which is exactly why it carries no general conditions, no fee and no contingency. Require separate, independently priced proposals for the two scopes before GMP.
+      <br><br><b>The District&rsquo;s own records do not yet settle where the Career Center is funded.</b> Searching all 122 Transcend projects returns no budgeted Library or Career Center project: the former standalone project <b>1804 &ldquo;San Marino High School &mdash; Library Modernization&rdquo; is flagged &ldquo;ZZ DELETE&rdquo; and carries no budget</b>, and project 483 &ldquo;Library Learning Commons&rdquo; is unbudgeted. At the same time, project <b>1608&rsquo;s FMP ID tags include HS20</b>, the FMP&rsquo;s &ldquo;Existing Library Moderate modernization&rdquo; line ($986,272 construction, $1,312,710 loaded) &mdash; which suggests the library scope <i>is</i> funded inside 1608 after all. That tag and the separate-project structure point in opposite directions and must be reconciled before the next board packet, because it determines whether the STEM building&rsquo;s budget is being compared against one scope or two.`,
     `<b>Building P footprint &mdash; 60% area discrepancy.</b> The District program describes the Career Center and Library renovation as <b>3,267 gross sf</b>; Balfour prices <b>5,226 GSF</b> &mdash; <span class="amt">+1,959 SF (+60%)</span>. Either the renovation footprint has grown beyond the program, or they are measuring the whole of Building P rather than the renovated portion. Resolve before GMP.`,
     `<b>SMHS priced as new construction against a modernization program.</b> The District scope and the Huckabee program (7/14/2026, Site Plan Option 2 &mdash; Modernization) deliver <b>20,993 gross sf of modernization</b>. Balfour priced <b>36,782 GSF</b> &mdash; a 31,556 GSF new two-story building plus 5,226 GSF of renovation, <span class="amt">15,789 GSF</span> beyond the program and on a different delivery basis. The scope basis must be reconciled before any number is compared.`,
     `<b>The Career Center carries no general conditions, no fee and no markup of any kind.</b> Balfour&rsquo;s own report closes the Medical Arts building at <b>$27,881,755.52 / $883.56 per SF / 100.00%</b> &mdash; the direct-cost-and-markup structure is complete at that line &mdash; then appends the renovation beneath it as an &ldquo;<b>Add For</b> Building P Modernization, Career Center $1,254,240.00 / $240.00.&rdquo; Being outside the marked-up structure, that $240.00/SF contains no general conditions, no general requirements, no fee, no bonds, no insurance and no contingency, and the single SMHS general-conditions line of $1,261,836 is attached to the new building only. A renovation on an occupied campus, adjacent to a demolition and a structural tie-in, needs its own supervision, logistics and phasing cost. Either that scope is being absorbed silently by the building&rsquo;s general conditions, or it is simply missing &mdash; and at 5,226 GSF against a District program of 3,267 gross sf, it is missing on 60% more area than was ever scoped.`,
@@ -1983,7 +2049,14 @@ function renderAll() {
   document.getElementById("watch").innerHTML =
     LLB_WATCH.map(w => `<div class="item llbw">${w}</div>`).join("") +
     watch.map(w => `<div class="item">${w}</div>`).join("");
+
+  // The live feed replaces PROJECTS and re-runs renderAll, so the budget comparison and the header
+  // rollups have to follow it or they silently keep pre-refresh figures. DB_READY is a hoisted var,
+  // false until the consts those renderers depend on have actually been evaluated further down the
+  // file - renderAll can legitimately run before that point.
+  if (DB_READY) { renderDb(); renderRollupSums(); }
 }
+var DB_READY = false;
 
 // ---- expand/collapse all ----
 let allOpen = false;
@@ -2625,10 +2698,20 @@ const FMP_VS = [
    fmp: 17580 * 595.00, act: 17805933, corr: 17805933},
   {b: "Valentine ES &mdash; CR / MPR / Kitchen", sf: 22044, basis: ["NEW construction, two-storey", "FMP rate $696.15/SF"],
    fmp: 22044 * 696.15, act: 22472400, corr: 22911984},
+  // corr matches the BB-vs-Normalized table exactly: restored scope of $102.74/SF (Division 07 HALVED
+  // to $37.92/SF of gross + Exterior Improvements $45.00 + utilities $6.50 + minor divisions $13.32),
+  // marked up at SMHS's own cost-scaling rate, plus 4 further months of general conditions. The former
+  // $31,915,632 used a $95.66/SF gap - Division 07 at its FULL rate and no Exterior Improvements at all
+  // - and so understated this line by $267,425. The halved Division 07 basis governs both tables.
   {b: "San Marino HS &mdash; Medical Arts building", sf: 31556, basis: ["NEW construction, two-storey", "FMP rate $696.15/SF", "normalized &mdash; the FMP held no new-construction rate for SMHS"],
-   fmp: 31556 * 696.15, act: 27881756, corr: 31915632, norm: true},
-  {b: "San Marino HS &mdash; Career Center / Library", sf: 5226, basis: ["MODERNIZATION of existing space", "FMP rate $333.20/SF", "BB prices a flat $240.00/SF as an &ldquo;Add For&rdquo;"],
-   fmp: 5226 * 333.20, act: 1254240, corr: 2913133}
+   fmp: 31556 * 696.15, act: 27881756, corr: 32183057, norm: true},
+  // A SEPARATE District project that Balfour bundled into the Medical Arts proposal. Put on the
+  // District's programmed 3,267 sf: the FMP base and the corrected column both use that area, while
+  // the as-proposed column is Balfour's own dollar figure for the 5,226 GSF they claim - 60% more
+  // area. The corrected variance is unaffected by the choice of area, since numerator and denominator
+  // scale together; the as-proposed variance is, and is annotated accordingly.
+  {b: "San Marino HS &mdash; Career Center / Library", sf: 3267, basis: ["MODERNIZATION of existing space", "FMP rate $333.20/SF", "on the District&rsquo;s programmed 3,267 sf", "as-proposed column is BB&rsquo;s flat $240.00/SF across 5,226 GSF &mdash; 60% more area, so that one figure is not area-matched"],
+   fmp: 3267 * 333.20, act: 1254240, corr: 1821483}
 ];
 function renderFmpVs() {
   document.getElementById("fmpVsBody").innerHTML = FMP_VS.map(r => {
@@ -2644,6 +2727,33 @@ function renderFmpVs() {
       <td>$${Math.round(r.fmp / r.sf)} &rarr; $${Math.round(r.corr / r.sf)}</td>
     </tr>`;
   }).join("");
+
+  // Publish every figure the surrounding prose quotes, so the narrative is computed from FMP_VS and
+  // cannot drift away from the table the way the stale $31,915,632 SMHS figure did.
+  const pcOf = r => 100 * (r.corr / r.fmp - 1);
+  const psfOf = r => r.corr / r.sf;
+  const byName = s => FMP_VS.find(r => r.b.indexOf(s) === 0);
+  const smhs = byName("San Marino HS &mdash; Medical Arts"), cc = byName("San Marino HS &mdash; Career Center");
+  const carver = byName("Carver"), ves = byName("Valentine");
+  const newBuilds = [carver, ves, smhs];                     // the three new-construction rows
+  const twoStorey = [ves, smhs];                             // of which these two are two-storey
+  const allPc = FMP_VS.map(pcOf), esc = 100 * FMP_ESC;
+  const rng = (a, d = 1) => `${Math.min(...a).toFixed(d)}%&ndash;${Math.max(...a).toFixed(d)}%`;
+  const dollars = a => `$${Math.min(...a).toLocaleString("en-US", {maximumFractionDigits: 0})}&ndash;$${Math.max(...a).toLocaleString("en-US", {maximumFractionDigits: 0})}`;
+  const put = (id, v) => { const el = document.getElementById(id); if (el) el.innerHTML = v; };
+  const sgn = v => (v < 0 ? "&minus;" : "+") + Math.abs(v).toFixed(1) + "%";
+  put("fvSmhsAs", sgn(100 * (smhs.act / smhs.fmp - 1)));
+  put("fvSmhsCorr", sgn(pcOf(smhs)));
+  put("fvCcAs", sgn(100 * (cc.act / cc.fmp - 1)));
+  put("fvCcCorr", sgn(pcOf(cc)));
+  put("fvAsRange", "+" + rng(FMP_VS.map(r => 100 * (r.act / r.fmp - 1))));
+  put("fvCorrRange", "+" + rng(allPc));
+  put("fvEscRange", "+" + rng(allPc.map(p => p - esc)));
+  put("fvCarverPsf", "$" + Math.round(psfOf(carver)).toLocaleString());
+  put("fvCarverPc", "+" + pcOf(carver).toFixed(0) + "%");
+  put("fvTwoStoreyPsf", dollars(twoStorey.map(psfOf)));
+  put("fvNewBuildPsf", dollars(newBuilds.map(psfOf)));
+  put("fvSmhsPsf", "$" + Math.round(psfOf(smhs)).toLocaleString());
 }
 const GC_DUR = [
   {n: "Carver ES &mdash; New TK &amp; KG", mo: 99891, priced: 1230696, lo: 12, hi: 14,
@@ -2677,8 +2787,8 @@ function renderFix() {
      note: "No scope gaps. Entirely the general-conditions schedule &mdash; 12 months priced against 16 needed"},
     {n: "San Marino HS &mdash; Medical Arts", as: 27881756, no: 32183057, sf: 31556,
      note: "$1,196,604 absent Division 07 roofing and weatherproofing &mdash; restored on a <b>15,778 SF footprint</b>, half of the 31,556 GSF, because on a two-storey building the roof and the underslab vapour barrier each serve two floors and are therefore footprint-driven. <b>Half-area basis confirmed by the District&rsquo;s construction manager.</b> &middot; $1,420,020 Exterior Improvements at $30.81/SF against $75.81 at both elementaries &middot; $205,114 utilities &middot; $420,326 minor divisions &middot; then markup and 16-month GC. <b>Masonry and Special Construction are deliberately excluded</b> &mdash; both appear only at Carver and are building-specific, not omissions"},
-    {n: "San Marino HS &mdash; Career Center", as: 1254240, no: 2913133, sf: 5226,
-     note: "Priced on <b>renovation rates only</b> &mdash; FMP library/moderate modernization $333.20/SF escalated to $397, plus $25/SF abatement and $35/SF interface demolition, then GC&rsquo;s, fee, bonds and contingency at 22%. <span class=\"assump\"><b>Three of those four inputs are our own constructions.</b> The <b>$25/SF abatement</b> and <b>$35/SF interface-demolition</b> allowances appear in no source document &mdash; there is no hazardous-materials survey for Building P in hand, and no demolition take-off for the tie-in to the new building; both are planning placeholders for scope that is real but unquantified. The <b>22% load</b> is the average markup ratio observed on Balfour&rsquo;s other three projects, applied because this line carries no markup at all. Only the <b>$333.20/SF</b> base rate is source data, from the FMP; the escalation to $397 uses the same unverified 12.5% assumption as everything else on this page. This line is the least firm number in the table and should be read as an order of magnitude for scope Balfour has not priced, not as an estimate.</span> <b>No Division 07 thermal, no Division 04 masonry and no new-construction rate is applied to this line.</b> The uplift is because BB&rsquo;s $240/SF was an unloaded &ldquo;Add For&rdquo; allowance carrying no GC&rsquo;s, fee or contingency, and no abatement, seismic, ADA or MEP renewal"},
+    {n: "San Marino HS &mdash; Career Center", as: 1254240, no: 1821483, sf: 5226, sfAs: 5226, sfNo: 3267,
+     note: "<b>Normalized on the District&rsquo;s programmed 3,267 sf, not Balfour&rsquo;s 5,226 GSF</b> &mdash; $557.54/SF &times; 3,267 sf. Balfour&rsquo;s as-proposed column is their own $240.00/SF across 5,226 GSF, so the two columns cover different areas; the 60% area discrepancy is a live question with Balfour and is carried as its own watch item. <b>This scope is also a separate District project from the STEM building</b>, which Balfour bundled into one proposal. Priced on <b>renovation rates only</b> &mdash; FMP library/moderate modernization $333.20/SF escalated to $397, plus $25/SF abatement and $35/SF interface demolition, then GC&rsquo;s, fee, bonds and contingency at 22%. <span class=\"assump\"><b>Three of those four inputs are our own constructions.</b> The <b>$25/SF abatement</b> and <b>$35/SF interface-demolition</b> allowances appear in no source document &mdash; there is no hazardous-materials survey for Building P in hand, and no demolition take-off for the tie-in to the new building; both are planning placeholders for scope that is real but unquantified. The <b>22% load</b> is the average markup ratio observed on Balfour&rsquo;s other three projects, applied because this line carries no markup at all. Only the <b>$333.20/SF</b> base rate is source data, from the FMP; the escalation to $397 uses the same unverified 12.5% assumption as everything else on this page. This line is the least firm number in the table and should be read as an order of magnitude for scope Balfour has not priced, not as an estimate.</span> <b>No Division 07 thermal, no Division 04 masonry and no new-construction rate is applied to this line.</b> The uplift is because BB&rsquo;s $240/SF was an unloaded &ldquo;Add For&rdquo; allowance carrying no GC&rsquo;s, fee or contingency, and no abatement, seismic, ADA or MEP renewal"},
     {n: "Carver site scope beyond the 5-ft line", as: 0, no: 3300105, sf: 0,
      note: "Play yards C36 $800,000 + C37 $650,000 and existing KG modernization C1 $1,000,000 at FMP construction cost, escalated 19%, loaded at Carver&rsquo;s own 13.19% &mdash; all in the District&rsquo;s project scope but outside Balfour&rsquo;s contract line"}
   ];
@@ -2691,7 +2801,8 @@ function renderFix() {
       <td>${r.as ? fmt(r.as) : "&mdash;"}</td>
       <td><b>${fmt(r.no)}</b></td>
       <td><span class="psf ${d > 1000000 ? "b3" : (d > 0 ? "b2" : "b1")}">${d < 0 ? "&minus;" + fmt(Math.abs(d)) : "+" + fmt(d)}</span></td>
-      <td>${r.sf ? "$" + Math.round(r.as / r.sf).toLocaleString() + " &rarr; $" + Math.round(r.no / r.sf).toLocaleString() : "&mdash;"}</td>
+      <td>${r.sf ? "$" + Math.round(r.as / (r.sfAs || r.sf)).toLocaleString() + " &rarr; $" + Math.round(r.no / (r.sfNo || r.sf)).toLocaleString() : "&mdash;"}${
+        r.sfNo && r.sfNo !== r.sfAs ? `<span class="gcnote">on ${r.sfAs.toLocaleString()} sf priced &rarr; ${r.sfNo.toLocaleString()} sf programmed</span>` : ""}</td>
     </tr>`;
   }).join("");
   FIX_TOTALS = {as: ta, no: tn};
@@ -2837,6 +2948,130 @@ function renderMvn() {
       <td><span class="psf b3"><b>+${fmt(f.diff)} &nbsp;+${(100 * f.diff / f.totA).toFixed(1)}%</b></span></td></tr>`;
 }
 
+// ---- District Budget vs Proposal vs Normalized -------------------------------------------------
+// Current budgets are read from the LIVE feed (PROJECTS) by project id, so this section follows any
+// later refresh instead of freezing a snapshot. The July 26 column is a fixed historical snapshot of
+// the previous published feed, which is why those figures alone are hardcoded.
+// SOFT = 1.33 is the FMP's own soft-cost factor - the multiplier that produces the "Final Cost"
+// column of the 2024 project list (e.g. V12 $15,097,000 x 1.33 = $20,079,010 exactly).
+const SOFT = 1.33;
+const PRIOR_FEED = {   // July 26, 2026, 11:39 AM feed
+  1608: 29500000, 1610: 21500000, 1609: 31357143, 1864: 4790000, 1866: 3630000.01,
+  1865: 3702616.31, 467: 0, 1633: 151800, 1634: 780951, 533: 902675, 1808: 6620000,
+  1853: 0, 463: 1200, 462: 79350, 402: 228770, 1638: 690877
+};
+const PRIOR_TOTAL = 110962441.32, PRIOR_RFPS = 121, PRIOR_PROJECTS = 33;
+const budOf = pid => { const p = PROJECTS.find(x => x.pid === pid); return p ? (p.budget || 0) : 0; };
+const nameOf = pid => { const p = PROJECTS.find(x => x.pid === pid); return p ? p.name : "(project no longer in the feed)"; };
+// Normalized construction per District project, from the BB-vs-Normalized table above.
+const DB_ROWS = [
+  {pid: 1608, label: "San Marino HS &mdash; New Two-Storey STEM Building", norm: 32183057, bb: 27881756,
+   note: "Balfour&rsquo;s figure here is the <b>Medical Arts building alone</b>. Their proposal total of $29,135,996 also contains the Career Center, which is a separate District project, so the bundled total must not be compared against this budget"},
+  {pid: 1610, label: "Carver ES &mdash; New TK/KG Building &amp; Play Yard", norm: 17773929 + 3300105, bb: 17805933,
+   note: "normalized includes the $3,300,105 of play yards and classroom modernization that sit outside Balfour&rsquo;s contract line but inside the District&rsquo;s project"},
+  {pid: 1609, label: "Valentine ES &mdash; MPR, Kitchen, 1&ndash;5 Classrooms", norm: 22911984, bb: 22472400,
+   note: "no scope gaps identified; the normalization is entirely the general-conditions schedule"}
+];
+function renderDb() {
+  let body = DB_ROWS.map(r => {
+    const bud = budOf(r.pid), loaded = r.norm * SOFT, d = 100 * (bud / loaded - 1);
+    const cls = Math.abs(d) <= 2 ? "b1" : (Math.abs(d) <= 6 ? "b2" : "b3");
+    return `<tr>
+      <td>${r.label}<span class="gcnote">Transcend project ${r.pid}</span><span class="gcnote">${r.note}</span></td>
+      <td><b>${fmt(bud)}</b></td>
+      <td>${fmt(r.bb)}</td>
+      <td>${(bud / r.bb).toFixed(2)}&times;</td>
+      <td>${fmt(loaded)}<span class="gcnote">${fmt(r.norm)} &times; 1.33</span></td>
+      <td><span class="psf ${cls}">${d < 0 ? "&minus;" : "+"}${Math.abs(d).toFixed(1)}%</span></td>
+    </tr>`;
+  }).join("");
+  body += `<tr>
+      <td>San Marino HS &mdash; Library / Career Center<span class="gcnote">a separate District project that Balfour bundled into the Medical Arts proposal</span><span class="gcnote"><b>District budget not yet identified.</b> No budgeted Library or Career Center project exists in the feed: project 1804 &ldquo;Library Modernization&rdquo; is flagged ZZ DELETE with no budget, and project 483 &ldquo;Library Learning Commons&rdquo; is unbudgeted. Project 1608 does however carry the FMP&rsquo;s HS20 library tag, so the scope may be funded inside the STEM building. Open item &mdash; no budget is assumed here</span></td>
+      <td><span class="psf none">not identified</span></td>
+      <td>${fmt(1254240)}<span class="gcnote">an &ldquo;Add For&rdquo; line, no GC&rsquo;s, fee or contingency</span></td>
+      <td><span class="psf none">&mdash;</span></td>
+      <td>${fmt(1821483 * SOFT)}<span class="gcnote">${fmt(1821483)} &times; 1.33, on the programmed 3,267 sf</span></td>
+      <td><span class="psf none">&mdash;</span></td>
+    </tr>`;
+  document.getElementById("dbBody").innerHTML = body;
+
+  const tot = PROJECTS.reduce((a, p) => a + (p.budget || 0), 0);
+  const smhs = DB_ROWS[0], smhsD = 100 * (budOf(1608) / (smhs.norm * SOFT) - 1);
+  const bundled = 100 * (budOf(1608) / ((smhs.norm + 1821483) * SOFT) - 1);
+  document.getElementById("dbConcl").innerHTML =
+    `<b>The District has independently rebudgeted to roughly normalized construction plus standard soft costs.</b>
+     Carver lands <b>5.5% below</b> that line and Valentine <b>1.8% above</b> it &mdash; both within touching distance
+     of figures built entirely from Balfour&rsquo;s own division rates and the FMP&rsquo;s own soft-cost factor. Nothing
+     in this analysis fed those budgets, so the agreement is genuine corroboration rather than circular reasoning, and it
+     carries a direct implication: <b>the District is already carrying the cost of what Balfour&rsquo;s proposal
+     omitted.</b> The budget-to-proposal ratios say the same thing more bluntly &mdash;
+     ${DB_ROWS.map(r => `<b>${(budOf(r.pid) / r.bb).toFixed(2)}&times;</b>`).join(", ")} for the STEM building, Carver and
+     Valentine respectively. A budget set at 1.4 to 1.7 times a construction proposal is not a budget that believes the
+     proposal is complete.
+     <br><br><b>San Marino HS is the exception and sits above the line, not on it.</b> Project 1608 is budgeted
+     <b>${smhsD < 0 ? "&minus;" : "+"}${Math.abs(smhsD).toFixed(1)}%</b> against the Medical Arts building normalized and
+     loaded &mdash; ${fmt(budOf(1608))} against ${fmt(smhs.norm * SOFT)}. <b>The tighter
+     ${bundled < 0 ? "&minus;" : "+"}${Math.abs(bundled).toFixed(1)}% figure only holds if the Career Center is funded
+     inside project 1608</b>, which is precisely the question flagged in the watch list: the project&rsquo;s FMP tags
+     include HS20 (the library line), yet the District describes the Library / Career Center as a separate project and no
+     separate budget for it can be found. Resolve that before quoting either number, because the two readings differ by
+     roughly ${fmt(Math.abs(budOf(1608) / SOFT - smhs.norm) * SOFT)} of apparent headroom.`;
+
+  const moves = Object.keys(PRIOR_FEED).map(k => Number(k))
+    .map(pid => ({pid, was: PRIOR_FEED[pid], now: budOf(pid)}))
+    .filter(m => Math.abs(m.now - m.was) > 0.5)
+    .sort((a, b) => Math.abs(b.now - b.was) - Math.abs(a.now - a.was));
+  const inc = moves.filter(m => m.now > m.was).reduce((a, m) => a + m.now - m.was, 0);
+  const dec = moves.filter(m => m.now < m.was).reduce((a, m) => a + m.now - m.was, 0);
+  document.getElementById("dbMoveBody").innerHTML = moves.map(m => {
+    const d = m.now - m.was;
+    return `<tr>
+      <td>${nameOf(m.pid)}<span class="gcnote">project ${m.pid}</span></td>
+      <td>${m.was ? fmt(m.was) : "<span class=\"psf none\">not budgeted</span>"}</td>
+      <td>${fmt(m.now)}</td>
+      <td><span class="psf ${d > 0 ? (d > 1e6 ? "b3" : "b2") : "b1"}">${d < 0 ? "&minus;" : "+"}${fmt(Math.abs(d))}</span></td>
+    </tr>`;
+  }).join("") + `<tr class="actual">
+      <td><b>Programme total</b><span class="gcnote">increases +${fmt(inc)} &middot; decreases &minus;${fmt(Math.abs(dec))} &middot; RFPs ${PRIOR_RFPS} &rarr; ${PROGRAM.rfps}, projects ${PRIOR_PROJECTS} &rarr; ${PROJECTS.length}. The one project removed was an unbudgeted duplicate, &ldquo;Interim Housing&rdquo; (1805), while the San Marino HS Interim Housing project (1853) took a budget in the same update &mdash; consistent with a rename or consolidation, worth confirming</span></td>
+      <td><b>${fmt(PRIOR_TOTAL)}</b></td><td><b>${fmt(tot)}</b></td>
+      <td><span class="psf b3"><b>+${fmt(tot - PRIOR_TOTAL)}</b></span></td></tr>`;
+
+  // FMP roofing line items from ProjList_Mod, by site: [id, construction, loaded +33%]
+  const ROOF = [
+    {pid: 1864, site: "Carver ES", fid: "C3", fc: 712840, fl: 948290},
+    {pid: 1866, site: "Valentine ES", fid: "V3", fc: 1257831, fl: 1673140},
+    {pid: 1865, site: "Huntington MS", fid: "H3", fc: 1607690, fl: 2138640},
+    {pid: 1808, site: "San Marino HS", fid: "HS3", fc: 1600000, fl: 2128000}
+  ];
+  let cut = 0, add = 0;
+  document.getElementById("dbRoofBody").innerHTML = ROOF.map(r => {
+    const was = PRIOR_FEED[r.pid], now = budOf(r.pid), d = now - was;
+    if (d < 0) cut += d; else add += d;
+    const v = 100 * (now / r.fl - 1);
+    return `<tr>
+      <td>${r.site}<span class="gcnote">FMP ${r.fid} &middot; Transcend project ${r.pid}</span></td>
+      <td>${fmt(r.fc)} &rarr; ${fmt(r.fl)}</td>
+      <td>${fmt(was)}</td><td>${fmt(now)}</td>
+      <td><span class="psf ${d < 0 ? "b3" : "b1"}">${d < 0 ? "&minus;" : "+"}${fmt(Math.abs(d))}</span></td>
+      <td><span class="psf ${v < -20 ? "b3" : (Math.abs(v) <= 20 ? "b1" : "b2")}">${v < 0 ? "&minus;" : "+"}${Math.abs(v).toFixed(0)}%</span></td>
+    </tr>`;
+  }).join("");
+  document.getElementById("dbRoofNote").innerHTML =
+    `<b>Roughly ${fmt(Math.abs(cut))} was taken out of roofing at three sites in the same update that added
+     ${fmt((budOf(1608) - PRIOR_FEED[1608]) + (budOf(1610) - PRIOR_FEED[1610]))} to the two new buildings.</b> San Marino
+     HS moved the other way, up ${fmt(add)}. The scale of the reduction is what makes it worth a question: Carver falls to
+     ${fmt(budOf(1864))} against an FMP loaded roofing line of ${fmt(948290)}, while Valentine and Huntington now sit
+     <i>below</i> their FMP lines.
+     <br><br><b>Roof work is condition-driven, not discretionary</b> &mdash; a roof at the end of its service life does not
+     become cheaper because the budget moved. So a reduction of this size is one of two things: a <b>rescope</b>, if
+     actual roof assessments came back showing less replacement and more repair than the FMP assumed, or a
+     <b>deferral</b>, if the work is simply being pushed to a later series and will return carrying escalation. Those have
+     very different consequences and the data on this page cannot distinguish them. <b>Ask for the roof condition
+     assessments behind the revised figures.</b> If they exist and support the reduction, this is good budgeting; if they
+     do not, roughly ${fmt(Math.abs(cut))} of deferred roofing is being used to fund new construction and will come back
+     at a higher price.`;
+}
+
 // ---- Rollup figures shown in section headers, so a collapsed section still reports its total ----
 function renderRollupSums() {
   const f = mvnFigures();
@@ -2847,6 +3082,8 @@ function renderRollupSums() {
   set("watchSum", document.querySelectorAll("#watch > *").length + " items");
   set("tiersSum", fmt(FMP_TOTAL_2024) + " district total");
   set("guideSum", document.querySelectorAll("#guideBody .gitem").length + " notes");
+  const tot = PROJECTS.reduce((a, p) => a + (p.budget || 0), 0);
+  set("dbSum", fmt(tot) + " budgeted &nbsp;&middot;&nbsp; +" + fmt(tot - PRIOR_TOTAL) + " on July 28");
   const srcN = document.querySelectorAll("#refCard .refgrp:not(.derived) .ref").length;
   const derN = document.querySelectorAll("#refCard .derived .ref").length - 1;  // less the lead-in paragraph
   set("refSum", srcN + " sources &nbsp;&middot;&nbsp; " + derN + " declared derivations");
@@ -2870,7 +3107,8 @@ const COLLAPSIBLES = [
   ["g5Toggle",     "g5Body",    "Show Notes",      "Hide Notes"],
   ["mvnToggle",    "mvnCard",   "Show Comparison", "Hide Comparison"],
   ["watchToggle",  "watch",     "Show Items",      "Hide Items"],
-  ["refToggle",    "refCard",   "Show References", "Hide References"]
+  ["refToggle",    "refCard",   "Show References", "Hide References"],
+  ["dbToggle",     "dbCard",    "Show Comparison", "Hide Comparison"]
 ];
 COLLAPSIBLES.forEach(([bid, tid, showLbl, hideLbl]) => {
   const btn = document.getElementById(bid), tgt = document.getElementById(tid);
@@ -2888,9 +3126,9 @@ COLLAPSIBLES.forEach(([bid, tid, showLbl, hideLbl]) => {
   sync();
 });
 
-renderAll();
+DB_READY = true;   // every const renderDb/renderRollupSums depend on has now been evaluated
+renderAll();       // which itself calls renderDb + renderRollupSums from here on
 renderMvn();
-renderRollupSums();
 
 // ---- live data feed: data.json is republished by automated refreshes and picked up here.
 // Only the hosted copy has the feed. We never poll from the claude.ai artifact viewer (the
