@@ -465,6 +465,7 @@
 
   /* Watch list */
   .watch { display: grid; gap: 8px; }
+  .watch .item.llbw { border-left-color: var(--bad); }
   .watch .item {
     background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--bad);
     border-radius: 6px; padding: 10px 14px; font-size: 13.5px;
@@ -784,6 +785,34 @@
               </table>
               <div class="llbhint" id="llbHint"></div>
 
+              <div class="llbcap" style="margin-top:14px">What the FMP estimated for these same three buildings
+                <span class="eq">&mdash; ProjList_Mod line items at the +33% loaded figure, against Balfour Beatty&rsquo;s priced work</span>
+              </div>
+              <table class="gctable">
+                <thead><tr>
+                  <th>Building</th><th>FMP Line Item(s)</th><th>FMP Estimate<span class="thsub">+33% loaded</span></th>
+                  <th>Balfour Priced</th><th>Variance</th><th>FMP $/SF &rarr; Actual $/SF</th>
+                </tr></thead>
+                <tbody id="fmpVsBody"></tbody>
+              </table>
+              <div class="llbhint" style="margin-bottom:12px"><b>Read this carefully &mdash; the headline is not the
+                variance on any single building.</b> Carver and Valentine <i>together</i> price at $40,278,333 against
+                $41,047,790 of matching FMP line items &mdash; <b>1.9% under</b>. Carver runs 64% over its own line item
+                while Valentine runs 26% under, and they very nearly cancel: the FMP priced Valentine&rsquo;s classrooms,
+                MPR and food service as three separate one-storey buildings, and combining them into a single two-storey
+                building recovered most of what Carver overran.
+                <br><br>
+                <b>San Marino High School is the real exposure.</b> The 2024 FMP contains <b>no new-construction line
+                item for SMHS at all</b> &mdash; not a Medical Arts building, not a Career Center, no CTE building. Its
+                only new-building entry is HS16, an addition to the existing Dance &amp; Drama rooms at $4,226,740
+                (Medium priority). SMHS&rsquo;s FMP money sits in Physical Education ($69.1M: gymnasium replacement and
+                an aquatics complex) and in Flex Labs / Science / VAPA / Theater modernization ($42.0M) &mdash; the plan
+                was to <i>modernize</i> existing lab and elective space, not build a new academic building. So the
+                $29,135,996 Medical Arts and Career Center project is scope the FMP never priced, and it is currently
+                drawing against that Medium-priority modernization pool. That trade &mdash; a new building instead of
+                the gymnasium, aquatics, or lab modernization the FMP listed &mdash; is a board-level decision, and it
+                should be documented as one rather than absorbed as a budget variance.</div>
+
               <div class="llbcap" style="margin-top:14px">LLB interview finalists &mdash; where each one sits
                 <span class="eq">&mdash; size drives the general conditions load, the sub pool, and the tolerance band</span>
               </div>
@@ -1016,7 +1045,7 @@
   </section>
 
   <section id="watchSection">
-    <h2>Watch Items <span class="note">computed from the same data &mdash; shown on screen, excluded from PDF export</span></h2>
+    <h2>Watch Items <span class="note">Balfour proposal items to reconcile, then exceptions computed from the data &mdash; shown on screen, excluded from PDF export</span></h2>
     <div class="watch" id="watch"></div>
   </section>
 
@@ -1495,7 +1524,20 @@ function renderAll() {
     watch.push(`<b>${r[4]}</b> &mdash; PO ${r[1]} (${r[2]}) has invoices exceeding the PO amount by <span class="amt">${fmt(-r[8])}</span> (PO ${fmt(r[5])}, invoiced ${fmt(r[6] + r[7])}). A change order or PO increase may be needed.`);
   });
   watch.push(`Estimated Project Budgets (<b>${fmt(T.budget)}</b>) are ${pct(T.budget, PROGRAM.released)} of the ${fmt(PROGRAM.released)} Series A release &mdash; sequencing of the next bond series will gate the two-story building projects.`);
-  document.getElementById("watch").innerHTML = watch.map(w => `<div class="item">${w}</div>`).join("");
+  // ---- Balfour Beatty proposal: inconsistencies and scope gaps to put back to them ----
+  const LLB_WATCH = [
+    `<b>Building P footprint &mdash; 60% area discrepancy.</b> The District program describes the Career Center and Library renovation as <b>3,267 gross sf</b>; Balfour prices <b>5,226 GSF</b> &mdash; <span class="amt">+1,959 SF (+60%)</span>. Either the renovation footprint has grown beyond the program, or they are measuring the whole of Building P rather than the renovated portion. Resolve before GMP.`,
+    `<b>SMHS priced as new construction against a modernization program.</b> The District scope and the Huckabee program (7/14/2026, Site Plan Option 2 &mdash; Modernization) deliver <b>20,993 gross sf of modernization</b>. Balfour priced <b>36,782 GSF</b> &mdash; a 31,556 GSF new two-story building plus 5,226 GSF of renovation, <span class="amt">15,789 GSF</span> beyond the program and on a different delivery basis. The scope basis must be reconciled before any number is compared.`,
+    `<b>Career Center renovation priced at a flat $240.00/SF &mdash; 28% below the FMP&rsquo;s own modernization rate.</b> Their project total less the Medical Arts building leaves <span class="amt">$1,254,240</span> over 5,226 GSF = exactly $240.00/SF, against the FMP library-modernization rate of $333.20/SF. A round number that far under the benchmark, for renovation adjacent to demolition and a new-building tie-in, reads as an allowance rather than an estimate &mdash; a change-order exposure, not a saving.`,
+    `<b>Identical unit rates across three different campuses.</b> 12 of 21 CSI divisions carry byte-identical $/SF in all three Project Comparison Reports &mdash; Concrete $46.88, Metals $58.80, Wood/Plastics $52.73, Openings $41.73, Electrical $92.37, Earthwork $20.32, General Requirements $8.75, Fire Suppression $8.38, Communications $15.63, Electronic Safety $16.13, Specialties $7.61, Thermal &amp; Moisture $75.84. Three sites, three sets of conditions, one rate card. Ask whether any project-specific estimating has been done.`,
+    `<b>SMHS carries 3.7 points more markup than the other two, with no stated reason.</b> Markup on direct cost is 25.7% at SMHS versus 22.0% at both Valentine and Carver &mdash; roughly <span class="amt">$820,532</span> &mdash; even though the fee proposal lists identical rates for all three (3.25% fee, 1% bond, 1.20% liability, 3% contingency). Ask what the difference funds.`,
+    `<b>Duration assumption contradicts their own narrative.</b> The fee proposal prices <b>12 months</b> of general conditions for all three projects regardless of size, while their narrative states Valentine &ldquo;will typically require approximately sixteen (16) months or less.&rdquo; Four unpriced months at $109,896 is <span class="amt">$439,584</span> of general conditions, and the sheet itself says the duration is &ldquo;to be revised per addenda #1 during precon.&rdquo;`,
+    `<b>Builder&rsquo;s risk insurance is unpriced on all three projects</b> (&ldquo;n/a &mdash; to be procured during GMP establishment&rdquo;), and the SDI option at 1.25% in lieu of subcontractor bonds is offered without a decision. Both are open cost and open risk-transfer items sitting outside the compared totals.`,
+    `<b>Scope gaps to confirm are included:</b> Career Center and Library demolition and the tie-in / finish-off of the exposed footprint where the new building meets Building P; abatement and hazardous materials; utility infrastructure beyond the five-foot perimeter line; DSA-driven scope added during plan review; FF&amp;E and the classroom technology package (the FMP carries these separately as HS52); off-hours and phasing premiums for occupied campuses; swing space and interim housing. None of these appear as priced lines.`
+  ];
+  document.getElementById("watch").innerHTML =
+    LLB_WATCH.map(w => `<div class="item llbw">${w}</div>`).join("") +
+    watch.map(w => `<div class="item">${w}</div>`).join("");
 }
 
 // ---- expand/collapse all ----
@@ -2105,7 +2147,27 @@ const GC_TIERS = [
   {t: "Medium GC", note: "full-time PM &amp; super, partial specialty support", mo: [65000, 85000], mk: [15, 18], psf: [865, 1010]},
   {t: "Large GC", note: "Balfour Beatty &mdash; actual work prices $884&ndash;1,019 / SF", mo: [99891, 109896], mk: [18, 21], psf: [880, 1120], actual: true}
 ];
+const FMP_VS = [
+  {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, items: "C10 Preschool, TK and Kindergarten <span class=\"tH\">High</span>", fmp: 10852800, act: 17805933},
+  {b: "Valentine ES &mdash; Classroom, MPR &amp; Kitchen", sf: 22044, items: "V12 Grades 1&ndash;5 + V15 MPR + V16 Food service <span class=\"tH\">High</span>", fmp: 30194990, act: 22472400},
+  {b: "San Marino HS &mdash; Medical Arts &amp; Career Center", sf: 36782, items: "<b>no new-construction line item exists for SMHS</b>", fmp: 0, act: 29135996, none: true}
+];
+function renderFmpVs() {
+  document.getElementById("fmpVsBody").innerHTML = FMP_VS.map(r => {
+    const d = r.act - r.fmp, pct = r.fmp ? (100 * d / r.fmp) : null;
+    const vcls = r.none ? "b3" : (d > 0 ? "b3" : "b1");
+    return `<tr${r.none ? ' class="actual"' : ""}>
+      <td>${r.b}<span class="gcnote">${r.sf.toLocaleString()} GSF</span></td>
+      <td style="text-align:left;font-weight:400;color:var(--ink-2)">${r.items}</td>
+      <td>${r.fmp ? fmt(r.fmp) : "&mdash;"}</td>
+      <td>${fmt(r.act)}</td>
+      <td><span class="psf ${vcls}">${r.none ? "unbudgeted" : (d > 0 ? "+" : "&minus;") + fmt(Math.abs(d)).replace("$", "$") + " (" + (pct > 0 ? "+" : "") + pct.toFixed(0) + "%)"}</span></td>
+      <td>${r.fmp ? "$" + Math.round(r.fmp / r.sf) + " &rarr; $" + Math.round(r.act / r.sf) : "&mdash; &rarr; $" + Math.round(r.act / r.sf)}</td>
+    </tr>`;
+  }).join("");
+}
 function renderFinalists() {
+  renderFmpVs();
   document.getElementById("finBody").innerHTML = FINALISTS.map(x => `
     <tr>
       <td>${x.n}<span class="gcnote">${x.hq}</span></td>
