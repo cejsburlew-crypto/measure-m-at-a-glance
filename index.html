@@ -825,8 +825,9 @@
               <table class="gctable">
                 <thead><tr>
                   <th>Building</th><th>FMP Construction<span class="thsub">rate &times; actual GSF</span></th>
-                  <th>BB Proposal<span class="thsub">incl. GC&rsquo;s &amp; GR&rsquo;s</span></th><th>Variance</th>
-                  <th>Less Escalation<span class="thsub">&minus;12.5%</span></th><th>FMP $/SF &rarr; BB $/SF</th>
+                  <th>BB As Proposed</th><th>BB Corrected<span class="thsub">omissions restored</span></th>
+                  <th>Variance<span class="thsub">corrected</span></th>
+                  <th>Less Escalation<span class="thsub">&minus;12.5%</span></th><th>FMP $/SF &rarr; Corrected $/SF</th>
                 </tr></thead>
                 <tbody id="fmpVsBody"></tbody>
               </table>
@@ -838,7 +839,16 @@
                 effectively priced as though it were the two-storey building. Scale explains part of it, but not a
                 two-storey coming in cheaper per foot than a one-storey; the rest points to Carver being overpriced.
                 <br><br>
-                <b>Variance tracks building size, not contractor greed.</b>
+                <b>On corrected costs the variances converge.</b> As proposed, the spread ran from +70% at Carver down to
+                &minus;28% at the Career Center, which looked like a size effect. Corrected, every line sits between
+                <b>+45% and +70%</b> over the FMP rate, or <b>+33% to +58%</b> after escalation &mdash; because the
+                apparent bargains were omissions. SMHS moves from +26.9% to <b>+45.3%</b> and the Career Center from
+                &minus;28.0% to <b>+67.3%</b>.
+                <br><br>
+                <b>Carver remains the outlier, and now for a real reason.</b> Its divisions are complete and its GC is
+                covered, yet it still prices +70% over the FMP rate &mdash; $1,013/SF for single-storey work against
+                $1,011&ndash;1,039/SF for two-storey buildings. That is the finding to press: one rate card applied
+                regardless of building type, which penalises the smallest and simplest project hardest.
                 Against the FMP&rsquo;s type-correct rates, the gap falls steadily as area grows: 17,580 GSF &rarr; +70%,
                 22,044 GSF &rarr; +46%, 36,782 GSF &rarr; +23%. Balfour spreads one fixed monthly general-conditions crew
                 across whatever area exists &mdash; $70.01/SF at Carver against $39.99/SF at SMHS &mdash; so small
@@ -2260,24 +2270,26 @@ const FMP_ESC = 0.125;   // Jan 2024 FMP -> 2026 pricing, ~6%/yr
 // either side - Balfour's totals carry their own GC's/GR's/fee/bonds/contingency but no District soft cost.
 const FMP_VS = [
   {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, basis: ["NEW construction, one-storey", "FMP rate $595.00/SF"],
-   fmp: 17580 * 595.00, act: 17805933},
+   fmp: 17580 * 595.00, act: 17805933, corr: 17805933},
   {b: "Valentine ES &mdash; CR / MPR / Kitchen", sf: 22044, basis: ["NEW construction, two-storey", "FMP rate $696.15/SF"],
-   fmp: 22044 * 696.15, act: 22472400},
+   fmp: 22044 * 696.15, act: 22472400, corr: 22911984},
   {b: "San Marino HS &mdash; Medical Arts building", sf: 31556, basis: ["NEW construction, two-storey", "FMP rate $696.15/SF", "normalized &mdash; the FMP held no new-construction rate for SMHS"],
-   fmp: 31556 * 696.15, act: 27881756, norm: true},
-  {b: "San Marino HS &mdash; Career Center / Library", sf: 5226, basis: ["MODERNIZATION of existing space", "FMP rate $333.20/SF", "BB prices a flat $240.00/SF"],
-   fmp: 5226 * 333.20, act: 1254240, mod: true}
+   fmp: 31556 * 696.15, act: 27881756, corr: 31915632, norm: true},
+  {b: "San Marino HS &mdash; Career Center / Library", sf: 5226, basis: ["MODERNIZATION of existing space", "FMP rate $333.20/SF", "BB prices a flat $240.00/SF as an &ldquo;Add For&rdquo;"],
+   fmp: 5226 * 333.20, act: 1254240, corr: 2913133}
 ];
 function renderFmpVs() {
   document.getElementById("fmpVsBody").innerHTML = FMP_VS.map(r => {
-    const d = r.act - r.fmp, pct = 100 * d / r.fmp, resid = pct - 100 * FMP_ESC;
+    const p = 100 * (r.act / r.fmp - 1), pc = 100 * (r.corr / r.fmp - 1), resid = pc - 100 * FMP_ESC;
+    const cls = v => v < 0 ? "b1" : (v > 40 ? "b3" : (v > 20 ? "b2" : "b1"));
     return `<tr${r.norm ? ' class="actual"' : ""}>
-      <td>${r.b}<span class="gcnote">${r.sf.toLocaleString()} GSF</span>${(Array.isArray(r.basis) ? r.basis : [r.basis]).map(x => `<span class="gcnote">${x}</span>`).join("")}</td>
+      <td>${r.b}<span class="gcnote">${r.sf.toLocaleString()} GSF</span>${r.basis.map(x => `<span class="gcnote">${x}</span>`).join("")}</td>
       <td>${fmt(r.fmp)}</td>
-      <td>${fmt(r.act)}</td>
-      <td><span class="psf ${pct < 0 ? "b1" : (pct > 40 ? "b3" : (pct > 20 ? "b2" : "b1"))}">${pct > 0 ? "+" : ""}${pct.toFixed(1)}%</span></td>
-      <td><span class="psf ${resid < 0 ? "b1" : (resid > 40 ? "b3" : (resid > 20 ? "b2" : "b1"))}">${resid > 0 ? "+" : ""}${resid.toFixed(1)}%</span></td>
-      <td>$${Math.round(r.fmp / r.sf)} &rarr; $${Math.round(r.act / r.sf)}</td>
+      <td>${fmt(r.act)}<span class="gcnote">${p > 0 ? "+" : ""}${p.toFixed(1)}% vs FMP</span></td>
+      <td><b>${fmt(r.corr)}</b>${r.corr !== r.act ? `<span class="gcnote">+${fmt(r.corr - r.act)} restored</span>` : `<span class="gcnote">no adjustment</span>`}</td>
+      <td><span class="psf ${cls(pc)}">${pc > 0 ? "+" : ""}${pc.toFixed(1)}%</span></td>
+      <td><span class="psf ${cls(resid)}">${resid > 0 ? "+" : ""}${resid.toFixed(1)}%</span></td>
+      <td>$${Math.round(r.fmp / r.sf)} &rarr; $${Math.round(r.corr / r.sf)}</td>
     </tr>`;
   }).join("");
 }
@@ -2286,21 +2298,36 @@ const GC_DUR = [
   {n: "Valentine ES &mdash; Two-Storey", mo: 109896, priced: 1318752, lo: 16, hi: 18},
   {n: "San Marino HS &mdash; Medical Arts", mo: 105153, priced: 1261836, lo: 16, hi: 18}
 ];
+function renderGcDur() {
+  let tp = 0, tl = 0, th = 0;
+  const rows = GC_DUR.map(g => {
+    const lo = g.mo * g.lo, hi = g.mo * g.hi, sl = lo - g.priced, sh = hi - g.priced;
+    tp += g.priced; tl += lo; th += hi;
+    return `<tr>
+      <td>${g.n}</td><td>${fmt(g.mo)}</td><td>${fmt(g.priced)}</td>
+      <td>${g.lo}&ndash;${g.hi} months</td><td>${fmt(lo)} &ndash; ${fmt(hi)}</td>
+      <td><span class="psf ${sh > 400000 ? "b3" : (sh > 100000 ? "b2" : "b1")}">${sl > 0 ? "+" + fmt(sl) : "covered"} &ndash; +${fmt(sh)}</span></td>
+    </tr>`;
+  }).join("");
+  document.getElementById("gcDurBody").innerHTML = rows + `<tr class="actual">
+      <td><b>Program total</b></td><td></td><td><b>${fmt(tp)}</b></td><td></td>
+      <td><b>${fmt(tl)} &ndash; ${fmt(th)}</b></td>
+      <td><span class="psf b3"><b>+${fmt(tl - tp)} &ndash; +${fmt(th - tp)}</b></span></td></tr>`;
+}
 function renderFix() {
   const SF = 31556, dir = 22176549.74, mkPool = 5705205.78, gcP = 1261836, fixed = 75000, mo = 105153;
-  const csr = (mkPool - gcP - fixed) / dir;              // cost-scaling markups only: 19.70%
-  const nd = dir + SF * 95.66;                            // Division 07 + utilities + minor divisions
+  const csr = (mkPool - gcP - fixed) / dir;
+  const nd = dir + SF * 95.66;
   const smhsLo = nd + nd * csr + mo * 16 + fixed;
-  const smhsHi = nd + nd * csr + mo * 18 + fixed;
   const rows = [
     {n: "Carver ES &mdash; New TK &amp; KG", as: 17805932.98, adj: 0, sf: 17580,
      note: "divisions complete; stands as priced. GC covered at 12 months, short $167,778 at 14"},
     {n: "Valentine ES &mdash; Two-Storey", as: 22472400.13, adj: 439584, sf: 22044,
-     note: "divisions complete; general conditions re-priced from 12 to 16&ndash;18 months (+$439,584 to +$659,376)"},
+     note: "divisions complete; general conditions re-priced from 12 to 16&ndash;18 months"},
     {n: "San Marino HS &mdash; Medical Arts", as: 27881755.52, adj: smhsLo - 27881755.52, sf: SF,
-     note: "+$95.66/SF direct for Division 07, utilities and minor divisions; cost-scaling markups at 19.70%; GC re-priced to 16&ndash;18 months. <b>GC's and GR's are time-based, so they are corrected by schedule, not by the blended 25.73% ratio</b>"},
+     note: "+$95.66/SF direct for Division 07, utilities and minor divisions; cost-scaling markups at 19.70%; GC re-priced to 16&ndash;18 months. <b>GC&rsquo;s and GR&rsquo;s are time-based, so they are corrected by schedule, not by the blended 25.73% ratio</b>"},
     {n: "San Marino HS &mdash; Career Center", as: 1254240, adj: 2913133 - 1254240, sf: 5226,
-     note: "loaded to a real modernization basis: FMP $333.20/SF escalated, abatement, interface demolition, then GC's and fee"}
+     note: "loaded to a real modernization basis: FMP $333.20/SF escalated, abatement, interface demolition, then GC&rsquo;s and fee"}
   ];
   let ta = 0, tj = 0;
   const body = rows.map(r => {
@@ -2311,37 +2338,17 @@ function renderFix() {
       <td>${fmt(r.as)}</td>
       <td>${r.adj ? `<span class="psf b3">+${fmt(r.adj)}</span>` : `<span class="psf b1">none</span>`}</td>
       <td><b>${fmt(cor)}</b></td>
-      <td>${r.sf ? "$" + Math.round(cor / r.sf).toLocaleString() : "&mdash;"}</td>
+      <td>$${Math.round(cor / r.sf).toLocaleString()}</td>
     </tr>`;
   }).join("");
   document.getElementById("fixBody").innerHTML = body + `<tr class="actual">
-    <td><b>Program total</b><span class="gcnote">low case shown; the high case (14-month Carver, 18-month two-storey buildings) reaches ${fmt(76144558)}</span></td>
+    <td><b>Program total</b><span class="gcnote">high case (14-month Carver, 18-month two-storey buildings) reaches ${fmt(76144558)}</span></td>
     <td><b>${fmt(ta)}</b></td><td><span class="psf b3"><b>+${fmt(tj)}</b></span></td>
     <td><b>${fmt(ta + tj)}</b></td><td><b>+${(100 * tj / ta).toFixed(1)}%</b></td></tr>`;
 }
-function renderGcDur() {
-  renderFix();
-  let tp = 0, tl = 0, th = 0;
-  const rows = GC_DUR.map(g => {
-    const lo = g.mo * g.lo, hi = g.mo * g.hi, sl = lo - g.priced, sh = hi - g.priced;
-    tp += g.priced; tl += lo; th += hi;
-    return `<tr>
-      <td>${g.n}</td>
-      <td>${fmt(g.mo)}</td>
-      <td>${fmt(g.priced)}</td>
-      <td>${g.lo}&ndash;${g.hi} months</td>
-      <td>${fmt(lo)} &ndash; ${fmt(hi)}</td>
-      <td><span class="psf ${sh > 400000 ? "b3" : (sh > 100000 ? "b2" : "b1")}">${sl > 0 ? "+" + fmt(sl) : "covered"} &ndash; +${fmt(sh)}</span></td>
-    </tr>`;
-  }).join("");
-  document.getElementById("gcDurBody").innerHTML = rows + `<tr class="actual">
-      <td><b>Program total</b></td><td></td><td><b>${fmt(tp)}</b></td><td></td>
-      <td><b>${fmt(tl)} &ndash; ${fmt(th)}</b></td>
-      <td><span class="psf b3"><b>+${fmt(tl - tp)} &ndash; +${fmt(th - tp)}</b></span></td>
-    </tr>`;
-}
 function renderFinalists() {
   renderGcDur();
+  renderFix();
   renderFmpVs();
   document.getElementById("finBody").innerHTML = FINALISTS.map(x => `
     <tr class="finmain">
