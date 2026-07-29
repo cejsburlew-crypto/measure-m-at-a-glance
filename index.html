@@ -796,7 +796,15 @@
                 </tr></thead>
                 <tbody id="fmpVsBody"></tbody>
               </table>
-              <div class="llbhint" style="margin-bottom:12px"><b>Variance tracks building size, not contractor greed.</b>
+              <div class="llbhint" style="margin-bottom:12px"><b>The per-SF rates run backwards by building type.</b>
+                A two-storey building should cost <i>more</i> per square foot than a single-storey one &mdash; the FMP
+                itself says 17% more. Balfour prices the opposite: single-storey Carver at <b>$1,013/SF</b>, two-storey
+                Valentine at <b>$1,019/SF</b> (only 0.6% apart, not 17%), and the two-storey SMHS Medical Arts building
+                at <b>$884/SF</b> &mdash; <span class="amt">13% below</span> the single-storey elementary. Carver is
+                effectively priced as though it were the two-storey building. Scale explains part of it, but not a
+                two-storey coming in cheaper per foot than a one-storey; the rest points to Carver being overpriced.
+                <br><br>
+                <b>Variance tracks building size, not contractor greed.</b>
                 Against the FMP&rsquo;s type-correct rates, the gap falls steadily as area grows: 17,580 GSF &rarr; +70%,
                 22,044 GSF &rarr; +46%, 36,782 GSF &rarr; +23%. Balfour spreads one fixed monthly general-conditions crew
                 across whatever area exists &mdash; $70.01/SF at Carver against $39.99/SF at SMHS &mdash; so small
@@ -2151,12 +2159,14 @@ const FMP_ESC = 0.125;   // Jan 2024 FMP -> 2026 pricing, ~6%/yr
 // two-storey classroom $696.15/SF, library/moderate modernization $333.20/SF. No soft cost on
 // either side - Balfour's totals carry their own GC's/GR's/fee/bonds/contingency but no District soft cost.
 const FMP_VS = [
-  {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, basis: "one-storey classroom @ $595.00/SF",
+  {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, basis: "NEW, one-storey @ $595.00/SF",
    fmp: 17580 * 595.00, act: 17805933},
-  {b: "Valentine ES &mdash; Two-Storey CR / MPR / Kitchen", sf: 22044, basis: "two-storey classroom @ $696.15/SF",
+  {b: "Valentine ES &mdash; CR / MPR / Kitchen", sf: 22044, basis: "NEW, two-storey @ $696.15/SF",
    fmp: 22044 * 696.15, act: 22472400},
-  {b: "San Marino HS &mdash; Med Arts + Career Center", sf: 36782, basis: "31,556 new @ $696.15 + 5,226 modernization @ $333.20",
-   fmp: 31556 * 696.15 + 5226 * 333.20, act: 29135996, norm: true}
+  {b: "San Marino HS &mdash; Medical Arts building", sf: 31556, basis: "NEW, two-storey @ $696.15/SF (normalized &mdash; the FMP held no new-construction rate for SMHS)",
+   fmp: 31556 * 696.15, act: 27881756, norm: true},
+  {b: "San Marino HS &mdash; Career Center / Library", sf: 5226, basis: "MODERNIZATION @ $333.20/SF &mdash; Balfour prices a flat $240.00/SF",
+   fmp: 5226 * 333.20, act: 1254240, mod: true}
 ];
 function renderFmpVs() {
   document.getElementById("fmpVsBody").innerHTML = FMP_VS.map(r => {
@@ -2165,8 +2175,8 @@ function renderFmpVs() {
       <td>${r.b}<span class="gcnote">${r.sf.toLocaleString()} GSF &middot; ${r.basis}${r.norm ? " (normalized &mdash; the FMP held no new-construction rate for SMHS)" : ""}</span></td>
       <td>${fmt(r.fmp)}</td>
       <td>${fmt(r.act)}</td>
-      <td><span class="psf ${pct > 40 ? "b3" : (pct > 20 ? "b2" : "b1")}">+${pct.toFixed(1)}%</span></td>
-      <td><span class="psf ${resid > 40 ? "b3" : (resid > 20 ? "b2" : "b1")}">+${resid.toFixed(1)}%</span></td>
+      <td><span class="psf ${pct < 0 ? "b1" : (pct > 40 ? "b3" : (pct > 20 ? "b2" : "b1"))}">${pct > 0 ? "+" : ""}${pct.toFixed(1)}%</span></td>
+      <td><span class="psf ${resid < 0 ? "b1" : (resid > 40 ? "b3" : (resid > 20 ? "b2" : "b1"))}">${resid > 0 ? "+" : ""}${resid.toFixed(1)}%</span></td>
       <td>$${Math.round(r.fmp / r.sf)} &rarr; $${Math.round(r.act / r.sf)}</td>
     </tr>`;
   }).join("");
