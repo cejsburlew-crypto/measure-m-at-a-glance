@@ -500,6 +500,27 @@
     text-transform: uppercase; letter-spacing: 0.07em;
   }
   .collbar .collttl .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+  /* Inline author-date citation tags, keyed to the reference list in #refSection. */
+  .cite { font-size: 10.8px; color: var(--ink-3); font-weight: 400; font-style: normal; white-space: nowrap; }
+  .llbcap .cite, .gcap .cite { text-transform: none; letter-spacing: 0; }
+
+  /* Reference list */
+  #refSection .refgrp { margin: 0 0 16px; }
+  #refSection .refhead {
+    font-size: 11px; font-weight: 700; color: var(--ink-2);
+    text-transform: uppercase; letter-spacing: 0.07em; margin: 0 0 8px;
+  }
+  #refSection .ref {
+    font-size: 12px; line-height: 1.45; color: var(--ink-2);
+    padding-left: 26px; text-indent: -26px; margin: 0 0 9px;
+  }
+  #refSection .ref i { font-style: italic; }
+  #refSection .ref .rnote { display: block; text-indent: 0; color: var(--ink-3); font-size: 11.2px; margin-top: 2px; }
+  #refSection .ref a { color: var(--committed); text-decoration: none; word-break: break-word; }
+  #refSection .ref a:hover { text-decoration: underline; }
+  #refSection .derived { border-left: 3px solid var(--bad); padding-left: 12px; }
+  #refSection .derived .refhead { color: var(--bad); }
+
   /* Rollup figure carried in a collapsed header, so every section reads as a total that drills down. */
   .collsum {
     font: 700 12px/1.3 "Avenir Next", "Segoe UI", system-ui, sans-serif;
@@ -857,6 +878,7 @@
             <div class="llbwrap">
               <div class="llbcap">Balfour Beatty proposal terms &mdash; RFQ/P #2026-05, dated 3/12/2026
                 <span class="eq">&mdash; the proposal prices <b>rates</b>, not a GMP: the cost of work is established later in preconstruction</span>
+                <span class="cite">Source: Balfour Beatty Construction, 2026a, pp. 61&ndash;67</span>
               </div>
               <table class="bbtable">
                 <thead><tr>
@@ -869,6 +891,7 @@
               </table>
               <div class="llbcap" style="margin-top:14px">Actual proposal pricing &mdash; Pre-Interview Submittal, 4/17/2026
                 <span class="eq">&mdash; Balfour Beatty&rsquo;s own Project Comparison Reports: gross SF, direct cost, and the GC / GR markup load</span>
+                <span class="cite">Source: Balfour Beatty Construction, 2026b, pp. 43&ndash;45</span>
               </div>
               <table class="llbtable">
                 <thead><tr>
@@ -885,6 +908,7 @@
 
               <div class="llbcap" style="margin-top:14px">What the FMP estimated for these same three buildings
                 <span class="eq">&mdash; the FMP&rsquo;s own construction rate for each building type, applied to the area Balfour actually proposed. No soft cost on either side.</span>
+                <span class="cite">Sources: San Marino Unified School District, 2024 (RawExport rates); Balfour Beatty Construction, 2026b (areas and totals). Escalation column is an author&rsquo;s derivation.</span>
               </div>
               <table class="gctable">
                 <thead><tr>
@@ -937,6 +961,7 @@
 
               <div class="llbcap" style="margin-top:14px">BB Estimate against Normalized Estimate
                 <span class="eq">&mdash; each project&rsquo;s own direct cost plus only the divisions demonstrably missing against its peers, its own cost-scaling markup rate, and general conditions priced to the real schedule</span>
+                <span class="cite">Sources: Balfour Beatty Construction, 2026a, 2026b; San Marino Unified School District, 2024; Division 07 half-area basis per Burlew, 2026 (personal communication). Cost-scaling rates and the Career Center allowances are author&rsquo;s derivations.</span>
               </div>
               <table class="gctable">
                 <thead><tr>
@@ -981,6 +1006,7 @@
 
               <div class="llbcap" style="margin-top:14px">General conditions against the real schedule
                 <span class="eq">&mdash; Balfour priced 12 months for all three; Carver runs 12&ndash;14 months, the two-storey buildings 16&ndash;18</span>
+                <span class="cite">Source: Balfour Beatty Construction, 2026a, item 3.1&ndash;3.2 (p. 61) and GC detail sheets (pp. 62&ndash;67). Durations are the District&rsquo;s programme schedule.</span>
               </div>
               <table class="gctable">
                 <thead><tr>
@@ -1003,6 +1029,7 @@
 
               <div class="llbcap" style="margin-top:14px">LLB interview finalists &mdash; where each one sits
                 <span class="eq">&mdash; size drives the general conditions load, the sub pool, and the tolerance band</span>
+                <span class="cite">Sources: District-verified revenue and surety letters; Engineering News-Record, 2024</span>
               </div>
               <table class="gctable">
                 <thead><tr>
@@ -1022,7 +1049,8 @@
                 wrong by roughly an order of magnitude, which is exactly why surety letters and District-verified
                 revenue are the only acceptable inputs here.</div>
 
-              <div class="llbcap" style="margin-top:14px">Contractor Sizing Chart <span class="eq">&mdash; California certification ceilings and surety capacity by tier</span></div>
+              <div class="llbcap" style="margin-top:14px">Contractor Sizing Chart <span class="eq">&mdash; California certification ceilings and surety capacity by tier</span>
+                <span class="cite">Sources: California Department of General Services, 2022; U.S. Small Business Administration, 2023 (NAICS 236220); Cal. Pub. Cont. Code §§ 20111.5&ndash;20111.6. Bonding brackets are an author&rsquo;s derivation.</span></div>
 
               <table class="gctable">
                 <thead><tr>
@@ -1033,6 +1061,7 @@
 
               <div class="llbcap" style="margin-top:14px">General contractor size and its effect on GC&rsquo;s / GR&rsquo;s
                 <span class="eq">&mdash; illustrative planning ranges for this scope; the large-GC row is Balfour Beatty&rsquo;s actual proposal</span>
+                <span class="cite">Large-GC row: Balfour Beatty Construction, 2026a, 2026b. The micro / small / medium $/SF ranges are author&rsquo;s derivations, not quotes.</span>
               </div>
               <table class="gctable">
                 <thead><tr>
@@ -1158,6 +1187,7 @@
 
       <div class="llbcap">Option A &mdash; modernize the existing lab wing
         <span class="eq">&mdash; the District&rsquo;s own 2024 FMP worksheet lines for HS13, which sum exactly to the $10,576,063 carried in Transcend project 1608</span>
+        <span class="cite">Sources: San Marino Unified School District, 2024 (RawExport, HS13 lines); Transcend PM, 2026 (project 1608). The &times;1.19 escalation is an author&rsquo;s derivation.</span>
       </div>
       <table class="gctable">
         <thead><tr><th>FMP Line</th><th>Area</th><th>FMP Rate</th><th>Construction Cost</th></tr></thead>
@@ -1166,13 +1196,15 @@
 
       <div class="llbcap" style="margin-top:14px">Cost per square foot on a construction basis
         <span class="eq">&mdash; no District soft cost on either side, so the two options are compared like with like</span>
+        <span class="cite">Sources: San Marino Unified School District, 2024; Balfour Beatty Construction, 2026b. The 20,993 sf denominator and the escalation rate are author&rsquo;s derivations.</span>
       </div>
       <table class="gctable">
         <thead><tr><th>Basis</th><th>Cost</th><th>Area</th><th>$ / SF</th></tr></thead>
         <tbody id="mvnPsfBody"></tbody>
       </table>
 
-      <div class="llbcap" style="margin-top:14px">The same 20,993 sf of program delivered either way</div>
+      <div class="llbcap" style="margin-top:14px">The same 20,993 sf of program delivered either way
+        <span class="cite">Denominator per the Huckabee program document; not present in San Marino Unified School District, 2024. See author&rsquo;s derivations.</span></div>
       <table class="gctable">
         <thead><tr><th>Option</th><th>Cost for 20,993 sf</th><th>$ / SF</th><th>Difference</th></tr></thead>
         <tbody id="mvnSameBody"></tbody>
@@ -1182,6 +1214,7 @@
 
       <div class="llbcap" style="margin-top:14px">San Marino HS totals, Career Center included both ways
         <span class="eq">&mdash; the Career Center is constant, so it does not affect the difference</span>
+        <span class="cite">Sources: Balfour Beatty Construction, 2026b; San Marino Unified School District, 2024</span>
       </div>
       <table class="gctable">
         <thead><tr><th>Option</th><th>Building Scope</th><th>Career Center<span class="thsub">constant</span></th><th>SMHS Total</th><th>Difference</th></tr></thead>
@@ -1354,6 +1387,129 @@
   </section>
 
 
+
+  <section id="refSection">
+    <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">References and Basis of Analysis
+      <span class="note">every figure on this page traces to a source document, a worksheet row, or an author&rsquo;s derivation declared as such</span>
+      <span class="collsum" id="refSum">&hellip;</span>
+      <button type="button" class="expand-all" id="refToggle" style="margin-left:auto">Show References</button>
+    </h2>
+    <div class="card coll" id="refCard" hidden>
+      <div class="ladder-note" style="margin:0 0 16px">
+        <b>How to challenge anything on this page.</b> Every Balfour Beatty figure can be traced to a page number in
+        their own submittals &mdash; the Fee Proposal Summary at p. 61 and the General Conditions detail sheets at
+        pp. 62&ndash;67 of the March proposal, and the Project Comparison Reports at pp. 43&ndash;45 of the April
+        pre-interview submittal. Every FMP rate can be traced to a specific worksheet row of the District&rsquo;s own
+        cost-estimate export &mdash; the one-storey construction and building-pad pairs at <b>r121 / r122</b> and
+        <b>r231 / r232</b>, and the two-storey classroom and its half-area pad at <b>r235 / r236</b>. Every arithmetic
+        reconciliation on this page is <i>shown</i> rather than asserted, so each one can be re-performed line by line.
+        Where a figure is the author&rsquo;s own construction rather than a published number, it is listed under
+        &ldquo;Author&rsquo;s derivations&rdquo; below and is flagged inline wherever it appears.
+      </div>
+
+      <div class="refgrp">
+        <div class="refhead">Primary sources &mdash; proposals and District records</div>
+        <p class="ref">Balfour Beatty Construction, LLC. (2026a, March 12). <i>Response to RFQ/P #2026-05:
+          Lease-leaseback construction services</i> [Unpublished proposal]. San Marino Unified School District.
+          <span class="rnote">Fee Proposal Summary (p. 61) and General Conditions detail sheets (pp. 62&ndash;67).
+          Source for all monthly general-conditions rates, assumed durations, fee, bond, liability, contingency and
+          allowance terms.</span></p>
+        <p class="ref">Balfour Beatty Construction, LLC. (2026b, April 17). <i>Pre-interview submittals: San Marino USD
+          lease-leaseback construction services</i> [Unpublished proposal]. San Marino Unified School District.
+          <span class="rnote">Project Comparison Reports (pp. 43&ndash;45), cost data exported April 9, 2026. Source for
+          all gross square footages, CSI division unit rates, direct costs, markup subtotals and project totals.</span></p>
+        <p class="ref">San Marino Unified School District. (2019). <i>Facilities master plan final report</i>
+          (Sections 1.0&ndash;6.0).</p>
+        <p class="ref">San Marino Unified School District. (2024, March 19). <i>Facilities master plan cost estimates</i>
+          [Data set].
+          <span class="rnote">ProjList_Mod worksheet (182 line items) and RawExport worksheet (unit-rate detail);
+          prepared for LPA Design Studios. Source for every FMP construction and modernization rate cited on this page.
+          <b>Estimator of record to be confirmed:</b> the RawExport header carries &ldquo;Building Partnerships&rdquo; and
+          &ldquo;Prepared for LPA Design Studios,&rdquo; but the cost consultant who authored the workbook could not be
+          established from the file, so it is attributed to the District pending confirmation.</span></p>
+        <p class="ref">Transcend PM. (2026, July 26). <i>Measure M program budget tree and purchase order log</i>
+          [Database records]. San Marino Unified School District, Program ID 1.
+          <a href="https://app.transcendpm.com">https://app.transcendpm.com</a>
+          <span class="rnote">Source for the bond ladder, site rollup, project budgets, commitments and pay-request
+          data, and for the quantified scope breakdowns in the project descriptions.</span></p>
+        <p class="ref">Burlew, J. (2026, July 28). <i>Personal communication</i>.
+          <span class="rnote">Construction manager&rsquo;s determination that Division 07 Thermal &amp; Moisture
+          Protection is footprint-driven and is therefore applied to half the gross area of a two-storey building,
+          because the roof and the underslab vapour barrier each serve two floors. This is the basis for the 15,778 SF
+          area used at the San Marino HS Medical Arts building and is <b>not</b> an author&rsquo;s derivation.</span></p>
+      </div>
+
+      <div class="refgrp">
+        <div class="refhead">Delivery-method research</div>
+        <p class="ref">Konchar, M., &amp; Sanvido, V. (1998). Comparison of U.S. project delivery systems.
+          <i>Journal of Construction Engineering and Management, 124</i>(6), 435&ndash;444.
+          <a href="https://doi.org/10.1061/(ASCE)0733-9364(1998)124:6(435)">https://doi.org/10.1061/(ASCE)0733-9364(1998)124:6(435)</a></p>
+        <p class="ref">Sullivan, J., El Asmar, M., Chalhoub, J., &amp; Obeid, H. (2017). Two decades of performance
+          comparisons for design-build, construction manager at risk, and design-bid-build: Quantitative analysis of the
+          state of knowledge on project cost, schedule, and quality. <i>Journal of Construction Engineering and
+          Management, 143</i>(6), Article 04017009.
+          <a href="https://doi.org/10.1061/(ASCE)CO.1943-7862.0001282">https://doi.org/10.1061/(ASCE)CO.1943-7862.0001282</a>
+          <span class="rnote">Author list, volume, issue, article number and DOI verified against the Crossref registry
+          record deposited by ASCE and two independent institutional sources.</span></p>
+      </div>
+
+      <div class="refgrp">
+        <div class="refhead">Contractor sizing, bonding and statutory thresholds</div>
+        <p class="ref">California Department of General Services. (2022). <i>Small business certification size standards:
+          Gross annual receipts</i> (E-Bulletin E-08-22). <a href="https://www.dgs.ca.gov/">https://www.dgs.ca.gov/</a></p>
+        <p class="ref">Cal. Pub. Cont. Code §§ 20111.5&ndash;20111.6 (2024). Prequalification of prospective bidders,
+          school district projects.</p>
+        <p class="ref">Engineering News-Record. (2024, August 12). <i>ENR California 2024 contractor of the year: Pinner
+          builds on its record of reliability.</i>
+          <a href="https://www.enr.com/articles/59078">https://www.enr.com/articles/59078</a></p>
+        <p class="ref">U.S. Small Business Administration. (2023). <i>Table of small business size standards matched to
+          North American Industry Classification System codes</i> (NAICS 236220).</p>
+      </div>
+
+      <div class="refgrp derived">
+        <div class="refhead">Author&rsquo;s derivations &mdash; not sourced</div>
+        <p class="ref" style="padding-left:0;text-indent:0"><b>Every figure below is the author&rsquo;s own
+          construction, not a published number.</b> Each is flagged inline wherever it appears on this page. They are
+          reasoning aids for framing questions to Balfour Beatty and to the board; none should be quoted as source data,
+          and none should be relied on without testing the input assumption behind it.</p>
+        <p class="ref"><b>The 12.5% and 19% escalation rates.</b> Both carry the FMP&rsquo;s January 2024 basis forward
+          &mdash; 12.5% to 2026 pricing and 19% to a 2027 construction window &mdash; at roughly 6% a year compounded.
+          No ENR, RSMeans, Caltrans or DGS index was used, and neither the FMP nor Balfour&rsquo;s proposal states an
+          escalation basis. Every escalation-adjusted variance on this page moves directly with these two numbers.</p>
+        <p class="ref"><b>All six delivery-method bands.</b> The three new-construction bands ($820&ndash;910,
+          $910&ndash;1,000, $1,000&ndash;1,120/SF) and the three modernization bands ($270&ndash;320, $320&ndash;370,
+          $370&ndash;430/SF). No rigorous public study isolates a California K-12 lease-leaseback premium, so the
+          Design-Bid-Build band is anchored on the FMP&rsquo;s own rates and the two lease-leaseback bands are spaced
+          above it using Balfour&rsquo;s own loaded pricing as the upper reference. The &ldquo;% vs DBB midpoint&rdquo;
+          premiums are arithmetic on boundaries the author chose.</p>
+        <p class="ref"><b>The $25/SF abatement and $35/SF interface-demolition allowances</b> on the Career Center.
+          Neither appears in any source document. There is no hazardous-materials survey for Building P in hand and no
+          demolition take-off for the tie-in to the new building; both are placeholders for scope that is real but
+          unquantified.</p>
+        <p class="ref"><b>The 22% load applied to the Career Center.</b> Not a Balfour rate for that line, which carries
+          no markup at all. It is the average markup ratio observed across their other three projects, applied so the
+          renovation can be compared on a loaded basis.</p>
+        <p class="ref"><b>The 19.70% / 14.42% / 13.19% cost-scaling markup rates,</b> derived by subtraction. Balfour
+          discloses one markup subtotal per project and nothing inside it; each rate is the residual after removing the
+          general conditions, preconstruction and allowances they do state, divided by direct cost. The method assumes
+          the disclosed general-conditions totals are exactly what sits inside the markup pool, which cannot be
+          verified. After also removing the stated 8.45% percentage loading (fee 3.25% + bond 1.00% + general liability
+          1.20% + contingency 3.00%), <b>$4,285,661 of the $12,970,468 total markup pool remains unreconciled</b> to any
+          stated component across the three projects. These are residuals, not a fee schedule.</p>
+        <p class="ref"><b>The micro / small / medium GC tier $/SF ranges and the bonding brackets.</b> Built by scaling
+          the staffing and home-office overhead in Balfour&rsquo;s own General Conditions sheets on the assumption that a
+          leaner team drops the part-time BIM, scheduling and operations-support roles and carries lower fee and
+          overhead. The statutory revenue thresholds are sourced (DGS, 2022; SBA, 2023; Cal. Pub. Cont. Code); the
+          <i>$/SF ranges and bonding brackets attached to each tier are not</i>. They are planning ranges, not quotes,
+          and only the large-GC row reflects an actual proposal.</p>
+        <p class="ref"><b>The 20,993 sf versus 14,200 sf denominator choice</b> in the modernize-or-build-new comparison.
+          The 20,993 sf program area comes from the Huckabee document and appears nowhere in the FMP export; the FMP&rsquo;s
+          own HS13 line carries three different and overlapping treatment areas (14,200 / 6,034 / 10,860 sf) and states
+          no total wing area. The choice of denominator moves the modernization rate between $600/sf and $886/sf &mdash;
+          nearly $300/sf &mdash; and must be resolved before either rate is used publicly.</p>
+      </div>
+    </div>
+  </section>
 
   <div id="coPrint"></div>
 </div>
@@ -2691,6 +2847,9 @@ function renderRollupSums() {
   set("watchSum", document.querySelectorAll("#watch > *").length + " items");
   set("tiersSum", fmt(FMP_TOTAL_2024) + " district total");
   set("guideSum", document.querySelectorAll("#guideBody .gitem").length + " notes");
+  const srcN = document.querySelectorAll("#refCard .refgrp:not(.derived) .ref").length;
+  const derN = document.querySelectorAll("#refCard .derived .ref").length - 1;  // less the lead-in paragraph
+  set("refSum", srcN + " sources &nbsp;&middot;&nbsp; " + derN + " declared derivations");
   const fx = FIX_TOTALS;
   if (fx) set("fmpSecSum", fmt(fx.as) + " proposed &rarr; " + fmt(fx.no) + " normalized");
 }
@@ -2710,7 +2869,8 @@ const COLLAPSIBLES = [
   ["g4Toggle",     "g4Body",    "Show Notes",      "Hide Notes"],
   ["g5Toggle",     "g5Body",    "Show Notes",      "Hide Notes"],
   ["mvnToggle",    "mvnCard",   "Show Comparison", "Hide Comparison"],
-  ["watchToggle",  "watch",     "Show Items",      "Hide Items"]
+  ["watchToggle",  "watch",     "Show Items",      "Hide Items"],
+  ["refToggle",    "refCard",   "Show References", "Hide References"]
 ];
 COLLAPSIBLES.forEach(([bid, tid, showLbl, hideLbl]) => {
   const btn = document.getElementById(bid), tgt = document.getElementById(tid);
