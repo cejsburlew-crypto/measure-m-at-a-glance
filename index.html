@@ -209,20 +209,25 @@
   #fmpGuide .gcap { font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.07em; }
   #fmpGuide .gcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
   .gitem { display: flex; gap: 10px; margin-top: 11px; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
+  .gitem > div { flex: 1; min-width: 0; }
   .gitem b { color: var(--ink); }
   .gitem i { font-style: italic; color: var(--ink); }
   .gnum {
     flex: none; width: 19px; height: 19px; border-radius: 50%; background: var(--surface-2);
     color: var(--ink-2); font-size: 11px; font-weight: 700; display: grid; place-items: center; margin-top: 1px;
   }
-  .gtable { width: 100%; margin-top: 8px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .gtable { width: 100%; max-width: 100%; min-width: 0; table-layout: fixed; margin-top: 8px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
   .gtable th {
     font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em;
     text-align: right; padding: 0 10px 4px; border-bottom: 1px solid var(--line); white-space: nowrap;
   }
   .gtable th:first-child { text-align: left; }
   .gtable th .thsub { text-transform: none; letter-spacing: 0; font-weight: 400; }
-  .gtable td { padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+  .gtable td { padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: 12.5px; overflow-wrap: anywhere; }
+  .gtable th:nth-child(1), .gtable td:nth-child(1) { width: 42%; }
+  .gtable th:nth-child(2), .gtable td:nth-child(2) { width: 26%; }
+  .gtable th:nth-child(3), .gtable td:nth-child(3) { width: 32%; padding-right: 0; }
+  .gtable th { overflow-wrap: anywhere; white-space: normal; }
   .gtable tr:last-child td { border-bottom: none; }
   .gtable td:first-child { color: var(--ink); font-weight: 600; }
   .gtable .gsf { text-align: right; white-space: nowrap; font-weight: 700; color: var(--ink); }
@@ -231,8 +236,75 @@
     border-radius: 9px; margin-left: 6px; background: var(--good-bg); color: var(--invoiced); text-transform: uppercase;
   }
   .gtag.warn { background: var(--bad-bg); color: var(--bad); }
-  .gscale { position: relative; display: block; height: 9px; min-width: 150px; background: var(--track); border-radius: 3px; }
+  .gscale { position: relative; display: block; width: 100%; min-width: 0; height: 9px; background: var(--track); border-radius: 3px; }
   .gscale i { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+
+  /* LLB proposals-in-hand table */
+  .llbwrap { margin-top: 12px; border: 1px solid var(--line); border-left: 3px solid var(--bad); border-radius: 6px; padding: 9px 11px; }
+  .llbcap { font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.05em; }
+  .llbcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+  .llbtable { width: 100%; max-width: 100%; min-width: 0; table-layout: fixed; border-collapse: collapse; margin-top: 7px; font-variant-numeric: tabular-nums; }
+  .llbtable th {
+    font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em;
+    text-align: right; padding: 0 8px 4px; border-bottom: 1px solid var(--line); white-space: normal; overflow-wrap: anywhere;
+  }
+  .llbtable th:first-child { text-align: left; }
+  .llbtable th .thsub { text-transform: none; letter-spacing: 0; font-weight: 400; display: block; }
+  .llbtable th:nth-child(1), .llbtable td:nth-child(1) { width: 40%; }
+  .llbtable th:nth-child(2), .llbtable td:nth-child(2) { width: 18%; }
+  .llbtable th:nth-child(3), .llbtable td:nth-child(3) { width: 24%; }
+  .llbtable th:nth-child(4), .llbtable td:nth-child(4) { width: 18%; }
+  .llbtable td { padding: 5px 8px; border-bottom: 1px solid var(--line); font-size: 12.5px; text-align: right; overflow-wrap: anywhere; }
+  .llbtable tr:last-child td { border-bottom: none; }
+  .llbtable td:first-child { text-align: left; color: var(--ink); font-weight: 600; }
+  .llbtable input {
+    width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line);
+    border-radius: 4px; padding: 4px 6px; font: inherit; font-size: 12.5px; text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .llbtable input:focus-visible { outline: 2px solid var(--committed); outline-offset: 0; }
+  .llbtable .psf { font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .llbtable .psf.b1 { color: var(--tier-high); }
+  .llbtable .psf.b2 { color: var(--review); }
+  .llbtable .psf.b3 { color: var(--bad); }
+  .llbtable .psf.none { color: var(--ink-3); font-weight: 400; }
+  .llbhint { font-size: 11.5px; color: var(--ink-3); margin-top: 6px; }
+
+  /* FMP allocation rows inside the project drill-down */
+  .ptable .alochead th { text-align: center; border-bottom: none; padding: 6px 12px 1px; color: var(--gold); }
+  .ptable .alochead th:first-child { text-align: left; padding-left: 44px; }
+  .ptable .alocrow td, .ptable .alocsum td { border-bottom: none; padding: 1px 12px; font-size: 12.5px; text-align: center; }
+  .ptable .alocrow td:first-child, .ptable .alocsum td:first-child { text-align: left; padding-left: 44px; color: var(--ink-2); font-weight: 400; }
+  .ptable .alocamt { font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .ptable .alocsum td { padding-bottom: 9px; border-bottom: 1px solid var(--line); }
+  .ptable .alocsum td:first-child { font-size: 11.5px; color: var(--ink-3); }
+  .ptable .alocnone td { padding: 5px 12px 9px 44px; font-size: 11.5px; color: var(--ink-3); border-bottom: 1px solid var(--line); text-align: left; }
+
+  /* 2024 FMP project list */
+  .plbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+  .plbar input[type="search"], .plbar select {
+    background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 5px;
+    padding: 7px 9px; font: inherit; font-size: 12.5px;
+  }
+  .plbar input[type="search"] { flex: 1 1 260px; }
+  .pltable { width: 100%; min-width: 880px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .pltable th {
+    position: sticky; top: 0; z-index: 1; background: var(--surface);
+    font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em;
+    text-align: right; padding: 7px 10px; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  .pltable th:nth-child(1), .pltable th:nth-child(2), .pltable th:nth-child(3), .pltable th:nth-child(6), .pltable th:nth-child(7) { text-align: left; }
+  .pltable th .thsub { text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .pltable td { padding: 5px 10px; border-bottom: 1px solid var(--line); font-size: 12.5px; text-align: right; }
+  .pltable td:nth-child(1), .pltable td:nth-child(2), .pltable td:nth-child(3), .pltable td:nth-child(6), .pltable td:nth-child(7) { text-align: left; }
+  .pltable td:nth-child(3) { color: var(--ink); }
+  .pltable tr.asg td:nth-child(3) { font-weight: 600; }
+  .pltable .plcat { display: block; font-size: 11px; color: var(--ink-3); }
+  .pltable select {
+    width: 100%; max-width: 250px; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px; padding: 3px 5px; font: inherit; font-size: 11.5px;
+  }
+  .pltable select.on { border-color: var(--gold); color: var(--gold); }
 
   /* Program portfolio breakdown */
   .pf-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
@@ -449,6 +521,7 @@
   :root[data-print-prep] #watchSection,
   :root[data-print-prep] .sbody,
   :root[data-print-prep] .shead .caret,
+  :root[data-print-prep] #plSection,
   :root[data-print-prep] #coSection,
   :root[data-print-prep] #pdfOverlay { display: none !important; }
   :root[data-print-prep] #coPrint { display: block; margin-top: 8px; border-top: 2px solid var(--gold); padding-top: 5px; }
@@ -466,7 +539,7 @@
   --s-smhs: #2a78d6; --s-ves: #4a3aa7; --s-ces: #1baf7a; --s-hms: #eb6834; --s-dw: #e87ba4;
     }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    .toolbar, button.expand-all, .sbody, .shead .caret, #watchSection, #coSection, #pdfOverlay { display: none !important; }
+    .toolbar, button.expand-all, .sbody, .shead .caret, #watchSection, #coSection, #plSection, #pdfOverlay { display: none !important; }
     #coPrint { display: block; margin-top: 5px; border-top: 2px solid var(--gold); padding-top: 3px; }
     .co-print-head { font-size: 10.7px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-2); }
     .co-print-head span { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--ink-3); }
@@ -508,8 +581,18 @@
     .gtable { margin-top: 4px; }
     .gtable th { font-size: 10.7px; padding: 0 8px 2px; }
     .gtable td { padding: 2px 8px; font-size: 10.7px; }
-    .gscale { height: 6px; min-width: 110px; }
+    .gscale { height: 6px; min-width: 0; }
     .gtag { font-size: 10.7px; padding: 0 5px; }
+    #fmpProse { columns: 2; column-gap: 14px; }
+    #fmpProse .gitem { break-inside: avoid; margin-top: 0; margin-bottom: 4px; }
+    .gitem { margin-top: 4px; }
+    .llbwrap { margin-top: 5px; padding: 5px 8px; }
+    .llbcap { font-size: 10.7px; }
+    .llbtable { margin-top: 3px; }
+    .llbtable th { font-size: 10.7px; padding: 0 6px 2px; }
+    .llbtable td { padding: 2px 6px; font-size: 10.7px; }
+    .llbtable .psf { font-size: 10.7px; }
+    .llbhint { font-size: 10.7px; margin-top: 3px; }
     .lgroup .gcap { font-size: 10.7px; }
     .ladder-note { font-size: 10.7px; margin-top: 3px; line-height: 1.15; }
     #siteCards { gap: 2px; }
@@ -618,47 +701,89 @@
               <thead><tr>
                 <th>Delivery Method</th>
                 <th>Expected LA County DSA Cost<br><span class="thsub">new STEM / classroom</span></th>
-                <th style="text-align:left">$550 &mdash; $1,050+ / SF</th>
+                <th style="text-align:left">$600 &mdash; $1,100+ / SF</th>
               </tr></thead>
               <tbody>
                 <tr>
                   <td>Design-Bid-Build (DBB) <span class="gtag">FMP basis</span></td>
-                  <td class="gsf">$600&ndash;800 / SF</td>
-                  <td><span class="gscale"><i style="left:10%;width:40%;background:var(--invoiced)"></i></span></td>
+                  <td class="gsf">$600&ndash;750 / SF</td>
+                  <td><span class="gscale"><i style="left:0%;width:30%;background:var(--tier-high)"></i></span></td>
                 </tr>
                 <tr>
                   <td>Lease-Leaseback &mdash; Typical Market</td>
-                  <td class="gsf">$650&ndash;900 / SF</td>
-                  <td><span class="gscale"><i style="left:20%;width:50%;background:var(--review)"></i></span></td>
+                  <td class="gsf">$750&ndash;900 / SF</td>
+                  <td><span class="gscale"><i style="left:30%;width:30%;background:var(--review)"></i></span></td>
                 </tr>
                 <tr>
-                  <td>Lease-Leaseback &mdash; Heavy Risk Loading <span class="gtag warn">Current LLB Contractor Pool</span></td>
-                  <td class="gsf">$750&ndash;1,000+ / SF</td>
-                  <td><span class="gscale"><i style="left:40%;width:60%;background:var(--bad)"></i></span></td>
+                  <td>Lease-Leaseback &mdash; Heavy Risk Loading</td>
+                  <td class="gsf">$900&ndash;1,050+ / SF</td>
+                  <td><span class="gscale"><i style="left:60%;width:30%;background:var(--bad)"></i><i style="left:90%;width:10%;background:var(--bad);opacity:0.45"></i></span></td>
                 </tr>
               </tbody>
             </table>
+
+            <div class="llbwrap">
+              <div class="llbcap">Lease-Leaseback &mdash; Heavy Risk Loading: proposals in hand
+                <span class="eq">&mdash; enter each figure from the Balfour Beatty GMP proposal; cost / SF calculates and is graded against the bands above</span>
+              </div>
+              <table class="llbtable">
+                <thead><tr>
+                  <th>Project</th>
+                  <th>Building SF</th>
+                  <th>Total Cost <span class="thsub">incl. GC&rsquo;s &amp; GR&rsquo;s</span></th>
+                  <th>Cost / SF</th>
+                </tr></thead>
+                <tbody id="llbBody"></tbody>
+              </table>
+              <div class="llbhint">Transcend baseline budgets for reference: Carver ES <b>$21,500,000</b> &middot; San Marino HS <b>$29,500,000</b> &middot; Valentine ES <b>$31,357,143</b>. Entries save in this browser.</div>
+            </div>
           </div>
         </div>
 
+        <div id="fmpProse">
         <div class="gitem"><span class="gnum">2</span>
           <div>
-            <b>Risk loading is the variable that moves the number.</b> The question behind every Lease-Leaseback
-            proposal is simply: <i>how much uncertainty is each proposer asking the District to pay for?</i>
-            Unresolved scope, escalation, labor availability, subcontractor market, and schedule risk all get priced
-            into the GMP as contingency. That premium &mdash; not the physical building &mdash; is what carries a
-            $600&ndash;800/SF project into the $750&ndash;1,000+/SF band. Where a proposal lands in that range tells
-            you how much risk is being transferred to the District up front versus retained and managed by the builder.
+            <b>Risk loading is the variable that moves the number.</b> The question behind every
+            Lease-Leaseback proposal is simply: <i>how much uncertainty is each proposer asking the District to
+            pay for?</i> Unresolved scope, escalation, labor availability, subcontractor market conditions, and
+            schedule risk all get priced in as contingency. That premium &mdash; not the physical building &mdash;
+            is what carries a $600&ndash;750/SF project into the $900&ndash;1,050+/SF band.
           </div>
         </div>
 
         <div class="gitem"><span class="gnum">3</span>
           <div>
-            <b>What this does to FMP buying power.</b> At the midpoints &mdash; $700/SF DBB versus $875/SF heavily
-            loaded LLB &mdash; the same dollar buys roughly <b>20% less scope</b>. An FMP tier that was sized to
-            deliver a full scope list under DBB should be read as delivering about four-fifths of that list if the
-            work goes out as heavily risk-loaded Lease-Leaseback.
+            <b>The GMP proposal and its &plusmn; tolerance are the risk-loading disclosure &mdash; read them
+            together.</b> A GMP proposal is submitted as a guaranteed maximum price with a stated &plusmn;
+            tolerance around it, and that tolerance band <i>is</i> the range of risk the proposer is asking the
+            District to carry. A tight tolerance says the proposer has resolved its scope and is standing behind
+            the number; a wide tolerance says the uncertainty is still open and the District is being asked to
+            fund the high end of it. Two proposals with the same headline GMP are <b>not</b> equivalent if one
+            carries &plusmn;3% and the other &plusmn;15% &mdash; the second is a materially more expensive
+            proposal with the difference hidden in the band rather than the price.
           </div>
+        </div>
+
+        <div class="gitem"><span class="gnum">4</span>
+          <div>
+            <b>Do not confuse the &plusmn; tolerance with the GMP monthly cost.</b> They answer different
+            questions. The <b>monthly cost</b> is the pay-application draw against the GMP as work is completed
+            &mdash; that is cash flow and timing. The <b>&plusmn; tolerance</b> is exposure: how far the final
+            number can move against the District. A favorable monthly billing rate tells you nothing about how
+            much risk premium is buried in the GMP, and a low draw early in the job does not shrink the tolerance
+            band. Evaluate them separately &mdash; tolerance for how much uncertainty the District is buying,
+            monthly cost for when the District pays for it.
+          </div>
+        </div>
+
+        <div class="gitem"><span class="gnum">5</span>
+          <div>
+            <b>What this does to FMP buying power.</b> At the midpoints &mdash; $675/SF DBB versus $975/SF
+            heavily loaded Lease-Leaseback &mdash; the same dollar buys roughly <b>30% less scope</b>. An FMP
+            tier sized to deliver a full scope list under Design-Bid-Build should be read as delivering about
+            two-thirds of that list if the work goes out as heavily risk-loaded Lease-Leaseback.
+            </div>
+      </div>
         </div>
       </div>
     </div>
@@ -720,6 +845,29 @@
   <section id="watchSection">
     <h2>Watch Items <span class="note">computed from the same data &mdash; shown on screen, excluded from PDF export</span></h2>
     <div class="watch" id="watch"></div>
+  </section>
+
+  <section id="plSection">
+    <h2>2024 FMP Project List <span class="note">ProjList_Mod &mdash; 182 line items; assign each to a Transcend project and every total on this page follows</span>
+      <button type="button" class="expand-all" id="plToggle" style="margin-left:auto">Show List</button>
+    </h2>
+    <div class="card" id="plCard" hidden>
+      <div class="plbar">
+        <input type="search" id="plSearch" placeholder="Filter by ID, name, category or site&hellip;" aria-label="Filter FMP project list">
+        <select id="plPri" aria-label="Filter by priority"><option value="">All priorities</option><option>High</option><option>Medium</option><option>Low</option></select>
+        <select id="plSite" aria-label="Filter by site"><option value="">All sites</option><option>SMHS</option><option>Carver</option><option>Valentine</option><option>Huntington</option></select>
+        <select id="plAsg" aria-label="Filter by assignment"><option value="">All items</option><option value="y">Assigned</option><option value="n">Unassigned</option></select>
+        <span class="tstatus" id="plStatus"></span>
+      </div>
+      <div class="tablewrap" style="border:none;border-radius:0;max-height:520px;overflow:auto">
+        <table class="pltable">
+          <thead><tr>
+            <th>Priority</th><th>ID</th><th>Project Name</th><th>Cost</th><th>Final Cost <span class="thsub">+33%</span></th><th>Site</th><th>Funds Transcend Project</th>
+          </tr></thead>
+          <tbody id="plBody"></tbody>
+        </table>
+      </div>
+    </div>
   </section>
 
 
@@ -810,7 +958,7 @@ const PROGRAM = {
   released: 40000000,
   allocated: 40000000,
   combinedBudget: 110962441.32,
-  projects: 22, rfps: 121, pos: 38,
+  projects: 33, rfps: 121, pos: 38,
   invoicesInReview: 1335165.84, invoicesInReviewCount: 31,
   invoicesDraft: 97921.25, invoicesUnassigned: 115460.26,
   availableOnRelease: 29282607.52
@@ -843,7 +991,72 @@ function setOpen(card, open) {
   card.querySelector(".shead").setAttribute("aria-expanded", open);
 }
 
+const PROJLIST = [["HS40","Exterior Play Spaces, Playfields & Hardcourts","SMHS","New concessions, restroom, team room building",4498200,5983670,"High"],["C38","Exterior Play Spaces, Playfields & Hardcourts","Carver","Grades 1-5 play yard & hardcourts",3600000,4788000,"High"],["HS37","Exterior Play Spaces, Playfields & Hardcourts","SMHS","Baseball & Softball - turf repair, lighting, backstop, field eqpm",2602530,3461990,"High"],["V36","Exterior Play Spaces, Playfields & Hardcourts","Valentine","Grades 1-5 play yard & hardcourts",1800000,2394000,"High"],["HS44","Exterior Play Spaces, Playfields & Hardcourts","SMHS","New football field surface",1604715,2134650,"High"],["HS43","Exterior Play Spaces, Playfields & Hardcourts","SMHS","New track surface & shotput area",1391110,1851360,"High"],["C36","Exterior Play Spaces, Playfields & Hardcourts","Carver","Kindergarten play yard",800000,1064000,"High"],["HS38","Exterior Play Spaces, Playfields & Hardcourts","SMHS","Tennis court refurbishment",708050,942970,"High"],["C37","Exterior Play Spaces, Playfields & Hardcourts","Carver","TK play yard",650000,864500,"High"],["V35","Exterior Play Spaces, Playfields & Hardcourts","Valentine","TK/Kindergarten play yard",650000,864500,"High"],["HS42","Exterior Play Spaces, Playfields & Hardcourts","SMHS","New tennis court",404600,538650,"High"],["V17","Library","Valentine","Reconfiguration of existing space as library",1332800,1772890,"High"],["H4","Modernization / Reconfigure Existing Classrooms","Huntington","Restroom Upgrades",2669170,3551100,"High"],["HS5","Modernization / Reconfigure Existing Classrooms","SMHS","Building Systems",1740000,2314200,"High"],["C5","Modernization / Reconfigure Existing Classrooms","Carver","Building Systems",1644170,2187850,"High"],["H3","Modernization / Reconfigure Existing Classrooms","Huntington","Roofing",1607690,2138640,"High"],["HS3","Modernization / Reconfigure Existing Classrooms","SMHS","Roofing",1600000,2128000,"High"],["V5","Modernization / Reconfigure Existing Classrooms","Valentine","Building Systems",1329496,1768900,"High"],["V3","Modernization / Reconfigure Existing Classrooms","Valentine","Roofing",1257831,1673140,"High"],["H5","Modernization / Reconfigure Existing Classrooms","Huntington","Building Systems",1151397,1532160,"High"],["C1","Modernization / Reconfigure Existing Classrooms","Carver","Existing Classrooms",1000000,1330000,"High"],["H1","Modernization / Reconfigure Existing Classrooms","Huntington","Existing Classrooms",1000000,1330000,"High"],["V1","Modernization / Reconfigure Existing Classrooms","Valentine","Existing Classrooms",1000000,1330000,"High"],["C6","Modernization / Reconfigure Existing Classrooms","Carver","Low Voltage Upgrades",975038,1298080,"High"],["HS6","Modernization / Reconfigure Existing Classrooms","SMHS","Low Voltage Upgrades",930000,1236900,"High"],["HS2","Modernization / Reconfigure Existing Classrooms","SMHS","Exteriors",890000,1183700,"High"],["V6","Modernization / Reconfigure Existing Classrooms","Valentine","Low Voltage Upgrades",843234,1122520,"High"],["V4","Modernization / Reconfigure Existing Classrooms","Valentine","Restroom Upgrades",803250,1069320,"High"],["C3","Modernization / Reconfigure Existing Classrooms","Carver","Roofing",712840,948290,"High"],["HS4","Modernization / Reconfigure Existing Classrooms","SMHS","Restroom Upgrades",700000,931000,"High"],["H6","Modernization / Reconfigure Existing Classrooms","Huntington","Low Voltage Upgrades",693639,923020,"High"],["H26","Student Support & Counseling","Huntington","Existing wellness center minor modernization",153510,204820,"Medium"],["HS1","Modernization / Reconfigure Existing Classrooms","SMHS","Existing Classrooms",600000,798000,"High"],["C4","Modernization / Reconfigure Existing Classrooms","Carver","Restroom Upgrades",568820,756770,"High"],["C7","Modernization / Reconfigure Existing Classrooms","Carver","Upgrade Backbone, wireless access points, & switches (direct cost)",433541,433541,"High"],["C8","Modernization / Reconfigure Existing Classrooms","Carver","Upgrade fiber optic connectivity (direct cost)",433541,433541,"High"],["HS7","Modernization / Reconfigure Existing Classrooms","SMHS","Upgrade Backbone, wireless access points, & switches (direct cost)",425000,425000,"High"],["HS8","Modernization / Reconfigure Existing Classrooms","SMHS","Upgrade fiber optic connectivity (direct cost)",425000,425000,"High"],["V7","Modernization / Reconfigure Existing Classrooms","Valentine","Upgrade Backbone, wireless access points, & switches (direct cost)",334152,334152,"High"],["V8","Modernization / Reconfigure Existing Classrooms","Valentine","Upgrade fiber optic connectivity (direct cost)",334152,334152,"High"],["H7","Modernization / Reconfigure Existing Classrooms","Huntington","Upgrade Backbone, wireless access points, & switches (direct cost)",303664,303664,"High"],["H8","Modernization / Reconfigure Existing Classrooms","Huntington","Upgrade fiber optic connectivity (direct cost)",303664,303664,"High"],["C2","Modernization / Reconfigure Existing Classrooms","Carver","Exteriors",34272,46550,"High"],["V2","Modernization / Reconfigure Existing Classrooms","Valentine","Exteriors",34272,46550,"High"],["H2","Modernization / Reconfigure Existing Classrooms","Huntington","Exteriors",11424,15960,"High"],["V15","Multipurpose Room (MPR) & Food Service","Valentine","MPR, one storey building",4411000,5866630,"High"],["V16","Multipurpose Room (MPR) & Food Service","Valentine","Food service building",3195000,4249350,"High"],["V14","Multipurpose Room (MPR) & Food Service","Valentine","Lunch court",828700,1102570,"High"],["V12","New Construction (Classrooms)","Valentine","Grades 1-5",15097000,20079010,"High"],["C10","New Construction (Classrooms)","Carver","Preschool, TK and Kindergarten",8159982,10852800,"High"],["V11","New Construction (Classrooms)","Valentine","Preschool, TK and Kindergarten",6987045,9294040,"High"],["H29","Safety and Security","Huntington","Shade structure",2114000,2811620,"High"],["HS24","Safety and Security","SMHS","Resurface and repair existing parking lot",1839000,2445870,"High"],["HS25","Safety and Security","SMHS","New parking lot",667000,887110,"High"],["V21","Safety and Security","Valentine","New drop-off area",549000,730170,"High"],["C25","Safety and Security","Carver","ADA path of travel upgrades",500000,665000,"High"],["H32","Safety and Security","Huntington","ADA path of travel upgrades",500000,665000,"High"],["HS27","Safety and Security","SMHS","ADA path of travel upgrades",500000,665000,"High"],["V23","Safety and Security","Valentine","ADA path of travel upgrades",500000,665000,"High"],["C18","Student Support & Counseling","Carver","Wellness center (minor expansion of admin space)",204564,272650,"Medium"],["C22","Safety and Security","Carver","New drop-off area",329000,437570,"High"],["V26","Safety and Security","Valentine","Decorative metal fencing and gates",197000,262010,"High"],["HS29","Safety and Security","SMHS","Rolling decorative metal gate",170000,226100,"High"],["V20","Safety and Security","Valentine","New parking lot",154000,204820,"High"],["C24","Safety and Security","Carver","Remove / replace retaining wall",124000,164920,"High"],["HS30","Safety and Security","SMHS","New exterior lighting for student safety",119000,158270,"High"],["HS32","Safety and Security","SMHS","New emergency signs and posts",96000,127680,"High"],["H33","Safety and Security","Huntington","New exterior lighting for student safety",90000,119700,"High"],["C23","Safety and Security","Carver","New concrete pedestrian paving",89000,118370,"High"],["H36","Safety and Security","Huntington","Perimeter CMU wall",74000,98420,"High"],["HS28","Safety and Security","SMHS","Decorative metal fencing and gates",69000,91770,"High"],["HS31","Safety and Security","SMHS","New safety locks to existing classroom doors",63000,83790,"High"],["C29","Safety and Security","Carver","New exterior lighting for student safety",60000,79800,"High"],["V27","Safety and Security","Valentine","New exterior lighting for student safety",60000,79800,"High"],["V22","Safety and Security","Valentine","New concrete pedestrian paving",58000,77140,"High"],["V24","Safety and Security","Valentine","Perimeter CMU wall",58000,77140,"High"],["C28","Safety and Security","Carver","Rolling decorative metal gate",57000,75810,"High"],["H35","Safety and Security","Huntington","New emergency signs and posts",48000,63840,"High"],["H34","Safety and Security","Huntington","New safety locks to existing classroom doors",46000,61180,"High"],["C30","Safety and Security","Carver","New safety locks to existing classroom doors",37000,49210,"High"],["C27","Safety and Security","Carver","Decorative metal fencing and gates",36000,47880,"High"],["HS26","Safety and Security","SMHS","New concrete pedestrian paving",36000,47880,"High"],["C26","Safety and Security","Carver","Rolling chain link gate",34000,45220,"High"],["V25","Safety and Security","Valentine","Rolling chain link gate",34000,45220,"High"],["V28","Safety and Security","Valentine","New safety locks to existing classroom doors",25000,33250,"High"],["C31","Safety and Security","Carver","New emergency signs and posts",24000,31920,"High"],["V29","Safety and Security","Valentine","New emergency signs and posts",24000,31920,"High"],["H30","Safety and Security","Huntington","New drop-off area",9000,11970,"High"],["H31","Safety and Security","Huntington","New concrete pedestrian paving",3000,3990,"High"],["H10","Site Utilities","Huntington","Electrical service upgrade & capacity expansion",1173000,1560090,"High"],["HS10","Site Utilities","SMHS","Electrical service upgrade & capacity expansion",1063000,1413790,"High"],["V10","Site Utilities","Valentine","Electrical service upgrade & capacity expansion",702000,933660,"High"],["HS9","Site Utilities","SMHS","Sanitary & Storm drain upgrades",695000,924350,"High"],["H9","Site Utilities","Huntington","Sanitary & Storm drain upgrades",692000,920360,"High"],["C9","Site Utilities","Carver","Sanitary & Storm drain upgrades",623000,828590,"High"],["V9","Site Utilities","Valentine","Sanitary & Storm drain upgrades",405000,538650,"High"],["HS12","Site Utilities","SMHS","Domestic plumbing & fire water",386000,513380,"High"],["H12","Site Utilities","Huntington","Domestic plumbing & fire water",264000,351120,"High"],["HS11","Site Utilities","SMHS","Natural gas",129000,171570,"High"],["H11","Site Utilities","Huntington","Natural gas",76000,101080,"High"],["C17","Student Support & Counseling","Carver","Learning center (moderate expansion of admin space)",1080098,1437730,"High"],["H25","Student Support & Counseling","Huntington","Existing learning center minor modernization & reconfiguration",464695,618450,"High"],["HS52","Technology Equipment","SMHS","Classroom tech - smart boards, projectors, audio, etc. (direct cost)",1125000,1125000,"High"],["C43","Technology Equipment","Carver","Classroom tech - smart boards, projectors, audio, etc. (direct cost)",729000,729000,"High"],["H47","Technology Equipment","Huntington","Classroom tech - smart boards, projectors, audio, etc. (direct cost)",667000,667000,"High"],["V40","Technology Equipment","Valentine","Classroom tech - smart boards, projectors, audio, etc. (direct cost)",479000,479000,"High"],["C12","Flex Labs, Science, VAPA, Theater & Elective Spaces","Carver","Minor modernization to existing spaces",519078,691600,"Low"],["C13","Multipurpose Room (MPR) & Food Service","Carver","MPR minor modernization, new A/V & lighting",969000,1288770,"Low"],["C14","Multipurpose Room (MPR) & Food Service","Carver","Lunch court",1673019,2226420,"Low"],["C15","Multipurpose Room (MPR) & Food Service","Carver","Food service area reconfiguration & small add'l building",4625000,6151250,"Low"],["C16","Library","Carver","Minor modernization to existing spaces",511849,680960,"Low"],["C19","Administration & Staff Support","Carver","Minor modernization to existing spaces",624750,831250,"Low"],["C20","Administration & Staff Support","Carver","Restroom Upgrades",92000,122360,"Low"],["C11","New Construction (Classrooms)","Carver","Grades 1-5",1391000,1850030,"Low"],["C33","Safety and Security","Carver","Security cameras",100000,133000,"Low"],["C34","Outdoor Learning Environments & Quads","Carver","Landscape enhancements",95200,127680,"Low"],["C35","Outdoor Learning Environments & Quads","Carver","New learning courts",590000,784700,"Low"],["C39","Next Generation Classroom Flexibility","Carver","Flexible furniture - classrooms (direct cost)",1375000,1375000,"Low"],["C40","Next Generation Classroom Flexibility","Carver","Flexible furniture - library (direct cost)",60000,60000,"Low"],["C41","Next Generation Classroom Flexibility","Carver","Flexible furniture - MPR (direct cost)",60000,60000,"Low"],["C42","Next Generation Classroom Flexibility","Carver","Flexible furniture - lunch court (direct cost)",60000,60000,"Low"],["C21","Safety and Security","Carver","Replace parking lot lights w/ LED",360000,478800,"Low"],["V13","Flex Labs, Science, VAPA, Theater & Elective Spaces","Valentine","Reconfiguration of existing STEM lab",428400,570570,"Low"],["V19","Safety and Security","Valentine","Replace parking lot lights w/ LED",108000,143640,"Low"],["V18","Administration & Staff Support","Valentine","Minor modernization & reconfiguration of existing spaces",1164266,1549450,"Low"],["V31","Safety and Security","Valentine","Security cameras",100000,133000,"Low"],["V32","Outdoor Learning Environments & Quads","Valentine","Landscape enhancements",171600,228760,"Low"],["V33","Outdoor Learning Environments & Quads","Valentine","New learning courts",406000,539980,"Low"],["V34","Outdoor Learning Environments & Quads","Valentine","Enhance learning courts",490875,653030,"Low"],["V37","Next Generation Classroom Flexibility","Valentine","Flexible furniture - classrooms (direct cost)",917000,917000,"Low"],["V38","Next Generation Classroom Flexibility","Valentine","Flexible furniture - library (direct cost)",60000,60000,"Low"],["V39","Next Generation Classroom Flexibility","Valentine","Flexible furniture - lunch court (direct cost)",60000,60000,"Low"],["H13","New Construction (Classrooms)","Huntington","Classroom building to replace portables",2756000,3665480,"Low"],["H14","Flex Labs, Science, VAPA, Theater & Elective Spaces","Huntington","Science & Art Existing Labs minor modernization & reconfiguration",2317644,3082940,"Low"],["H15","Flex Labs, Science, VAPA, Theater & Elective Spaces","Huntington","Science & Art Existing Labs small additional building",1095861,1457680,"Low"],["H16","Flex Labs, Science, VAPA, Theater & Elective Spaces","Huntington","Existing Music Room minor modernization & reconfiguration",581196,774060,"Low"],["H17","Flex Labs, Science, VAPA, Theater & Elective Spaces","Huntington","Existing Music Room small additional building",365287,486780,"Low"],["H18","Flex Labs, Science, VAPA, Theater & Elective Spaces","Huntington","Auditorium moderate modernization",4056913,5395810,"Low"],["H19","Multipurpose Room (MPR) & Food Service","Huntington","MPR modernization",1320000,1755600,"Low"],["H20","Multipurpose Room (MPR) & Food Service","Huntington","Food service modernization",1634250,2174550,"Low"],["H21","Multipurpose Room (MPR) & Food Service","Huntington","Food service building addition",303000,402990,"Low"],["H22","Multipurpose Room (MPR) & Food Service","Huntington","Lunch court",529000,703570,"Low"],["H23","Library","Huntington","Library reconfiguration",1094800,1456350,"Low"],["H24","Library","Huntington","Library building addition",1219312,1622600,"Low"],["H27","Administration & Staff Support","Huntington","Minor modernization & reconfiguration of existing admin & work room spaces",1019000,1355270,"Low"],["H28","Safety and Security","Huntington","Replace parking lot lights w/ LED",108000,143640,"Low"],["C32","Safety and Security","Carver","Landscape buffer at existing fence",38000,50540,"Low"],["V30","Safety and Security","Valentine","Shade sails",37500,50540,"Low"],["H37","Safety and Security","Huntington","Security cameras",100000,133000,"Low"],["H38","Outdoor Learning Environments & Quads","Huntington","New learning courts",596000,792680,"Low"],["H39","Outdoor Learning Environments & Quads","Huntington","New student amphitheater",1469650,1955100,"Low"],["H40","Exterior Play Spaces, Playfields & Hardcourts","Huntington","Shade structure",991000,1318030,"Low"],["H41","Exterior Play Spaces, Playfields & Hardcourts","Huntington","Resurface and repair hardcourts",789000,1049370,"Low"],["H42","Exterior Play Spaces, Playfields & Hardcourts","Huntington","Repair playfields (sod)",692000,920360,"Low"],["H43","Next Generation Classroom Flexibility","Huntington","Flexible furniture per classroom (direct cost)",1250000,1250000,"Low"],["H44","Next Generation Classroom Flexibility","Huntington","Flexible furniture per library (direct cost)",60000,60000,"Low"],["H45","Next Generation Classroom Flexibility","Huntington","Flexible furniture per MPR / cafeteria (direct cost)",60000,60000,"Low"],["H46","Next Generation Classroom Flexibility","Huntington","Flexible furniture per outdoor lunch area  (direct cost)",60000,60000,"Low"],["HS49","Next Generation Classroom Flexibility","SMHS","Flexible furniture per library (direct cost)",60000,60000,"Low"],["HS50","Next Generation Classroom Flexibility","SMHS","Flexible furniture - MPR (direct cost)",60000,60000,"Low"],["HS51","Next Generation Classroom Flexibility","SMHS","Flexible furniture - cafeteria (direct cost)",60000,60000,"Low"],["HS34","Outdoor Learning Environments & Quads","SMHS","Enhancements to existing learning courts",148000,196840,"Low"],["HS46","Exterior Play Spaces, Playfields & Hardcourts","SMHS","new football scoreboard",166600,222110,"Low"],["HS41","Exterior Play Spaces, Playfields & Hardcourts","SMHS","Small storage building",308448,410970,"Low"],["HS39","Exterior Play Spaces, Playfields & Hardcourts","SMHS","Field house modernization",324870,432250,"Low"],["HS35","Exterior Play Spaces, Playfields & Hardcourts","SMHS","Resurface hardcourts",343000,456190,"Low"],["HS36","Exterior Play Spaces, Playfields & Hardcourts","SMHS","Repair playfields (sod)",396000,526680,"Low"],["HS20","Library","SMHS","Existing Library Moderate modernization",986272,1312710,"Low"],["HS47","Exterior Play Spaces, Playfields & Hardcourts","SMHS","new football lighting",1071000,1424430,"Low"],["HS18","Multipurpose Room (MPR) & Food Service","SMHS","MPR modernization",1167000,1552110,"Low"],["HS21","Administration & Staff Support","SMHS","Existing admin space minor modernization",1270920,1690430,"Low"],["HS19","Multipurpose Room (MPR) & Food Service","SMHS","Food service modernization",1277000,1698410,"Low"],["HS33","Outdoor Learning Environments & Quads","SMHS","Enhancements to existing student quad",1339000,1780870,"Low"],["HS48","Next Generation Classroom Flexibility","SMHS","Flexible furniture per classroom (direct cost)",2166000,2166000,"Low"],["HS45","Exterior Play Spaces, Playfields & Hardcourts","SMHS","New football bleachers, pressbox",2695350,3585680,"Low"],["HS14","Flex Labs, Science, VAPA, Theater & Elective Spaces","SMHS","Existing Music Room moderate modernization",2681945,3567060,"Medium"],["HS16","Flex Labs, Science, VAPA, Theater & Elective Spaces","SMHS","Existing Dance & Drama rooms additional building",3177998,4226740,"Medium"],["HS15","Flex Labs, Science, VAPA, Theater & Elective Spaces","SMHS","Existing Dance & Drama rooms moderate modernization & reconfiguration",4654702,6191150,"Medium"],["HS17","Flex Labs, Science, VAPA, Theater & Elective Spaces","SMHS","Existing Auditorium moderate modernization",10501050,13967660,"Medium"],["HS13","Flex Labs, Science, VAPA, Theater & Elective Spaces","SMHS","Science & Art Existing Labs moderate modernization & reconfiguration",10576063,14067410,"Medium"],["HS23","Physical Education Improvements","SMHS","Aquatics complex building & pool",14265323,18973780,"Medium"],["HS22","Physical Education Improvements","SMHS","Gymnasiums replacement",37669611,50101100,"Medium"]];
+
+// PROJLIST rows: [id, category, site, name, constCost, totalCost(+33%), priority]
+const PL_SITE = {SMHS: "SMHS", Carver: "CES", Valentine: "VES", Huntington: "HMS"};
+const ASSIGN_KEY = "mm_fmp_assign_v1";
+const STOP = new Set("a an and the of to for at in on new with amp school elementary middle high san marino grades grade area areas".split(" "));
+const toks = s => new Set(String(s).toLowerCase().replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter(w => w.length > 2 && !STOP.has(w)));
+let assignMem = null;
+function assignLoad() {
+  if (assignMem) return assignMem;
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(ASSIGN_KEY)) || {}; } catch (e) {}
+  const auto = autoMatch();
+  assignMem = {};
+  PROJLIST.forEach(r => {
+    const id = r[0];
+    assignMem[id] = Object.prototype.hasOwnProperty.call(saved, id) ? saved[id] : (auto[id] || 0);
+  });
+  return assignMem;
+}
+function assignSave() { try { localStorage.setItem(ASSIGN_KEY, JSON.stringify(assignMem)); } catch (e) {} }
+function autoMatch() {
+  const out = {};
+  const byPid = PROJECTS.map(p => ({pid: p.pid, site: p.site, t: toks(p.name)}));
+  PROJLIST.forEach(r => {
+    const site = PL_SITE[r[2]] || null;
+    if (!site) return;
+    const t = toks(r[3] + " " + r[1]);
+    let best = 0, bestScore = 0;
+    byPid.filter(p => p.site === site).forEach(p => {
+      let score = 0;
+      p.t.forEach(w => { if (t.has(w)) score++; });
+      if (score > bestScore) { bestScore = score; best = p.pid; }
+    });
+    if (bestScore >= 2) out[r[0]] = best;
+  });
+  return out;
+}
+const FMP_SITE_NAME = {SMHS: "San Marino High School", VES: "Valentine Elementary School", CES: "Carver Elementary School", HMS: "Huntington Middle School"};
+// Tier totals come straight from ProjList_Mod; the "a*" figures are the portion of each tier
+// assigned to a Transcend project, so they move whenever an assignment changes.
+function fmpFromProjList() {
+  const a = assignLoad(), m = {};
+  PROJLIST.forEach(r => {
+    const s = PL_SITE[r[2]];
+    if (!s) return;
+    m[s] = m[s] || {key: s, name: FMP_SITE_NAME[s] || SITES[s] || s, high: 0, med: 0, low: 0, aHigh: 0, aMed: 0, aLow: 0};
+    const tier = r[6] === "High" ? "high" : (r[6] === "Medium" ? "med" : "low");
+    const at = r[6] === "High" ? "aHigh" : (r[6] === "Medium" ? "aMed" : "aLow");
+    m[s][tier] += r[5];
+    if (a[r[0]]) m[s][at] += r[5];
+  });
+  return Object.values(m).sort((x, y) => (y.high + y.med + y.low) - (x.high + x.med + x.low));
+}
+
+function allocFor(pid) {
+  const a = assignLoad();
+  return PROJLIST.filter(r => a[r[0]] === pid);
+}
+
 function renderAll() {
+  // counts always come from the data in hand, never from a stale constant
+  PROGRAM.projects = PROJECTS.length;
+  PROGRAM.pos = POS.length;
+  const budgetedCount = PROJECTS.filter(p => p.budget > 0).length;
+
   // ---- rollups ----
   const byPid = {};
   PROJECTS.forEach(p => { byPid[p.pid] = {...p, committed: 0, approved: 0, open: 0, remaining: 0, poCount: 0}; });
@@ -890,7 +1103,7 @@ function renderAll() {
     auth:       {lbl: "Authorized (Measure M)", v: PROGRAM.authorized, color: "var(--auth)", pctLabel: ""},
     pendingRel: {lbl: "Pending Release", sub: "future bond series", v: PROGRAM.authorized - PROGRAM.released, color: "var(--ink-3)", pctLabel: pct(PROGRAM.authorized - PROGRAM.released, PROGRAM.authorized) + " of auth."},
     released:   {lbl: "Released &mdash; Series A", sub: "funds all active projects", v: PROGRAM.released, color: "var(--gold)", pctLabel: pct(PROGRAM.released, PROGRAM.authorized) + " of auth."},
-    budgets:    {lbl: "Estimated Project Budgets", sub: `all ${PROGRAM.projects} projects, segmented by site`, v: T.budget, stack: siteStack(s => s.budget), pctLabel: pct(T.budget, PROGRAM.authorized) + " of auth."},
+    budgets:    {lbl: "Estimated Project Budgets", sub: `${PROGRAM.projects} projects (${budgetedCount} with budgets), segmented by site`, v: T.budget, stack: siteStack(s => s.budget), pctLabel: pct(T.budget, PROGRAM.authorized) + " of auth."},
     uncommitted:{lbl: "Uncommitted Project Budgets", sub: "budgets &minus; committed, by site", v: T.budget - T.committed, stack: siteStack(s => s.budget - s.committed), vs: T.budget, vsLbl: "estimated project budgets", pctLabel: pct(T.budget - T.committed, T.budget) + " of budgets"},
     committed:  {lbl: "Committed (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vs: T.budget, vsLbl: "estimated project budgets", pctLabel: pct(T.committed, T.budget) + " of budgets"},
     committedP: {lbl: "Committed (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vsLbl: "authorization", pctLabel: pct(T.committed, PROGRAM.authorized) + " of auth. &middot; " + pct(T.committed, PROGRAM.released) + " of release"},
@@ -916,16 +1129,7 @@ function renderAll() {
     </div>`;
   // FMP tier budgets and, per tier, the portion addressed by today's baseline project budgets
   // (Transcend Allocation Tracking column of Proj List Mod).
-  const FMP_2024 = [
-    {key: "SMHS", name: "San Marino High School", high: 33236650, med: 111094900, low: 17635680,
-     aHigh: 14188583, aMed: 14067410, aLow: 1534820},
-    {key: "VES", name: "Valentine Elementary School", high: 57427584, med: 0, low: 5049610,
-     aHigh: 49103114, aMed: 0, aLow: 183540},
-    {key: "CES", name: "Carver Elementary School", high: 29714942, med: 272650, low: 16972360,
-     aHigh: 26173152, aMed: 0, aLow: 0},
-    {key: "HMS", name: "Huntington Middle School", high: 18152028, med: 204820, low: 32075860,
-     aHigh: 8671788, aMed: 0, aLow: 1049370}
-  ];
+  const FMP_2024 = fmpFromProjList();
   const districtFmp = FMP_2024.reduce((a, s) => a + s.high + s.med + s.low, 0);
   document.getElementById("fmpTiers").innerHTML =
     '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimated Project Costs land. The line under each bar gives the share of <i>each</i> tier addressed in the District&rsquo;s Current Baseline Estimated Project Costs. Transcend baselines and FMP-tagged allocations are two different measures and will not match: FMP tags cover scope that is planned but not yet budgeted in Transcend, and Transcend carries work that was never an FMP line item.</span></div>' +
@@ -981,6 +1185,25 @@ function renderAll() {
       <td>${r[7] ? fmt(r[7]) : "&mdash;"}</td>
       <td>${cellNeg(r[8])}</td>
     </tr>`).join("");
+  const allocRows = pid => {
+    const rows = allocFor(pid);
+    if (!rows.length) return `<tr class="pdetail alocnone proj-${pid}"><td colspan="6">No 2024 FMP line items assigned to this project yet &mdash; assign them in the <b>2024 FMP Project List</b> table below.</td></tr>`;
+    const tot = rows.reduce((a, r) => a + r[5], 0);
+    return `<tr class="pdetail alochead proj-${pid}">
+        <th colspan="2">2024 FMP Line Items Funding This Project</th><th>ID</th><th>Priority</th><th>Const Cost</th><th>FMP Allocation</th>
+      </tr>` +
+      rows.sort((a, b) => b[5] - a[5]).map(r => `<tr class="pdetail alocrow proj-${pid}">
+        <td colspan="2">${r[3]}</td>
+        <td>${r[0]}</td>
+        <td><span class="t${r[6][0]}">${r[6]}</span></td>
+        <td>${fmt(r[4])}</td>
+        <td class="alocamt">${fmt(r[5])}</td>
+      </tr>`).join("") +
+      `<tr class="pdetail alocsum proj-${pid}">
+        <td colspan="2">${rows.length} line item${rows.length === 1 ? "" : "s"} &middot; categories: ${[...new Set(rows.map(r => r[1]))].join(", ")}</td>
+        <td></td><td></td><td>Total allocated</td><td class="alocamt">${fmt(tot)}</td>
+      </tr>`;
+  };
   const projRows = projects => projects.map(p => `
     <tr class="pname" data-proj="${p.pid}" role="button" tabindex="0" aria-expanded="false">
       <td colspan="6"><span class="tcaret">&#9656;</span>${p.name} <span class="pos">&middot; ${p.poCount} PO${p.poCount === 1 ? "" : "'s"} &middot; ${fmt(p.budget)} budget</span>${p.budget - p.committed < 0 ? overChip(p.committed - p.budget) : ""}</td>
@@ -997,6 +1220,7 @@ function renderAll() {
       <td>${p.open ? fmt(p.open) : "&mdash;"}</td>
       <td>${p.committed ? cellNeg(p.remaining) : "&mdash;"}</td>
     </tr>
+    ${allocRows(p.pid)}
     ${dpRows(p.pid)}`).join("");
   const siteCard = (s, isTotal) => {
     const base = Math.max(s.budget, s.committed) || 1;
@@ -1296,11 +1520,17 @@ async function exportPdf(mode) {
     if (isSite) {
       // exports always show the report view: toolbar, watch items and the note editor
       // are removed, site cards are collapsed, and the latest saved note prints at the bottom
-      bodyClone.querySelectorAll(".toolbar, #watchSection, #coSection").forEach(el => el.remove());
+      bodyClone.querySelectorAll(".toolbar, #watchSection, #coSection, #plSection").forEach(el => el.remove());
       bodyClone.querySelectorAll(".scard.open").forEach(c => c.classList.remove("open"));
       const cp = bodyClone.querySelector("#coPrint");
       if (cp && cp.innerHTML) cp.setAttribute("style", "display:block;margin-top:10px;border-top:2px solid var(--gold);padding-top:6px");
     }
+    bodyClone.querySelectorAll("input").forEach(inp => {
+      const live = inp.dataset.llb ? document.querySelector(`#llbBody input[data-llb="${inp.dataset.llb}"][data-fld="${inp.dataset.fld}"]`) : null;
+      const s = document.createElement("span");
+      s.textContent = (live && live.value) || inp.getAttribute("value") || "\u2014";
+      inp.parentNode.replaceChild(s, inp);
+    });
     bodyClone.querySelectorAll("textarea").forEach(t => {
       const live = t.id ? document.getElementById(t.id) : null;
       const d = document.createElement("div");
@@ -1473,6 +1703,106 @@ function applyTheme(t) {
 document.getElementById("btnTheme").addEventListener("click", () => {
   applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
 });
+
+// ---- LLB proposals in hand: editable SF / cost, live cost-per-SF grading ----
+const LLB_KEY = "mm_llb_proposals_v1";
+const LLB_ROWS = [
+  {k: "carver", label: "Carver ES &mdash; New TK/KG Building & Play Yard"},
+  {k: "smhs",   label: "San Marino HS &mdash; New Two-Story STEM Building"},
+  {k: "ves",    label: "Valentine ES &mdash; MPR, Kitchen, Grades 1&ndash;5 Classrooms"}
+];
+let llbMem = {};
+function llbLoad() { try { return JSON.parse(localStorage.getItem(LLB_KEY)) || llbMem; } catch (e) { return llbMem; } }
+function llbSave(d) { llbMem = d; try { localStorage.setItem(LLB_KEY, JSON.stringify(d)); } catch (e) {} }
+const numOnly = s => { const n = parseFloat(String(s).replace(/[^0-9.]/g, "")); return isFinite(n) ? n : 0; };
+const grp = n => n ? n.toLocaleString("en-US") : "";
+function psfCell(sf, cost) {
+  if (!sf || !cost) return '<span class="psf none">&mdash;</span>';
+  const v = cost / sf;
+  const band = v < 750 ? "b1" : (v < 900 ? "b2" : "b3");
+  const note = v < 750 ? "within DBB range" : (v < 900 ? "typical LLB market" : "heavy risk loading");
+  return `<span class="psf ${band}" title="${note}">$${v.toLocaleString("en-US", {maximumFractionDigits: 0})} / SF</span>`;
+}
+function renderLlb() {
+  const d = llbLoad();
+  document.getElementById("llbBody").innerHTML = LLB_ROWS.map(r => {
+    const v = d[r.k] || {};
+    return `<tr>
+      <td>${r.label}</td>
+      <td><input type="text" inputmode="numeric" data-llb="${r.k}" data-fld="sf" value="${v.sf ? grp(v.sf) : ""}" placeholder="SF" aria-label="${r.label} building square feet"></td>
+      <td><input type="text" inputmode="numeric" data-llb="${r.k}" data-fld="cost" value="${v.cost ? "$" + grp(v.cost) : ""}" placeholder="$ total" aria-label="${r.label} total cost including general conditions and general requirements"></td>
+      <td>${psfCell(v.sf, v.cost)}</td>
+    </tr>`;
+  }).join("");
+  document.querySelectorAll("#llbBody input").forEach(inp => {
+    inp.addEventListener("change", () => {
+      const data = llbLoad();
+      const key = inp.dataset.llb, fld = inp.dataset.fld;
+      data[key] = data[key] || {};
+      data[key][fld] = numOnly(inp.value);
+      llbSave(data);
+      renderLlb();
+    });
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") inp.blur(); });
+  });
+}
+renderLlb();
+
+// ---- 2024 FMP Project List: filter, assign, recalculate ----
+function renderProjList() {
+  const a = assignLoad();
+  const q = (document.getElementById("plSearch").value || "").toLowerCase().trim();
+  const fp = document.getElementById("plPri").value;
+  const fs = document.getElementById("plSite").value;
+  const fa = document.getElementById("plAsg").value;
+  const opts = PROJECTS.slice().sort((x, y) => x.name.localeCompare(y.name));
+  const rows = PROJLIST.filter(r => {
+    if (fp && r[6] !== fp) return false;
+    if (fs && r[2] !== fs) return false;
+    if (fa === "y" && !a[r[0]]) return false;
+    if (fa === "n" && a[r[0]]) return false;
+    if (q && !(r[0] + " " + r[1] + " " + r[2] + " " + r[3]).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.getElementById("plBody").innerHTML = rows.map(r => {
+    const pid = a[r[0]] || 0;
+    return `<tr class="${pid ? "asg" : ""}">
+      <td><span class="t${r[6][0]}">${r[6]}</span></td>
+      <td>${r[0]}</td>
+      <td>${r[3]}<span class="plcat">${r[1]}</span></td>
+      <td>${fmt(r[4])}</td>
+      <td>${fmt(r[5])}</td>
+      <td>${r[2]}</td>
+      <td><select data-pl="${r[0]}" class="${pid ? "on" : ""}" aria-label="Assign ${r[0]} to a project">
+        <option value="0"${pid ? "" : " selected"}>&mdash; unassigned &mdash;</option>
+        ${opts.map(p => `<option value="${p.pid}"${p.pid === pid ? " selected" : ""}>${p.name}</option>`).join("")}
+      </select></td>
+    </tr>`;
+  }).join("") || `<tr><td colspan="7" style="text-align:center;color:var(--ink-3);padding:14px">No line items match these filters.</td></tr>`;
+
+  const assignedCount = PROJLIST.filter(r => a[r[0]]).length;
+  const assignedSum = PROJLIST.filter(r => a[r[0]]).reduce((s, r) => s + r[5], 0);
+  const allSum = PROJLIST.reduce((s, r) => s + r[5], 0);
+  document.getElementById("plStatus").innerHTML =
+    `Showing <b>${rows.length}</b> of ${PROJLIST.length} &middot; assigned <b>${assignedCount}</b> (${fmt(assignedSum)} of ${fmt(allSum)})`;
+
+  document.querySelectorAll("#plBody select[data-pl]").forEach(sel => {
+    sel.addEventListener("change", () => {
+      assignLoad()[sel.dataset.pl] = parseInt(sel.value, 10) || 0;
+      assignSave();
+      renderAll();          // site cards + drill-downs pick up the new allocation
+      renderProjList();     // refresh counters and highlighting
+    });
+  });
+}
+document.getElementById("plToggle").addEventListener("click", function () {
+  const card = document.getElementById("plCard");
+  const show = card.hasAttribute("hidden");
+  if (show) { card.removeAttribute("hidden"); renderProjList(); } else { card.setAttribute("hidden", ""); }
+  this.textContent = show ? "Hide List" : "Show List";
+});
+["plSearch", "plPri", "plSite", "plAsg"].forEach(id =>
+  document.getElementById(id).addEventListener("input", renderProjList));
 
 renderAll();
 
