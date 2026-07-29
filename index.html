@@ -864,37 +864,34 @@
                 contractor variance, and belongs in front of the board as one.</div>
 
 
-              <div class="llbcap" style="margin-top:14px">Corrected project costs
-                <span class="eq">&mdash; Balfour as proposed, adjusted for the omissions identified above</span>
+              <div class="llbcap" style="margin-top:14px">BB Estimate against Normalized Estimate
+                <span class="eq">&mdash; each project&rsquo;s own direct cost plus only the divisions demonstrably missing against its peers, its own cost-scaling markup rate, and general conditions priced to the real schedule</span>
               </div>
               <table class="gctable">
                 <thead><tr>
-                  <th>Line</th><th>As Proposed</th><th>Adjustment</th><th>Corrected</th><th>$ / SF</th>
+                  <th>Build</th><th>BB Estimated</th><th>Normalized Estimate</th><th>Difference</th><th>BB $/SF &rarr; Normalized</th>
                 </tr></thead>
                 <tbody id="fixBody"></tbody>
               </table>
-              <div class="llbhint" style="margin-bottom:12px">Carver and Valentine stand as priced &mdash; their
-                divisions are complete. The corrections fall entirely on San Marino HS: Division 07 at the elementaries&rsquo;
-                own rate plus the utilities and minor-division gaps ($95.66/SF, carrying Balfour&rsquo;s own 25.73% markup
-                ratio), the Career Center loaded to a real modernization basis rather than a bare &ldquo;Add For&rdquo;
-                allowance, and general conditions priced against the actual 12&ndash;14 and 16&ndash;18 month schedule.
-                <b>General conditions are corrected by schedule, not by cost</b> &mdash; a distinction that matters, because
-                applying Balfour&rsquo;s blended 25.73% markup to restored scope would double-count them. Their pool of
-                $5,705,206 at SMHS decomposes into $1,261,836 of time-based general conditions (12 months &times; $105,153),
-                $75,000 fixed precon and allowances, and $4,368,370 of genuinely cost-scaling markups &mdash; <b>19.70%
-                of direct cost</b>. Restoring scope therefore adds 19.70%, while general conditions are re-priced purely
-                on duration: <b>$1,261,836 as proposed against $1,682,448 at 16 months and $1,892,754 at 18</b>, understated
-                by $420,612 to $630,918 at SMHS alone.
+              <div class="llbhint" style="margin-bottom:12px"><b>Nothing here is imported from outside Balfour&rsquo;s
+                own rates</b> except the FMP modernization rate for the Career Center and the FMP construction cost for
+                Carver&rsquo;s site scope. General conditions are corrected by <i>schedule</i>, never by the blended markup
+                ratio, because GC&rsquo;s and GR&rsquo;s scale with time and not with cost &mdash; applying the blended rate
+                to restored scope would double-count them.
                 <br><br>
-                The result validates the whole exercise: corrected, San Marino HS lands at <b>$1,011&ndash;$1,018/SF</b>
-                against Carver at $1,012.85 and Valentine at $1,019.43. All three converge on about $1,015/SF &mdash;
-                precisely what one rate card applied to three buildings should produce, and the clearest confirmation
-                that the SMHS shortfall was omission rather than efficiency.
-                <b>The program is understated by $6.1M to $6.7M &mdash; roughly 9% to 10%.</b> Excluded from this
-                correction, and still to be resolved: the 60% Building P area discrepancy, site work beyond the five-foot
-                perimeter line at Carver, abatement, DSA-triggered seismic and ADA scope, and the $4.29M of unreconciled
-                markup. Every figure here uses Balfour&rsquo;s own rates and ratios &mdash; nothing is imported from outside
-                their proposal except the FMP modernization rate.</div>
+                <b>Carver&rsquo;s building is fairly priced</b> &mdash; it lands $32,004 under, the only project where
+                Balfour&rsquo;s number is marginally high. Its <i>project</i> is underfunded only because $3.3M of play
+                yards and classroom modernization sit outside the contract line. <b>Valentine is purely a schedule
+                correction.</b> <b>San Marino HS carries the entire scope problem</b>, and at $1,065/SF normalized it
+                now sits slightly above the elementaries &mdash; which is what a two-storey building on an occupied
+                high-school campus should cost.
+                <br><br>
+                <b>One anomaly the normalization cannot explain away:</b> the cost-scaling markup rates, computed from
+                Balfour&rsquo;s own figures after removing time-based GC and fixed preconstruction, are
+                <b>Carver 13.19%, Valentine 14.42%, San Marino HS 19.70%</b>. Same contractor, same fee schedule, same
+                month, yet SMHS carries 6.5 points more &mdash; about <b>$1.6M</b> on its normalized direct cost, with no
+                stated basis. It is left in the normalized figure because it is their rate, but it should be challenged
+                rather than accepted.</div>
 
               <div class="llbcap" style="margin-top:14px">General conditions against the real schedule
                 <span class="eq">&mdash; Balfour priced 12 months for all three; Carver runs 12&ndash;14 months, the two-storey buildings 16&ndash;18</span>
@@ -2315,36 +2312,35 @@ function renderGcDur() {
       <td><span class="psf b3"><b>+${fmt(tl - tp)} &ndash; +${fmt(th - tp)}</b></span></td></tr>`;
 }
 function renderFix() {
-  const SF = 31556, dir = 22176549.74, mkPool = 5705205.78, gcP = 1261836, fixed = 75000, mo = 105153;
-  const csr = (mkPool - gcP - fixed) / dir;
-  const nd = dir + SF * 95.66;
-  const smhsLo = nd + nd * csr + mo * 16 + fixed;
   const rows = [
-    {n: "Carver ES &mdash; New TK &amp; KG", as: 17805932.98, adj: 0, sf: 17580,
-     note: "divisions complete; stands as priced. GC covered at 12 months, short $167,778 at 14"},
-    {n: "Valentine ES &mdash; Two-Storey", as: 22472400.13, adj: 439584, sf: 22044,
-     note: "divisions complete; general conditions re-priced from 12 to 16&ndash;18 months"},
-    {n: "San Marino HS &mdash; Medical Arts", as: 27881755.52, adj: smhsLo - 27881755.52, sf: SF,
-     note: "+$95.66/SF direct for Division 07, utilities and minor divisions; cost-scaling markups at 19.70%; GC re-priced to 16&ndash;18 months. <b>GC&rsquo;s and GR&rsquo;s are time-based, so they are corrected by schedule, not by the blended 25.73% ratio</b>"},
-    {n: "San Marino HS &mdash; Career Center", as: 1254240, adj: 2913133 - 1254240, sf: 5226,
-     note: "loaded to a real modernization basis: FMP $333.20/SF escalated, abatement, interface demolition, then GC&rsquo;s and fee"}
+    {n: "Carver ES &mdash; New TK &amp; KG", as: 17805933, no: 17773929, sf: 17580,
+     note: "Divisions complete. Comes in slightly <b>under</b> because the 12-month GC price marginally exceeds 12 months of actual general conditions"},
+    {n: "Valentine ES &mdash; CR / MPR / Kitchen", as: 22472400, no: 22911984, sf: 22044,
+     note: "No scope gaps. Entirely the general-conditions schedule &mdash; 12 months priced against 16 needed"},
+    {n: "San Marino HS &mdash; Medical Arts", as: 27881756, no: 33615370, sf: 31556,
+     note: "$2,393,207 absent Division 07 roofing and weatherproofing &middot; $1,420,020 Exterior Improvements at $30.81/SF against $75.81 at both elementaries &middot; $205,114 utilities &middot; $420,326 minor divisions &middot; then markup and 16-month GC"},
+    {n: "San Marino HS &mdash; Career Center", as: 1254240, no: 2913133, sf: 5226,
+     note: "$240/SF was an unloaded &ldquo;Add For&rdquo; allowance &mdash; no GC&rsquo;s, fee or contingency, and no abatement, seismic, ADA or MEP renewal"},
+    {n: "Carver site scope beyond the 5-ft line", as: 0, no: 3300105, sf: 0,
+     note: "Play yards C36 $800,000 + C37 $650,000 and existing KG modernization C1 $1,000,000 at FMP construction cost, escalated 19%, loaded at Carver&rsquo;s own 13.19% &mdash; all in the District&rsquo;s project scope but outside Balfour&rsquo;s contract line"}
   ];
-  let ta = 0, tj = 0;
+  let ta = 0, tn = 0;
   const body = rows.map(r => {
-    ta += r.as; tj += r.adj;
-    const cor = r.as + r.adj;
+    ta += r.as; tn += r.no;
+    const d = r.no - r.as;
     return `<tr>
       <td>${r.n}<span class="gcnote">${r.note}</span></td>
-      <td>${fmt(r.as)}</td>
-      <td>${r.adj ? `<span class="psf b3">+${fmt(r.adj)}</span>` : `<span class="psf b1">none</span>`}</td>
-      <td><b>${fmt(cor)}</b></td>
-      <td>$${Math.round(cor / r.sf).toLocaleString()}</td>
+      <td>${r.as ? fmt(r.as) : "&mdash;"}</td>
+      <td><b>${fmt(r.no)}</b></td>
+      <td><span class="psf ${d > 1000000 ? "b3" : (d > 0 ? "b2" : "b1")}">${d < 0 ? "&minus;" + fmt(Math.abs(d)) : "+" + fmt(d)}</span></td>
+      <td>${r.sf ? "$" + Math.round(r.as / r.sf).toLocaleString() + " &rarr; $" + Math.round(r.no / r.sf).toLocaleString() : "&mdash;"}</td>
     </tr>`;
   }).join("");
   document.getElementById("fixBody").innerHTML = body + `<tr class="actual">
-    <td><b>Program total</b><span class="gcnote">high case (14-month Carver, 18-month two-storey buildings) reaches ${fmt(76144558)}</span></td>
-    <td><b>${fmt(ta)}</b></td><td><span class="psf b3"><b>+${fmt(tj)}</b></span></td>
-    <td><b>${fmt(ta + tj)}</b></td><td><b>+${(100 * tj / ta).toFixed(1)}%</b></td></tr>`;
+    <td><b>Program total</b><span class="gcnote">before the Building P area discrepancy, abatement, DSA seismic and ADA scope, and $4.29M of unreconciled markup</span></td>
+    <td><b>${fmt(ta)}</b></td><td><b>${fmt(tn)}</b></td>
+    <td><span class="psf b3"><b>+${fmt(tn - ta)}</b></span></td>
+    <td><b>+${(100 * (tn / ta - 1)).toFixed(1)}%</b></td></tr>`;
 }
 function renderFinalists() {
   renderGcDur();
