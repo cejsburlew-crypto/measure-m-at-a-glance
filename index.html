@@ -251,6 +251,7 @@
   .gtag.warn { background: var(--bad-bg); color: var(--bad); }
   .gscale { position: relative; display: block; width: 100%; min-width: 0; height: 9px; background: var(--track); border-radius: 3px; }
   .gscale i { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+  .gscale i.bmark { width: 0; height: 0; top: -5px; bottom: auto; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 7px solid var(--ink); margin-left: -5px; border-radius: 0; }
 
   /* LLB proposals-in-hand table */
   .llbwrap { margin-top: 12px; border: 1px solid var(--line); border-left: 3px solid var(--bad); border-radius: 6px; padding: 9px 11px; }
@@ -755,6 +756,29 @@
               </tr></thead>
               <tbody id="bandBody"></tbody>
             </table>
+
+            <table class="gtable" style="margin-top:14px">
+              <thead><tr>
+                <th>Modernization &mdash; Delivery Method</th>
+                <th>Loaded Total Cost / SF<br><span class="thsub">renovation of existing space, 2026</span></th>
+                <th style="text-align:left">$180 &mdash; $480+ / SF <span class="thsub">&#9660; marks where Balfour prices the Career Center</span></th>
+              </tr></thead>
+              <tbody id="modBandBody"></tbody>
+            </table>
+            <div class="ladder-note" style="margin:8px 0 0">
+              <b>Two scales are needed because SMHS is two different kinds of work.</b> The Medical Arts building is new
+              construction and belongs on the scale above; the Career Center and Library is renovation and belongs here.
+              These modernization bands are built from the FMP&rsquo;s own 2024 rates &mdash; light/minor $142.80/SF,
+              moderate $214.20/SF, library and reconfigure $333.20&ndash;357.00/SF &mdash; loaded the way Balfour loads its
+              work (&times;1.22) and escalated to 2026 (&times;1.125).
+              <b>Balfour prices the Career Center at a flat $240.00/SF, which falls below every band on this scale</b>
+              &mdash; under even a competitive Design-Bid-Build moderate-modernization rate, and roughly 47% under the
+              FMP&rsquo;s library-grade loaded rate of about $457/SF. Note that Lease-Leaseback premiums run higher on
+              renovation than on new construction (+17% and +36% here, against +10% and +23% for new build) because
+              unknown existing conditions are exactly what a contractor prices risk against &mdash; which makes a
+              below-DBB renovation number more anomalous, not less. For renovation adjacent to a demolition and a new-building tie-in, that is an allowance, not an
+              estimate, and it is the most likely source of a future change order on this project.
+            </div>
 
             <div class="llbwrap">
               <div class="llbcap">Balfour Beatty proposal terms &mdash; RFQ/P #2026-05, dated 3/12/2026
@@ -1937,22 +1961,41 @@ const BANDS = [
   {k: "heavy",   label: "Lease-Leaseback &mdash; Heavy Risk Loading", lo: 1000, hi: 1120, color: "var(--bad)", open: true}
 ];
 const BAND_MIN = 800, BAND_MAX = 1150;
+// MODERNIZATION scale. Anchored on the FMP's own 2024 construction rates - light/minor $142.80,
+// moderate $214.20, library/reconfigure $333.20-357.00 per SF - carried to a loaded total the same
+// way Balfour loads its work (x1.22 markup) and escalated to 2026 (x1.125). Contiguous, no overlap.
+const BANDS_MOD = [
+  {k: "dbb",     label: "Design-Bid-Build &mdash; moderate modernization", tag: "FMP basis", lo: 270, hi: 320, color: "var(--tier-high)"},
+  {k: "typical", label: "Lease-Leaseback &mdash; Typical Market",     lo: 320, hi: 370, color: "var(--review)"},
+  {k: "heavy",   label: "Lease-Leaseback &mdash; Heavy Risk Loading", lo: 370, hi: 430, color: "var(--bad)", open: true}
+];
+const MOD_MIN = 220, MOD_MAX = 450;
 const bandMid = b => (b.lo + b.hi) / 2;
 const premiumVs = (b, base) => 100 * (bandMid(b) / bandMid(base) - 1);
 const bandOf = v => v < BANDS[0].hi ? BANDS[0] : (v < BANDS[1].hi ? BANDS[1] : BANDS[2]);
-function renderBands() {
-  const pos = x => (100 * (x - BAND_MIN) / (BAND_MAX - BAND_MIN)).toFixed(1);
-  document.getElementById("bandBody").innerHTML = BANDS.map(b => {
+function paintBands(arr, tbodyId, lo, hi, mark) {
+  const body = document.getElementById(tbodyId);
+  if (!body) return;
+  const pos = x => (100 * (x - lo) / (hi - lo)).toFixed(1);
+  body.innerHTML = arr.map(b => {
     const left = pos(b.lo), w = (pos(b.hi) - pos(b.lo)).toFixed(1);
     const prem = b.k === "dbb" ? '<span class="gcnote">baseline for comparison</span>'
-      : `<span class="gcnote">+${premiumVs(b, BANDS[0]).toFixed(1)}% vs DBB midpoint</span>`;
+      : `<span class="gcnote">+${(100*((b.lo+b.hi)/2/((arr[0].lo+arr[0].hi)/2)-1)).toFixed(1)}% vs DBB midpoint</span>`;
+    const inBand = mark != null && mark >= b.lo && mark < b.hi;
+    const below = mark != null && b.k === "dbb" && mark < b.lo;
+    const hit = (inBand || below)
+      ? `<i class="bmark" style="left:${pos(mark)}%" title="Balfour prices the Career Center at $${mark}/SF${below ? " - below every band" : ""}"></i>` : "";
     return `<tr>
       <td>${b.label}${b.tag ? ` <span class="gtag">${b.tag}</span>` : ""}${prem}</td>
       <td class="gsf">$${b.lo.toLocaleString()}&ndash;${b.hi.toLocaleString()}${b.open ? "+" : ""} / SF</td>
       <td><span class="gscale"><i style="left:${left}%;width:${w}%;background:${b.color}"></i>${
-        b.open ? `<i style="left:${pos(b.hi)}%;width:${(100 - pos(b.hi)).toFixed(1)}%;background:${b.color};opacity:0.45"></i>` : ""}</span></td>
+        b.open ? `<i style="left:${pos(b.hi)}%;width:${(100-pos(b.hi)).toFixed(1)}%;background:${b.color};opacity:0.45"></i>` : ""}${hit}</span></td>
     </tr>`;
   }).join("");
+}
+function renderBands() {
+  paintBands(BANDS, "bandBody", BAND_MIN, BAND_MAX, null);
+  paintBands(BANDS_MOD, "modBandBody", MOD_MIN, MOD_MAX, 240);
   const t = document.getElementById("premTyp"), h = document.getElementById("premHvy");
   if (t) t.textContent = "about " + premiumVs(BANDS[1], BANDS[0]).toFixed(0) + "%";
   if (h) h.textContent = "about " + premiumVs(BANDS[2], BANDS[0]).toFixed(0) + "%";
@@ -2127,11 +2170,14 @@ const BOND_TIERS = [
   {t: "Small &mdash; Public Works", rev: "$19&ndash;46M", single: "$15&ndash;40M", agg: "$50&ndash;120M",
    note: "CA <b>SB-PW</b> ceiling $46M; SBA NAICS 236220 is $45M",
    fits: "A single mid-size building or a bundled modernization package"},
-  {t: "Medium", rev: "$46M&ndash;$500M", single: "$25&ndash;150M", agg: "$100&ndash;400M",
+  {t: "Upper Medium", rev: "$150M&ndash;$500M", single: "$75&ndash;150M", agg: "$250&ndash;500M",
+   note: "where all three regional finalists sit; single-project capacity clears any one SMUSD building several times over",
+   fits: "Two or three SMUSD buildings concurrently; cannot absorb the full $200M program alone"},
+  {t: "Medium", rev: "$46M&ndash;$150M", single: "$25&ndash;75M", agg: "$100&ndash;250M",
    note: "above every small-business definition; CA K-12 specialists often bond well above their revenue tier",
-   fits: "Any single SMUSD building here ($17.8&ndash;29.1M) with large headroom; several concurrently"},
-  {t: "Large", rev: "$500M+", single: "$100M+", agg: "$500M&ndash;$1B+",
-   note: "ENR-ranked national / international",
+   fits: "Any single SMUSD building here ($17.8&ndash;29.1M) with headroom; one or two concurrently"},
+  {t: "Large", rev: "$500M+", single: "$150M+", agg: "$500M&ndash;$1B+",
+   note: "<b>threshold from Upper Medium: revenue above ~$500M with $500M+ aggregate surety</b> &mdash; ENR-ranked national / international",
    fits: "All three buildings concurrently, plus program-wide capacity", actual: true}
 ];
 // LLB interview finalists. Revenue for the private regional firms is third-party estimate only.
