@@ -500,6 +500,14 @@
     text-transform: uppercase; letter-spacing: 0.07em;
   }
   .collbar .collttl .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+  /* Rollup figure carried in a collapsed header, so every section reads as a total that drills down. */
+  .collsum {
+    font: 700 12px/1.3 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: var(--committed); letter-spacing: 0; text-transform: none;
+    white-space: nowrap; padding: 2px 8px; border-radius: 4px;
+    background: var(--surface-2); border: 1px solid var(--line);
+  }
+  h2 .collsum { margin-left: 10px; }
   .collbar.sub { margin: 0; }
   .collbar.sub .collttl { font-size: 12.5px; text-transform: none; letter-spacing: 0; color: var(--ink); }
   .collbar button.expand-all { margin-left: auto; flex: none; padding: 4px 10px; font-size: 11.5px; }
@@ -746,12 +754,14 @@
   </div>
 
   <section id="fmpSection">
-    <h2 style="display:flex">2024 Facility Master Plan and District Project Planning <span class="note">what the FMP approved, and how delivery method affects it</span>
+    <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">2024 Facility Master Plan and District Project Planning <span class="note">what the FMP approved, and how delivery method affects it</span>
+      <span class="collsum" id="fmpSecSum">&hellip;</span>
       <button type="button" class="expand-all" id="fmpSecToggle" style="margin-left:auto">Hide Section</button>
     </h2>
     <div class="card coll" id="fmpCard">
       <div class="collbar">
         <span class="collttl">2024 FMP Approved Project Budgets (By Priority)</span>
+        <span class="collsum" id="tiersSum">&hellip;</span>
         <button type="button" class="expand-all" id="tiersToggle">Show Budgets</button>
       </div>
       <div id="fmpTiers" class="coll" hidden></div>
@@ -759,6 +769,7 @@
       <div id="fmpGuide">
         <div class="collbar">
           <span class="collttl">FMP Guidelines <span class="eq">&mdash; how to read the budgets above against how we are actually delivering the work</span></span>
+          <span class="collsum" id="guideSum">&hellip;</span>
           <button type="button" class="expand-all" id="guideToggle">Hide Guidelines</button>
         </div>
         <div class="coll" id="guideBody">
@@ -1138,11 +1149,83 @@
     </div><!-- /fmpCard -->
   </section>
 
+  <section id="mvnSection">
+    <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">Modernize or Build New &mdash; San Marino HS
+      <span class="note">the same teaching space delivered two ways &mdash; a scope decision, not a budget variance</span>
+      <span class="collsum" id="mvnSum">&hellip;</span>
+      <button type="button" class="expand-all" id="mvnToggle" style="margin-left:auto">Show Comparison</button>
+    </h2>
+    <div class="card coll" id="mvnCard" hidden>
+      <div class="ladder-note" style="margin:0 0 14px">
+        <b>This is the largest single discretionary number on the program, and it is a board decision rather than a
+        contractor variance.</b> The District can modernize the existing single-storey CTE / Science / Art lab wing, or
+        replace that teaching capacity with a new two-storey Medical Arts building. The <b>Career Center / Library
+        modernization happens under either option</b>, so it is held constant below and cancels out of the difference
+        &mdash; it is not a variable in this choice.
+      </div>
+
+      <div class="llbcap">Option A &mdash; modernize the existing lab wing
+        <span class="eq">&mdash; the District&rsquo;s own 2024 FMP worksheet lines for HS13, which sum exactly to the $10,576,063 carried in Transcend project 1608</span>
+      </div>
+      <table class="gctable">
+        <thead><tr><th>FMP Line</th><th>Area</th><th>FMP Rate</th><th>Construction Cost</th></tr></thead>
+        <tbody id="mvnABody"></tbody>
+      </table>
+
+      <div class="llbcap" style="margin-top:14px">Cost per square foot on a construction basis
+        <span class="eq">&mdash; no District soft cost on either side, so the two options are compared like with like</span>
+      </div>
+      <table class="gctable">
+        <thead><tr><th>Basis</th><th>Cost</th><th>Area</th><th>$ / SF</th></tr></thead>
+        <tbody id="mvnPsfBody"></tbody>
+      </table>
+
+      <div class="llbcap" style="margin-top:14px">The same 20,993 sf of program delivered either way</div>
+      <table class="gctable">
+        <thead><tr><th>Option</th><th>Cost for 20,993 sf</th><th>$ / SF</th><th>Difference</th></tr></thead>
+        <tbody id="mvnSameBody"></tbody>
+      </table>
+
+      <div class="llbhint" style="margin-bottom:12px" id="mvnMarginal"></div>
+
+      <div class="llbcap" style="margin-top:14px">San Marino HS totals, Career Center included both ways
+        <span class="eq">&mdash; the Career Center is constant, so it does not affect the difference</span>
+      </div>
+      <table class="gctable">
+        <thead><tr><th>Option</th><th>Building Scope</th><th>Career Center<span class="thsub">constant</span></th><th>SMHS Total</th><th>Difference</th></tr></thead>
+        <tbody id="mvnTotBody"></tbody>
+      </table>
+
+      <div class="llbhint" style="margin-bottom:12px"><b>There are legitimate programmatic reasons on the
+        District&rsquo;s side, and they should be stated alongside the number.</b> Enrolment is projected to grow from
+        <b>850 to 937</b> and teaching stations from <b>48 to 51</b>, and a new building delivers permanent capacity
+        with a full code and seismic life rather than a seismically retrofitted 1919-era wing carrying the maintenance
+        liability of the original structure. Those are real benefits and a board can reasonably decide to buy them.
+        <b>What needs defending is not the decision but the marginal rate:</b> the added area prices at roughly
+        <b id="mvnMargRate">&hellip;</b> per square foot, close to double the average new-construction rate on this very
+        program, which makes the incremental space the most expensive square footage anywhere in Measure M. Ask why the
+        increment costs what it does before approving the area, not after.
+        <span class="assump"><b>Two constructed inputs govern this comparison &mdash; neither is source data.</b>
+        <b>(1) The 19% escalation on Option A is an assumption</b>, carrying the FMP&rsquo;s January 2024 basis to a 2027
+        construction window. No index is cited and none is stated in the FMP. At <b>zero escalation</b> Option A is
+        $10,576,063 and the gap widens to about <b>$21.6M</b>, so the assumption works <i>against</i> the finding rather
+        than for it. <b>(2) The $600/sf modernization rate depends entirely on the 20,993 sf denominator</b>, which
+        comes from the Huckabee program document and <b>appears nowhere in the FMP raw export</b>. The FMP&rsquo;s own
+        HS13 line carries three different and overlapping treatment areas &mdash; 14,200 sf of minor modernization,
+        6,034 sf of moderate modernization plus seismic, and 10,860 sf of reconfigure plus seismic, which together
+        exceed 14,200 sf and so describe layered work rather than a single measurable wing &mdash; and states no total
+        wing area at all. On the District&rsquo;s own 14,200 sf basis the rate is <b>$886/sf</b>, only about 13% below
+        new construction, which makes Option B look considerably more reasonable. That single denominator moves the
+        comparison by nearly <b>$300/sf</b>, and it must be resolved before either rate is used publicly.</span></div>
+    </div>
+  </section>
+
   <section id="tcSection">
-    <h2>Evaluating True Project Cost <span class="note">Lease-Leaseback proposal checklist &mdash; what actually moves the final number</span>
+    <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">Evaluating True Project Cost <span class="note">Lease-Leaseback proposal checklist &mdash; what actually moves the final number</span>
+      <span class="collsum" id="tcSum">&hellip;</span>
       <button type="button" class="expand-all" id="tcToggle" style="margin-left:auto">Show Checklist</button>
     </h2>
-    <div class="card" id="tcCard" hidden>
+    <div class="card coll" id="tcCard" hidden>
       <div id="tcProse">
         <div class="gitem"><span class="gnum">1</span><div><b>Normalize every proposal to one number, not a fee percentage.</b>
           Fee is the smallest lever on the page. Rebuild each proposal as precon + (monthly GC &times; a <i>realistic</i>
@@ -1247,15 +1330,19 @@
   </section>
 
   <section id="watchSection">
-    <h2>Watch Items <span class="note">Balfour proposal items to reconcile, then exceptions computed from the data &mdash; shown on screen, excluded from PDF export</span></h2>
-    <div class="watch" id="watch"></div>
+    <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">Watch Items <span class="note">Balfour proposal items to reconcile, then exceptions computed from the data &mdash; shown on screen, excluded from PDF export</span>
+      <span class="collsum" id="watchSum">&hellip;</span>
+      <button type="button" class="expand-all" id="watchToggle" style="margin-left:auto">Hide Items</button>
+    </h2>
+    <div class="watch coll" id="watch"></div>
   </section>
 
   <section id="plSection">
-    <h2>2024 FMP Project List <span class="note">ProjList_Mod &mdash; 182 line items; assign each to a Transcend project and every total on this page follows</span>
+    <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">2024 FMP Project List <span class="note">ProjList_Mod &mdash; assign each to a Transcend project and every total on this page follows</span>
+      <span class="collsum" id="plSum">&hellip;</span>
       <button type="button" class="expand-all" id="plToggle" style="margin-left:auto">Show List</button>
     </h2>
-    <div class="card" id="plCard" hidden>
+    <div class="card coll" id="plCard" hidden>
       <div class="plbar">
         <input type="search" id="plSearch" placeholder="Filter by ID, name, category or site&hellip;" aria-label="Filter FMP project list">
         <select id="plPri" aria-label="Filter by priority"><option value="">All priorities</option><option>High</option><option>Medium</option><option>Low</option></select>
@@ -1535,8 +1622,9 @@ function renderAll() {
   // (Transcend Allocation Tracking column of Proj List Mod).
   const FMP_2024 = fmpFromProjList();
   const districtFmp = FMP_2024.reduce((a, s) => a + s.high + s.med + s.low, 0);
+  FMP_TOTAL_2024 = districtFmp;
   document.getElementById("fmpTiers").innerHTML =
-    '<div class="gcap">2024 FMP Approved Project Budgets (By Priority) <span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimated Project Costs land. The line under each bar gives the share of <i>each</i> tier addressed in the District&rsquo;s Current Baseline Estimated Project Costs. Transcend baselines and FMP-tagged allocations are two different measures and will not match: FMP tags cover scope that is planned but not yet budgeted in Transcend, and Transcend carries work that was never an FMP line item.</span></div>' +
+    '<div class="gcap"><span class="eq">&mdash; the Facilities Master Plan starting point (district total ' + fmt(districtFmp) + ' intentionally exceeds the $200,000,000 authorization). Bar = <span class="tH">High</span> / <span class="tM">Medium</span> / <span class="tL">Low</span> tiers; <b style="color:var(--gold)">gold marker</b> = where today&rsquo;s Current Baseline Estimated Project Costs land. The line under each bar gives the share of <i>each</i> tier addressed in the District&rsquo;s Current Baseline Estimated Project Costs. Transcend baselines and FMP-tagged allocations are two different measures and will not match: FMP tags cover scope that is planned but not yet budgeted in Transcend, and Transcend carries work that was never an FMP line item.</span></div>' +
     FMP_2024.map(fs => {
       const total = fs.high + fs.med + fs.low;
       const cur = (sites[fs.key] || {budget: 0}).budget;
@@ -2460,6 +2548,7 @@ function renderFix() {
       <td>${r.sf ? "$" + Math.round(r.as / r.sf).toLocaleString() + " &rarr; $" + Math.round(r.no / r.sf).toLocaleString() : "&mdash;"}</td>
     </tr>`;
   }).join("");
+  FIX_TOTALS = {as: ta, no: tn};
   document.getElementById("fixBody").innerHTML = body + `<tr class="actual">
     <td><b>Program total</b><span class="gcnote">before the Building P area discrepancy, abatement, DSA seismic and ADA scope, and $4.29M of unreconciled markup</span></td>
     <td><b>${fmt(ta)}</b></td><td><b>${fmt(tn)}</b></td>
@@ -2509,6 +2598,113 @@ function renderGcScale() {
 }
 renderGcScale();
 
+// Rollup totals published by the renderers for the collapsed section headers to read.
+// Deliberately "var": renderGcScale() -> renderFix() runs earlier in the file than this point,
+// so a let/const binding would still be in its temporal dead zone and throw on first render.
+// No initializers, for the same reason: renderFix() has already assigned FIX_TOTALS by the time
+// execution reaches this line, and "= null" here would wipe it back out.
+var FIX_TOTALS;
+var FMP_TOTAL_2024;
+
+// ---- Modernize or Build New: the San Marino HS scope decision ---------------------------------
+// Option A is the District's own 2024 FMP worksheet for HS13 (raw export row 426). Its five lines
+// sum to exactly $10,576,063, the figure carried in Transcend project 1608, so the build-up is
+// reconciled to source rather than reconstructed. Option B is Balfour's own area and pricing for
+// the new Medical Arts building. The Career Center / Library modernization is delivered under
+// either option, so it is held constant and cancels out of every difference below.
+const MVN = {
+  optA: [
+    {d: "High School Science and Art Labs &mdash; minor modernization", sf: 14200, rate: 142.80},
+    {d: "Moderate modernization",                                       sf: 6034,  rate: 214.20},
+    {d: "Seismic retrofit",                                             sf: 6034,  rate: 200.00},
+    {d: "Reconfigure",                                                  sf: 10860, rate: 357.00},
+    {d: "Seismic retrofit",                                             sf: 10860, rate: 200.00}
+  ],
+  esc: 1.19,       // ASSUMPTION: 2024 FMP basis carried to a 2027 construction window. Not sourced.
+  progSf: 20993,   // Huckabee Site Plan Option 2 program area. Appears nowhere in the FMP export.
+  labSf: 14200,    // the FMP's own largest single treatment area on the HS13 line
+  newSf: 31556,    // Balfour's stated GSF for the Medical Arts building
+  newAs: 27881756, // Balfour as proposed
+  newNorm: 32183057, // normalized, per the BB-vs-Normalized table above
+  ccAs: 1254240, ccNorm: 2913133
+};
+function mvnFigures() {
+  const constr = MVN.optA.reduce((a, r) => a + Math.round(r.sf * r.rate), 0);
+  const escd = Math.round(constr * MVN.esc);
+  const newPsf = MVN.newNorm / MVN.newSf;
+  const sameNew = Math.round(newPsf * MVN.progSf);
+  const totA = escd + MVN.ccNorm, totB = MVN.newNorm + MVN.ccNorm;
+  const addSf = MVN.newSf - MVN.progSf;
+  const diff = totB - totA;
+  return {constr, escd, newPsf, sameNew, totA, totB, addSf, diff, marginal: diff / addSf};
+}
+function renderMvn() {
+  const f = mvnFigures();
+  document.getElementById("mvnABody").innerHTML =
+    MVN.optA.map(r => `<tr>
+      <td>${r.d}</td><td>${r.sf.toLocaleString()} sf</td>
+      <td>$${r.rate.toFixed(2)} / sf</td><td>${fmt(r.sf * r.rate)}</td></tr>`).join("") +
+    `<tr class="actual"><td><b>Construction total, 2024 FMP basis</b><span class="gcnote">reconciles exactly to the $10,576,063 stated in Transcend project 1608</span></td>
+       <td></td><td></td><td><b>${fmt(f.constr)}</b></td></tr>` +
+    `<tr class="actual"><td><b>Escalated to a 2027 construction window</b><span class="gcnote">&times;1.19 &mdash; an assumption, not a published index; see the note below</span></td>
+       <td></td><td>&times;${MVN.esc.toFixed(2)}</td><td><b>${fmt(f.escd)}</b></td></tr>`;
+
+  const psf = [
+    {b: "Modernization over the Huckabee program area", c: f.escd, sf: MVN.progSf,
+     n: "the 20,993 sf denominator, from the Huckabee Site Plan Option 2 program &mdash; not found in the FMP export"},
+    {b: "Modernization over the District&rsquo;s stated lab area", c: f.escd, sf: MVN.labSf,
+     n: "the FMP&rsquo;s own largest single treatment area on HS13"},
+    {b: "New construction &mdash; Medical Arts building, normalized", c: MVN.newNorm, sf: MVN.newSf,
+     n: "Balfour&rsquo;s own 31,556 GSF, normalized for the omissions identified above", hi: true}
+  ];
+  document.getElementById("mvnPsfBody").innerHTML = psf.map(r => `<tr${r.hi ? ' class="actual"' : ""}>
+      <td>${r.b}<span class="gcnote">${r.n}</span></td>
+      <td>${fmt(r.c)}</td><td>${r.sf.toLocaleString()} sf</td>
+      <td><span class="psf ${r.hi ? "b3" : "b1"}">$${Math.round(r.c / r.sf).toLocaleString()} / SF</span></td></tr>`).join("");
+
+  const sameDiff = f.sameNew - f.escd;
+  document.getElementById("mvnSameBody").innerHTML = `
+    <tr><td>Option A &mdash; modernize<span class="gcnote">escalated FMP construction cost</span></td>
+      <td>${fmt(f.escd)}</td><td>$${Math.round(f.escd / MVN.progSf).toLocaleString()} / sf</td>
+      <td><span class="psf b1">baseline</span></td></tr>
+    <tr class="actual"><td><b>Option B &mdash; build new</b><span class="gcnote">Balfour&rsquo;s normalized rate applied to the same 20,993 sf</span></td>
+      <td><b>${fmt(f.sameNew)}</b></td><td>$${Math.round(f.newPsf).toLocaleString()} / SF</td>
+      <td><span class="psf b3"><b>+${fmt(sameDiff)} &nbsp;+${(100 * sameDiff / f.escd).toFixed(1)}%</b></span></td></tr>`;
+
+  document.getElementById("mvnMarginal").innerHTML =
+    `<b>What the District is actually buying &mdash; the figure to put in front of the board.</b> Option B does not
+     deliver 20,993 sf; it delivers <b>${MVN.newSf.toLocaleString()} GSF</b>. So the comparison above understates the
+     decision: the full difference between the two options is <span class="amt">${fmt(f.diff)}</span>, and that money
+     buys <b>${f.addSf.toLocaleString()} additional GSF</b> beyond the program. The marginal cost of the added area is
+     therefore <b>$${Math.round(f.marginal).toLocaleString()} / SF</b> &mdash; against an average normalized
+     new-construction rate of $${Math.round(f.newPsf).toLocaleString()}/SF on this same building. <b>The incremental
+     space is nearly twice as expensive as the building it sits in, and it is the most expensive square footage in the
+     Measure M program.</b>`;
+  document.getElementById("mvnMargRate").textContent = "$" + Math.round(f.marginal).toLocaleString();
+
+  document.getElementById("mvnTotBody").innerHTML = `
+    <tr><td>Option A &mdash; modernize the lab wing<span class="gcnote">escalated FMP construction cost</span></td>
+      <td>${fmt(f.escd)}</td><td>${fmt(MVN.ccNorm)}</td><td>${fmt(f.totA)}</td>
+      <td><span class="psf b1">baseline</span></td></tr>
+    <tr class="actual"><td><b>Option B &mdash; new Medical Arts building</b><span class="gcnote">normalized; as proposed it is ${fmt(MVN.newAs)}</span></td>
+      <td><b>${fmt(MVN.newNorm)}</b></td><td>${fmt(MVN.ccNorm)}</td><td><b>${fmt(f.totB)}</b></td>
+      <td><span class="psf b3"><b>+${fmt(f.diff)} &nbsp;+${(100 * f.diff / f.totA).toFixed(1)}%</b></span></td></tr>`;
+}
+
+// ---- Rollup figures shown in section headers, so a collapsed section still reports its total ----
+function renderRollupSums() {
+  const f = mvnFigures();
+  const set = (id, txt) => { const el = document.getElementById(id); if (el) el.innerHTML = txt; };
+  set("mvnSum", `+${fmt(f.diff)} &nbsp;&middot;&nbsp; +${(100 * f.diff / f.totA).toFixed(1)}% scope decision`);
+  set("tcSum", document.querySelectorAll("#tcProse .gitem").length + " checks");
+  set("plSum", PROJLIST.length + " line items");
+  set("watchSum", document.querySelectorAll("#watch > *").length + " items");
+  set("tiersSum", fmt(FMP_TOTAL_2024) + " district total");
+  set("guideSum", document.querySelectorAll("#guideBody .gitem").length + " notes");
+  const fx = FIX_TOTALS;
+  if (fx) set("fmpSecSum", fmt(fx.as) + " proposed &rarr; " + fmt(fx.no) + " normalized");
+}
+
 // ---- Collapsible reference blocks ------------------------------------------------------------
 // Same Show/Hide contract as #tcCard / #plCard: the target carries class "coll" and the boolean
 // [hidden] attribute, the button lives in a .collbar (or the section <h2>) beside its title. Every
@@ -2522,7 +2718,9 @@ const COLLAPSIBLES = [
   ["g2Toggle",     "g2Body",    "Show Notes",      "Hide Notes"],
   ["g3Toggle",     "g3Body",    "Show Notes",      "Hide Notes"],
   ["g4Toggle",     "g4Body",    "Show Notes",      "Hide Notes"],
-  ["g5Toggle",     "g5Body",    "Show Notes",      "Hide Notes"]
+  ["g5Toggle",     "g5Body",    "Show Notes",      "Hide Notes"],
+  ["mvnToggle",    "mvnCard",   "Show Comparison", "Hide Comparison"],
+  ["watchToggle",  "watch",     "Show Items",      "Hide Items"]
 ];
 COLLAPSIBLES.forEach(([bid, tid, showLbl, hideLbl]) => {
   const btn = document.getElementById(bid), tgt = document.getElementById(tid);
@@ -2541,6 +2739,8 @@ COLLAPSIBLES.forEach(([bid, tid, showLbl, hideLbl]) => {
 });
 
 renderAll();
+renderMvn();
+renderRollupSums();
 
 // ---- live data feed: data.json is republished by automated refreshes and picked up here.
 // Only the hosted copy has the feed. We never poll from the claude.ai artifact viewer (the
