@@ -485,6 +485,25 @@
   footer ul { margin: 6px 0 0; padding-left: 18px; }
   footer li { margin: 3px 0; }
 
+  /* Derived-assumption caveats: figures constructed by us, not published source data. */
+  .assump {
+    display: block; font-size: 11px; line-height: 1.35; color: var(--ink-3);
+    font-weight: 400; margin-top: 6px;
+    border-left: 2px solid var(--line); padding-left: 8px;
+  }
+  .assump b { color: var(--ink-2); font-weight: 700; }
+
+  /* Collapsible reference/guidance blocks. Same Show/Hide pattern as #tcCard and #plCard. */
+  .collbar { display: flex; align-items: baseline; gap: 10px; margin: 0 0 8px; }
+  .collbar .collttl {
+    font-size: 11px; font-weight: 700; color: var(--ink-2);
+    text-transform: uppercase; letter-spacing: 0.07em;
+  }
+  .collbar .collttl .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+  .collbar.sub { margin: 0; }
+  .collbar.sub .collttl { font-size: 12.5px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+  .collbar button.expand-all { margin-left: auto; flex: none; padding: 4px 10px; font-size: 11.5px; }
+
   button.expand-all {
     font: 600 12px/1 "Avenir Next", "Segoe UI", system-ui, sans-serif;
     color: var(--ink-2); background: var(--surface); border: 1px solid var(--line);
@@ -550,10 +569,12 @@
   :root[data-export-prep] #watchSection,
   :root[data-export-prep] #coSection,
   :root[data-export-prep] .sbody,
+  :root[data-export-prep] button.expand-all,
   :root[data-export-prep] #pdfOverlay { display: none !important; }
   :root[data-export-prep] #coPrint { display: block; margin-top: 10px; border-top: 2px solid var(--gold); padding-top: 6px; }
   /* live print-prep state (set by the PDF buttons; independent of @media print support) */
   :root[data-print-prep] .toolbar,
+  :root[data-print-prep] button.expand-all,
   :root[data-print-prep] #watchSection,
   :root[data-print-prep] .sbody,
   :root[data-print-prep] .shead .caret,
@@ -724,16 +745,31 @@
     <span id="refreshStatus" class="tstatus"></span>
   </div>
 
-  <section>
-    <h2>2024 Facility Master Plan and District Project Planning <span class="note">what the FMP approved, and how delivery method affects it</span></h2>
-    <div class="card">
-      <div id="fmpTiers"></div>
+  <section id="fmpSection">
+    <h2 style="display:flex">2024 Facility Master Plan and District Project Planning <span class="note">what the FMP approved, and how delivery method affects it</span>
+      <button type="button" class="expand-all" id="fmpSecToggle" style="margin-left:auto">Hide Section</button>
+    </h2>
+    <div class="card coll" id="fmpCard">
+      <div class="collbar">
+        <span class="collttl">2024 FMP Approved Project Budgets (By Priority)</span>
+        <button type="button" class="expand-all" id="tiersToggle">Show Budgets</button>
+      </div>
+      <div id="fmpTiers" class="coll" hidden></div>
 
       <div id="fmpGuide">
-        <div class="gcap">FMP Guidelines <span class="eq">&mdash; how to read the budgets above against how we are actually delivering the work</span></div>
+        <div class="collbar">
+          <span class="collttl">FMP Guidelines <span class="eq">&mdash; how to read the budgets above against how we are actually delivering the work</span></span>
+          <button type="button" class="expand-all" id="guideToggle">Hide Guidelines</button>
+        </div>
+        <div class="coll" id="guideBody">
 
         <div class="gitem"><span class="gnum">1</span>
           <div>
+            <div class="collbar sub">
+              <span class="collttl">The FMP was estimated on Design-Bid-Build, not Lease-Leaseback</span>
+              <button type="button" class="expand-all" id="g1Toggle">Show Notes</button>
+            </div>
+            <div class="coll" id="g1Body" hidden>
             <b>The FMP was estimated on Design-Bid-Build, not Lease-Leaseback.</b>
             Every High / Medium / Low total above carries DBB pricing assumptions. Projects delivered LLB should be
             expected to land higher per square foot &mdash; not because the building changed, but because the delivery
@@ -753,6 +789,7 @@
             <i>unloaded</i> construction cost, which is not a delivery-method comparison at all. No rigorous public
             study isolates a California K-12 Lease-Leaseback premium, so these bands are anchored on Balfour Beatty&rsquo;s
             own priced work for these three buildings rather than on published averages.
+            </div>
             <table class="gtable">
               <thead><tr>
                 <th>Delivery Method &mdash; New Construction</th>
@@ -761,6 +798,13 @@
               </tr></thead>
               <tbody id="bandBody"></tbody>
             </table>
+            <span class="assump"><b>All three new-construction bands are constructed, not published.</b> No rigorous
+              public study isolates a California K-12 Lease-Leaseback premium, so these boundaries
+              ($820&ndash;910, $910&ndash;1,000, $1,000&ndash;1,120/SF) were set by us: the Design-Bid-Build band is
+              anchored on the FMP&rsquo;s own construction rates escalated to 2026, and the two Lease-Leaseback bands
+              are spaced above it using Balfour&rsquo;s own loaded pricing for these three buildings as the upper
+              reference. They are a reading frame for judging a quoted $/SF, <b>not</b> market data, and the
+              &ldquo;+% vs DBB midpoint&rdquo; figures are simply arithmetic on boundaries we chose.</span>
 
             <table class="gtable" style="margin-top:14px">
               <thead><tr>
@@ -770,6 +814,12 @@
               </tr></thead>
               <tbody id="modBandBody"></tbody>
             </table>
+            <span class="assump"><b>All three modernization bands are constructed, not published.</b> They are derived
+              by taking the FMP&rsquo;s own 2024 renovation rates, multiplying by <b>1.22</b> to load them the way
+              Balfour loads its work, and by <b>1.125</b> for escalation to 2026 &mdash; both of those multipliers are
+              themselves assumptions listed below. The resulting boundaries ($270&ndash;320, $320&ndash;370,
+              $370&ndash;430/SF) are ours, and the wider Lease-Leaseback premium shown on renovation than on new build
+              is a consequence of how we spaced them rather than an observed market spread.</span>
             <div class="ladder-note" style="margin:8px 0 0">
               <b>Two scales are needed because SMHS is two different kinds of work.</b> The Medical Arts building is new
               construction and belongs on the scale above; the Career Center and Library is renovation and belongs here.
@@ -780,7 +830,10 @@
               &ldquo;Add For&rdquo; line carrying <i>no</i> general conditions, fee or contingency, while these bands are
               loaded totals. Compared like with like &mdash; against the FMP&rsquo;s construction-only library rate of
               $333.20/SF &mdash; it still comes in <b>28% low</b>. Loaded to the same basis as this chart it would need
-              roughly 22% added, putting it near $293/SF, which is only just inside the Design-Bid-Build band and still
+              roughly 22% added <span class="assump" style="display:inline;border:none;padding:0"><b>(assumption:</b>
+              the 22% load is not a Balfour rate for this line &mdash; it is the average markup ratio we computed from
+              their other three projects, about 22.0% of direct cost, applied here because the Career Center carries no
+              stated markup at all)</span>, putting it near $293/SF, which is only just inside the Design-Bid-Build band and still
               below every Lease-Leaseback range. <b>The flat $240.00/SF falls below every band on this scale</b>
               &mdash; under even a competitive Design-Bid-Build moderate-modernization rate, and roughly 47% under the
               FMP&rsquo;s library-grade loaded rate of about $457/SF. Note that Lease-Leaseback premiums run higher on
@@ -855,7 +908,14 @@
                 buildings absorb it badly. <b>Carver is the exposure, not SMHS.</b> Bundling the two elementary buildings
                 under a single mobilization is the clearest available saving.
                 <br><br>
-                Roughly 12.5% of each variance is 2024&rarr;2026 escalation, shown separately. The FMP&rsquo;s two-storey
+                Roughly 12.5% of each variance is 2024&rarr;2026 escalation, shown separately.
+                <span class="assump"><b>The 12.5% escalation rate is our assumption, not a published index.</b> It is
+                simply about 6% a year compounded over the two years from the FMP&rsquo;s January 2024 basis to 2026
+                pricing. No ENR, RSMeans, Caltrans or DGS index was used, and no escalation basis is stated anywhere in
+                the FMP or in Balfour&rsquo;s proposal. Every &ldquo;Less Escalation&rdquo; figure in the table above,
+                and the &times;1.125 factor inside the modernization bands, moves directly with this one number &mdash;
+                treat the escalation-adjusted variances as indicative only.</span>
+                The FMP&rsquo;s two-storey
                 premium is already inside its $696.15/SF rate, so it must not be added again. <b>SMHS is normalized:</b>
                 the FMP carried no new-construction rate for that campus &mdash; it budgeted modernization at
                 $142.80&ndash;$357.00/SF &mdash; so the elementaries&rsquo; new-construction rate is applied to the new
@@ -879,19 +939,36 @@
                 ratio, because GC&rsquo;s and GR&rsquo;s scale with time and not with cost &mdash; applying the blended rate
                 to restored scope would double-count them.
                 <br><br>
-                <b>Carver&rsquo;s building is fairly priced</b> &mdash; it lands $32,004 under, the only project where
-                Balfour&rsquo;s number is marginally high. Its <i>project</i> is underfunded only because $3.3M of play
-                yards and classroom modernization sit outside the contract line. <b>Valentine is purely a schedule
-                correction.</b> <b>San Marino HS carries the entire scope problem</b>, and at $1,065/SF normalized it
-                now sits slightly above the elementaries &mdash; which is what a two-storey building on an occupied
-                high-school campus should cost.
+                <b>Carver&rsquo;s $32,004 is an arithmetic error in Balfour&rsquo;s proposal, not a discount.</b> The
+                line comes in under only because Balfour&rsquo;s stated general-conditions total of $1,230,696 exceeds
+                12 &times; its own $99,891 monthly rate by exactly that amount, while Valentine and SMHS both multiply
+                out precisely. It is <i>not</i> evidence that Carver&rsquo;s building is fairly priced &mdash; on the
+                corrected arithmetic Carver prices at its proposal total with no cushion at all, and it remains the
+                worst FMP variance on the page at +70%. Its <i>project</i> is separately underfunded because $3.3M of
+                play yards and classroom modernization sit outside the contract line. <b>Valentine is purely a schedule
+                correction.</b> <b>San Marino HS carries the entire scope problem</b>, and at $1,020/SF normalized it
+                lands between Carver at $1,011 and Valentine at $1,039 &mdash; the convergence you would expect once
+                the omissions are restored on a defensible basis.
                 <br><br>
                 <b>One anomaly the normalization cannot explain away:</b> the cost-scaling markup rates, computed from
                 Balfour&rsquo;s own figures after removing time-based GC and fixed preconstruction, are
                 <b>Carver 13.19%, Valentine 14.42%, San Marino HS 19.70%</b>. Same contractor, same fee schedule, same
                 month, yet SMHS carries 6.5 points more &mdash; about <b>$1.6M</b> on its normalized direct cost, with no
                 stated basis. It is left in the normalized figure because it is their rate, but it should be challenged
-                rather than accepted.</div>
+                rather than accepted.
+                <span class="assump"><b>These three rates are derived by subtraction and are not published by
+                Balfour.</b> Balfour discloses one markup subtotal per project and nothing inside it. Each rate here is
+                what is left after we remove the figures they do state &mdash; general conditions, preconstruction and
+                allowances &mdash; and divide by direct cost: Carver (3,215,434 &minus; 1,230,696 &minus; 60,000)
+                &divide; 14,590,499 = 13.19%, Valentine (4,049,828 &minus; 1,318,752 &minus; 75,000) &divide;
+                18,422,572 = 14.42%, SMHS (5,705,206 &minus; 1,261,836 &minus; 75,000) &divide; 22,176,550 = 19.70%.
+                The method carries two known weaknesses. First, it assumes the disclosed general-conditions totals are
+                exactly what sits inside the markup pool, which is unverifiable &mdash; and at Carver it is demonstrably
+                shaky, since Balfour&rsquo;s stated $1,230,696 conflicts with 12 &times; $99,891 = $1,198,692, moving
+                that rate between <b>13.19%</b> and <b>13.41%</b> depending on which figure is used. Second, across the
+                three projects roughly <b>$4.29M</b> of the disclosed markup pool is not accounted for by any stated
+                component, so these percentages are a residual, not a fee schedule. Use them to compare the three
+                projects against each other and to frame questions for Balfour &mdash; not as established rates.</span></div>
 
               <div class="llbcap" style="margin-top:14px">General conditions against the real schedule
                 <span class="eq">&mdash; Balfour priced 12 months for all three; Carver runs 12&ndash;14 months, the two-storey buildings 16&ndash;18</span>
@@ -903,8 +980,17 @@
                 </tr></thead>
                 <tbody id="gcDurBody"></tbody>
               </table>
-              <div class="llbhint" style="margin-bottom:12px">Carver is essentially covered &mdash; its 12-month price
-                slightly exceeds 12 months of general conditions, and 14 months would add $167,778. The two-storey
+              <div class="llbhint" style="margin-bottom:12px"><b>Carver&rsquo;s general-conditions total does not
+                reconcile with its own monthly rate.</b> Balfour states $1,230,696, but 12 &times; $99,891 is
+                $1,198,692 &mdash; a <span class="amt">$32,004</span> overstatement inside their own Fee Proposal
+                Summary. The monthly rate is the verified figure: $99,891 appears both at item 3.1 of that summary and
+                as the &ldquo;Total Monthly General Conditions&rdquo; on Balfour&rsquo;s separate Carver General
+                Conditions detail sheet, and it decomposes correctly against SMHS (the only differences are the project
+                manager at $18,808 against $20,589 and the superintendent at $17,808 against $21,289). Valentine and
+                SMHS both multiply out exactly, so this is a Carver-specific error rather than a rounding convention.
+                Read it as an unexplained $32,004 in the proposal, <b>not</b> as evidence that Carver is priced
+                generously: on the correct arithmetic Carver&rsquo;s 12 months are covered to the dollar and nothing
+                more, and 14 months would add $167,778. The two-storey
                 buildings are where the exposure sits: at 16&ndash;18 months they need <b>$420,612 to $659,376 each</b>
                 beyond what was priced. Across the program that is <b>$828,192 to $1,458,072 of unpriced general
                 conditions</b>, none of which appears in the totals compared above. Balfour&rsquo;s own sheet calls the
@@ -970,16 +1056,27 @@
         <div id="fmpProse">
         <div class="gitem"><span class="gnum">2</span>
           <div>
+            <div class="collbar sub">
+              <span class="collttl">Risk loading is the variable that moves the number</span>
+              <button type="button" class="expand-all" id="g2Toggle">Show Notes</button>
+            </div>
+            <div class="coll" id="g2Body" hidden>
             <b>Risk loading is the variable that moves the number.</b> The question behind every
             Lease-Leaseback proposal is simply: <i>how much uncertainty is each proposer asking the District to
             pay for?</i> Unresolved scope, escalation, labor availability, subcontractor market conditions, and
             schedule risk all get priced in as contingency. That premium &mdash; not the physical building &mdash;
             is what carries a $600&ndash;750/SF project into the $900&ndash;1,050+/SF band.
           </div>
+          </div>
         </div>
 
         <div class="gitem"><span class="gnum">3</span>
           <div>
+            <div class="collbar sub">
+              <span class="collttl">The GMP proposal and its &plusmn; tolerance are the risk-loading disclosure</span>
+              <button type="button" class="expand-all" id="g3Toggle">Show Notes</button>
+            </div>
+            <div class="coll" id="g3Body" hidden>
             <b>The GMP proposal and its &plusmn; tolerance are the risk-loading disclosure &mdash; read them
             together.</b> A GMP proposal is submitted as a guaranteed maximum price with a stated &plusmn;
             tolerance around it, and that tolerance band <i>is</i> the range of risk the proposer is asking the
@@ -1000,10 +1097,16 @@
             signals a contractor whose subs are known, competitive, and already accounted for &mdash; less risk
             and a lower likely landing point.
           </div>
+          </div>
         </div>
 
         <div class="gitem"><span class="gnum">4</span>
           <div>
+            <div class="collbar sub">
+              <span class="collttl">Do not confuse the &plusmn; tolerance with the GMP monthly cost</span>
+              <button type="button" class="expand-all" id="g4Toggle">Show Notes</button>
+            </div>
+            <div class="coll" id="g4Body" hidden>
             <b>Do not confuse the &plusmn; tolerance with the GMP monthly cost.</b> They answer different
             questions. The <b>monthly cost</b> is the pay-application draw against the GMP as work is completed
             &mdash; that is cash flow and timing. The <b>&plusmn; tolerance</b> is exposure: how far the final
@@ -1012,19 +1115,27 @@
             band. Evaluate them separately &mdash; tolerance for how much uncertainty the District is buying,
             monthly cost for when the District pays for it.
           </div>
+          </div>
         </div>
 
         <div class="gitem"><span class="gnum">5</span>
           <div>
+            <div class="collbar sub">
+              <span class="collttl">What this does to FMP buying power</span>
+              <button type="button" class="expand-all" id="g5Toggle">Show Notes</button>
+            </div>
+            <div class="coll" id="g5Body" hidden>
             <b>What this does to FMP buying power.</b> At the midpoints &mdash; $675/SF DBB versus $975/SF
             heavily loaded Lease-Leaseback &mdash; the same dollar buys roughly <b>30% less scope</b>. An FMP
             tier sized to deliver a full scope list under Design-Bid-Build should be read as delivering about
             two-thirds of that list if the work goes out as heavily risk-loaded Lease-Leaseback.
-            </div>
+            </div><!-- /g5Body -->
       </div>
-        </div>
-      </div>
-    </div>
+        </div><!-- /gitem 5 -->
+      </div><!-- /fmpProse -->
+      </div><!-- /guideBody -->
+      </div><!-- /fmpGuide -->
+    </div><!-- /fmpCard -->
   </section>
 
   <section id="tcSection">
@@ -1617,15 +1728,20 @@ function renderAll() {
   watch.push(`Estimated Project Budgets (<b>${fmt(T.budget)}</b>) are ${pct(T.budget, PROGRAM.released)} of the ${fmt(PROGRAM.released)} Series A release &mdash; sequencing of the next bond series will gate the two-story building projects.`);
   // ---- Balfour Beatty proposal: inconsistencies and scope gaps to put back to them ----
   const LLB_WATCH = [
-    `<b>Division 07 &mdash; Thermal &amp; Moisture Protection &mdash; is entirely absent from the San Marino HS estimate.</b> Both elementaries carry it at <b>$75.84/SF</b>; SMHS carries nothing. That division is roofing, waterproofing, insulation and air/vapour barriers, and on 31,556 GSF it is <span class="amt">$2,393,207</span> missing. A new two-storey DSA building cannot be delivered without a roof or weatherproofing, so this is an omission rather than a scope decision. <b>Masonry</b> and <b>Special Construction</b> are likewise absent, and <b>Exterior Improvements</b> sits at $30.81/SF against $75.81/SF at both elementaries.
-      <br><br>The arithmetic closes the loop: the direct-cost gap is <b>$130.07/SF</b> (SMHS $702.77 against an elementary average of $832.84), and the missing and reduced divisions total <b>$175.19/SF</b> &mdash; more than enough to account for the whole difference, with the remainder offset where SMHS runs higher (HVAC $64.76 against about $55, Furnishings $15.65 against $4.65, Existing Conditions $14.32). <b>SMHS is not cheaper because it is larger or better priced &mdash; it is cheaper because roofing and weatherproofing were left out, along with masonry, special construction and most of the site work.</b> Restoring Division 07 alone moves it from $883.56 to <b>$978.92/SF</b>; restoring the defensible omissions puts it at <b>$1,003.83/SF</b>, right alongside Carver at $1,012.85 and Valentine at $1,019.43 &mdash; the convergence you would expect from three buildings priced off one rate card.`,
+    `<b>Division 07 &mdash; Thermal &amp; Moisture Protection &mdash; is entirely absent from the San Marino HS estimate.</b> Both elementaries carry it at <b>$75.84/SF</b>; SMHS carries nothing. Note how it is absent: Masonry, Special Construction and Transportation each appear on the SMHS sheet marked &ldquo;N/A,&rdquo; which is a decision; Division 07 has <b>no row at all</b>, which is an oversight. That division is roofing, waterproofing, insulation and air/vapour barriers, and a new two-storey DSA building cannot be delivered without a roof or weatherproofing, so this is an omission rather than a scope decision. <b>Exterior Improvements</b> also sits at $30.81/SF against $75.81/SF at both elementaries.
+      <br><br><b>Sized on footprint, not gross area:</b> roofing and the underslab vapour barrier are driven by the area of ground the building covers, and one roof and one slab serve both floors of a two-storey building. Applying $75.84/SF to the full 31,556 GSF would double-count both. On a <b>15,778 SF footprint</b> the restoration is <span class="amt">$1,196,604</span>, not the $2,393,207 that a gross-area calculation gives. The absence itself is confirmed and remains the single largest verified omission on the program; only its size changes.
+      <br><br>The arithmetic still closes the loop: the direct-cost gap is <b>$130.07/SF</b> (SMHS $702.77 against an elementary average of $832.84), and the missing and reduced divisions total <b>$137.27/SF</b> on the footprint basis &mdash; still more than enough to account for the whole difference, with the remainder offset where SMHS runs higher (HVAC $64.76 against about $55, Furnishings $15.65 against $4.65, Existing Conditions $14.32). <b>SMHS is not cheaper because it is larger or better priced &mdash; it is cheaper because roofing and weatherproofing were left out, along with most of the site work.</b> Restoring Division 07 on footprint moves it from $883.56 to <b>$931.24/SF</b>; restoring the defensible omissions puts it at <b>$956.15/SF</b>, closing most of the gap to Carver at $1,012.85 and Valentine at $1,019.43, with the residual sitting in masonry and special construction, which are building-specific rather than omissions.`,
+    `<b>A one-storey and a two-storey building carry identical Division 07 dollars per gross square foot &mdash; they cannot both be right.</b> Balfour prices Thermal &amp; Moisture Protection at <b>$75.84/SF of gross area</b> at Carver ($1,333,228 on 17,580 GSF) and at exactly the same rate on gross area at Valentine ($1,671,767 on 22,044 GSF). Carver is single-storey, so its roof and slab areas do equal its gross area and $75.84/SF is appropriate there. Valentine is two-storey, so its footprint is roughly half its gross area and a footprint basis would give about <b>$835,908</b> &mdash; some <span class="amt">$836,000</span> less. Either Valentine&rsquo;s Division 07 is overpriced by roughly that amount or Carver&rsquo;s is underpriced; nothing in the proposal lets us tell which, so <b>no adjustment is made to either project here</b> &mdash; it is a question to put to Balfour. Either way it is further proof that one flat rate card was applied without regard to building geometry, the same conclusion already reached from the 12 byte-identical CSI divisions and the near-identical 22.0% markup ratios.
+      <br><br><b>Balfour&rsquo;s own numbers confirm no footprint basis anywhere in the estimate.</b> Division 31 Earthwork is footprint-driven, yet dividing each project&rsquo;s Division 31 total by its own $20.32/SF rate returns the <i>gross</i> area every time: SMHS $641,236 &divide; $20.32 = 31,557 SF against 31,556 GSF, Valentine $447,947 &divide; $20.32 = 22,045 SF against 22,044 GSF, Carver $357,236 &divide; $20.32 = 17,580 SF against 17,580 GSF. Carver landing on gross validates the test, since for a single-storey building footprint and gross genuinely coincide &mdash; and it then shows that both two-storey buildings had earthwork priced on roughly twice the area that actually drives it.
+      <br><br><b>The 50% footprint ratio is taken from the District&rsquo;s own estimator, not assumed.</b> No footprint, first-floor area or roof area is stated anywhere in Balfour&rsquo;s three Project Comparison Reports &mdash; the Metrics block gives gross square feet only. The 2024 FMP raw export is explicit, however: at Valentine the two-storey classroom building is priced on <b>20,760 SF</b> (row 235) while the site improvements surrounding its building pad sit on <b>10,380 SF</b> (row 236), exactly half; and at San Marino HS the two-storey gymnasium is priced on <b>35,910 SF</b> with its pad at <b>17,955 SF</b> (row 449), again exactly half. Every single-storey line in the same export pairs at 1:1 &mdash; Carver 12,569/12,569 (rows 121&ndash;122), 10,773/10,773 (rows 231&ndash;232), the one-storey MPR 5,772/5,772 (rows 244&ndash;245) and the one-storey aquatics building 5,839/5,839 (rows 450&ndash;451). The District&rsquo;s estimator applied 0.50 to two-storey buildings and 1.00 to single-storey ones without exception, including at SMHS itself. <b>What remains an assumption</b> is that the Medical Arts building splits evenly between its two floors; no drawing or area take-off in any source states its footprint, so 15,778 SF is the FMP&rsquo;s convention applied to Balfour&rsquo;s 31,556 GSF rather than a measured area.`,
+    `<b>Carver&rsquo;s general-conditions total contradicts its own monthly rate by $32,004.</b> Balfour&rsquo;s Fee Proposal Summary states a monthly general-conditions cost of <b>$99,891</b> for Carver, a 12-month duration, and an Estimated Total General Conditions of <b>$1,230,696</b>. Those cannot all be true: 12 &times; $99,891 = <b>$1,198,692</b>. The monthly rate is the verified figure, appearing both at item 3.1 of the summary and as the &ldquo;Total Monthly General Conditions&rdquo; on Balfour&rsquo;s separate Carver General Conditions detail sheet, and it decomposes correctly against the SMHS sheet (the only line differences are the project manager at $18,808 against $20,589 and the superintendent at $17,808 against $21,289). The other two projects multiply out exactly &mdash; $109,896 &times; 12 = $1,318,752 and $105,153 &times; 12 = $1,261,836 &mdash; so the Carver total appears to be a stale or hand-entered cell rather than a formula; $1,230,696 &divide; 12 implies a monthly of $102,558, a figure that appears nowhere in the document. Ask Balfour which number they stand behind, because it moves the program general-conditions total and it shifts Carver&rsquo;s derived cost-scaling markup rate between <b>13.19%</b> and <b>13.41%</b> depending on which GC figure is removed from the markup pool.`,
     `<b>Building P footprint &mdash; 60% area discrepancy.</b> The District program describes the Career Center and Library renovation as <b>3,267 gross sf</b>; Balfour prices <b>5,226 GSF</b> &mdash; <span class="amt">+1,959 SF (+60%)</span>. Either the renovation footprint has grown beyond the program, or they are measuring the whole of Building P rather than the renovated portion. Resolve before GMP.`,
     `<b>SMHS priced as new construction against a modernization program.</b> The District scope and the Huckabee program (7/14/2026, Site Plan Option 2 &mdash; Modernization) deliver <b>20,993 gross sf of modernization</b>. Balfour priced <b>36,782 GSF</b> &mdash; a 31,556 GSF new two-story building plus 5,226 GSF of renovation, <span class="amt">15,789 GSF</span> beyond the program and on a different delivery basis. The scope basis must be reconciled before any number is compared.`,
     `<b>The Career Center carries no general conditions, no fee and no markup of any kind.</b> Balfour&rsquo;s own report closes the Medical Arts building at <b>$27,881,755.52 / $883.56 per SF / 100.00%</b> &mdash; the direct-cost-and-markup structure is complete at that line &mdash; then appends the renovation beneath it as an &ldquo;<b>Add For</b> Building P Modernization, Career Center $1,254,240.00 / $240.00.&rdquo; Being outside the marked-up structure, that $240.00/SF contains no general conditions, no general requirements, no fee, no bonds, no insurance and no contingency, and the single SMHS general-conditions line of $1,261,836 is attached to the new building only. A renovation on an occupied campus, adjacent to a demolition and a structural tie-in, needs its own supervision, logistics and phasing cost. Either that scope is being absorbed silently by the building&rsquo;s general conditions, or it is simply missing &mdash; and at 5,226 GSF against a District program of 3,267 gross sf, it is missing on 60% more area than was ever scoped.`,
     `<b>A one-story building and a two-story building priced at the same rate &mdash; the estimates are not project-specific.</b> Carver is single-storey TK/KG buildings; Valentine is a two-storey classroom, MPR and kitchen building. Their direct costs come in at <b>$829.95/SF</b> and <b>$835.72/SF</b> &mdash; <span class="amt">0.7% apart</span> &mdash; and their markups at <b>22.04%</b> and <b>21.98%</b> of direct cost, <span class="amt">0.05 of a percentage point apart</span>. A two-storey building carries hoisting, vertical material handling, stair and elevator coordination and a longer structural sequence; a set of separate single-storey buildings carries more foundations, more roof and more perimeter. Those do not produce the same rate or the same general-conditions ratio. The District&rsquo;s own FMP distinguishes them by <b>17.0%</b> ($696.15/SF two-storey versus $595.00/SF one-storey) &mdash; so the 2024 master plan estimate was more project-specific than this proposal. Measured against the FMP&rsquo;s type-correct rates, Carver&rsquo;s direct cost runs <span class="amt">+39.5%</span> while Valentine&rsquo;s runs <span class="amt">+20.0%</span>, which points to Carver being the overpriced project &mdash; or Valentine&rsquo;s two-storey scope being underpriced and exposed to change orders. Ask Balfour to produce genuinely separate estimates for the two building types.`,
     `<b>Identical unit rates across three different campuses.</b> 12 of 21 CSI divisions carry byte-identical $/SF in all three Project Comparison Reports &mdash; Concrete $46.88, Metals $58.80, Wood/Plastics $52.73, Openings $41.73, Electrical $92.37, Earthwork $20.32, General Requirements $8.75, Fire Suppression $8.38, Communications $15.63, Electronic Safety $16.13, Specialties $7.61, Thermal &amp; Moisture $75.84. Three sites, three sets of conditions, one rate card. Ask whether any project-specific estimating has been done.`,
     `<b>SMHS carries 3.7 points more markup than the other two, with no stated reason.</b> Markup on direct cost is 25.7% at SMHS versus 22.0% at both Valentine and Carver &mdash; roughly <span class="amt">$820,532</span> &mdash; even though the fee proposal lists identical rates for all three (3.25% fee, 1% bond, 1.20% liability, 3% contingency). Ask what the difference funds.`,
-    `<b>General conditions are priced on a 12-month assumption that the real schedule does not support.</b> Balfour&rsquo;s Fee Proposal Summary item 3.2 states <b>12 months for all three projects</b> &mdash; their own words, &ldquo;assumed for calculations, to be revised per addenda #1 during precon&rdquo; &mdash; and the arithmetic confirms it: $99,891 &times; 12 = $1,230,696 at Carver, $109,896 &times; 12 = $1,318,752 at Valentine, $105,153 &times; 12 = $1,261,836 at SMHS. The actual program runs <b>14 and 18 months of construction with about 21 months of general-conditions coverage</b> on the two-storey buildings, Carver starting April 2027 and finishing in 12 months, the others complete by July 2028. Applied properly &mdash; Carver at 12&ndash;14 months, the two-storey buildings at 16&ndash;18 &mdash; the program needs $4,639,476 to $5,269,356 of general conditions against $3,811,284 priced, leaving <span class="amt">$828,192 to $1,458,072</span> unpriced ($439,584&ndash;$659,376 Valentine, $420,612&ndash;$630,918 SMHS; Carver is covered at 12 months and short $167,778 at 14). Either way the GC total in the proposal is understated and must be re-priced against the real schedule before GMP, together with the mechanism for who absorbs extensions beyond it.`,
+    `<b>General conditions are priced on a 12-month assumption that the real schedule does not support.</b> Balfour&rsquo;s Fee Proposal Summary item 3.2 states <b>12 months for all three projects</b> &mdash; their own words, &ldquo;assumed for calculations, to be revised per addenda #1 during precon&rdquo; &mdash; and the arithmetic confirms it at two of the three: $109,896 &times; 12 = $1,318,752 at Valentine and $105,153 &times; 12 = $1,261,836 at SMHS, both exact. <b>Carver does not reconcile:</b> $99,891 &times; 12 = $1,198,692, yet the same sheet states $1,230,696 &mdash; <span class="amt">$32,004</span> more than its own monthly rate times its own duration. The monthly rate is not in doubt: $99,891 appears both at item 3.1 of the Fee Proposal Summary and as the &ldquo;Total Monthly General Conditions&rdquo; on Balfour&rsquo;s separate Carver General Conditions detail sheet. So the total is the erroneous figure, and Balfour should be asked which number it intends to stand behind. The actual program runs <b>14 and 18 months of construction with about 21 months of general-conditions coverage</b> on the two-storey buildings, Carver starting April 2027 and finishing in 12 months, the others complete by July 2028. Applied properly &mdash; Carver at 12&ndash;14 months, the two-storey buildings at 16&ndash;18 &mdash; the program needs $4,639,476 to $5,269,356 of general conditions against $3,811,284 priced, leaving <span class="amt">$828,192 to $1,458,072</span> unpriced ($439,584&ndash;$659,376 Valentine, $420,612&ndash;$630,918 SMHS; at Carver the stated total happens to cover 12 months with $32,004 to spare only because of the overstatement above, and it is short $167,778 at 14 months). Either way the GC total in the proposal is understated and must be re-priced against the real schedule before GMP, together with the mechanism for who absorbs extensions beyond it.`,
     `<b>Builder&rsquo;s risk insurance is unpriced on all three projects</b> (&ldquo;n/a &mdash; to be procured during GMP establishment&rdquo;), and the SDI option at 1.25% in lieu of subcontractor bonds is offered without a decision. Both are open cost and open risk-transfer items sitting outside the compared totals.`,
     `<b>Scope gaps to confirm are included:</b> Career Center and Library demolition and the tie-in / finish-off of the exposed footprint where the new building meets Building P; abatement and hazardous materials; utility infrastructure beyond the five-foot perimeter line; DSA-driven scope added during plan review; FF&amp;E and the classroom technology package (the FMP carries these separately as HS52); off-hours and phasing premiums for occupied campuses; swing space and interim housing. None of these appear as priced lines.`
   ];
@@ -1826,6 +1942,10 @@ async function exportPdf(mode) {
     const bodyClone = document.body.cloneNode(true);
     bodyClone.style.width = "";
     bodyClone.querySelectorAll("script, iframe, #pdfOverlay").forEach(el => el.remove());
+    // Collapsible reference blocks always print expanded, whatever their state on screen, and the
+    // Show/Hide controls themselves never print - their titles stay, so nothing loses its label.
+    bodyClone.querySelectorAll(".coll[hidden]").forEach(el => el.removeAttribute("hidden"));
+    bodyClone.querySelectorAll("button.expand-all").forEach(el => el.remove());
     if (isSite) {
       // exports always show the report view: toolbar, watch items and the note editor
       // are removed, site cards are collapsed, and the latest saved note prints at the bottom
@@ -2291,7 +2411,9 @@ function renderFmpVs() {
   }).join("");
 }
 const GC_DUR = [
-  {n: "Carver ES &mdash; New TK &amp; KG", mo: 99891, priced: 1230696, lo: 12, hi: 14},
+  {n: "Carver ES &mdash; New TK &amp; KG", mo: 99891, priced: 1230696, lo: 12, hi: 14,
+   moSrc: "verified twice in the source: Fee Proposal Summary item 3.1 and the &ldquo;Total Monthly General Conditions&rdquo; on Balfour&rsquo;s Carver GC detail sheet",
+   flag: "Balfour&rsquo;s stated figure, but 12 &times; $99,891 = $1,198,692 &mdash; their own summary overstates this line by $32,004. The other two totals are exact 12&times; products"},
   {n: "Valentine ES &mdash; Two-Storey", mo: 109896, priced: 1318752, lo: 16, hi: 18},
   {n: "San Marino HS &mdash; Medical Arts", mo: 105153, priced: 1261836, lo: 16, hi: 18}
 ];
@@ -2301,7 +2423,9 @@ function renderGcDur() {
     const lo = g.mo * g.lo, hi = g.mo * g.hi, sl = lo - g.priced, sh = hi - g.priced;
     tp += g.priced; tl += lo; th += hi;
     return `<tr>
-      <td>${g.n}</td><td>${fmt(g.mo)}</td><td>${fmt(g.priced)}</td>
+      <td>${g.n}</td>
+      <td>${fmt(g.mo)}${g.moSrc ? `<span class="gcnote">${g.moSrc}</span>` : ""}</td>
+      <td>${fmt(g.priced)}${g.flag ? `<span class="gcnote">${g.flag}</span>` : ""}</td>
       <td>${g.lo}&ndash;${g.hi} months</td><td>${fmt(lo)} &ndash; ${fmt(hi)}</td>
       <td><span class="psf ${sh > 400000 ? "b3" : (sh > 100000 ? "b2" : "b1")}">${sl > 0 ? "+" + fmt(sl) : "covered"} &ndash; +${fmt(sh)}</span></td>
     </tr>`;
@@ -2314,13 +2438,13 @@ function renderGcDur() {
 function renderFix() {
   const rows = [
     {n: "Carver ES &mdash; New TK &amp; KG", as: 17805933, no: 17773929, sf: 17580,
-     note: "Divisions complete. Comes in slightly <b>under</b> because the 12-month GC price marginally exceeds 12 months of actual general conditions"},
+     note: "Divisions complete, and single-storey, so gross area is also the roof and slab area &mdash; its $75.84/SF Division 07 needs no geometry correction. The &minus;$32,004 is <b>not</b> a saving: Balfour&rsquo;s stated general-conditions total of $1,230,696 exceeds 12 &times; its own verified $99,891 monthly rate by exactly that amount, so it is an unexplained overstatement in their Fee Proposal Summary rather than a cushion in the building price"},
     {n: "Valentine ES &mdash; CR / MPR / Kitchen", as: 22472400, no: 22911984, sf: 22044,
      note: "No scope gaps. Entirely the general-conditions schedule &mdash; 12 months priced against 16 needed"},
-    {n: "San Marino HS &mdash; Medical Arts", as: 27881756, no: 33615370, sf: 31556,
-     note: "$2,393,207 absent Division 07 roofing and weatherproofing &middot; $1,420,020 Exterior Improvements at $30.81/SF against $75.81 at both elementaries &middot; $205,114 utilities &middot; $420,326 minor divisions &middot; then markup and 16-month GC. <b>Masonry and Special Construction are deliberately excluded</b> &mdash; both appear only at Carver and are building-specific, not omissions"},
+    {n: "San Marino HS &mdash; Medical Arts", as: 27881756, no: 32183057, sf: 31556,
+     note: "$1,196,604 absent Division 07 roofing and weatherproofing &mdash; restored on a <b>15,778 SF footprint</b>, not the full 31,556 GSF, because roofing and the underslab vapour barrier are driven by the area of ground the building covers and one roof and one slab serve both floors of a two-storey building &middot; $1,420,020 Exterior Improvements at $30.81/SF against $75.81 at both elementaries &middot; $205,114 utilities &middot; $420,326 minor divisions &middot; then markup and 16-month GC. <b>Masonry and Special Construction are deliberately excluded</b> &mdash; both appear only at Carver and are building-specific, not omissions"},
     {n: "San Marino HS &mdash; Career Center", as: 1254240, no: 2913133, sf: 5226,
-     note: "Priced on <b>renovation rates only</b> &mdash; FMP library/moderate modernization $333.20/SF escalated to $397, plus $25/SF abatement and $35/SF interface demolition, then GC&rsquo;s, fee, bonds and contingency at 22%. <b>No Division 07 thermal, no Division 04 masonry and no new-construction rate is applied to this line.</b> The uplift is because BB&rsquo;s $240/SF was an unloaded &ldquo;Add For&rdquo; allowance carrying no GC&rsquo;s, fee or contingency, and no abatement, seismic, ADA or MEP renewal"},
+     note: "Priced on <b>renovation rates only</b> &mdash; FMP library/moderate modernization $333.20/SF escalated to $397, plus $25/SF abatement and $35/SF interface demolition, then GC&rsquo;s, fee, bonds and contingency at 22%. <span class=\"assump\"><b>Three of those four inputs are our own constructions.</b> The <b>$25/SF abatement</b> and <b>$35/SF interface-demolition</b> allowances appear in no source document &mdash; there is no hazardous-materials survey for Building P in hand, and no demolition take-off for the tie-in to the new building; both are planning placeholders for scope that is real but unquantified. The <b>22% load</b> is the average markup ratio observed on Balfour&rsquo;s other three projects, applied because this line carries no markup at all. Only the <b>$333.20/SF</b> base rate is source data, from the FMP; the escalation to $397 uses the same unverified 12.5% assumption as everything else on this page. This line is the least firm number in the table and should be read as an order of magnitude for scope Balfour has not priced, not as an estimate.</span> <b>No Division 07 thermal, no Division 04 masonry and no new-construction rate is applied to this line.</b> The uplift is because BB&rsquo;s $240/SF was an unloaded &ldquo;Add For&rdquo; allowance carrying no GC&rsquo;s, fee or contingency, and no abatement, seismic, ADA or MEP renewal"},
     {n: "Carver site scope beyond the 5-ft line", as: 0, no: 3300105, sf: 0,
      note: "Play yards C36 $800,000 + C37 $650,000 and existing KG modernization C1 $1,000,000 at FMP construction cost, escalated 19%, loaded at Carver&rsquo;s own 13.19% &mdash; all in the District&rsquo;s project scope but outside Balfour&rsquo;s contract line"}
   ];
@@ -2384,6 +2508,37 @@ function renderGcScale() {
     </tr>`).join("");
 }
 renderGcScale();
+
+// ---- Collapsible reference blocks ------------------------------------------------------------
+// Same Show/Hide contract as #tcCard / #plCard: the target carries class "coll" and the boolean
+// [hidden] attribute, the button lives in a .collbar (or the section <h2>) beside its title. Every
+// collapsed block is force-expanded into the PDF clone in exportPdf, so nothing drops out of print.
+// Reference and guidance material starts collapsed; the financial views start open.
+const COLLAPSIBLES = [
+  ["fmpSecToggle", "fmpCard",   "Show Section",    "Hide Section"],
+  ["tiersToggle",  "fmpTiers",  "Show Budgets",    "Hide Budgets"],
+  ["guideToggle",  "guideBody", "Show Guidelines", "Hide Guidelines"],
+  ["g1Toggle",     "g1Body",    "Show Notes",      "Hide Notes"],
+  ["g2Toggle",     "g2Body",    "Show Notes",      "Hide Notes"],
+  ["g3Toggle",     "g3Body",    "Show Notes",      "Hide Notes"],
+  ["g4Toggle",     "g4Body",    "Show Notes",      "Hide Notes"],
+  ["g5Toggle",     "g5Body",    "Show Notes",      "Hide Notes"]
+];
+COLLAPSIBLES.forEach(([bid, tid, showLbl, hideLbl]) => {
+  const btn = document.getElementById(bid), tgt = document.getElementById(tid);
+  if (!btn || !tgt) return;
+  const sync = () => {
+    const off = tgt.hasAttribute("hidden");
+    btn.textContent = off ? showLbl : hideLbl;
+    btn.setAttribute("aria-expanded", off ? "false" : "true");
+  };
+  btn.addEventListener("click", () => {
+    if (tgt.hasAttribute("hidden")) tgt.removeAttribute("hidden");
+    else tgt.setAttribute("hidden", "");
+    sync();
+  });
+  sync();
+});
 
 renderAll();
 
