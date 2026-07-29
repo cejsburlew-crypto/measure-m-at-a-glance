@@ -808,7 +808,7 @@
 
               <table class="gctable">
                 <thead><tr>
-                  <th>GC Tier</th><th>Monthly GC&rsquo;s / GR&rsquo;s</th><th>Markup Load</th><th>$ / SF Range</th>
+                  <th>GC Tier</th><th>Monthly GC&rsquo;s / GR&rsquo;s</th><th>Markup Load</th><th>$ / SF Range<span class="thsub">spread widens with size</span></th>
                   <th>Carver ES<span class="thsub">17,580 SF</span></th>
                   <th>Valentine ES<span class="thsub">22,044 SF</span></th>
                   <th>San Marino HS<span class="thsub">31,556 SF</span></th>
@@ -820,8 +820,10 @@
                 part-time BIM, scheduling, and operations-support roles and carries lower fee and overhead. They are
                 <b>not</b> quotes. Lower general conditions do not automatically mean lower risk: a smaller GC may carry
                 less bonding capacity, thinner staffing for DSA-heavy work, and a narrower subcontractor pool, all of
-                which can return in change orders. Use this to judge whether the premium for a large GC is buying
-                capacity the District actually needs on that project.</div>
+                which can return in change orders. Note the pattern: as the tier rises the range does not just shift upward,
+                it <b>widens</b> &mdash; bigger contractors carry more risk loading and quote it with a broader tolerance,
+                which is the same signal described in the guidance above. Use this to judge whether the premium for a
+                large GC is buying capacity the District actually needs on that project.</div>
             </div>
           </div>
         </div>
@@ -2027,10 +2029,10 @@ const BOND_TIERS = [
    fits: "All three buildings concurrently, plus program-wide capacity", actual: true}
 ];
 const GC_TIERS = [
-  {t: "Micro GC", note: "owner-run, no dedicated site staff", mo: [20000, 35000], mk: [8, 11], psf: [620, 720]},
-  {t: "Small GC", note: "lean site team, minimal home-office overhead", mo: [45000, 65000], mk: [11, 14], psf: [700, 820]},
-  {t: "Medium GC", note: "full-time PM &amp; super, partial specialty support", mo: [65000, 85000], mk: [14, 17], psf: [780, 900]},
-  {t: "Large GC", note: "Balfour Beatty &mdash; actual proposal", mo: [99891, 109896], mk: [18, 20], psf: [884, 1019], actual: true}
+  {t: "Micro GC", note: "owner-run, no dedicated site staff", mo: [20000, 35000], mk: [8, 11], psf: [620, 730]},
+  {t: "Small GC", note: "lean site team, minimal home-office overhead", mo: [45000, 65000], mk: [11, 14], psf: [700, 850]},
+  {t: "Medium GC", note: "full-time PM &amp; super, partial specialty support", mo: [65000, 85000], mk: [14, 17], psf: [780, 950]},
+  {t: "Large GC", note: "Balfour Beatty &mdash; actual proposal at the low end of this band", mo: [99891, 109896], mk: [18, 20], psf: [884, 1100], actual: true}
 ];
 function renderBondTiers() {
   document.getElementById("bondBody").innerHTML = BOND_TIERS.map(b => `
@@ -2051,7 +2053,7 @@ function renderGcScale() {
       <td>${g.t}<span class="gcnote">${g.note}</span></td>
       <td>${money(g.mo[0])}&ndash;${money(g.mo[1])}</td>
       <td>${g.mk[0]}&ndash;${g.mk[1]}%</td>
-      <td>$${g.psf[0]}&ndash;${g.psf[1]}</td>
+      <td>$${g.psf[0]}&ndash;${g.psf[1]}<span class="gcnote">&plusmn;$${g.psf[1] - g.psf[0]} spread</span></td>
       <td>${mils(projSf.carver * g.psf[0])}&ndash;${mils(projSf.carver * g.psf[1])}</td>
       <td>${mils(projSf.ves * g.psf[0])}&ndash;${mils(projSf.ves * g.psf[1])}</td>
       <td>${g.t === "Micro GC" ? '<span class="psf none">capacity-limited</span>' : mils(projSf.smhs * g.psf[0]) + "&ndash;" + mils(projSf.smhs * g.psf[1])}</td>
