@@ -206,6 +206,19 @@
     margin: 0 0 14px; padding: 12px 14px; border: 1px solid var(--line);
     border-left: 3px solid var(--ink-3); border-radius: 6px;
   }
+  #tcProse { columns: 2; column-gap: 22px; }
+  #tcProse .gitem { break-inside: avoid; }
+  @media (max-width: 900px) { #tcProse { columns: 1; } }
+  .gctable { width: 100%; max-width: 100%; min-width: 0; table-layout: fixed; border-collapse: collapse; margin-top: 7px; font-variant-numeric: tabular-nums; }
+  .gctable th { font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; padding: 0 6px 4px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+  .gctable th:first-child { text-align: left; }
+  .gctable th .thsub { display: block; text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .gctable th:nth-child(1), .gctable td:nth-child(1) { width: 19%; }
+  .gctable td { padding: 5px 6px; border-bottom: 1px solid var(--line); font-size: 12px; text-align: right; overflow-wrap: anywhere; }
+  .gctable td:first-child { text-align: left; color: var(--ink); font-weight: 600; }
+  .gctable tr:last-child td { border-bottom: none; }
+  .gctable .gcnote { display: block; font-size: 10.8px; color: var(--ink-3); font-weight: 400; }
+  .gctable tr.actual td { background: color-mix(in srgb, var(--bad) 8%, transparent); }
   #fmpGuide .gcap { font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.07em; }
   #fmpGuide .gcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
   .gitem { display: flex; gap: 10px; margin-top: 11px; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
@@ -250,10 +263,13 @@
   }
   .llbtable th:first-child { text-align: left; }
   .llbtable th .thsub { text-transform: none; letter-spacing: 0; font-weight: 400; display: block; }
-  .llbtable th:nth-child(1), .llbtable td:nth-child(1) { width: 40%; }
-  .llbtable th:nth-child(2), .llbtable td:nth-child(2) { width: 18%; }
-  .llbtable th:nth-child(3), .llbtable td:nth-child(3) { width: 24%; }
-  .llbtable th:nth-child(4), .llbtable td:nth-child(4) { width: 18%; }
+  .llbtable th:nth-child(1), .llbtable td:nth-child(1) { width: 28%; }
+  .llbtable th:nth-child(2), .llbtable td:nth-child(2) { width: 12%; }
+  .llbtable th:nth-child(3), .llbtable td:nth-child(3) { width: 17%; }
+  .llbtable th:nth-child(4), .llbtable td:nth-child(4) { width: 17%; }
+  .llbtable th:nth-child(5), .llbtable td:nth-child(5) { width: 14%; }
+  .llbtable th:nth-child(6), .llbtable td:nth-child(6) { width: 12%; }
+  .llbtable .bbnote { display: block; font-size: 11px; color: var(--ink-3); font-weight: 400; }
   .llbtable td { padding: 5px 8px; border-bottom: 1px solid var(--line); font-size: 12.5px; text-align: right; overflow-wrap: anywhere; }
   .llbtable tr:last-child td { border-bottom: none; }
   .llbtable td:first-child { text-align: left; color: var(--ink); font-weight: 600; }
@@ -269,6 +285,19 @@
   .llbtable .psf.b3 { color: var(--bad); }
   .llbtable .psf.none { color: var(--ink-3); font-weight: 400; }
   .llbhint { font-size: 11.5px; color: var(--ink-3); margin-top: 6px; }
+  .bbtable { width: 100%; max-width: 100%; min-width: 0; table-layout: fixed; border-collapse: collapse; margin-top: 7px; font-variant-numeric: tabular-nums; }
+  .bbtable th {
+    font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em;
+    text-align: right; padding: 0 8px 4px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere;
+  }
+  .bbtable th:first-child { text-align: left; }
+  .bbtable th .thsub { display: block; text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .bbtable th:nth-child(1), .bbtable td:nth-child(1) { width: 34%; }
+  .bbtable td { padding: 4px 8px; border-bottom: 1px solid var(--line); font-size: 12.5px; text-align: right; overflow-wrap: anywhere; }
+  .bbtable td:first-child { text-align: left; color: var(--ink); }
+  .bbtable tr:last-child td { border-bottom: none; }
+  .bbtable .bbnote { display: block; font-size: 11px; color: var(--ink-3); }
+  .bbtable tr.bbsum td { background: color-mix(in srgb, var(--bad) 7%, transparent); }
 
   /* FMP allocation rows inside the project drill-down */
   .ptable .alochead th { text-align: center; border-bottom: none; padding: 6px 12px 1px; color: var(--gold); }
@@ -521,6 +550,8 @@
   :root[data-print-prep] #watchSection,
   :root[data-print-prep] .sbody,
   :root[data-print-prep] .shead .caret,
+  :root[data-print-prep] #fmpGuide,
+  :root[data-print-prep] #tcSection,
   :root[data-print-prep] #plSection,
   :root[data-print-prep] #coSection,
   :root[data-print-prep] #pdfOverlay { display: none !important; }
@@ -539,7 +570,7 @@
   --s-smhs: #2a78d6; --s-ves: #4a3aa7; --s-ces: #1baf7a; --s-hms: #eb6834; --s-dw: #e87ba4;
     }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    .toolbar, button.expand-all, .sbody, .shead .caret, #watchSection, #coSection, #plSection, #pdfOverlay { display: none !important; }
+    .toolbar, button.expand-all, .sbody, .shead .caret, #watchSection, #coSection, #plSection, #fmpGuide, #tcSection, #pdfOverlay { display: none !important; }
     #coPrint { display: block; margin-top: 5px; border-top: 2px solid var(--gold); padding-top: 3px; }
     .co-print-head { font-size: 10.7px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-2); }
     .co-print-head span { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--ink-3); }
@@ -592,6 +623,9 @@
     .llbtable th { font-size: 10.7px; padding: 0 6px 2px; }
     .llbtable td { padding: 2px 6px; font-size: 10.7px; }
     .llbtable .psf { font-size: 10.7px; }
+    .bbtable th { font-size: 10.7px; padding: 0 6px 2px; }
+    .bbtable td { padding: 1px 6px; font-size: 10.7px; }
+    .bbtable .bbnote { font-size: 10.7px; }
     .llbhint { font-size: 10.7px; margin-top: 3px; }
     .lgroup .gcap { font-size: 10.7px; }
     .ladder-note { font-size: 10.7px; margin-top: 3px; line-height: 1.15; }
@@ -696,7 +730,9 @@
             <b>The FMP was estimated on Design-Bid-Build, not Lease-Leaseback.</b>
             Every High / Medium / Low total above carries DBB pricing assumptions. Projects delivered LLB should be
             expected to land higher per square foot &mdash; not because the building changed, but because the delivery
-            method prices risk differently.
+            method prices risk differently. As a baseline, the LLB premium typically runs <b>5% to 15% higher
+            in total final cost</b> than the same scope delivered Design-Bid-Build &mdash; before any
+            project-specific risk loading is added on top.
             <table class="gtable">
               <thead><tr>
                 <th>Delivery Method</th>
@@ -723,19 +759,69 @@
             </table>
 
             <div class="llbwrap">
-              <div class="llbcap">Lease-Leaseback &mdash; Heavy Risk Loading: proposals in hand
-                <span class="eq">&mdash; enter each figure from the Balfour Beatty GMP proposal; cost / SF calculates and is graded against the bands above</span>
+              <div class="llbcap">Balfour Beatty proposal terms &mdash; RFQ/P #2026-05, dated 3/12/2026
+                <span class="eq">&mdash; the proposal prices <b>rates</b>, not a GMP: the cost of work is established later in preconstruction</span>
+              </div>
+              <table class="bbtable">
+                <thead><tr>
+                  <th>Risk / Cost Component</th>
+                  <th>San Marino HS<span class="thsub">Two-Story Classroom</span></th>
+                  <th>Valentine ES<span class="thsub">Two-Story Classroom</span></th>
+                  <th>Carver ES<span class="thsub">New TK &amp; KG</span></th>
+                </tr></thead>
+                <tbody id="bbBody"></tbody>
+              </table>
+              <div class="llbcap" style="margin-top:14px">Actual proposal pricing &mdash; Pre-Interview Submittal, 4/17/2026
+                <span class="eq">&mdash; Balfour Beatty&rsquo;s own Project Comparison Reports: gross SF, direct cost, and the GC / GR markup load</span>
               </div>
               <table class="llbtable">
                 <thead><tr>
                   <th>Project</th>
-                  <th>Building SF</th>
-                  <th>Total Cost <span class="thsub">incl. GC&rsquo;s &amp; GR&rsquo;s</span></th>
+                  <th>Gross SF</th>
+                  <th>Direct Cost of Work</th>
+                  <th>Markups <span class="thsub">GC&rsquo;s, GR&rsquo;s, fee, bonds, contingency</span></th>
+                  <th>Total Cost</th>
                   <th>Cost / SF</th>
                 </tr></thead>
                 <tbody id="llbBody"></tbody>
               </table>
-              <div class="llbhint">Transcend baseline budgets for reference: Carver ES <b>$21,500,000</b> &middot; San Marino HS <b>$29,500,000</b> &middot; Valentine ES <b>$31,357,143</b>. Entries save in this browser.</div>
+              <div class="llbhint" id="llbHint"></div>
+
+              <div class="llbcap" style="margin-top:14px">General contractor size and its effect on GC&rsquo;s / GR&rsquo;s
+                <span class="eq">&mdash; illustrative planning ranges for this scope; the large-GC row is Balfour Beatty&rsquo;s actual proposal</span>
+              </div>
+              <table class="gctable">
+                <thead><tr>
+                  <th>GC Tier</th><th>Single-Project Bonding</th><th>Aggregate Bonding</th><th>Which SMUSD Work It Can Carry</th>
+                </tr></thead>
+                <tbody id="bondBody"></tbody>
+              </table>
+              <div class="llbhint" style="margin-bottom:12px">There is <b>no official AGC of California or state tier
+                standard</b> &mdash; AGC-CA is an advocacy and training association and does not classify contractors by
+                size. Tiers in practice are set by <b>surety underwriting</b>, which issues each contractor a
+                single-project limit and an aggregate limit (rule of thumb: aggregate runs near ten times working
+                capital or net worth). The brackets below are the common industry convention, with two hard reference
+                points: the SBA Bond Guarantee Program caps at <b>$9M</b> for non-federal work, which effectively marks
+                the micro/small ceiling, and California districts set their own bonding thresholds in the
+                prequalification questionnaire required for bond-funded projects over $1M
+                (Public Contract Code &sect;20111.5&ndash;20111.6). ENR&rsquo;s revenue rankings are the usual informal proxy.</div>
+
+              <table class="gctable">
+                <thead><tr>
+                  <th>GC Tier</th><th>Monthly GC&rsquo;s / GR&rsquo;s</th><th>Markup Load</th><th>$ / SF Range</th>
+                  <th>Carver ES<span class="thsub">17,580 SF</span></th>
+                  <th>Valentine ES<span class="thsub">22,044 SF</span></th>
+                  <th>San Marino HS<span class="thsub">31,556 SF</span></th>
+                </tr></thead>
+                <tbody id="gcBody"></tbody>
+              </table>
+              <div class="llbhint">Small and medium ranges are planning estimates built by scaling the staffing and
+                home-office overhead in Balfour&rsquo;s own General Conditions sheets &mdash; a leaner team drops the
+                part-time BIM, scheduling, and operations-support roles and carries lower fee and overhead. They are
+                <b>not</b> quotes. Lower general conditions do not automatically mean lower risk: a smaller GC may carry
+                less bonding capacity, thinner staffing for DSA-heavy work, and a narrower subcontractor pool, all of
+                which can return in change orders. Use this to judge whether the premium for a large GC is buying
+                capacity the District actually needs on that project.</div>
             </div>
           </div>
         </div>
@@ -761,6 +847,17 @@
             fund the high end of it. Two proposals with the same headline GMP are <b>not</b> equivalent if one
             carries &plusmn;3% and the other &plusmn;15% &mdash; the second is a materially more expensive
             proposal with the difference hidden in the band rather than the price.
+            <br><br>
+            <b>A GMP ROM is priced by that contractor&rsquo;s subcontractor pool, not by the market.</b> A Rough
+            Order of Magnitude estimate reflects the experience and the specific subs that <i>this</i> general
+            contractor brings, and the same scope bid through a different GC returns different numbers: subs load
+            their bids differently depending on who they are working for &mdash; relationship, payment history,
+            backlog, and administrative burden all move the price. The same subcontractor routinely bids one GC
+            materially differently than another. So the ROM and its tolerance together tell you how well that GC
+            knows its pool and how much risk that pool is pricing in. A wide tolerance on a ROM signals an
+            unsettled pool and hands that uncertainty to the District; a tighter tolerance around a lower range
+            signals a contractor whose subs are known, competitive, and already accounted for &mdash; less risk
+            and a lower likely landing point.
           </div>
         </div>
 
@@ -785,6 +882,61 @@
             </div>
       </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tcSection">
+    <h2>Evaluating True Project Cost <span class="note">Lease-Leaseback proposal checklist &mdash; what actually moves the final number</span>
+      <button type="button" class="expand-all" id="tcToggle" style="margin-left:auto">Show Checklist</button>
+    </h2>
+    <div class="card" id="tcCard" hidden>
+      <div id="tcProse">
+        <div class="gitem"><span class="gnum">1</span><div><b>Normalize every proposal to one number, not a fee percentage.</b>
+          Fee is the smallest lever on the page. Rebuild each proposal as precon + (monthly GC &times; a <i>realistic</i>
+          duration) + fee% + bond% + liability% + contingency% + allowances, applied to the same cost of work. A lower
+          fee with a higher monthly GC or a longer assumed schedule loses.</div></div>
+
+        <div class="gitem"><span class="gnum">2</span><div><b>Duration is a price term, not a schedule note.</b>
+          At roughly $100K per month, every added month costs about $100K in general conditions alone &mdash; and the
+          12-month assumption here is explicitly &ldquo;to be revised during precon.&rdquo; Lock the monthly rate and
+          settle now who absorbs GC&rsquo;s when DSA review, phasing, or District-caused delay extends the job.</div></div>
+
+        <div class="gitem"><span class="gnum">3</span><div><b>Ask who keeps unused contingency and savings.</b>
+          A 3% errors-and-omissions contingency on a $20M cost of work is $600K. Does it return to the District at
+          closeout or convert to contractor profit? Explicit savings-return language is worth more than a point of fee.</div></div>
+
+        <div class="gitem"><span class="gnum">4</span><div><b>Require open-book subcontractor bidding.</b>
+          Because the ROM is only as good as the sub pool, insist on a minimum number of bids per trade, District
+          presence at bid openings and leveling, and disclosure of any scope the GC intends to self-perform &mdash;
+          self-performed work should be competitively tested, not negotiated.</div></div>
+
+        <div class="gitem"><span class="gnum">5</span><div><b>Separate allowances, contingency and escalation.</b>
+          Three different risks. Escalation should carry a stated date basis. Confirm the same uncertainty is not
+          priced once in escalation, again in contingency, and a third time inside the sub bids.</div></div>
+
+        <div class="gitem"><span class="gnum">6</span><div><b>Check whether markups stack on markups.</b>
+          Verify fee is not calculated on contingency, that bond and insurance are not applied to fee, and that
+          allowances sit outside the percentage base. Stacked markups quietly add several percent to the total.</div></div>
+
+        <div class="gitem"><span class="gnum">7</span><div><b>Understand SDI versus subcontractor bonds.</b>
+          Subcontractor Default Insurance in lieu of sub bonds (1.25% here) protects and is controlled by the
+          <i>contractor</i>; a payment and performance bond gives the <b>District</b> a surety to call. Cheaper is not
+          the same as safer.</div></div>
+
+        <div class="gitem"><span class="gnum">8</span><div><b>Fix change-order mechanics before the GMP.</b>
+          Lock labor and equipment unit rates, cap change-order markup, and define &ldquo;unforeseen conditions&rdquo;
+          in writing. Post-GMP growth is where LLB projects drift, and most of it traces to unresolved scope at GMP
+          establishment.</div></div>
+
+        <div class="gitem"><span class="gnum">9</span><div><b>Tie preconstruction fees to deliverables.</b>
+          Precon dollars are paid before a GMP exists. Attach them to defined products &mdash; estimates at DD and CD,
+          a constructability log, subcontractor outreach evidence &mdash; so value is judged before the large money commits.</div></div>
+
+        <div class="gitem"><span class="gnum">10</span><div><b>Compare $/GSF on identical scope definitions.</b>
+          Confirm gross-square-foot definitions match and that site work, utilities and the perimeter rule (five feet
+          beyond the building at Carver, for example) are treated the same in every proposal. Otherwise the
+          per-square-foot comparison is meaningless.</div></div>
       </div>
     </div>
   </section>
@@ -1521,6 +1673,7 @@ async function exportPdf(mode) {
       // exports always show the report view: toolbar, watch items and the note editor
       // are removed, site cards are collapsed, and the latest saved note prints at the bottom
       bodyClone.querySelectorAll(".toolbar, #watchSection, #coSection, #plSection").forEach(el => el.remove());
+      bodyClone.querySelectorAll("#tcCard").forEach(el => el.removeAttribute("hidden"));
       bodyClone.querySelectorAll(".scard.open").forEach(c => c.classList.remove("open"));
       const cp = bodyClone.querySelector("#coPrint");
       if (cp && cp.innerHTML) cp.setAttribute("style", "display:block;margin-top:10px;border-top:2px solid var(--gold);padding-top:6px");
@@ -1705,43 +1858,95 @@ document.getElementById("btnTheme").addEventListener("click", () => {
 });
 
 // ---- LLB proposals in hand: editable SF / cost, live cost-per-SF grading ----
-const LLB_KEY = "mm_llb_proposals_v1";
-const LLB_ROWS = [
-  {k: "carver", label: "Carver ES &mdash; New TK/KG Building & Play Yard"},
-  {k: "smhs",   label: "San Marino HS &mdash; New Two-Story STEM Building"},
-  {k: "ves",    label: "Valentine ES &mdash; MPR, Kitchen, Grades 1&ndash;5 Classrooms"}
-];
+const LLB_KEY = "mm_llb_proposals_v2";
+// Balfour Beatty RFQ/P #2026-05 fee proposal, 3/12/2026. Percentages apply to the cost of work (GMP);
+// GC total = monthly GC x assumed duration. No SF or GMP is stated in the proposal.
+const BB = {
+  smhs:   {label: "San Marino HS &mdash; New Two-Story STEM Building", precon: 55000, fee: 3.25, gcMo: 105153, months: 12, gcTot: 1261836, bond: 1, gl: 1.20, contingency: 3, allow: 20000},
+  ves:    {label: "Valentine ES &mdash; Two-Story Classroom (MPR / Kitchen / 1&ndash;5)", precon: 55000, fee: 3.25, gcMo: 109896, months: 12, gcTot: 1318752, bond: 1, gl: 1.20, contingency: 3, allow: 20000},
+  carver: {label: "Carver ES &mdash; New TK &amp; KG Building", precon: 45000, fee: 3.25, gcMo: 99891, months: 12, gcTot: 1230696, bond: 1, gl: 1.20, contingency: 3, allow: 15000}
+};
+const BB_ORDER = ["smhs", "ves", "carver"];
+// Actual pricing from the Pre-Interview Submittal Project Comparison Reports (4/17/2026).
+// Markups are the GC's / GR's / fee / bonds / insurance / contingency load on the direct cost of work.
+const BB_ACT = {
+  smhs:   {sf: 31556, direct: 22176549.74, markup: 5705205.78,
+           note: "Medical Arts Building at 31,556 GSF; the Career Center adds 5,226 GSF, taking the project total to $29,135,996"},
+  ves:    {sf: 22044, direct: 18422572.24, markup: 4049827.89, note: "Classroom, MPR and Kitchen building"},
+  carver: {sf: 17580, direct: 14590498.55, markup: 3215434.43, note: "New TK &amp; Kindergarten building"}
+};
+const pctLoad = k => BB[k].fee + BB[k].bond + BB[k].gl + BB[k].contingency;   // % applied to cost of work
+const fixedLoad = k => BB[k].gcTot + BB[k].precon + BB[k].allow;              // $ applied on top
 let llbMem = {};
-function llbLoad() { try { return JSON.parse(localStorage.getItem(LLB_KEY)) || llbMem; } catch (e) { return llbMem; } }
+function llbDefaults() {
+  const d = {};
+  BB_ORDER.forEach(k => { d[k] = {sf: BB_ACT[k].sf, direct: BB_ACT[k].direct, markup: BB_ACT[k].markup}; });
+  return d;
+}
+function llbLoad() {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(LLB_KEY)); } catch (e) {}
+  const base = llbDefaults();
+  if (saved) BB_ORDER.forEach(k => { if (saved[k]) base[k] = Object.assign(base[k], saved[k]); });
+  return base;
+}
 function llbSave(d) { llbMem = d; try { localStorage.setItem(LLB_KEY, JSON.stringify(d)); } catch (e) {} }
 const numOnly = s => { const n = parseFloat(String(s).replace(/[^0-9.]/g, "")); return isFinite(n) ? n : 0; };
-const grp = n => n ? n.toLocaleString("en-US") : "";
-function psfCell(sf, cost) {
-  if (!sf || !cost) return '<span class="psf none">&mdash;</span>';
-  const v = cost / sf;
+const grp = n => n ? Math.round(n).toLocaleString("en-US") : "";
+const totalOf = v => (v.direct || 0) + (v.markup || 0);
+function psfCell(k, sf, tot) {
+  if (!sf || !tot) return '<span class="psf none">&mdash;</span>';
+  const v = tot / sf;
   const band = v < 750 ? "b1" : (v < 900 ? "b2" : "b3");
-  const note = v < 750 ? "within DBB range" : (v < 900 ? "typical LLB market" : "heavy risk loading");
+  const note = v < 750 ? "within DBB range ($600-750)" : (v < 900 ? "typical LLB market ($750-900)" : "heavy risk loading ($900-1,050+)");
   return `<span class="psf ${band}" title="${note}">$${v.toLocaleString("en-US", {maximumFractionDigits: 0})} / SF</span>`;
 }
+function renderBbTerms() {
+  const row = (label, fn, note) => `<tr><td>${label}${note ? `<span class="bbnote">${note}</span>` : ""}</td>` +
+    BB_ORDER.map(k => `<td>${fn(k)}</td>`).join("") + "</tr>";
+  document.getElementById("bbBody").innerHTML =
+    row("Preconstruction services", k => fmt(BB[k].precon), "fixed, paid before the GMP exists") +
+    row("Construction fee", k => BB[k].fee.toFixed(2) + "%", "of cost of work") +
+    row("Monthly general conditions", k => fmt(BB[k].gcMo), "GC's / GR's") +
+    row("Assumed duration", k => BB[k].months + " months", "&ldquo;to be revised during precon&rdquo;") +
+    row("<b>Estimated total general conditions</b>", k => "<b>" + fmt(BB[k].gcTot) + "</b>", "monthly &times; duration") +
+    row("Performance &amp; payment bond", k => BB[k].bond.toFixed(2) + "%", "of cost of work") +
+    row("General liability", k => BB[k].gl.toFixed(2) + "%", "workers&rsquo; comp included") +
+    row("Construction contingency", k => BB[k].contingency.toFixed(2) + "%", "errors &amp; omissions; final % set in precon") +
+    row("Allowances", k => fmt(BB[k].allow), "utilities / unforeseen conditions") +
+    row("Builder&rsquo;s risk", () => "<span class=\"psf none\">not priced</span>", "procured at GMP establishment") +
+    `<tr class="bbsum"><td><b>Total percentage loading on cost of work</b><span class="bbnote">fee + bond + liability + contingency</span></td>` +
+      BB_ORDER.map(k => `<td><b>${pctLoad(k).toFixed(2)}%</b></td>`).join("") + "</tr>" +
+    `<tr class="bbsum"><td><b>Fixed dollars on top</b><span class="bbnote">GC total + precon + allowances</span></td>` +
+      BB_ORDER.map(k => `<td><b>${fmt(fixedLoad(k))}</b></td>`).join("") + "</tr>";
+}
 function renderLlb() {
+  renderBbTerms();
   const d = llbLoad();
-  document.getElementById("llbBody").innerHTML = LLB_ROWS.map(r => {
-    const v = d[r.k] || {};
+  document.getElementById("llbBody").innerHTML = BB_ORDER.map(k => {
+    const v = d[k], tot = totalOf(v);
+    const mpct = tot ? (100 * (v.markup || 0) / tot) : 0;
     return `<tr>
-      <td>${r.label}</td>
-      <td><input type="text" inputmode="numeric" data-llb="${r.k}" data-fld="sf" value="${v.sf ? grp(v.sf) : ""}" placeholder="SF" aria-label="${r.label} building square feet"></td>
-      <td><input type="text" inputmode="numeric" data-llb="${r.k}" data-fld="cost" value="${v.cost ? "$" + grp(v.cost) : ""}" placeholder="$ total" aria-label="${r.label} total cost including general conditions and general requirements"></td>
-      <td>${psfCell(v.sf, v.cost)}</td>
+      <td>${BB[k].label}${BB_ACT[k].note ? `<span class="bbnote">${BB_ACT[k].note}</span>` : ""}</td>
+      <td><input type="text" inputmode="numeric" data-llb="${k}" data-fld="sf" value="${grp(v.sf)}" aria-label="${BB[k].label} gross square feet"></td>
+      <td><input type="text" inputmode="numeric" data-llb="${k}" data-fld="direct" value="${v.direct ? "$" + grp(v.direct) : ""}" aria-label="${BB[k].label} direct cost of work"></td>
+      <td><input type="text" inputmode="numeric" data-llb="${k}" data-fld="markup" value="${v.markup ? "$" + grp(v.markup) : ""}" aria-label="${BB[k].label} markups"><span class="bbnote">${mpct ? mpct.toFixed(1) + "% of total" : ""}</span></td>
+      <td><b>${tot ? fmt(tot) : "&mdash;"}</b></td>
+      <td>${psfCell(k, v.sf, tot)}</td>
     </tr>`;
   }).join("");
+  document.getElementById("llbHint").innerHTML =
+    "Figures are Balfour Beatty&rsquo;s own Project Comparison Reports (Pre-Interview Submittal, 4/17/2026). " +
+    "<b>Markups</b> are the GC&rsquo;s, GR&rsquo;s, fee, bonds, insurance and contingency carried on top of the direct cost of work &mdash; " +
+    "18&ndash;20% of each total here. Cost / SF is graded against the bands above. Every field is editable and saves in this browser, " +
+    "so these update as the GMPs are established.";
   document.querySelectorAll("#llbBody input").forEach(inp => {
     inp.addEventListener("change", () => {
       const data = llbLoad();
-      const key = inp.dataset.llb, fld = inp.dataset.fld;
-      data[key] = data[key] || {};
-      data[key][fld] = numOnly(inp.value);
+      data[inp.dataset.llb][inp.dataset.fld] = numOnly(inp.value);
       llbSave(data);
-      renderLlb();
+      
+renderLlb();
     });
     inp.addEventListener("keydown", e => { if (e.key === "Enter") inp.blur(); });
   });
@@ -1803,6 +2008,56 @@ document.getElementById("plToggle").addEventListener("click", function () {
 });
 ["plSearch", "plPri", "plSite", "plAsg"].forEach(id =>
   document.getElementById(id).addEventListener("input", renderProjList));
+
+document.getElementById("tcToggle").addEventListener("click", function () {
+  const c = document.getElementById("tcCard"), show = c.hasAttribute("hidden");
+  if (show) c.removeAttribute("hidden"); else c.setAttribute("hidden", "");
+  this.textContent = show ? "Hide Checklist" : "Show Checklist";
+});
+
+// GC size scale: illustrative $/SF ranges applied to the actual gross areas
+const BOND_TIERS = [
+  {t: "Micro", single: "&le; $5M", agg: "$10&ndash;15M", note: "often SBA-guaranteed (caps at $9M)",
+   fits: "Playground and hardcourt replacement, fencing, shade structures, single-trade packages"},
+  {t: "Small", single: "$5&ndash;25M", agg: "$25&ndash;75M", note: "local / family firms",
+   fits: "Roofing packages, restroom and classroom modernization, asphalt and site work"},
+  {t: "Medium", single: "$25&ndash;100M", agg: "$100&ndash;300M", note: "regional builders",
+   fits: "Any single SMUSD building here ($17.8&ndash;29.1M), one or two at a time"},
+  {t: "Large", single: "$100M+", agg: "$500M&ndash;$1B+", note: "Balfour Beatty sits here",
+   fits: "All three buildings concurrently, plus program-wide capacity", actual: true}
+];
+const GC_TIERS = [
+  {t: "Micro GC", note: "owner-run, no dedicated site staff", mo: [20000, 35000], mk: [8, 11], psf: [620, 720]},
+  {t: "Small GC", note: "lean site team, minimal home-office overhead", mo: [45000, 65000], mk: [11, 14], psf: [700, 820]},
+  {t: "Medium GC", note: "full-time PM &amp; super, partial specialty support", mo: [65000, 85000], mk: [14, 17], psf: [780, 900]},
+  {t: "Large GC", note: "Balfour Beatty &mdash; actual proposal", mo: [99891, 109896], mk: [18, 20], psf: [884, 1019], actual: true}
+];
+function renderBondTiers() {
+  document.getElementById("bondBody").innerHTML = BOND_TIERS.map(b => `
+    <tr class="${b.actual ? "actual" : ""}">
+      <td>${b.t}<span class="gcnote">${b.note}</span></td>
+      <td>${b.single}</td>
+      <td>${b.agg}</td>
+      <td style="text-align:left;font-weight:400;color:var(--ink-2)">${b.fits}</td>
+    </tr>`).join("");
+}
+function renderGcScale() {
+  renderBondTiers();
+  const money = n => "$" + Math.round(n).toLocaleString("en-US");
+  const mils = n => "$" + (n / 1e6).toFixed(1) + "M";
+  const projSf = {carver: 17580, ves: 22044, smhs: 31556};
+  document.getElementById("gcBody").innerHTML = GC_TIERS.map(g => `
+    <tr class="${g.actual ? "actual" : ""}">
+      <td>${g.t}<span class="gcnote">${g.note}</span></td>
+      <td>${money(g.mo[0])}&ndash;${money(g.mo[1])}</td>
+      <td>${g.mk[0]}&ndash;${g.mk[1]}%</td>
+      <td>$${g.psf[0]}&ndash;${g.psf[1]}</td>
+      <td>${mils(projSf.carver * g.psf[0])}&ndash;${mils(projSf.carver * g.psf[1])}</td>
+      <td>${mils(projSf.ves * g.psf[0])}&ndash;${mils(projSf.ves * g.psf[1])}</td>
+      <td>${g.t === "Micro GC" ? '<span class="psf none">capacity-limited</span>' : mils(projSf.smhs * g.psf[0]) + "&ndash;" + mils(projSf.smhs * g.psf[1])}</td>
+    </tr>`).join("");
+}
+renderGcScale();
 
 renderAll();
 
