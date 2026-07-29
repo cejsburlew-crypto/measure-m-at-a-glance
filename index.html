@@ -848,6 +848,7 @@
                 that wing costs roughly <b>$15.2M more at FMP rates</b>, which is a District scope decision, not a
                 contractor variance, and belongs in front of the board as one.</div>
 
+
               <div class="llbcap" style="margin-top:14px">LLB interview finalists &mdash; where each one sits
                 <span class="eq">&mdash; size drives the general conditions load, the sub pool, and the tolerance band</span>
               </div>
@@ -869,25 +870,18 @@
                 wrong by roughly an order of magnitude, which is exactly why surety letters and District-verified
                 revenue are the only acceptable inputs here.</div>
 
-              <div class="llbcap" style="margin-top:14px">General contractor size and its effect on GC&rsquo;s / GR&rsquo;s
-                <span class="eq">&mdash; illustrative planning ranges for this scope; the large-GC row is Balfour Beatty&rsquo;s actual proposal</span>
-              </div>
+              <div class="llbcap" style="margin-top:14px">Contractor Sizing Chart <span class="eq">&mdash; California certification ceilings and surety capacity by tier</span></div>
+
               <table class="gctable">
                 <thead><tr>
-                  <th>GC Tier</th><th>Single-Project Bonding</th><th>Aggregate Bonding</th><th>Annual Revenue<span class="thsub">California / SBA basis</span></th>
+                  <th>GC Tier</th><th>Annual Revenue<span class="thsub">California / SBA basis</span></th><th>Single-Project Bonding</th><th>Aggregate Bonding</th><th>Which SMUSD Work It Can Carry</th>
                 </tr></thead>
                 <tbody id="bondBody"></tbody>
               </table>
-              <div class="llbhint" style="margin-bottom:12px">There is <b>no official AGC of California or state tier
-                standard</b> &mdash; AGC-CA is an advocacy and training association and does not classify contractors by
-                size. Tiers in practice are set by <b>surety underwriting</b>, which issues each contractor a
-                single-project limit and an aggregate limit (rule of thumb: aggregate runs near ten times working
-                capital or net worth). The brackets below are the common industry convention, with two hard reference
-                points: the SBA Bond Guarantee Program caps at <b>$9M</b> for non-federal work, which effectively marks
-                the micro/small ceiling, and California districts set their own bonding thresholds in the
-                prequalification questionnaire required for bond-funded projects over $1M
-                (Public Contract Code &sect;20111.5&ndash;20111.6). ENR&rsquo;s revenue rankings are the usual informal proxy.</div>
 
+              <div class="llbcap" style="margin-top:14px">General contractor size and its effect on GC&rsquo;s / GR&rsquo;s
+                <span class="eq">&mdash; illustrative planning ranges for this scope; the large-GC row is Balfour Beatty&rsquo;s actual proposal</span>
+              </div>
               <table class="gctable">
                 <thead><tr>
                   <th>GC Tier</th><th>Monthly GC&rsquo;s / GR&rsquo;s</th><th>Markup Load</th><th>$ / SF Range<span class="thsub">spread widens with size</span></th>
@@ -2168,19 +2162,16 @@ document.getElementById("tcToggle").addEventListener("click", function () {
 
 // GC size scale: illustrative $/SF ranges applied to the actual gross areas
 const BOND_TIERS = [
-  {t: "Micro", rev: "&le; $6M", single: "&le; $5M", agg: "$10&ndash;15M",
-   note: "CA DGS <b>Micro Business</b> ceiling"},
-  {t: "Small", rev: "$6&ndash;19M", single: "$5&ndash;25M", agg: "$25&ndash;75M",
-   note: "CA DGS <b>Small Business</b> ceiling $19M"},
-  {t: "Small &mdash; Public Works", rev: "$19&ndash;46M", single: "$15&ndash;40M", agg: "$50&ndash;120M",
-   note: "CA <b>SB-PW</b> ceiling $46M; SBA NAICS 236220 is $45M"},
-  {t: "Medium", rev: "$46M&ndash;$150M", single: "$25&ndash;75M", agg: "$100&ndash;250M",
-   note: "above every small-business definition; CA K-12 specialists often bond well above their revenue tier"},
-  {t: "Upper Medium", rev: "$150M&ndash;$500M", single: "$75&ndash;150M", agg: "$250&ndash;500M",
-   note: "where all three regional finalists sit; single-project capacity clears any one SMUSD building several times over"},
-  {t: "Large", rev: "$500M+", single: "$150M+", agg: "$500M&ndash;$1B+",
-   note: "<b>threshold from Upper Medium: revenue above ~$500M with $500M+ aggregate surety</b> &mdash; ENR-ranked national / international",
-   actual: true}
+  {t: "Micro", note: "CA DGS Micro Business ceiling", rev: "&le; $6M", single: "&le; $5M", agg: "$10&ndash;15M",
+   fits: "Playgrounds and hardcourts, fencing, shade structures, single-trade packages"},
+  {t: "Small", note: "CA DGS Small Business ceiling $19M", rev: "$6&ndash;19M", single: "$5&ndash;25M", agg: "$25&ndash;75M",
+   fits: "Roofing, restroom and classroom modernization, asphalt and site work"},
+  {t: "Small &mdash; Public Works", note: "CA SB-PW ceiling $46M; SBA NAICS 236220 is $45M", rev: "$19&ndash;46M", single: "$15&ndash;40M", agg: "$50&ndash;120M",
+   fits: "A single mid-size building or a bundled modernization package"},
+  {t: "Medium", note: "above every small-business definition; CA K-12 specialists often bond well above their revenue tier", rev: "$46M&ndash;$500M", single: "$25&ndash;150M", agg: "$100&ndash;400M",
+   fits: "Any single SMUSD building here ($17.8&ndash;29.1M) with large headroom; several concurrently"},
+  {t: "Large", note: "ENR-ranked national / international", rev: "$500M+", single: "$100M+", agg: "$500M&ndash;$1B+",
+   fits: "All three buildings concurrently, plus program-wide capacity", actual: true}
 ];
 // LLB interview finalists. Revenue for the private regional firms is third-party estimate only.
 const FINALISTS = [
@@ -2188,13 +2179,13 @@ const FINALISTS = [
    bond: "$1B+ aggregate", tier: "Large", cls: "b3", src: "company results",
    note: "ENR-ranked national contractor; the only finalist whose capacity is effectively unlimited for this program. Roughly 48&times; the revenue of the largest regional firm on this list."},
   {n: "Erickson-Hall Construction", hq: "Escondido, CA &middot; founded 1998", rev: "<b>$300M+</b> (2025)",
-   bond: "<b>$75M</b> single &middot; <b>$375M</b> aggregate", tier: "Upper Medium", cls: "b2", src: "District figures",
+   bond: "<b>$75M</b> single &middot; <b>$375M</b> aggregate", tier: "Medium (upper)", cls: "b2", src: "District figures",
    note: "Largest of the three regional firms by revenue and by aggregate surety program, though it carries the lowest single-project limit of the three at $75M &mdash; still 2.6&times; the biggest building on this program."},
   {n: "Neff Construction", hq: "Ontario, CA &middot; founded 1974", rev: "<b>$200M</b> (2025)",
-   bond: "<b>$150M</b> single &middot; <b>$300M</b> aggregate", tier: "Upper Medium", cls: "b2", src: "District figures",
+   bond: "<b>$150M</b> single &middot; <b>$300M</b> aggregate", tier: "Medium (upper)", cls: "b2", src: "District figures",
    note: "Highest single-project capacity of the regional firms at $150M &mdash; 5&times; the largest building here, and above the $100M threshold often treated as large. K-12 specialist since 1974."},
   {n: "Pinner Construction", hq: "Anaheim, CA &middot; founded 1919", rev: "<b>$197M</b> (2025)",
-   bond: "confirm from prequal letter", tier: "Upper Medium", cls: "b2", src: "District figures / ENR",
+   bond: "confirm from prequal letter", tier: "Medium (upper)", cls: "b2", src: "District figures / ENR",
    note: "ENR California 2024 Contractor of the Year; 65&ndash;70% K-12 work and #12 education contractor nationally. The only finalist whose bonding capacity is still unconfirmed &mdash; pull it from the prequalification letter to complete the comparison."}
 ];
 const GC_TIERS = [
@@ -2245,9 +2236,10 @@ function renderBondTiers() {
   document.getElementById("bondBody").innerHTML = BOND_TIERS.map(b => `
     <tr class="${b.actual ? "actual" : ""}">
       <td>${b.t}<span class="gcnote">${b.note}</span></td>
+      <td>${b.rev}</td>
       <td>${b.single}</td>
       <td>${b.agg}</td>
-      <td>${b.rev}</td>
+      <td style="text-align:left;font-weight:400;color:var(--ink-2)">${b.fits}</td>
     </tr>`).join("");
 }
 function renderGcScale() {
