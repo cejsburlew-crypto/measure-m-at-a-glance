@@ -868,7 +868,19 @@
                 own rate plus the utilities and minor-division gaps ($95.66/SF, carrying Balfour&rsquo;s own 25.73% markup
                 ratio), the Career Center loaded to a real modernization basis rather than a bare &ldquo;Add For&rdquo;
                 allowance, and general conditions priced against the actual 12&ndash;14 and 16&ndash;18 month schedule.
-                <b>The program is understated by $6.3M to $6.9M &mdash; roughly 9% to 10%.</b> Excluded from this
+                <b>General conditions are corrected by schedule, not by cost</b> &mdash; a distinction that matters, because
+                applying Balfour&rsquo;s blended 25.73% markup to restored scope would double-count them. Their pool of
+                $5,705,206 at SMHS decomposes into $1,261,836 of time-based general conditions (12 months &times; $105,153),
+                $75,000 fixed precon and allowances, and $4,368,370 of genuinely cost-scaling markups &mdash; <b>19.70%
+                of direct cost</b>. Restoring scope therefore adds 19.70%, while general conditions are re-priced purely
+                on duration: <b>$1,261,836 as proposed against $1,682,448 at 16 months and $1,892,754 at 18</b>, understated
+                by $420,612 to $630,918 at SMHS alone.
+                <br><br>
+                The result validates the whole exercise: corrected, San Marino HS lands at <b>$1,011&ndash;$1,018/SF</b>
+                against Carver at $1,012.85 and Valentine at $1,019.43. All three converge on about $1,015/SF &mdash;
+                precisely what one rate card applied to three buildings should produce, and the clearest confirmation
+                that the SMHS shortfall was omission rather than efficiency.
+                <b>The program is understated by $6.1M to $6.7M &mdash; roughly 9% to 10%.</b> Excluded from this
                 correction, and still to be resolved: the 60% Building P area discrepancy, site work beyond the five-foot
                 perimeter line at Carver, abatement, DSA-triggered seismic and ADA scope, and the $4.29M of unreconciled
                 markup. Every figure here uses Balfour&rsquo;s own rates and ratios &mdash; nothing is imported from outside
@@ -2275,14 +2287,20 @@ const GC_DUR = [
   {n: "San Marino HS &mdash; Medical Arts", mo: 105153, priced: 1261836, lo: 16, hi: 18}
 ];
 function renderFix() {
-  const SF = 31556, dir = 22176549.74, mkr = 5705205.78 / 22176549.74, base = 27881755.52;
-  const addPsf = 95.66, nd = dir + SF * addPsf, smhs = nd * (1 + mkr);
+  const SF = 31556, dir = 22176549.74, mkPool = 5705205.78, gcP = 1261836, fixed = 75000, mo = 105153;
+  const csr = (mkPool - gcP - fixed) / dir;              // cost-scaling markups only: 19.70%
+  const nd = dir + SF * 95.66;                            // Division 07 + utilities + minor divisions
+  const smhsLo = nd + nd * csr + mo * 16 + fixed;
+  const smhsHi = nd + nd * csr + mo * 18 + fixed;
   const rows = [
-    {n: "Carver ES &mdash; New TK &amp; KG", as: 17805932.98, adj: 0, sf: 17580, note: "divisions complete; stands as priced"},
-    {n: "Valentine ES &mdash; Two-Storey", as: 22472400.13, adj: 0, sf: 22044, note: "divisions complete; stands as priced"},
-    {n: "San Marino HS &mdash; Medical Arts", as: base, adj: smhs - base, sf: SF, note: "+$95.66/SF for Division 07, utilities and minor divisions, at Balfour&rsquo;s 25.73% markup"},
-    {n: "San Marino HS &mdash; Career Center", as: 1254240, adj: 2913133 - 1254240, sf: 5226, note: "loaded to a real modernization basis: FMP $333.20/SF escalated, abatement, interface demolition, then GC&rsquo;s and fee"},
-    {n: "Unpriced general conditions", as: 0, adj: 828192, sf: 0, note: "low case: Carver 12&ndash;14 months, two-storey buildings 16&ndash;18; high case adds $629,880"}
+    {n: "Carver ES &mdash; New TK &amp; KG", as: 17805932.98, adj: 0, sf: 17580,
+     note: "divisions complete; stands as priced. GC covered at 12 months, short $167,778 at 14"},
+    {n: "Valentine ES &mdash; Two-Storey", as: 22472400.13, adj: 439584, sf: 22044,
+     note: "divisions complete; general conditions re-priced from 12 to 16&ndash;18 months (+$439,584 to +$659,376)"},
+    {n: "San Marino HS &mdash; Medical Arts", as: 27881755.52, adj: smhsLo - 27881755.52, sf: SF,
+     note: "+$95.66/SF direct for Division 07, utilities and minor divisions; cost-scaling markups at 19.70%; GC re-priced to 16&ndash;18 months. <b>GC's and GR's are time-based, so they are corrected by schedule, not by the blended 25.73% ratio</b>"},
+    {n: "San Marino HS &mdash; Career Center", as: 1254240, adj: 2913133 - 1254240, sf: 5226,
+     note: "loaded to a real modernization basis: FMP $333.20/SF escalated, abatement, interface demolition, then GC's and fee"}
   ];
   let ta = 0, tj = 0;
   const body = rows.map(r => {
@@ -2290,14 +2308,14 @@ function renderFix() {
     const cor = r.as + r.adj;
     return `<tr>
       <td>${r.n}<span class="gcnote">${r.note}</span></td>
-      <td>${r.as ? fmt(r.as) : "&mdash;"}</td>
+      <td>${fmt(r.as)}</td>
       <td>${r.adj ? `<span class="psf b3">+${fmt(r.adj)}</span>` : `<span class="psf b1">none</span>`}</td>
       <td><b>${fmt(cor)}</b></td>
       <td>${r.sf ? "$" + Math.round(cor / r.sf).toLocaleString() : "&mdash;"}</td>
     </tr>`;
   }).join("");
   document.getElementById("fixBody").innerHTML = body + `<tr class="actual">
-    <td><b>Program total</b><span class="gcnote">high case adds a further $629,880 of general conditions</span></td>
+    <td><b>Program total</b><span class="gcnote">low case shown; the high case (14-month Carver, 18-month two-storey buildings) reaches ${fmt(76144558)}</span></td>
     <td><b>${fmt(ta)}</b></td><td><span class="psf b3"><b>+${fmt(tj)}</b></span></td>
     <td><b>${fmt(ta + tj)}</b></td><td><b>+${(100 * tj / ta).toFixed(1)}%</b></td></tr>`;
 }
