@@ -786,32 +786,30 @@
               <div class="llbhint" id="llbHint"></div>
 
               <div class="llbcap" style="margin-top:14px">What the FMP estimated for these same three buildings
-                <span class="eq">&mdash; ProjList_Mod line items at the +33% loaded figure, against Balfour Beatty&rsquo;s priced work</span>
+                <span class="eq">&mdash; the FMP&rsquo;s own construction rate for each building type, applied to the area Balfour actually proposed. No soft cost on either side.</span>
               </div>
               <table class="gctable">
                 <thead><tr>
-                  <th>Building</th><th>FMP Line Item(s)</th><th>FMP Estimate<span class="thsub">+33% loaded</span></th>
-                  <th>Balfour Priced</th><th>Variance</th><th>FMP $/SF &rarr; Actual $/SF</th>
+                  <th>Building</th><th>FMP Construction<span class="thsub">rate &times; actual GSF</span></th>
+                  <th>Balfour Priced<span class="thsub">incl. GC&rsquo;s &amp; GR&rsquo;s</span></th><th>Variance</th>
+                  <th>Less Escalation<span class="thsub">&minus;12.5%</span></th><th>FMP $/SF &rarr; Actual $/SF</th>
                 </tr></thead>
                 <tbody id="fmpVsBody"></tbody>
               </table>
-              <div class="llbhint" style="margin-bottom:12px"><b>Read this carefully &mdash; the headline is not the
-                variance on any single building.</b> Carver and Valentine <i>together</i> price at $40,278,333 against
-                $41,047,790 of matching FMP line items &mdash; <b>1.9% under</b>. Carver runs 64% over its own line item
-                while Valentine runs 26% under, and they very nearly cancel: the FMP priced Valentine&rsquo;s classrooms,
-                MPR and food service as three separate one-storey buildings, and combining them into a single two-storey
-                building recovered most of what Carver overran.
+              <div class="llbhint" style="margin-bottom:12px"><b>Variance tracks building size, not contractor greed.</b>
+                Against the FMP&rsquo;s type-correct rates, the gap falls steadily as area grows: 17,580 GSF &rarr; +70%,
+                22,044 GSF &rarr; +46%, 36,782 GSF &rarr; +23%. Balfour spreads one fixed monthly general-conditions crew
+                across whatever area exists &mdash; $70.01/SF at Carver against $39.99/SF at SMHS &mdash; so small
+                buildings absorb it badly. <b>Carver is the exposure, not SMHS.</b> Bundling the two elementary buildings
+                under a single mobilization is the clearest available saving.
                 <br><br>
-                <b>San Marino High School is the real exposure.</b> The 2024 FMP contains <b>no new-construction line
-                item for SMHS at all</b> &mdash; not a Medical Arts building, not a Career Center, no CTE building. Its
-                only new-building entry is HS16, an addition to the existing Dance &amp; Drama rooms at $4,226,740
-                (Medium priority). SMHS&rsquo;s FMP money sits in Physical Education ($69.1M: gymnasium replacement and
-                an aquatics complex) and in Flex Labs / Science / VAPA / Theater modernization ($42.0M) &mdash; the plan
-                was to <i>modernize</i> existing lab and elective space, not build a new academic building. So the
-                $29,135,996 Medical Arts and Career Center project is scope the FMP never priced, and it is currently
-                drawing against that Medium-priority modernization pool. That trade &mdash; a new building instead of
-                the gymnasium, aquatics, or lab modernization the FMP listed &mdash; is a board-level decision, and it
-                should be documented as one rather than absorbed as a budget variance.</div>
+                Roughly 12.5% of each variance is 2024&rarr;2026 escalation, shown separately. The FMP&rsquo;s two-storey
+                premium is already inside its $696.15/SF rate, so it must not be added again. <b>SMHS is normalized:</b>
+                the FMP carried no new-construction rate for that campus &mdash; it budgeted modernization at
+                $142.80&ndash;$357.00/SF &mdash; so the elementaries&rsquo; new-construction rate is applied to the new
+                building and the FMP&rsquo;s own library rate to the Career Center. Building new rather than modernizing
+                that wing costs roughly <b>$15.2M more at FMP rates</b>, which is a District scope decision, not a
+                contractor variance, and belongs in front of the board as one.</div>
 
               <div class="llbcap" style="margin-top:14px">LLB interview finalists &mdash; where each one sits
                 <span class="eq">&mdash; size drives the general conditions load, the sub pool, and the tolerance band</span>
@@ -2137,10 +2135,10 @@ const FINALISTS = [
    bond: "confirm from prequal letter", tier: "Upper Medium", cls: "b2", src: "ENR California",
    note: "Largest of the three regional firms. ENR California 2024 Contractor of the Year; 65&ndash;70% K-12 work; #12 education contractor nationally"},
   {n: "Neff Construction", hq: "Ontario, CA &middot; founded 1974", rev: "revenue estimates unreliable",
-   bond: "<b>$150M</b> single &middot; <b>$300M</b> aggregate", tier: "Medium", cls: "b2", src: "surety capacity",
-   note: "Highest single-project capacity of the regional firms &mdash; 5&times; the largest building here; K-12 specialist since 1974"},
+   bond: "<b>$150M</b> single &middot; <b>$300M</b> aggregate", tier: "Upper Medium", cls: "b2", src: "surety capacity",
+   note: "Highest single-project capacity of the regional firms at $150M &mdash; 5&times; the largest building here, and above the $100M single-project threshold normally treated as large. K-12 specialist since 1974"},
   {n: "Erickson-Hall Construction", hq: "Escondido, CA &middot; founded 1998", rev: "revenue estimates unreliable",
-   bond: "<b>$75M</b> single &middot; <b>$375M</b> aggregate", tier: "Medium", cls: "b2", src: "surety capacity",
+   bond: "<b>$75M</b> single &middot; <b>$375M</b> aggregate", tier: "Upper Medium", cls: "b2", src: "surety capacity",
    note: "Largest aggregate program of the regional firms but the lowest single-project limit &mdash; still 2.6&times; the biggest building here"}
 ];
 const GC_TIERS = [
@@ -2148,22 +2146,28 @@ const GC_TIERS = [
   {t: "Medium GC", note: "full-time PM &amp; super, partial specialty support", mo: [65000, 85000], mk: [15, 18], psf: [865, 1010]},
   {t: "Large GC", note: "Balfour Beatty &mdash; actual work prices $884&ndash;1,019 / SF", mo: [99891, 109896], mk: [18, 21], psf: [880, 1120], actual: true}
 ];
+const FMP_ESC = 0.125;   // Jan 2024 FMP -> 2026 pricing, ~6%/yr
+// FMP construction rates straight from the raw export: one-storey classroom $595.00/SF,
+// two-storey classroom $696.15/SF, library/moderate modernization $333.20/SF. No soft cost on
+// either side - Balfour's totals carry their own GC's/GR's/fee/bonds/contingency but no District soft cost.
 const FMP_VS = [
-  {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, items: "C10 Preschool, TK and Kindergarten <span class=\"tH\">High</span>", fmp: 10852800, act: 17805933},
-  {b: "Valentine ES &mdash; Classroom, MPR &amp; Kitchen", sf: 22044, items: "V12 Grades 1&ndash;5 + V15 MPR + V16 Food service <span class=\"tH\">High</span>", fmp: 30194990, act: 22472400},
-  {b: "San Marino HS &mdash; Medical Arts &amp; Career Center", sf: 36782, items: "<b>no new-construction line item exists for SMHS</b>", fmp: 0, act: 29135996, none: true}
+  {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, basis: "one-storey classroom @ $595.00/SF",
+   fmp: 17580 * 595.00, act: 17805933},
+  {b: "Valentine ES &mdash; Two-Storey CR / MPR / Kitchen", sf: 22044, basis: "two-storey classroom @ $696.15/SF",
+   fmp: 22044 * 696.15, act: 22472400},
+  {b: "San Marino HS &mdash; Med Arts + Career Center", sf: 36782, basis: "31,556 new @ $696.15 + 5,226 modernization @ $333.20",
+   fmp: 31556 * 696.15 + 5226 * 333.20, act: 29135996, norm: true}
 ];
 function renderFmpVs() {
   document.getElementById("fmpVsBody").innerHTML = FMP_VS.map(r => {
-    const d = r.act - r.fmp, pct = r.fmp ? (100 * d / r.fmp) : null;
-    const vcls = r.none ? "b3" : (d > 0 ? "b3" : "b1");
-    return `<tr${r.none ? ' class="actual"' : ""}>
-      <td>${r.b}<span class="gcnote">${r.sf.toLocaleString()} GSF</span></td>
-      <td style="text-align:left;font-weight:400;color:var(--ink-2)">${r.items}</td>
-      <td>${r.fmp ? fmt(r.fmp) : "&mdash;"}</td>
+    const d = r.act - r.fmp, pct = 100 * d / r.fmp, resid = pct - 100 * FMP_ESC;
+    return `<tr${r.norm ? ' class="actual"' : ""}>
+      <td>${r.b}<span class="gcnote">${r.sf.toLocaleString()} GSF &middot; ${r.basis}${r.norm ? " (normalized &mdash; the FMP held no new-construction rate for SMHS)" : ""}</span></td>
+      <td>${fmt(r.fmp)}</td>
       <td>${fmt(r.act)}</td>
-      <td><span class="psf ${vcls}">${r.none ? "unbudgeted" : (d > 0 ? "+" : "&minus;") + fmt(Math.abs(d)).replace("$", "$") + " (" + (pct > 0 ? "+" : "") + pct.toFixed(0) + "%)"}</span></td>
-      <td>${r.fmp ? "$" + Math.round(r.fmp / r.sf) + " &rarr; $" + Math.round(r.act / r.sf) : "&mdash; &rarr; $" + Math.round(r.act / r.sf)}</td>
+      <td><span class="psf ${pct > 40 ? "b3" : (pct > 20 ? "b2" : "b1")}">+${pct.toFixed(1)}%</span></td>
+      <td><span class="psf ${resid > 40 ? "b3" : (resid > 20 ? "b2" : "b1")}">+${resid.toFixed(1)}%</span></td>
+      <td>$${Math.round(r.fmp / r.sf)} &rarr; $${Math.round(r.act / r.sf)}</td>
     </tr>`;
   }).join("");
 }
