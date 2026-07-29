@@ -854,6 +854,26 @@
                 contractor variance, and belongs in front of the board as one.</div>
 
 
+              <div class="llbcap" style="margin-top:14px">Corrected project costs
+                <span class="eq">&mdash; Balfour as proposed, adjusted for the omissions identified above</span>
+              </div>
+              <table class="gctable">
+                <thead><tr>
+                  <th>Line</th><th>As Proposed</th><th>Adjustment</th><th>Corrected</th><th>$ / SF</th>
+                </tr></thead>
+                <tbody id="fixBody"></tbody>
+              </table>
+              <div class="llbhint" style="margin-bottom:12px">Carver and Valentine stand as priced &mdash; their
+                divisions are complete. The corrections fall entirely on San Marino HS: Division 07 at the elementaries&rsquo;
+                own rate plus the utilities and minor-division gaps ($95.66/SF, carrying Balfour&rsquo;s own 25.73% markup
+                ratio), the Career Center loaded to a real modernization basis rather than a bare &ldquo;Add For&rdquo;
+                allowance, and general conditions priced against the actual 12&ndash;14 and 16&ndash;18 month schedule.
+                <b>The program is understated by $6.3M to $6.9M &mdash; roughly 9% to 10%.</b> Excluded from this
+                correction, and still to be resolved: the 60% Building P area discrepancy, site work beyond the five-foot
+                perimeter line at Carver, abatement, DSA-triggered seismic and ADA scope, and the $4.29M of unreconciled
+                markup. Every figure here uses Balfour&rsquo;s own rates and ratios &mdash; nothing is imported from outside
+                their proposal except the FMP modernization rate.</div>
+
               <div class="llbcap" style="margin-top:14px">General conditions against the real schedule
                 <span class="eq">&mdash; Balfour priced 12 months for all three; Carver runs 12&ndash;14 months, the two-storey buildings 16&ndash;18</span>
               </div>
@@ -1578,6 +1598,8 @@ function renderAll() {
   watch.push(`Estimated Project Budgets (<b>${fmt(T.budget)}</b>) are ${pct(T.budget, PROGRAM.released)} of the ${fmt(PROGRAM.released)} Series A release &mdash; sequencing of the next bond series will gate the two-story building projects.`);
   // ---- Balfour Beatty proposal: inconsistencies and scope gaps to put back to them ----
   const LLB_WATCH = [
+    `<b>Division 07 &mdash; Thermal &amp; Moisture Protection &mdash; is entirely absent from the San Marino HS estimate.</b> Both elementaries carry it at <b>$75.84/SF</b>; SMHS carries nothing. That division is roofing, waterproofing, insulation and air/vapour barriers, and on 31,556 GSF it is <span class="amt">$2,393,207</span> missing. A new two-storey DSA building cannot be delivered without a roof or weatherproofing, so this is an omission rather than a scope decision. <b>Masonry</b> and <b>Special Construction</b> are likewise absent, and <b>Exterior Improvements</b> sits at $30.81/SF against $75.81/SF at both elementaries.
+      <br><br>The arithmetic closes the loop: the direct-cost gap is <b>$130.07/SF</b> (SMHS $702.77 against an elementary average of $832.84), and the missing and reduced divisions total <b>$175.19/SF</b> &mdash; more than enough to account for the whole difference, with the remainder offset where SMHS runs higher (HVAC $64.76 against about $55, Furnishings $15.65 against $4.65, Existing Conditions $14.32). <b>SMHS is not cheaper because it is larger or better priced &mdash; it is cheaper because roofing and weatherproofing were left out, along with masonry, special construction and most of the site work.</b> Restoring Division 07 alone moves it from $883.56 to <b>$978.92/SF</b>; restoring the defensible omissions puts it at <b>$1,003.83/SF</b>, right alongside Carver at $1,012.85 and Valentine at $1,019.43 &mdash; the convergence you would expect from three buildings priced off one rate card.`,
     `<b>Building P footprint &mdash; 60% area discrepancy.</b> The District program describes the Career Center and Library renovation as <b>3,267 gross sf</b>; Balfour prices <b>5,226 GSF</b> &mdash; <span class="amt">+1,959 SF (+60%)</span>. Either the renovation footprint has grown beyond the program, or they are measuring the whole of Building P rather than the renovated portion. Resolve before GMP.`,
     `<b>SMHS priced as new construction against a modernization program.</b> The District scope and the Huckabee program (7/14/2026, Site Plan Option 2 &mdash; Modernization) deliver <b>20,993 gross sf of modernization</b>. Balfour priced <b>36,782 GSF</b> &mdash; a 31,556 GSF new two-story building plus 5,226 GSF of renovation, <span class="amt">15,789 GSF</span> beyond the program and on a different delivery basis. The scope basis must be reconciled before any number is compared.`,
     `<b>The Career Center carries no general conditions, no fee and no markup of any kind.</b> Balfour&rsquo;s own report closes the Medical Arts building at <b>$27,881,755.52 / $883.56 per SF / 100.00%</b> &mdash; the direct-cost-and-markup structure is complete at that line &mdash; then appends the renovation beneath it as an &ldquo;<b>Add For</b> Building P Modernization, Career Center $1,254,240.00 / $240.00.&rdquo; Being outside the marked-up structure, that $240.00/SF contains no general conditions, no general requirements, no fee, no bonds, no insurance and no contingency, and the single SMHS general-conditions line of $1,261,836 is attached to the new building only. A renovation on an occupied campus, adjacent to a demolition and a structural tie-in, needs its own supervision, logistics and phasing cost. Either that scope is being absorbed silently by the building&rsquo;s general conditions, or it is simply missing &mdash; and at 5,226 GSF against a District program of 3,267 gross sf, it is missing on 60% more area than was ever scoped.`,
@@ -2252,7 +2274,35 @@ const GC_DUR = [
   {n: "Valentine ES &mdash; Two-Storey", mo: 109896, priced: 1318752, lo: 16, hi: 18},
   {n: "San Marino HS &mdash; Medical Arts", mo: 105153, priced: 1261836, lo: 16, hi: 18}
 ];
+function renderFix() {
+  const SF = 31556, dir = 22176549.74, mkr = 5705205.78 / 22176549.74, base = 27881755.52;
+  const addPsf = 95.66, nd = dir + SF * addPsf, smhs = nd * (1 + mkr);
+  const rows = [
+    {n: "Carver ES &mdash; New TK &amp; KG", as: 17805932.98, adj: 0, sf: 17580, note: "divisions complete; stands as priced"},
+    {n: "Valentine ES &mdash; Two-Storey", as: 22472400.13, adj: 0, sf: 22044, note: "divisions complete; stands as priced"},
+    {n: "San Marino HS &mdash; Medical Arts", as: base, adj: smhs - base, sf: SF, note: "+$95.66/SF for Division 07, utilities and minor divisions, at Balfour&rsquo;s 25.73% markup"},
+    {n: "San Marino HS &mdash; Career Center", as: 1254240, adj: 2913133 - 1254240, sf: 5226, note: "loaded to a real modernization basis: FMP $333.20/SF escalated, abatement, interface demolition, then GC&rsquo;s and fee"},
+    {n: "Unpriced general conditions", as: 0, adj: 828192, sf: 0, note: "low case: Carver 12&ndash;14 months, two-storey buildings 16&ndash;18; high case adds $629,880"}
+  ];
+  let ta = 0, tj = 0;
+  const body = rows.map(r => {
+    ta += r.as; tj += r.adj;
+    const cor = r.as + r.adj;
+    return `<tr>
+      <td>${r.n}<span class="gcnote">${r.note}</span></td>
+      <td>${r.as ? fmt(r.as) : "&mdash;"}</td>
+      <td>${r.adj ? `<span class="psf b3">+${fmt(r.adj)}</span>` : `<span class="psf b1">none</span>`}</td>
+      <td><b>${fmt(cor)}</b></td>
+      <td>${r.sf ? "$" + Math.round(cor / r.sf).toLocaleString() : "&mdash;"}</td>
+    </tr>`;
+  }).join("");
+  document.getElementById("fixBody").innerHTML = body + `<tr class="actual">
+    <td><b>Program total</b><span class="gcnote">high case adds a further $629,880 of general conditions</span></td>
+    <td><b>${fmt(ta)}</b></td><td><span class="psf b3"><b>+${fmt(tj)}</b></span></td>
+    <td><b>${fmt(ta + tj)}</b></td><td><b>+${(100 * tj / ta).toFixed(1)}%</b></td></tr>`;
+}
 function renderGcDur() {
+  renderFix();
   let tp = 0, tl = 0, th = 0;
   const rows = GC_DUR.map(g => {
     const lo = g.mo * g.lo, hi = g.mo * g.hi, sl = lo - g.priced, sh = hi - g.priced;
