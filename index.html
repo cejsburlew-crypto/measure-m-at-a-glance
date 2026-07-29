@@ -787,12 +787,28 @@
               </table>
               <div class="llbhint" id="llbHint"></div>
 
+              <div class="llbcap" style="margin-top:14px">LLB interview finalists &mdash; where each one sits
+                <span class="eq">&mdash; size drives the general conditions load, the sub pool, and the tolerance band</span>
+              </div>
+              <table class="gctable">
+                <thead><tr>
+                  <th>Contractor</th><th>Approx. Annual Revenue</th><th>Size Tier</th><th>Basis / Note</th>
+                </tr></thead>
+                <tbody id="finBody"></tbody>
+              </table>
+              <div class="llbhint" style="margin-bottom:12px">Revenue for Pinner comes from ENR reporting; the
+                Erickson-Hall and Neff figures are <b>third-party web estimates, not verified financials</b> &mdash; for
+                private regional builders those are frequently low. The number that actually governs is each firm&rsquo;s
+                <b>surety bonding capacity</b>, which the District already collected in the prequalification
+                questionnaires. Pull the bonding letters from those submittals and replace these estimates before the
+                figures are used for any decision.</div>
+
               <div class="llbcap" style="margin-top:14px">General contractor size and its effect on GC&rsquo;s / GR&rsquo;s
                 <span class="eq">&mdash; illustrative planning ranges for this scope; the large-GC row is Balfour Beatty&rsquo;s actual proposal</span>
               </div>
               <table class="gctable">
                 <thead><tr>
-                  <th>GC Tier</th><th>Single-Project Bonding</th><th>Aggregate Bonding</th><th>Which SMUSD Work It Can Carry</th>
+                  <th>GC Tier</th><th>Annual Revenue<span class="thsub">California / SBA basis</span></th><th>Single-Project Bonding</th><th>Aggregate Bonding</th><th>Which SMUSD Work It Can Carry</th>
                 </tr></thead>
                 <tbody id="bondBody"></tbody>
               </table>
@@ -2019,14 +2035,32 @@ document.getElementById("tcToggle").addEventListener("click", function () {
 
 // GC size scale: illustrative $/SF ranges applied to the actual gross areas
 const BOND_TIERS = [
-  {t: "Micro", single: "&le; $5M", agg: "$10&ndash;15M", note: "often SBA-guaranteed (caps at $9M)",
-   fits: "Playground and hardcourt replacement, fencing, shade structures, single-trade packages"},
-  {t: "Small", single: "$5&ndash;25M", agg: "$25&ndash;75M", note: "local / family firms",
-   fits: "Roofing packages, restroom and classroom modernization, asphalt and site work"},
-  {t: "Medium", single: "$25&ndash;100M", agg: "$100&ndash;300M", note: "regional builders",
-   fits: "Any single SMUSD building here ($17.8&ndash;29.1M), one or two at a time"},
-  {t: "Large", single: "$100M+", agg: "$500M&ndash;$1B+", note: "Balfour Beatty sits here",
+  {t: "Micro", rev: "&le; $6M", single: "&le; $5M", agg: "$10&ndash;15M",
+   note: "CA DGS <b>Micro Business</b> ceiling",
+   fits: "Playgrounds and hardcourts, fencing, shade structures, single-trade packages"},
+  {t: "Small", rev: "$6&ndash;19M", single: "$5&ndash;25M", agg: "$25&ndash;75M",
+   note: "CA DGS <b>Small Business</b> ceiling $19M",
+   fits: "Roofing, restroom and classroom modernization, asphalt and site work"},
+  {t: "Small &mdash; Public Works", rev: "$19&ndash;46M", single: "$15&ndash;40M", agg: "$50&ndash;120M",
+   note: "CA <b>SB-PW</b> ceiling $46M; SBA NAICS 236220 is $45M",
+   fits: "A single mid-size building or a bundled modernization package"},
+  {t: "Medium", rev: "$46M&ndash;$500M", single: "$25&ndash;100M", agg: "$100&ndash;300M",
+   note: "above every small-business definition; regional builders",
+   fits: "Any single SMUSD building here ($17.8&ndash;29.1M), one or two concurrently"},
+  {t: "Large", rev: "$500M+", single: "$100M+", agg: "$500M&ndash;$1B+",
+   note: "ENR-ranked national / international",
    fits: "All three buildings concurrently, plus program-wide capacity", actual: true}
+];
+// LLB interview finalists. Revenue for the private regional firms is third-party estimate only.
+const FINALISTS = [
+  {n: "Balfour Beatty Construction", hq: "US arm of Balfour Beatty plc", rev: "~$14.5B group (2025); US buildings multi-billion",
+   tier: "Large", cls: "b3", src: "company results", note: "ENR-ranked national; the only finalist that could carry all three buildings at once"},
+  {n: "Pinner Construction", hq: "Anaheim, CA &middot; founded 1919", rev: "$184M (2023)",
+   tier: "Medium", cls: "b2", src: "ENR California", note: "ENR California 2024 Contractor of the Year; 65&ndash;70% K-12 work; #12 education contractor nationally"},
+  {n: "Erickson-Hall Construction", hq: "Escondido, CA &middot; founded 1998", rev: "~$28.5M (estimate)",
+   tier: "Small&ndash;Medium", cls: "b1", src: "third-party estimate", note: "101&ndash;200 employees suggests real revenue is higher than the estimate &mdash; verify"},
+  {n: "Neff Construction", hq: "Ontario, CA &middot; founded 1974", rev: "~$15.6M (estimate)",
+   tier: "Small", cls: "b1", src: "third-party estimate", note: "family-run K-12 specialist, ~46 employees; would qualify as a CA Small Business"}
 ];
 const GC_TIERS = [
   {t: "Micro GC", note: "owner-run, no dedicated site staff", mo: [20000, 35000], mk: [8, 11], psf: [620, 730]},
@@ -2034,10 +2068,21 @@ const GC_TIERS = [
   {t: "Medium GC", note: "full-time PM &amp; super, partial specialty support", mo: [65000, 85000], mk: [14, 17], psf: [780, 950]},
   {t: "Large GC", note: "Balfour Beatty &mdash; actual proposal at the low end of this band", mo: [99891, 109896], mk: [18, 20], psf: [884, 1100], actual: true}
 ];
+function renderFinalists() {
+  document.getElementById("finBody").innerHTML = FINALISTS.map(x => `
+    <tr>
+      <td>${x.n}<span class="gcnote">${x.hq}</span></td>
+      <td>${x.rev}</td>
+      <td><span class="psf ${x.cls}">${x.tier}</span></td>
+      <td style="text-align:left;font-weight:400;color:var(--ink-2)">${x.note}<span class="gcnote">source: ${x.src}</span></td>
+    </tr>`).join("");
+}
 function renderBondTiers() {
+  renderFinalists();
   document.getElementById("bondBody").innerHTML = BOND_TIERS.map(b => `
     <tr class="${b.actual ? "actual" : ""}">
       <td>${b.t}<span class="gcnote">${b.note}</span></td>
+      <td>${b.rev}</td>
       <td>${b.single}</td>
       <td>${b.agg}</td>
       <td style="text-align:left;font-weight:400;color:var(--ink-2)">${b.fits}</td>
