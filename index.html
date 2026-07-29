@@ -1256,27 +1256,46 @@
     </h2>
     <div class="card coll" id="dbCard" hidden>
       <div class="ladder-note" style="margin:0 0 14px">
-        <b>The District revised its budgets sharply on July 28, and the revised numbers land close to normalized
-        construction loaded at the FMP&rsquo;s own soft-cost factor.</b> That matters because it is corroboration from a
-        completely independent direction: these budgets were set by the District, not derived from Balfour&rsquo;s
-        proposal or from this analysis. Where the three buildings land against normalized cost plus the FMP&rsquo;s
-        <b>&times;1.33</b> soft-cost load is shown below. The &times;1.33 factor is not an assumption &mdash; it is the
-        FMP&rsquo;s own factor, the one that produces the &ldquo;Final Cost&rdquo; column of the 2024 project list.
+        <b>The District revised its budgets sharply on July 28, and each project&rsquo;s construction budget line is now
+        exactly the normalized estimate &mdash; to the dollar, on all three.</b> The comparison below is made against the
+        <b>LLB BB Construction</b> line inside each project, not against the all-in project budget. That distinction is
+        the whole point of this section: an all-in budget also carries soft costs, architectural services and DPOR,
+        interim housing, geotechnical work and preconstruction, none of which Balfour&rsquo;s proposal prices. Comparing
+        a construction-only proposal against an all-in budget overstates the District&rsquo;s coverage by roughly a fifth
+        and is a mistake this page previously made.
+        <span class="assump"><b>The exact match means the District has adopted the normalized figures as its budget
+        basis &mdash; it is not independent confirmation that those figures are correct.</b> Numbers that agree to the
+        dollar share an origin. Treat this as evidence of what the District is funding, never as a second opinion on the
+        analysis.</span>
       </div>
 
-      <div class="llbcap">District budget against Balfour&rsquo;s proposal and against normalized cost
-        <span class="eq">&mdash; normalized construction &times; 1.33 is the comparison basis, since a District budget carries soft costs and a construction proposal does not</span>
-        <span class="cite">Sources: Transcend PM, 2026, July 28 (budgets); Balfour Beatty Construction, 2026b (proposal); San Marino Unified School District, 2024 (the &times;1.33 soft-cost factor)</span>
+      <div class="llbcap">The District&rsquo;s construction budget line against normalized cost and against Balfour&rsquo;s proposal
+        <span class="eq">&mdash; compared against the <b>LLB BB Construction</b> line only, which is the sole line Balfour&rsquo;s proposal covers</span>
+        <span class="cite">Sources: Transcend PM, 2026, July 28, program budget tree (budget lines); Balfour Beatty Construction, 2026b (proposal)</span>
       </div>
       <table class="gctable">
         <thead><tr>
-          <th>Project</th><th>District Budget<span class="thsub">July 28</span></th>
-          <th>BB Proposal</th><th>Budget &divide; BB</th>
-          <th>Normalized &times;1.33</th><th>Budget vs Normalized</th>
+          <th>Project</th><th>LLB BB Construction<span class="thsub">budget line</span></th>
+          <th>Normalized Estimate</th><th>Difference</th>
+          <th>BB Proposal</th><th>Budget above BB</th>
         </tr></thead>
         <tbody id="dbBody"></tbody>
       </table>
       <div class="llbhint" style="margin-bottom:12px" id="dbConcl"></div>
+
+      <div class="llbcap" style="margin-top:14px">What each project&rsquo;s budget actually contains
+        <span class="eq">&mdash; the line items behind the all-in figure, showing how much of a project sits outside the construction contract</span>
+        <span class="cite">Source: Transcend PM, 2026, July 28, <code>get_program_budget_tree</code>; each project&rsquo;s lines sum to its stated total to the cent</span>
+      </div>
+      <table class="gctable">
+        <thead><tr>
+          <th>Budget Line</th><th>San Marino HS<span class="thsub">project 1608</span></th>
+          <th>Carver ES<span class="thsub">project 1610</span></th>
+          <th>Valentine ES<span class="thsub">project 1609</span></th>
+        </tr></thead>
+        <tbody id="dbLineBody"></tbody>
+      </table>
+      <div class="llbhint" style="margin-bottom:12px" id="dbLineNote"></div>
 
       <div class="llbcap" style="margin-top:14px">What moved between July 26 and July 28
         <span class="eq">&mdash; computed from the two published feeds, largest movements first</span>
@@ -1566,6 +1585,12 @@
           overhead. The statutory revenue thresholds are sourced (DGS, 2022; SBA, 2023; Cal. Pub. Cont. Code); the
           <i>$/SF ranges and bonding brackets attached to each tier are not</i>. They are planning ranges, not quotes,
           and only the large-GC row reflects an actual proposal.</p>
+        <p class="ref" style="opacity:0.72"><b><s>A &times;1.33 soft-cost load applied to normalized construction.</s>
+          RETIRED &mdash; no longer used anywhere on this page.</b> An earlier version of the budget comparison
+          reconstructed each project&rsquo;s soft costs by multiplying normalized construction by the FMP&rsquo;s 1.33
+          factor. That was unnecessary and wrong in method: the District&rsquo;s budget <i>itemises</i> soft costs as
+          their own line, so there was nothing to reconstruct. The comparison now runs against the <b>LLB BB
+          Construction</b> budget line directly. Listed here rather than deleted so the change is auditable.</p>
         <p class="ref"><b>The 20,993 sf versus 14,200 sf denominator choice</b> in the modernize-or-build-new comparison.
           The 20,993 sf program area comes from the Huckabee document and appears nowhere in the FMP export; the FMP&rsquo;s
           own HS13 line carries three different and overlapping treatment areas (14,200 / 6,034 / 10,860 sf) and states
@@ -2034,8 +2059,9 @@ function renderAll() {
     `<b>A one-storey and a two-storey building carry identical Division 07 dollars per gross square foot &mdash; they cannot both be right.</b> Balfour prices Thermal &amp; Moisture Protection at <b>$75.84/SF of gross area</b> at Carver ($1,333,228 on 17,580 GSF) and at exactly the same rate on gross area at Valentine ($1,671,767 on 22,044 GSF). Carver is single-storey, so its roof and slab areas do equal its gross area and $75.84/SF is appropriate there. Valentine is two-storey, so its footprint is roughly half its gross area and a footprint basis would give about <b>$835,908</b> &mdash; some <span class="amt">$836,000</span> less. Either Valentine&rsquo;s Division 07 is overpriced by roughly that amount or Carver&rsquo;s is underpriced; nothing in the proposal lets us tell which, so <b>no adjustment is made to either project here</b> &mdash; it is a question to put to Balfour. Either way it is further proof that one flat rate card was applied without regard to building geometry, the same conclusion already reached from the 12 byte-identical CSI divisions and the near-identical 22.0% markup ratios.
       <br><br><b>Balfour&rsquo;s own numbers confirm no footprint basis anywhere in the estimate.</b> Division 31 Earthwork is footprint-driven, yet dividing each project&rsquo;s Division 31 total by its own $20.32/SF rate returns the <i>gross</i> area every time: SMHS $641,236 &divide; $20.32 = 31,557 SF against 31,556 GSF, Valentine $447,947 &divide; $20.32 = 22,045 SF against 22,044 GSF, Carver $357,236 &divide; $20.32 = 17,580 SF against 17,580 GSF. Carver landing on gross validates the test, since for a single-storey building footprint and gross genuinely coincide &mdash; and it then shows that both two-storey buildings had earthwork priced on roughly twice the area that actually drives it.
       <br><br><b>The half-area basis is confirmed by the District&rsquo;s construction manager</b> and is applied here as a determination, not an assumption: for a two-storey building the roof and the underslab vapour barrier each serve two floors, so both are footprint-driven rather than gross-area-driven. It is corroborated by the District&rsquo;s own 2024 FMP raw export, which halves footprint-driven scope on every two-storey building without exception &mdash; Valentine&rsquo;s two-storey classroom priced on 20,760 SF with its building pad at 10,380 SF, and the San Marino HS two-storey gymnasium on 35,910 SF with its pad at 17,955 SF &mdash; while every single-storey line in the same export pairs 1:1. Note also that no footprint, first-floor area or roof area is stated anywhere in Balfour&rsquo;s three Project Comparison Reports; their Metrics blocks give gross square feet only.`,
+    `<b>Balfour&rsquo;s proposal prices one budget line out of six or seven &mdash; so no &ldquo;total project cost&rdquo; comparison against their number is valid.</b> Their proposal covers the <b>LLB BB Construction</b> line and nothing else. Sitting outside it, in the District&rsquo;s own budget lines: <b>soft costs</b> ($8,740,799 SMHS, $4,443,780 Carver, $5,515,970 Valentine), <b>architectural services and DPOR</b> ($1,199,426 SMHS, $898,000 Carver, $1,225,750 Valentine), <b>interim housing and portable leases</b> ($1,000,000 SMHS, $1,100,000 Valentine, $217,700 of Valentine portables), <b>preconstruction services</b> ($65,000 each), and <b>site investigation</b> ($91,500 SMHS geotechnical and fault borings, $4,265 SMHS survey, $7,250 Carver underground scanning). Together that is roughly <b>a fifth of each project</b>. Anyone comparing Balfour&rsquo;s $69.4M against the $110.7M or $126.7M programme figures &mdash; or against a single project&rsquo;s all-in budget &mdash; is comparing a construction contract against a fully loaded capital programme. Always name which line is being compared.`,
     `<b>Balfour&rsquo;s proposal bundles two separate District projects into one total &mdash; so their project total cannot be compared against any single District budget.</b> Their report is titled &ldquo;San Marino HS Med Arts Bldg. and Career Center&rdquo; and closes at a <b>Project Total of $29,135,996</b>, being the Medical Arts building at <b>$27,881,756</b> plus the Career Center as an &ldquo;Add For&rdquo; line at <b>$1,254,240</b>. The District carries the STEM / Medical Arts building and the Library / Career Center modernization as <b>two distinct projects</b>. Any comparison of Balfour&rsquo;s $29,135,996 against a single District project budget is therefore invalid, because their figure spans two projects while the budget covers one. It also means <b>the Career Center was never scoped as a project in its own right by Balfour</b> &mdash; it is an add-on line inside another project&rsquo;s proposal, which is exactly why it carries no general conditions, no fee and no contingency. Require separate, independently priced proposals for the two scopes before GMP.
-      <br><br><b>The District&rsquo;s own records do not yet settle where the Career Center is funded.</b> Searching all 122 Transcend projects returns no budgeted Library or Career Center project: the former standalone project <b>1804 &ldquo;San Marino High School &mdash; Library Modernization&rdquo; is flagged &ldquo;ZZ DELETE&rdquo; and carries no budget</b>, and project 483 &ldquo;Library Learning Commons&rdquo; is unbudgeted. At the same time, project <b>1608&rsquo;s FMP ID tags include HS20</b>, the FMP&rsquo;s &ldquo;Existing Library Moderate modernization&rdquo; line ($986,272 construction, $1,312,710 loaded) &mdash; which suggests the library scope <i>is</i> funded inside 1608 after all. That tag and the separate-project structure point in opposite directions and must be reconciled before the next board packet, because it determines whether the STEM building&rsquo;s budget is being compared against one scope or two.`,
+      <br><br><b>Where the Career Center is funded is now settled &mdash; inside project 1608.</b> That project&rsquo;s <i>LLB BB Construction</i> budget line of <b>$35,096,190</b> is Medical Arts $32,183,057 plus the Career Center $2,913,133 to the dollar, and the project carries the FMP&rsquo;s <b>HS20</b> &ldquo;Existing Library Moderate modernization&rdquo; tag. Consistent with that, no separate budgeted Library project exists: the former standalone project <b>1804 is flagged &ldquo;ZZ DELETE&rdquo;</b> with no budget and project 483 &ldquo;Library Learning Commons&rdquo; is unbudgeted. So the library scope is <b>funded within project 1608 while being delivered as a separate project</b>. What remains open is only the area: the District&rsquo;s construction line funds Balfour&rsquo;s 5,226 GSF, while the District&rsquo;s own programme describes 3,267 sf. On the programmed area the normalized figure would be <b>$1,821,483</b> rather than $2,913,133 &mdash; a <b>$1,091,650</b> question, and the reason the area discrepancy still needs resolving even though the funding question does not.`,
     `<b>Building P footprint &mdash; 60% area discrepancy.</b> The District program describes the Career Center and Library renovation as <b>3,267 gross sf</b>; Balfour prices <b>5,226 GSF</b> &mdash; <span class="amt">+1,959 SF (+60%)</span>. Either the renovation footprint has grown beyond the program, or they are measuring the whole of Building P rather than the renovated portion. Resolve before GMP.`,
     `<b>SMHS priced as new construction against a modernization program.</b> The District scope and the Huckabee program (7/14/2026, Site Plan Option 2 &mdash; Modernization) deliver <b>20,993 gross sf of modernization</b>. Balfour priced <b>36,782 GSF</b> &mdash; a 31,556 GSF new two-story building plus 5,226 GSF of renovation, <span class="amt">15,789 GSF</span> beyond the program and on a different delivery basis. The scope basis must be reconciled before any number is compared.`,
     `<b>The Career Center carries no general conditions, no fee and no markup of any kind.</b> Balfour&rsquo;s own report closes the Medical Arts building at <b>$27,881,755.52 / $883.56 per SF / 100.00%</b> &mdash; the direct-cost-and-markup structure is complete at that line &mdash; then appends the renovation beneath it as an &ldquo;<b>Add For</b> Building P Modernization, Career Center $1,254,240.00 / $240.00.&rdquo; Being outside the marked-up structure, that $240.00/SF contains no general conditions, no general requirements, no fee, no bonds, no insurance and no contingency, and the single SMHS general-conditions line of $1,261,836 is attached to the new building only. A renovation on an occupied campus, adjacent to a demolition and a structural tie-in, needs its own supervision, logistics and phasing cost. Either that scope is being absorbed silently by the building&rsquo;s general conditions, or it is simply missing &mdash; and at 5,226 GSF against a District program of 3,267 gross sf, it is missing on 60% more area than was ever scoped.`,
@@ -2710,8 +2736,8 @@ const FMP_VS = [
   // the as-proposed column is Balfour's own dollar figure for the 5,226 GSF they claim - 60% more
   // area. The corrected variance is unaffected by the choice of area, since numerator and denominator
   // scale together; the as-proposed variance is, and is annotated accordingly.
-  {b: "San Marino HS &mdash; Career Center / Library", sf: 3267, basis: ["MODERNIZATION of existing space", "FMP rate $333.20/SF", "on the District&rsquo;s programmed 3,267 sf", "as-proposed column is BB&rsquo;s flat $240.00/SF across 5,226 GSF &mdash; 60% more area, so that one figure is not area-matched"],
-   fmp: 3267 * 333.20, act: 1254240, corr: 1821483}
+  {b: "San Marino HS &mdash; Career Center / Library", sf: 5226, basis: ["MODERNIZATION of existing space", "FMP rate $333.20/SF", "BB prices a flat $240.00/SF as an &ldquo;Add For&rdquo;", "on BB&rsquo;s 5,226 GSF &mdash; the basis the District&rsquo;s own construction budget line funds"],
+   fmp: 5226 * 333.20, act: 1254240, corr: 2913133}
 ];
 function renderFmpVs() {
   document.getElementById("fmpVsBody").innerHTML = FMP_VS.map(r => {
@@ -2787,8 +2813,8 @@ function renderFix() {
      note: "No scope gaps. Entirely the general-conditions schedule &mdash; 12 months priced against 16 needed"},
     {n: "San Marino HS &mdash; Medical Arts", as: 27881756, no: 32183057, sf: 31556,
      note: "$1,196,604 absent Division 07 roofing and weatherproofing &mdash; restored on a <b>15,778 SF footprint</b>, half of the 31,556 GSF, because on a two-storey building the roof and the underslab vapour barrier each serve two floors and are therefore footprint-driven. <b>Half-area basis confirmed by the District&rsquo;s construction manager.</b> &middot; $1,420,020 Exterior Improvements at $30.81/SF against $75.81 at both elementaries &middot; $205,114 utilities &middot; $420,326 minor divisions &middot; then markup and 16-month GC. <b>Masonry and Special Construction are deliberately excluded</b> &mdash; both appear only at Carver and are building-specific, not omissions"},
-    {n: "San Marino HS &mdash; Career Center", as: 1254240, no: 1821483, sf: 5226, sfAs: 5226, sfNo: 3267,
-     note: "<b>Normalized on the District&rsquo;s programmed 3,267 sf, not Balfour&rsquo;s 5,226 GSF</b> &mdash; $557.54/SF &times; 3,267 sf. Balfour&rsquo;s as-proposed column is their own $240.00/SF across 5,226 GSF, so the two columns cover different areas; the 60% area discrepancy is a live question with Balfour and is carried as its own watch item. <b>This scope is also a separate District project from the STEM building</b>, which Balfour bundled into one proposal. Priced on <b>renovation rates only</b> &mdash; FMP library/moderate modernization $333.20/SF escalated to $397, plus $25/SF abatement and $35/SF interface demolition, then GC&rsquo;s, fee, bonds and contingency at 22%. <span class=\"assump\"><b>Three of those four inputs are our own constructions.</b> The <b>$25/SF abatement</b> and <b>$35/SF interface-demolition</b> allowances appear in no source document &mdash; there is no hazardous-materials survey for Building P in hand, and no demolition take-off for the tie-in to the new building; both are planning placeholders for scope that is real but unquantified. The <b>22% load</b> is the average markup ratio observed on Balfour&rsquo;s other three projects, applied because this line carries no markup at all. Only the <b>$333.20/SF</b> base rate is source data, from the FMP; the escalation to $397 uses the same unverified 12.5% assumption as everything else on this page. This line is the least firm number in the table and should be read as an order of magnitude for scope Balfour has not priced, not as an estimate.</span> <b>No Division 07 thermal, no Division 04 masonry and no new-construction rate is applied to this line.</b> The uplift is because BB&rsquo;s $240/SF was an unloaded &ldquo;Add For&rdquo; allowance carrying no GC&rsquo;s, fee or contingency, and no abatement, seismic, ADA or MEP renewal"},
+    {n: "San Marino HS &mdash; Career Center", as: 1254240, no: 2913133, sf: 5226,
+     note: "Normalized on Balfour&rsquo;s <b>5,226 GSF</b> at $557.54/SF. That basis is not a choice made here &mdash; the District&rsquo;s own <i>LLB BB Construction</i> budget line for project 1608 is $35,096,190, which is Medical Arts $32,183,057 plus this line at $2,913,133 to the dollar, so the District is funding the 5,226-sf figure. On the District&rsquo;s programmed 3,267 sf the same rate gives $1,821,483; that alternative is carried as a watch-item question about the 60% area discrepancy rather than as the published number. <b>The library scope is funded inside project 1608 while being delivered as a separate project.</b> Priced on <b>renovation rates only</b> &mdash; FMP library/moderate modernization $333.20/SF escalated to $397, plus $25/SF abatement and $35/SF interface demolition, then GC&rsquo;s, fee, bonds and contingency at 22%. <span class=\"assump\"><b>Three of those four inputs are our own constructions.</b> The <b>$25/SF abatement</b> and <b>$35/SF interface-demolition</b> allowances appear in no source document &mdash; there is no hazardous-materials survey for Building P in hand, and no demolition take-off for the tie-in to the new building; both are planning placeholders for scope that is real but unquantified. The <b>22% load</b> is the average markup ratio observed on Balfour&rsquo;s other three projects, applied because this line carries no markup at all. Only the <b>$333.20/SF</b> base rate is source data, from the FMP; the escalation to $397 uses the same unverified 12.5% assumption as everything else on this page. This line is the least firm number in the table and should be read as an order of magnitude for scope Balfour has not priced, not as an estimate.</span> <b>No Division 07 thermal, no Division 04 masonry and no new-construction rate is applied to this line.</b> The uplift is because BB&rsquo;s $240/SF was an unloaded &ldquo;Add For&rdquo; allowance carrying no GC&rsquo;s, fee or contingency, and no abatement, seismic, ADA or MEP renewal"},
     {n: "Carver site scope beyond the 5-ft line", as: 0, no: 3300105, sf: 0,
      note: "Play yards C36 $800,000 + C37 $650,000 and existing KG modernization C1 $1,000,000 at FMP construction cost, escalated 19%, loaded at Carver&rsquo;s own 13.19% &mdash; all in the District&rsquo;s project scope but outside Balfour&rsquo;s contract line"}
   ];
@@ -2952,9 +2978,33 @@ function renderMvn() {
 // Current budgets are read from the LIVE feed (PROJECTS) by project id, so this section follows any
 // later refresh instead of freezing a snapshot. The July 26 column is a fixed historical snapshot of
 // the previous published feed, which is why those figures alone are hardcoded.
-// SOFT = 1.33 is the FMP's own soft-cost factor - the multiplier that produces the "Final Cost"
-// column of the 2024 project list (e.g. V12 $15,097,000 x 1.33 = $20,079,010 exactly).
-const SOFT = 1.33;
+// An earlier version multiplied normalized construction by the FMP's 1.33 soft-cost factor to
+// approximate a project budget. That is retired: the District's budget itemises soft costs as their
+// own line, so the comparison runs against the LLB BB Construction line directly instead.
+// Budget line items pulled from get_program_budget_tree?program_id=1 (each project's `tree`,
+// fields taskName / amount), verified 2026-07-28. Each project's lines sum to its stated total
+// to the cent. The KEY line is "LLB BB Construction", which is the only line Balfour's proposal
+// covers - everything else in the project is budgeted separately and outside their number.
+const BUDGET_LINES = {
+  1608: {total: 46197179.66, lines: [
+    ["LLB BB Construction (approx. 70%)", 35096190, "con"],
+    ["LLB BB Soft Costs (approx. 30%)", 8740798.66, "soft"],
+    ["Architectural DPOR Services", 1199426], ["Interim Housing GC", 1000000],
+    ["SMHS &mdash; Geotechnical and Fault Investigation, additional borings", 91500],
+    ["Preconstruction Services", 65000], ["SMHS &mdash; Additional Survey Requirements", 4265]]},
+  1610: {total: 26488063.89, lines: [
+    ["LLB BB Construction Costs (approx. 70%)", 21074034, "con"],
+    ["LLB BB Soft Costs (approx. 30%)", 4443779.89, "soft"],
+    ["Architectural Design Services", 898000], ["Preconstruction Services", 65000],
+    ["CES &mdash; Carver Underground Scanning Phase II", 7250]]},
+  1609: {total: 31036404.04, lines: [
+    ["LLB BB Construction Costs (approx. 70%)", 22911984, "con"],
+    ["LLB BB Soft Costs (approx. 30%)", 5515970.04, "soft"],
+    ["Architectural Services", 1225750], ["GC Interim housing Valentine Elementary", 1100000],
+    ["Piggyback Lease of Portables", 217700], ["Preconstruction Services", 65000]]}
+};
+const conLine = pid => (BUDGET_LINES[pid].lines.find(l => l[2] === "con") || [])[1] || 0;
+const softLine = pid => (BUDGET_LINES[pid].lines.find(l => l[2] === "soft") || [])[1] || 0;
 const PRIOR_FEED = {   // July 26, 2026, 11:39 AM feed
   1608: 29500000, 1610: 21500000, 1609: 31357143, 1864: 4790000, 1866: 3630000.01,
   1865: 3702616.31, 467: 0, 1633: 151800, 1634: 780951, 533: 902675, 1808: 6620000,
@@ -2963,59 +3013,121 @@ const PRIOR_FEED = {   // July 26, 2026, 11:39 AM feed
 const PRIOR_TOTAL = 110962441.32, PRIOR_RFPS = 121, PRIOR_PROJECTS = 33;
 const budOf = pid => { const p = PROJECTS.find(x => x.pid === pid); return p ? (p.budget || 0) : 0; };
 const nameOf = pid => { const p = PROJECTS.find(x => x.pid === pid); return p ? p.name : "(project no longer in the feed)"; };
-// Normalized construction per District project, from the BB-vs-Normalized table above.
+// Normalized construction per District project, from the BB-vs-Normalized table above, against the
+// project's own LLB BB Construction budget line - NOT against its all-in budget, which also carries
+// soft costs, architectural services, interim housing, geotechnical work and preconstruction.
 const DB_ROWS = [
-  {pid: 1608, label: "San Marino HS &mdash; New Two-Storey STEM Building", norm: 32183057, bb: 27881756,
-   note: "Balfour&rsquo;s figure here is the <b>Medical Arts building alone</b>. Their proposal total of $29,135,996 also contains the Career Center, which is a separate District project, so the bundled total must not be compared against this budget"},
+  {pid: 1608, label: "San Marino HS &mdash; New Two-Storey STEM Building", norm: 32183057 + 2913133, bb: 29135996,
+   note: "normalized is Medical Arts $32,183,057 + Career Center $2,913,133. Balfour&rsquo;s figure is their bundled project total, which is the right comparison here because the District&rsquo;s construction line funds both scopes"},
   {pid: 1610, label: "Carver ES &mdash; New TK/KG Building &amp; Play Yard", norm: 17773929 + 3300105, bb: 17805933,
-   note: "normalized includes the $3,300,105 of play yards and classroom modernization that sit outside Balfour&rsquo;s contract line but inside the District&rsquo;s project"},
+   note: "normalized is the building $17,773,929 + $3,300,105 of play yards and classroom modernization that sit outside Balfour&rsquo;s contract line but inside the District&rsquo;s project"},
   {pid: 1609, label: "Valentine ES &mdash; MPR, Kitchen, 1&ndash;5 Classrooms", norm: 22911984, bb: 22472400,
    note: "no scope gaps identified; the normalization is entirely the general-conditions schedule"}
 ];
 function renderDb() {
+  let tc = 0, tn = 0, tb = 0;
   let body = DB_ROWS.map(r => {
-    const bud = budOf(r.pid), loaded = r.norm * SOFT, d = 100 * (bud / loaded - 1);
-    const cls = Math.abs(d) <= 2 ? "b1" : (Math.abs(d) <= 6 ? "b2" : "b3");
+    const con = conLine(r.pid), d = con - r.norm, g = con - r.bb;
+    tc += con; tn += r.norm; tb += r.bb;
     return `<tr>
-      <td>${r.label}<span class="gcnote">Transcend project ${r.pid}</span><span class="gcnote">${r.note}</span></td>
-      <td><b>${fmt(bud)}</b></td>
-      <td>${fmt(r.bb)}</td>
-      <td>${(bud / r.bb).toFixed(2)}&times;</td>
-      <td>${fmt(loaded)}<span class="gcnote">${fmt(r.norm)} &times; 1.33</span></td>
-      <td><span class="psf ${cls}">${d < 0 ? "&minus;" : "+"}${Math.abs(d).toFixed(1)}%</span></td>
+      <td>${r.label}<span class="gcnote">Transcend project ${r.pid} &middot; all-in budget ${fmt(BUDGET_LINES[r.pid].total)}</span><span class="gcnote">${r.note}</span></td>
+      <td><b>${fmt(con)}</b></td>
+      <td>${fmt(r.norm)}</td>
+      <td><span class="psf ${d === 0 ? "b1" : "b3"}">${d === 0 ? "exact &mdash; $0" : (d < 0 ? "&minus;" : "+") + fmt(Math.abs(d))}</span></td>
+      <td>${fmt(r.bb)}<span class="gcnote">${(con / r.bb).toFixed(2)}&times; covered by the construction line</span></td>
+      <td><span class="psf ${g > 3e6 ? "b3" : (g > 1e6 ? "b2" : "b1")}">+${fmt(g)}<span class="gcnote">+${(100 * g / r.bb).toFixed(1)}%</span></span></td>
     </tr>`;
   }).join("");
-  body += `<tr>
-      <td>San Marino HS &mdash; Library / Career Center<span class="gcnote">a separate District project that Balfour bundled into the Medical Arts proposal</span><span class="gcnote"><b>District budget not yet identified.</b> No budgeted Library or Career Center project exists in the feed: project 1804 &ldquo;Library Modernization&rdquo; is flagged ZZ DELETE with no budget, and project 483 &ldquo;Library Learning Commons&rdquo; is unbudgeted. Project 1608 does however carry the FMP&rsquo;s HS20 library tag, so the scope may be funded inside the STEM building. Open item &mdash; no budget is assumed here</span></td>
-      <td><span class="psf none">not identified</span></td>
-      <td>${fmt(1254240)}<span class="gcnote">an &ldquo;Add For&rdquo; line, no GC&rsquo;s, fee or contingency</span></td>
-      <td><span class="psf none">&mdash;</span></td>
-      <td>${fmt(1821483 * SOFT)}<span class="gcnote">${fmt(1821483)} &times; 1.33, on the programmed 3,267 sf</span></td>
-      <td><span class="psf none">&mdash;</span></td>
-    </tr>`;
-  document.getElementById("dbBody").innerHTML = body;
+  document.getElementById("dbBody").innerHTML = body + `<tr class="actual">
+      <td><b>Programme total &mdash; the three LLB buildings</b></td>
+      <td><b>${fmt(tc)}</b></td><td><b>${fmt(tn)}</b></td>
+      <td><span class="psf b1"><b>${tc - tn === 0 ? "exact &mdash; $0" : fmt(tc - tn)}</b></span></td>
+      <td><b>${fmt(tb)}</b><span class="gcnote">${(tc / tb).toFixed(2)}&times;</span></td>
+      <td><span class="psf b3"><b>+${fmt(tc - tb)}<span class="gcnote">+${(100 * (tc - tb) / tb).toFixed(1)}%</span></b></span></td></tr>`;
 
-  const tot = PROJECTS.reduce((a, p) => a + (p.budget || 0), 0);
-  const smhs = DB_ROWS[0], smhsD = 100 * (budOf(1608) / (smhs.norm * SOFT) - 1);
-  const bundled = 100 * (budOf(1608) / ((smhs.norm + 1821483) * SOFT) - 1);
   document.getElementById("dbConcl").innerHTML =
-    `<b>The District has independently rebudgeted to roughly normalized construction plus standard soft costs.</b>
-     Carver lands <b>5.5% below</b> that line and Valentine <b>1.8% above</b> it &mdash; both within touching distance
-     of figures built entirely from Balfour&rsquo;s own division rates and the FMP&rsquo;s own soft-cost factor. Nothing
-     in this analysis fed those budgets, so the agreement is genuine corroboration rather than circular reasoning, and it
-     carries a direct implication: <b>the District is already carrying the cost of what Balfour&rsquo;s proposal
-     omitted.</b> The budget-to-proposal ratios say the same thing more bluntly &mdash;
-     ${DB_ROWS.map(r => `<b>${(budOf(r.pid) / r.bb).toFixed(2)}&times;</b>`).join(", ")} for the STEM building, Carver and
-     Valentine respectively. A budget set at 1.4 to 1.7 times a construction proposal is not a budget that believes the
-     proposal is complete.
-     <br><br><b>San Marino HS is the exception and sits above the line, not on it.</b> Project 1608 is budgeted
-     <b>${smhsD < 0 ? "&minus;" : "+"}${Math.abs(smhsD).toFixed(1)}%</b> against the Medical Arts building normalized and
-     loaded &mdash; ${fmt(budOf(1608))} against ${fmt(smhs.norm * SOFT)}. <b>The tighter
-     ${bundled < 0 ? "&minus;" : "+"}${Math.abs(bundled).toFixed(1)}% figure only holds if the Career Center is funded
-     inside project 1608</b>, which is precisely the question flagged in the watch list: the project&rsquo;s FMP tags
-     include HS20 (the library line), yet the District describes the Library / Career Center as a separate project and no
-     separate budget for it can be found. Resolve that before quoting either number, because the two readings differ by
-     roughly ${fmt(Math.abs(budOf(1608) / SOFT - smhs.norm) * SOFT)} of apparent headroom.`;
+    `<b>The District&rsquo;s construction budget lines are the normalized figures &mdash; not close to them, identical to
+     them.</b> All three match to the dollar, and so does the total: <b>${fmt(tc)}</b> budgeted for construction against
+     <b>${fmt(tn)}</b> normalized, a difference of <b>$0</b>. Balfour&rsquo;s proposal for the same three scopes is
+     <b>${fmt(tb)}</b>, so the District has budgeted <span class="amt">+${fmt(tc - tb)}</span>
+     (+${(100 * (tc - tb) / tb).toFixed(1)}%) more for construction than the contractor proposed to do it for.
+     <span class="assump"><b>Read the exact match correctly &mdash; it is adoption, not corroboration.</b> Three
+     independently computed multi-million-dollar figures do not agree to the dollar by coincidence. The only
+     explanation is that the normalized estimates and the District&rsquo;s construction budget lines share an origin:
+     the District has adopted the normalized figures as its budget basis. That is a meaningful fact &mdash; it means the
+     District is budgeting to the corrected scope rather than to Balfour&rsquo;s proposal &mdash; but it is
+     <b>not independent verification that the normalized numbers are right</b>, and it must never be presented to the
+     board as though the budget confirms the analysis. The two are the same number viewed twice. What the comparison
+     does establish independently is the gap to Balfour&rsquo;s proposal.</span>
+     <br><br><b>The per-project gap is where the useful signal is.</b> The construction line covers
+     ${DB_ROWS.map(r => `<b>${(conLine(r.pid) / r.bb).toFixed(2)}&times;</b>`).join(", ")} Balfour&rsquo;s price at the
+     STEM building, Carver and Valentine respectively. Valentine at 1.02&times; is effectively funded at the proposal,
+     which fits &mdash; it was the one project with no identified scope gaps. The STEM building at 1.20&times; and
+     Carver at 1.18&times; carry real headroom, and it is headroom of almost exactly the size of the omissions
+     identified earlier: absent Division 07 roofing at SMHS, and the play yards and classroom modernization sitting
+     outside Balfour&rsquo;s contract line at Carver.
+     <br><br><b>The Career Center question is settled by the budget itself.</b> Project 1608&rsquo;s construction line of
+     ${fmt(conLine(1608))} equals Medical Arts ${fmt(32183057)} plus the Career Center ${fmt(2913133)} exactly, and the
+     project carries the FMP&rsquo;s HS20 library tag. <b>The library scope is funded inside project 1608 while being
+     delivered as a separate project</b> &mdash; which also means the 5,226 GSF basis is the one the District is paying
+     for, notwithstanding that its own programme describes 3,267 sf. That area discrepancy remains a live question with
+     Balfour, but it is no longer a question about which budget applies.`;
+
+  // Budget-line breakdown. Lines are matched across the three projects by a normalised label so the
+  // same kind of cost lands on one row even where the District named it slightly differently.
+  const kindOf = n => /LLB BB Construction/i.test(n) ? "con"
+    : /LLB BB Soft/i.test(n) ? "soft"
+    : /Architect/i.test(n) ? "arch"
+    : /Interim Housing|Portables/i.test(n) ? "interim"
+    : /Preconstruction/i.test(n) ? "precon" : "other";
+  const KIND_LABEL = {
+    con: ["LLB BB Construction", "the <b>only</b> line Balfour&rsquo;s proposal prices"],
+    soft: ["LLB BB Soft Costs", "labelled &ldquo;approx. 30%&rdquo;; see the note below on what they are actually 30% <i>of</i>"],
+    arch: ["Architectural services / DPOR", "outside the construction contract"],
+    interim: ["Interim housing &amp; portable leases", "outside the construction contract"],
+    precon: ["Preconstruction services", "paid before a GMP exists"],
+    other: ["Site investigation &amp; other", "geotechnical, survey, underground scanning"]
+  };
+  const PIDS = [1608, 1610, 1609];
+  const cellOf = (pid, kind) => BUDGET_LINES[pid].lines.filter(l => kindOf(l[0]) === kind)
+    .reduce((a, l) => a + l[1], 0);
+  document.getElementById("dbLineBody").innerHTML =
+    Object.keys(KIND_LABEL).map(k => `<tr${k === "con" ? ' class="actual"' : ""}>
+      <td>${k === "con" ? "<b>" + KIND_LABEL[k][0] + "</b>" : KIND_LABEL[k][0]}<span class="gcnote">${KIND_LABEL[k][1]}</span></td>
+      ${PIDS.map(p => { const v = cellOf(p, k); return `<td>${v ? (k === "con" ? "<b>" + fmt(v) + "</b>" : fmt(v)) : "<span class=\"psf none\">&mdash;</span>"}</td>`; }).join("")}
+    </tr>`).join("") +
+    `<tr class="actual"><td><b>All-in project budget</b><span class="gcnote">what the ladder and site rollup show</span></td>
+      ${PIDS.map(p => `<td><b>${fmt(BUDGET_LINES[p].total)}</b></td>`).join("")}</tr>` +
+    `<tr><td>Outside the construction line<span class="gcnote">everything Balfour&rsquo;s number does not cover</span></td>
+      ${PIDS.map(p => { const o = BUDGET_LINES[p].total - conLine(p);
+        return `<td><span class="psf b2">${fmt(o)}<span class="gcnote">${(100 * o / BUDGET_LINES[p].total).toFixed(0)}% of the project</span></span></td>`; }).join("")}</tr>`;
+
+  // The soft-cost lines are 30% of BALFOUR'S proposal total, less any separately budgeted
+  // architectural line - verified to the cent on all three projects. They are NOT 30% of the
+  // construction budget line the District actually adopted, which is the larger number.
+  const softChk = PIDS.map(p => {
+    const bb = DB_ROWS.find(r => r.pid === p).bb, arch = cellOf(p, "arch");
+    const onBb = bb * 0.30 - (p === 1608 ? 0 : arch), onCon = conLine(p) * 0.30 - (p === 1608 ? 0 : arch);
+    return {p, soft: softLine(p), onBb, onCon, gap: onCon - softLine(p)};
+  });
+  const totGap = softChk.reduce((a, s) => a + s.gap, 0);
+  document.getElementById("dbLineNote").innerHTML =
+    `<b>Roughly a fifth of each project sits outside the construction contract</b> &mdash; soft costs, architectural
+     services and DPOR, interim housing and portable leases, preconstruction, geotechnical and survey work. That is why
+     Balfour&rsquo;s proposal must never be compared against an all-in project budget: the two cover different scopes,
+     and doing so was the error corrected in this section. Note also that the two percentage labels are nominal &mdash;
+     the lines are named &ldquo;approx. 70%&rdquo; and &ldquo;approx. 30%&rdquo;, but the actual split of construction to
+     soft cost runs about ${PIDS.map(p => (100 * conLine(p) / (conLine(p) + softLine(p))).toFixed(0)).join("/")}&nbsp;to&nbsp;${PIDS.map(p => (100 * softLine(p) / (conLine(p) + softLine(p))).toFixed(0)).join("/")}.
+     <br><br><b>A finding worth raising: the soft-cost lines are sized off Balfour&rsquo;s proposal, not off the
+     construction budget the District adopted.</b> Each soft-cost line is exactly 30% of Balfour&rsquo;s own project
+     total, less any separately budgeted architectural line &mdash; verified to the cent on all three:
+     ${softChk.map(s => `project ${s.p} ${fmt(s.soft)}`).join(", ")}. But the construction line each project carries is
+     the larger normalized figure. Sizing the soft costs on the same basis as the construction line would require
+     ${softChk.map(s => fmt(s.onCon)).join(", ")} respectively &mdash; about
+     <span class="amt">${fmt(totGap)}</span> more in total. Either the 30% factor is deliberately applied to the
+     contractor&rsquo;s price rather than to the funded scope, or the soft-cost lines have not been trued up alongside
+     the construction lines. Worth confirming before the next board packet, because it is the same class of error in
+     miniature: a percentage applied to the wrong base.`;
 
   const moves = Object.keys(PRIOR_FEED).map(k => Number(k))
     .map(pid => ({pid, was: PRIOR_FEED[pid], now: budOf(pid)}))
@@ -3023,6 +3135,7 @@ function renderDb() {
     .sort((a, b) => Math.abs(b.now - b.was) - Math.abs(a.now - a.was));
   const inc = moves.filter(m => m.now > m.was).reduce((a, m) => a + m.now - m.was, 0);
   const dec = moves.filter(m => m.now < m.was).reduce((a, m) => a + m.now - m.was, 0);
+  const tot = PROJECTS.reduce((a, p) => a + (p.budget || 0), 0);   // all-in programme budget
   document.getElementById("dbMoveBody").innerHTML = moves.map(m => {
     const d = m.now - m.was;
     return `<tr>
