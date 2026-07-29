@@ -219,6 +219,11 @@
   .gctable tr:last-child td { border-bottom: none; }
   .gctable .gcnote { display: block; font-size: 10.8px; color: var(--ink-3); font-weight: 400; }
   .gctable tr.actual td { background: color-mix(in srgb, var(--bad) 8%, transparent); }
+  .gctable tr.finmain td { border-bottom: none; padding-bottom: 2px; }
+  .gctable tr.finnote td {
+    text-align: left; font-weight: 400; color: var(--ink-2); font-size: 11.8px;
+    white-space: normal; overflow-wrap: anywhere; padding: 0 6px 8px; line-height: 1.4;
+  }
   #fmpGuide .gcap { font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.07em; }
   #fmpGuide .gcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
   .gitem { display: flex; gap: 10px; margin-top: 11px; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
@@ -787,9 +792,9 @@
               <table class="bbtable">
                 <thead><tr>
                   <th>Risk / Cost Component</th>
-                  <th>San Marino HS<span class="thsub">Two-Story Classroom</span></th>
-                  <th>Valentine ES<span class="thsub">Two-Story Classroom</span></th>
                   <th>Carver ES<span class="thsub">New TK &amp; KG</span></th>
+                  <th>Valentine ES<span class="thsub">Two-Storey Classroom</span></th>
+                  <th>San Marino HS<span class="thsub">Medical Arts</span></th>
                 </tr></thead>
                 <tbody id="bbBody"></tbody>
               </table>
@@ -799,10 +804,10 @@
               <table class="llbtable">
                 <thead><tr>
                   <th>Project</th>
-                  <th>Gross SF</th>
-                  <th>Direct Cost of Work</th>
+                  <th>BB Proposal GSF</th>
+                  <th>BB Direct Cost of Work</th>
                   <th>Markups <span class="thsub">GC&rsquo;s, GR&rsquo;s, fee, bonds, contingency</span></th>
-                  <th>Total Cost</th>
+                  <th>BB Proposal Total</th>
                   <th>Cost / SF</th>
                 </tr></thead>
                 <tbody id="llbBody"></tbody>
@@ -815,8 +820,8 @@
               <table class="gctable">
                 <thead><tr>
                   <th>Building</th><th>FMP Construction<span class="thsub">rate &times; actual GSF</span></th>
-                  <th>Balfour Priced<span class="thsub">incl. GC&rsquo;s &amp; GR&rsquo;s</span></th><th>Variance</th>
-                  <th>Less Escalation<span class="thsub">&minus;12.5%</span></th><th>FMP $/SF &rarr; Actual $/SF</th>
+                  <th>BB Proposal<span class="thsub">incl. GC&rsquo;s &amp; GR&rsquo;s</span></th><th>Variance</th>
+                  <th>Less Escalation<span class="thsub">&minus;12.5%</span></th><th>FMP $/SF &rarr; BB $/SF</th>
                 </tr></thead>
                 <tbody id="fmpVsBody"></tbody>
               </table>
@@ -848,29 +853,28 @@
               </div>
               <table class="gctable">
                 <thead><tr>
-                  <th>Contractor</th><th>Aggregate Bonding</th><th>Revenue Signal</th><th>Size Tier</th><th>Basis / Note</th>
+                  <th>Contractor</th><th>Aggregate Bonding</th><th>Revenue Signal</th><th>Size Tier</th>
                 </tr></thead>
                 <tbody id="finBody"></tbody>
               </table>
               <div class="llbhint" style="margin-bottom:12px"><b>Capacity is not the differentiator here &mdash; price
-                and risk terms are.</b> Pinner is the largest of the three regional firms by revenue; Neff carries $150M single-project / $300M
-                aggregate and Erickson-Hall $75M single-project / $375M aggregate. Every finalist can bond the largest building on this program
-                ($29.1M) with 2.6&times; to 5&times; headroom, and all have aggregate room for the current tranche. That
-                removes bonding capacity as a screening criterion and puts the decision squarely on general conditions
-                load, fee, tolerance width, and subcontractor pool.
+                and risk terms are.</b> All three regional firms run $197M&ndash;$300M+ in annual revenue and sit in the
+                same Upper Medium tier. Every finalist can bond the largest building on this program ($29.1M) with
+                2.6&times; to 5&times; headroom, so bonding capacity does not screen anyone out. The decision rests on
+                general conditions load, fee, tolerance width, and subcontractor pool.
                 <br><br>
-                It also shows why revenue estimates must be discarded: the third-party web figures for these two firms
-                (~$28.5M and ~$15.6M) are wrong by an order of magnitude &mdash; no surety extends $300&ndash;375M of
-                capacity to a $16M contractor. Sureties weight backlog performance and completed K-12 work, so
-                California school specialists routinely carry capacity far above what their published revenue would
-                imply. Confirm Pinner&rsquo;s capacity from its prequalification bonding letter to complete the picture.</div>
+                <b>Erickson-Hall is the largest of the three by revenue and aggregate program; Neff carries the most
+                single-project capacity.</b> Note how far off the public web estimates were: third-party profiles list
+                Erickson-Hall near $28.5M and Neff near $15.6M against District figures of $300M+ and $200M &mdash;
+                wrong by roughly an order of magnitude, which is exactly why surety letters and District-verified
+                revenue are the only acceptable inputs here.</div>
 
               <div class="llbcap" style="margin-top:14px">General contractor size and its effect on GC&rsquo;s / GR&rsquo;s
                 <span class="eq">&mdash; illustrative planning ranges for this scope; the large-GC row is Balfour Beatty&rsquo;s actual proposal</span>
               </div>
               <table class="gctable">
                 <thead><tr>
-                  <th>GC Tier</th><th>Annual Revenue<span class="thsub">California / SBA basis</span></th><th>Single-Project Bonding</th><th>Aggregate Bonding</th><th>Which SMUSD Work It Can Carry</th>
+                  <th>GC Tier</th><th>Single-Project Bonding</th><th>Aggregate Bonding</th><th>Annual Revenue<span class="thsub">California / SBA basis</span></th>
                 </tr></thead>
                 <tbody id="bondBody"></tbody>
               </table>
@@ -2009,7 +2013,7 @@ const BB = {
   ves:    {label: "Valentine ES &mdash; Two-Story Classroom (MPR / Kitchen / 1&ndash;5)", precon: 55000, fee: 3.25, gcMo: 109896, months: 12, gcTot: 1318752, bond: 1, gl: 1.20, contingency: 3, allow: 20000},
   carver: {label: "Carver ES &mdash; New TK &amp; KG Building", precon: 45000, fee: 3.25, gcMo: 99891, months: 12, gcTot: 1230696, bond: 1, gl: 1.20, contingency: 3, allow: 15000}
 };
-const BB_ORDER = ["smhs", "ves", "carver"];
+const BB_ORDER = ["carver", "ves", "smhs"];
 // Actual pricing from the Pre-Interview Submittal Project Comparison Reports (4/17/2026).
 // Markups are the GC's / GR's / fee / bonds / insurance / contingency load on the direct cost of work.
 const BB_ACT = {
@@ -2083,7 +2087,10 @@ function renderLlb() {
     "Figures are Balfour Beatty&rsquo;s own Project Comparison Reports (Pre-Interview Submittal, 4/17/2026). " +
     "<b>Markups</b> are the GC&rsquo;s, GR&rsquo;s, fee, bonds, insurance and contingency carried on top of the direct cost of work &mdash; " +
     "18&ndash;20% of each total here. Cost / SF is graded against the bands above. Every field is editable and saves in this browser, " +
-    "so these update as the GMPs are established.";
+    "so these update as the GMPs are established. <b>These are the same figures used in the FMP comparison above:</b> " +
+    "Carver $17,805,933 &middot; Valentine $22,472,400 &middot; SMHS Medical Arts $27,881,756, plus the SMHS Career Center " +
+    "at $1,254,240 (5,226 GSF) which is carried in the comparison table as a separate modernization line &mdash; " +
+    "SMHS project total $29,135,996, three-project total $69,414,329.";
   document.querySelectorAll("#llbBody input").forEach(inp => {
     inp.addEventListener("change", () => {
       const data = llbLoad();
@@ -2162,38 +2169,33 @@ document.getElementById("tcToggle").addEventListener("click", function () {
 // GC size scale: illustrative $/SF ranges applied to the actual gross areas
 const BOND_TIERS = [
   {t: "Micro", rev: "&le; $6M", single: "&le; $5M", agg: "$10&ndash;15M",
-   note: "CA DGS <b>Micro Business</b> ceiling",
-   fits: "Playgrounds and hardcourts, fencing, shade structures, single-trade packages"},
+   note: "CA DGS <b>Micro Business</b> ceiling"},
   {t: "Small", rev: "$6&ndash;19M", single: "$5&ndash;25M", agg: "$25&ndash;75M",
-   note: "CA DGS <b>Small Business</b> ceiling $19M",
-   fits: "Roofing, restroom and classroom modernization, asphalt and site work"},
+   note: "CA DGS <b>Small Business</b> ceiling $19M"},
   {t: "Small &mdash; Public Works", rev: "$19&ndash;46M", single: "$15&ndash;40M", agg: "$50&ndash;120M",
-   note: "CA <b>SB-PW</b> ceiling $46M; SBA NAICS 236220 is $45M",
-   fits: "A single mid-size building or a bundled modernization package"},
-  {t: "Upper Medium", rev: "$150M&ndash;$500M", single: "$75&ndash;150M", agg: "$250&ndash;500M",
-   note: "where all three regional finalists sit; single-project capacity clears any one SMUSD building several times over",
-   fits: "Two or three SMUSD buildings concurrently; cannot absorb the full $200M program alone"},
+   note: "CA <b>SB-PW</b> ceiling $46M; SBA NAICS 236220 is $45M"},
   {t: "Medium", rev: "$46M&ndash;$150M", single: "$25&ndash;75M", agg: "$100&ndash;250M",
-   note: "above every small-business definition; CA K-12 specialists often bond well above their revenue tier",
-   fits: "Any single SMUSD building here ($17.8&ndash;29.1M) with headroom; one or two concurrently"},
+   note: "above every small-business definition; CA K-12 specialists often bond well above their revenue tier"},
+  {t: "Upper Medium", rev: "$150M&ndash;$500M", single: "$75&ndash;150M", agg: "$250&ndash;500M",
+   note: "where all three regional finalists sit; single-project capacity clears any one SMUSD building several times over"},
   {t: "Large", rev: "$500M+", single: "$150M+", agg: "$500M&ndash;$1B+",
    note: "<b>threshold from Upper Medium: revenue above ~$500M with $500M+ aggregate surety</b> &mdash; ENR-ranked national / international",
-   fits: "All three buildings concurrently, plus program-wide capacity", actual: true}
+   actual: true}
 ];
 // LLB interview finalists. Revenue for the private regional firms is third-party estimate only.
 const FINALISTS = [
   {n: "Balfour Beatty Construction", hq: "US arm of Balfour Beatty plc", rev: "~$14.5B group (2025)",
    bond: "$1B+ aggregate", tier: "Large", cls: "b3", src: "company results",
-   note: "ENR-ranked national contractor; the only finalist whose capacity is effectively unlimited for this program"},
-  {n: "Pinner Construction", hq: "Anaheim, CA &middot; founded 1919", rev: "$184M (2023)",
-   bond: "confirm from prequal letter", tier: "Upper Medium", cls: "b2", src: "ENR California",
-   note: "Largest of the three regional firms. ENR California 2024 Contractor of the Year; 65&ndash;70% K-12 work; #12 education contractor nationally"},
-  {n: "Neff Construction", hq: "Ontario, CA &middot; founded 1974", rev: "revenue estimates unreliable",
-   bond: "<b>$150M</b> single &middot; <b>$300M</b> aggregate", tier: "Upper Medium", cls: "b2", src: "surety capacity",
-   note: "Highest single-project capacity of the regional firms at $150M &mdash; 5&times; the largest building here, and above the $100M single-project threshold normally treated as large. K-12 specialist since 1974"},
-  {n: "Erickson-Hall Construction", hq: "Escondido, CA &middot; founded 1998", rev: "revenue estimates unreliable",
-   bond: "<b>$75M</b> single &middot; <b>$375M</b> aggregate", tier: "Upper Medium", cls: "b2", src: "surety capacity",
-   note: "Largest aggregate program of the regional firms but the lowest single-project limit &mdash; still 2.6&times; the biggest building here"}
+   note: "ENR-ranked national contractor; the only finalist whose capacity is effectively unlimited for this program. Roughly 48&times; the revenue of the largest regional firm on this list."},
+  {n: "Erickson-Hall Construction", hq: "Escondido, CA &middot; founded 1998", rev: "<b>$300M+</b> (2025)",
+   bond: "<b>$75M</b> single &middot; <b>$375M</b> aggregate", tier: "Upper Medium", cls: "b2", src: "District figures",
+   note: "Largest of the three regional firms by revenue and by aggregate surety program, though it carries the lowest single-project limit of the three at $75M &mdash; still 2.6&times; the biggest building on this program."},
+  {n: "Neff Construction", hq: "Ontario, CA &middot; founded 1974", rev: "<b>$200M</b> (2025)",
+   bond: "<b>$150M</b> single &middot; <b>$300M</b> aggregate", tier: "Upper Medium", cls: "b2", src: "District figures",
+   note: "Highest single-project capacity of the regional firms at $150M &mdash; 5&times; the largest building here, and above the $100M threshold often treated as large. K-12 specialist since 1974."},
+  {n: "Pinner Construction", hq: "Anaheim, CA &middot; founded 1919", rev: "<b>$197M</b> (2025)",
+   bond: "confirm from prequal letter", tier: "Upper Medium", cls: "b2", src: "District figures / ENR",
+   note: "ENR California 2024 Contractor of the Year; 65&ndash;70% K-12 work and #12 education contractor nationally. The only finalist whose bonding capacity is still unconfirmed &mdash; pull it from the prequalification letter to complete the comparison."}
 ];
 const GC_TIERS = [
   {t: "Small GC", note: "lean site team, minimal home-office overhead", mo: [45000, 65000], mk: [12, 15], psf: [840, 950]},
@@ -2205,20 +2207,20 @@ const FMP_ESC = 0.125;   // Jan 2024 FMP -> 2026 pricing, ~6%/yr
 // two-storey classroom $696.15/SF, library/moderate modernization $333.20/SF. No soft cost on
 // either side - Balfour's totals carry their own GC's/GR's/fee/bonds/contingency but no District soft cost.
 const FMP_VS = [
-  {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, basis: "NEW, one-storey @ $595.00/SF",
+  {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, basis: ["NEW construction, one-storey", "FMP rate $595.00/SF"],
    fmp: 17580 * 595.00, act: 17805933},
-  {b: "Valentine ES &mdash; CR / MPR / Kitchen", sf: 22044, basis: "NEW, two-storey @ $696.15/SF",
+  {b: "Valentine ES &mdash; CR / MPR / Kitchen", sf: 22044, basis: ["NEW construction, two-storey", "FMP rate $696.15/SF"],
    fmp: 22044 * 696.15, act: 22472400},
-  {b: "San Marino HS &mdash; Medical Arts building", sf: 31556, basis: "NEW, two-storey @ $696.15/SF (normalized &mdash; the FMP held no new-construction rate for SMHS)",
+  {b: "San Marino HS &mdash; Medical Arts building", sf: 31556, basis: ["NEW construction, two-storey", "FMP rate $696.15/SF", "normalized &mdash; the FMP held no new-construction rate for SMHS"],
    fmp: 31556 * 696.15, act: 27881756, norm: true},
-  {b: "San Marino HS &mdash; Career Center / Library", sf: 5226, basis: "MODERNIZATION @ $333.20/SF &mdash; Balfour prices a flat $240.00/SF",
+  {b: "San Marino HS &mdash; Career Center / Library", sf: 5226, basis: ["MODERNIZATION of existing space", "FMP rate $333.20/SF", "BB prices a flat $240.00/SF"],
    fmp: 5226 * 333.20, act: 1254240, mod: true}
 ];
 function renderFmpVs() {
   document.getElementById("fmpVsBody").innerHTML = FMP_VS.map(r => {
     const d = r.act - r.fmp, pct = 100 * d / r.fmp, resid = pct - 100 * FMP_ESC;
     return `<tr${r.norm ? ' class="actual"' : ""}>
-      <td>${r.b}<span class="gcnote">${r.sf.toLocaleString()} GSF &middot; ${r.basis}${r.norm ? " (normalized &mdash; the FMP held no new-construction rate for SMHS)" : ""}</span></td>
+      <td>${r.b}<span class="gcnote">${r.sf.toLocaleString()} GSF</span>${(Array.isArray(r.basis) ? r.basis : [r.basis]).map(x => `<span class="gcnote">${x}</span>`).join("")}</td>
       <td>${fmt(r.fmp)}</td>
       <td>${fmt(r.act)}</td>
       <td><span class="psf ${pct < 0 ? "b1" : (pct > 40 ? "b3" : (pct > 20 ? "b2" : "b1"))}">${pct > 0 ? "+" : ""}${pct.toFixed(1)}%</span></td>
@@ -2230,23 +2232,22 @@ function renderFmpVs() {
 function renderFinalists() {
   renderFmpVs();
   document.getElementById("finBody").innerHTML = FINALISTS.map(x => `
-    <tr>
+    <tr class="finmain">
       <td>${x.n}<span class="gcnote">${x.hq}</span></td>
       <td>${x.bond}</td>
       <td>${x.rev}</td>
       <td><span class="psf ${x.cls}">${x.tier}</span></td>
-      <td style="text-align:left;font-weight:400;color:var(--ink-2)">${x.note}<span class="gcnote">source: ${x.src}</span></td>
-    </tr>`).join("");
+    </tr>
+    <tr class="finnote"><td colspan="4">${x.note}<span class="gcnote">source: ${x.src}</span></td></tr>`).join("");
 }
 function renderBondTiers() {
   renderFinalists();
   document.getElementById("bondBody").innerHTML = BOND_TIERS.map(b => `
     <tr class="${b.actual ? "actual" : ""}">
       <td>${b.t}<span class="gcnote">${b.note}</span></td>
-      <td>${b.rev}</td>
       <td>${b.single}</td>
       <td>${b.agg}</td>
-      <td style="text-align:left;font-weight:400;color:var(--ink-2)">${b.fits}</td>
+      <td>${b.rev}</td>
     </tr>`).join("");
 }
 function renderGcScale() {
