@@ -217,7 +217,8 @@
   .gctable th:first-child { text-align: left; }
   .gctable th .thsub { display: block; text-transform: none; letter-spacing: 0; font-weight: 400; }
   .gctable th:nth-child(1), .gctable td:nth-child(1) { width: 19%; }
-  .gctable td { padding: 5px 6px; border-bottom: 1px solid var(--line); font-size: 12px; text-align: right; overflow-wrap: anywhere; }
+  .gctable td { padding: 5px 6px; border-bottom: 1px solid var(--line); font-size: 12px; text-align: right; overflow-wrap: anywhere; vertical-align: top; }
+  .gctable th { vertical-align: bottom; }
   .gctable td:first-child { text-align: left; color: var(--ink); font-weight: 600; }
   .gctable tr:last-child td { border-bottom: none; }
   .gctable .gcnote { display: block; font-size: 10.8px; color: var(--ink-3); font-weight: 400; }
@@ -1331,6 +1332,35 @@
     </div>
   </section>
 
+  <section id="idSection">
+    <h2>FMP Line-Item Allocation &mdash; SMHS Project 1608 <span class="note">which ProjList_Mod IDs fund the new two-storey building, and what share of each is defensible</span>
+      <span class="collsum" id="idSum">&hellip;</span>
+      <button type="button" class="expand-all" id="idToggle">Show Allocation</button>
+    </h2>
+    <div class="card coll" id="idCard" hidden>
+      <table class="gctable">
+        <thead><tr>
+          <th>ID</th><th>Scope</th><th>SF Basis</th><th>Allocated</th>
+          <th>Share of Basis</th><th>Pro-Rata Defensible</th><th>Over-Allocated</th>
+        </tr></thead>
+        <tbody id="idBody"></tbody>
+      </table>
+      <div class="llbhint"><b>Campus-wide lines should be prorated by the footprint this project actually replaces.</b>
+        The demolished single-storey building is <b>20,993 sf</b> of the campus&rsquo;s <b>59,475 sf</b> of existing
+        classroom area &mdash; <b>35.30%</b>. Two IDs were already drawn on that basis (HS5 at 35.2%, HS2 at 35.9%),
+        which confirms the method; the rest were taken at 100% of a campus-wide line. HS13, HS20 and HS5 legitimately
+        stay whole because their own bases already sit inside this project&rsquo;s footprint.
+        <br><br>
+        On that correction <b>$2,187,128</b> of what is tagged to project 1608 belongs to campus scope outside it, and
+        FMP-ID coverage of the $35,096,190 LLB BB Construction line falls from <b>59.0% to 52.8%</b>. Note separately
+        that HS6, HS7 and HS8 read as 100% draws because ProjList_Mod already carries their post-cut values &mdash; the
+        halving happened before the line reached the workbook, so it must not be counted twice.
+        <span class="cite">Sources: San Marino Unified School District, 2024 (ProjList_Mod); Transcend PM, 2026
+        (project 1608 code field and description). The 20,993 sf basis is the Huckabee Option 2 program area.</span>
+      </div>
+    </div>
+  </section>
+
   <section id="tcSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">Evaluating True Project Cost <span class="note">Lease-Leaseback proposal checklist &mdash; what actually moves the final number</span>
       <span class="collsum" id="tcSum">&hellip;</span>
@@ -2062,7 +2092,35 @@ function renderAll() {
   });
   watch.push(`Estimated Project Budgets (<b>${fmt(T.budget)}</b>) are ${pct(T.budget, PROGRAM.released)} of the ${fmt(PROGRAM.released)} Series A release &mdash; sequencing of the next bond series will gate the two-story building projects.`);
   // ---- Balfour Beatty proposal: inconsistencies and scope gaps to put back to them ----
+  // FMP line-item allocation, prorated by the footprint this project replaces
+  const ID_ROWS = [
+    ["HS13","Science &amp; Art existing labs &mdash; mod, reconfigure, seismic","14,200 lab",14067410,100.0,14067410,0,"lab wing only &mdash; basis sits inside the project"],
+    ["HS20","Existing library modernization &mdash; the Career Center","2,960 library",1312710,100.0,1312710,0,"library only; this IS the Career Center scope"],
+    ["HS5","Building systems","20,993",814200,100.0,814200,0,"already drawn at the 20,993 sf share; $1,500,000 of its $2,314,200 line went to the Gymnasium HVAC project"],
+    ["HS6","Low voltage upgrades","29,738",1236900,70.6,873167,363733,"campus-wide 59,475 sf, funded on a 29,738 sf share"],
+    ["HS52","Classroom technology, 54 rooms","54 rooms",1125000,35.3,397093,727907,"campus-wide classroom count"],
+    ["HS1","Existing classrooms","59,475",798000,35.3,281672,516328,"campus-wide"],
+    ["HS2","Exteriors","59,475",425000,35.3,150013,274987,"already drawn at ~36%; $758,700 of the line remains unallocated"],
+    ["HS7","Backbone, wireless, switches","29,738",425000,70.6,300021,124979,"campus-wide, halved to 29,738 sf"],
+    ["HS8","Fiber optic connectivity","29,738",425000,70.6,300021,124979,"campus-wide, halved to 29,738 sf"],
+    ["HS31","Safety locks, existing doors","59,475",83790,35.3,29576,54214,"campus-wide"]
+  ];
+  const idAlloc = ID_ROWS.reduce((a,r)=>a+r[3],0), idPro = ID_ROWS.reduce((a,r)=>a+r[5],0);
+  document.getElementById("idBody").innerHTML = ID_ROWS.map(r => `
+    <tr>
+      <td>${r[0]}</td>
+      <td style="text-align:left;font-weight:400;color:var(--ink-2)">${r[1]}<span class="gcnote">${r[7]}</span></td>
+      <td>${r[2]}</td><td>${fmt(r[3])}</td><td>${r[4].toFixed(1)}%</td><td><b>${fmt(r[5])}</b></td>
+      <td>${r[6] ? `<span class="psf b3">${fmt(r[6])}</span>` : `<span class="psf b1">&mdash;</span>`}</td>
+    </tr>`).join("") + `<tr class="actual">
+      <td><b>Total</b></td><td style="text-align:left"><b>10 IDs tagged to project 1608</b></td><td></td>
+      <td><b>${fmt(idAlloc)}</b></td><td></td><td><b>${fmt(idPro)}</b></td>
+      <td><span class="psf b3"><b>${fmt(idAlloc-idPro)}</b></span></td></tr>`;
+  document.getElementById("idSum").textContent = fmt(idAlloc) + " tagged \u00b7 " + fmt(idAlloc - idPro) + " over-allocated";
+
   const LLB_WATCH = [
+    `<b>The Career Center IS the Library &mdash; one scope, one ID.</b> HS20, the FMP&rsquo;s &ldquo;Existing Library Moderate modernization&rdquo; line at $1,312,710 loaded, is delivered as the 3,267 gross sf Building P Career Center and Library renovation. There is no separate Career Center scope needing its own funding source, which closes the earlier question about a missing project. Two things still follow from it: HS20&rsquo;s $1,312,710 covers only about <b>45%</b> of the $2,913,133 normalized cost for that renovation, and the scope is funded inside project 1608 while being delivered as a separate project &mdash; so it appears in Balfour&rsquo;s bundled proposal but has no District budget line of its own.`,
+    `<b>Valentine roofing is inside the new construction &mdash; resolved, not a deferral.</b> The budget moving from $3,630,000 to $700,000 (&minus;58% against the FMP line) is explained: the roof over the replaced classrooms is carried in the new building&rsquo;s scope, and the residual $700,000 covers roofs on buildings that are not being replaced. This is a rescope and should not be tracked as deferred work. <b>Huntington is not explained by the same logic</b> &mdash; there is no new construction on that campus in this program, so its $3,702,616 to $822,616 reduction (&minus;62%) still needs the roof condition assessment to establish whether it is a genuine rescope or deferred work returning later with escalation.`,
     `<b>Division 07 &mdash; Thermal &amp; Moisture Protection &mdash; is entirely absent from the San Marino HS estimate.</b> Both elementaries carry it at <b>$75.84/SF</b>; SMHS carries nothing. Note how it is absent: Masonry, Special Construction and Transportation each appear on the SMHS sheet marked &ldquo;N/A,&rdquo; which is a decision; Division 07 has <b>no row at all</b>, which is an oversight. That division is roofing, waterproofing, insulation and air/vapour barriers, and a new two-storey DSA building cannot be delivered without a roof or weatherproofing, so this is an omission rather than a scope decision. <b>Exterior Improvements</b> also sits at $30.81/SF against $75.81/SF at both elementaries.
       <br><br><b>Sized on footprint, not gross area &mdash; half-area basis confirmed by the District&rsquo;s construction manager.</b> On a two-storey building the roof and the underslab vapour barrier each serve two floors, so both are footprint-driven; applying $75.84/SF to the full 31,556 GSF would double-count them. On a <b>15,778 SF footprint</b> the restoration is <span class="amt">$1,196,604</span>, approximately $1.20M, rather than the $2,393,207 a gross-area calculation gives. The absence itself is confirmed and remains the single largest verified omission on the program; only its size changes.
       <br><br>The arithmetic still closes the loop: the direct-cost gap is <b>$130.07/SF</b> (SMHS $702.77 against an elementary average of $832.84), and the missing and reduced divisions total <b>$137.27/SF</b> on the footprint basis &mdash; still more than enough to account for the whole difference, with the remainder offset where SMHS runs higher (HVAC $64.76 against about $55, Furnishings $15.65 against $4.65, Existing Conditions $14.32). <b>SMHS is not cheaper because it is larger or better priced &mdash; it is cheaper because roofing and weatherproofing were left out, along with most of the site work.</b> Restoring Division 07 on footprint moves it from $883.56 to <b>$931.24/SF</b>; restoring the defensible omissions puts it at <b>$956.15/SF</b>, closing most of the gap to Carver at $1,012.85 and Valentine at $1,019.43, with the residual sitting in masonry and special construction, which are building-specific rather than omissions.`,
@@ -3222,6 +3280,7 @@ function renderRollupSums() {
 const COLLAPSIBLES = [
   ["fmpSecToggle", "fmpCard",   "Show Section",    "Hide Section"],
   ["tiersToggle",  "fmpTiers",  "Show Budgets",    "Hide Budgets"],
+  ["idToggle",     "idCard",    "Show Allocation", "Hide Allocation"],
   ["guideToggle",  "guideBody", "Show Guidelines", "Hide Guidelines"],
   ["g1Toggle",     "g1Body",    "Show Notes",      "Hide Notes"],
   ["g2Toggle",     "g2Body",    "Show Notes",      "Hide Notes"],
