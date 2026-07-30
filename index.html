@@ -97,6 +97,9 @@
   }
 
   * { box-sizing: border-box; }
+  /* the hidden attribute must beat any explicit display rule (.watch is display:grid,
+     which silently defeated its own collapse toggle) */
+  [hidden] { display: none !important; }
   body {
     margin: 0;
     background: var(--bg);
@@ -528,7 +531,13 @@
     white-space: nowrap; padding: 2px 8px; border-radius: 4px;
     background: var(--surface-2); border: 1px solid var(--line);
   }
-  h2 .collsum { margin-left: 10px; }
+  h2 .collsum { margin-left: 0; }
+  /* Uniform section header, matching Modernize or Build New:
+     line 1 title · line 2 descriptive note · line 3 rollup pill left, toggle right */
+  h2, .collbar { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 10px; }
+  h2 > .note, .collbar > .collttl > .eq { flex: 1 1 100%; margin: 0; }
+  h2 > .collsum, .collbar > .collsum { order: 8; }
+  h2 > button.expand-all, .collbar > button.expand-all { order: 9; margin-left: auto; }
   .collbar.sub { margin: 0; }
   .collbar.sub .collttl { font-size: 12.5px; text-transform: none; letter-spacing: 0; color: var(--ink); }
   .collbar button.expand-all { margin-left: auto; flex: none; padding: 4px 10px; font-size: 11.5px; }
@@ -768,6 +777,7 @@
   <div class="toolbar">
     <button type="button" id="btnRefresh">&#10227; Refresh Data</button>
     <button type="button" id="btnTheme" title="Switch between light and dark">&#9788; Light Mode</button>
+    <button type="button" id="btnCollapseAll">Collapse All</button>
     <button type="button" id="btnPdfSite" style="border-color:var(--gold);color:var(--gold)">Export PDF &mdash; As Shown</button>
     <button type="button" id="btnPdfLetter">White Print 8.5&times;11</button>
     <button type="button" id="btnPdfTabloid">White Print 11&times;17</button>
@@ -3264,7 +3274,18 @@ async function pollData() {
       if (d.rfps) PROGRAM.rfps = d.rfps;
       ASOF = d.asOf;
       LIVE = true;
-      renderAll();
+      // Collapse every expanded section; each toggle keeps its own label logic
+document.getElementById("btnCollapseAll").addEventListener("click", () => {
+  for (let pass = 0; pass < 4; pass++) {
+    const open = [...document.querySelectorAll("button.expand-all")]
+      .filter(b => /^hide/i.test(b.textContent.trim()));
+    if (!open.length) break;
+    open.forEach(b => b.click());
+  }
+  window.scrollTo({top: 0, behavior: "smooth"});
+});
+
+renderAll();
     }
     return true;
   } catch (e) {
