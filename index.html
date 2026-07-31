@@ -1257,7 +1257,24 @@
         new construction, which makes Option B look considerably more reasonable. That single denominator moves the
         comparison by nearly <b>$300/sf</b>, and it must be resolved before either rate is used publicly.</span></div>
     </div>
-  </section>
+  
+      <div class="collbar sub" style="margin-top:14px">
+        <span class="collttl">All-in project cost &mdash; construction, architect and soft costs</span>
+      </div>
+      <table class="gctable">
+        <thead><tr><th>Cost layer</th><th>Option B &mdash; new build</th><th>Option A &mdash; modernize only</th><th>Saving</th></tr></thead>
+        <tbody id="mvnAllInBody"></tbody>
+      </table>
+      <div class="llbhint">Architect fees are the executed OPSC sliding-scale figures: new construction at
+        9/8.5/8/7/6/5% and modernization at 12/11.5/11/10/9/8%, with Huckabee&rsquo;s 10% discount applied at the high
+        school. Soft costs are carried at <b>25% of the LLB construction cost</b>, with the architect fee deducted from that
+        pool rather than sitting on top of it.
+        <b>The new building costs about $29M more all-in than the modernization the FMP planned</b> &mdash; $20.3M of
+        construction and $8.7M of soft costs that scale with it. That is the figure for the board, and it is larger than
+        a construction-only comparison suggests.
+        <span class="cite">Sources: Huckabee and WestGroup fee proposals (OPSC sliding scales); San Marino Unified
+        School District, 2024 (FMP HS13 lines); Balfour Beatty Construction, 2026b. The &times;1.19 escalation is an author&rsquo;s derivation; the 25% soft-cost basis is District direction.</span></div>
+</section>
 
   <section id="dbSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">District Budget vs Proposal vs Normalized
@@ -2989,7 +3006,27 @@ function mvnFigures() {
   const diff = totB - totA;
   return {constr, escd, newPsf, sameNew, totA, totB, addSf, diff, marginal: diff / addSf};
 }
+function renderMvnAllIn() {
+  const MODC = 12585515 + 2913133;        // FMP HS13 escalated + Career Center / Library
+  const NEWC = 35759777;                  // normalized CTE building + Career Center / Library
+  const DPOR_NEW = 1933781, DPOR_MOD = 1284653;   // OPSC scales, Huckabee 10% discount
+  const softOf = c => c * 0.25;   // soft cost budget = 25% of LLB construction cost
+  const rows = [
+    ["LLB BB Construction", NEWC, MODC],
+    ["Architectural Design Services (DPOR)", DPOR_NEW, DPOR_MOD],
+    ["Other soft costs", softOf(NEWC) - DPOR_NEW, softOf(MODC) - DPOR_MOD]
+  ];
+  const tb = NEWC + softOf(NEWC), ta = MODC + softOf(MODC);
+  document.getElementById("mvnAllInBody").innerHTML = rows.map(r => `
+    <tr><td style="text-align:left;font-weight:400;color:var(--ink-2)">${r[0]}</td>
+      <td>${fmt(r[1])}</td><td>${fmt(r[2])}</td>
+      <td><span class="psf b3">${fmt(r[1] - r[2])}</span></td></tr>`).join("") +
+    `<tr class="actual"><td style="text-align:left"><b>Total project cost</b></td>
+      <td><b>${fmt(tb)}</b></td><td><b>${fmt(ta)}</b></td>
+      <td><span class="psf b3"><b>${fmt(tb - ta)}</b></span></td></tr>`;
+}
 function renderMvn() {
+  renderMvnAllIn();
   const f = mvnFigures();
   document.getElementById("mvnABody").innerHTML =
     MVN.optA.map(r => `<tr>
