@@ -886,6 +886,35 @@
               estimate, and it is the most likely source of a future change order on this project.
             </div>
 
+            <div class="collbar sub" style="margin-top:14px">
+              <span class="collttl">Why Lease-Leaseback exists, and what has changed</span>
+              <button type="button" class="expand-all" id="llbWhyToggle">Show Background</button>
+            </div>
+            <div class="coll" id="llbWhyBody" hidden>
+              <div class="ladder-note" style="margin:0">
+                Lease-Leaseback was developed to improve collaboration, constructability and project planning by
+                involving the contractor earlier in the design process. Historically this approach was believed to
+                reduce costs, improve quality and accelerate delivery. However, modern construction practices &mdash;
+                complete digital design, Building Information Modeling, advanced coordination software, standardised
+                quality control and improved project management &mdash; have significantly reduced many of the
+                challenges Lease-Leaseback was originally intended to solve.
+                <br><br>
+                Today both Lease-Leaseback and traditional Design-Bid-Build are capable of delivering high-quality
+                facilities on schedule when properly managed. <b>The primary difference is often how the project is
+                procured and priced.</b> Design-Bid-Build relies on competitive bidding after complete design documents
+                are finalised, while Lease-Leaseback typically includes negotiated fees and separately identified
+                indirect costs such as contractor fees, general conditions and other project overhead.
+                <br><br>
+                <b>Current research has not demonstrated that Lease-Leaseback consistently delivers lower construction
+                costs than Design-Bid-Build</b>, and many modern projects indicate that project success is driven more
+                by the quality of the design, contractor performance and project management than by the procurement
+                method itself.
+                <span class="cite">Consistent with the delivery-method literature cited above: Konchar &amp; Sanvido,
+                1998; Sullivan, El Asmar, Chalhoub &amp; Obeid, 2017.</span>
+              </div>
+            </div>
+
+
             <div class="llbwrap">
               <div class="llbcap">Balfour Beatty proposal terms &mdash; RFQ/P #2026-05, dated 3/12/2026
                 <span class="eq">&mdash; the proposal prices <b>rates</b>, not a GMP: the cost of work is established later in preconstruction</span>
@@ -1349,7 +1378,25 @@
     </div>
   </section>
 
-  <section id="idSection">
+    <section id="bdSection">
+    <h2>How each LLB Construction budget is built <span class="note">every line traceable to Balfour&rsquo;s own figures, their own rates, or a District decision</span>
+      <span class="collsum" id="bdSum">&hellip;</span>
+      <button type="button" class="expand-all" id="bdToggle">Show Build-Ups</button>
+    </h2>
+    <div class="card coll" id="bdCard" hidden>
+      <div id="bdWrap"></div>
+      <div class="llbhint">Direct costs and markup pools are Balfour&rsquo;s own, from their Project Comparison Reports.
+        The cost-scaling markup rate for each project is derived by removing time-based general conditions and fixed
+        preconstruction from their markup pool, so restored scope carries their rate and nothing is double-counted.
+        General conditions are re-priced as one shared site team of $109,896 per month, prorated by gross square feet
+        among the projects active in each month across an 18-month program &mdash; not three full teams.
+        <span class="cite">Sources: Balfour Beatty Construction, 2026a (fee proposal, general conditions) and 2026b
+        (Project Comparison Reports); San Marino Unified School District, 2024 (FMP rates); Burlew, J. (2026, July 28),
+        personal communication (Division 07 footprint basis, shared-team assumption, schedule).</span></div>
+    </div>
+  </section>
+
+<section id="idSection">
     <h2>FMP Line-Item Allocation &mdash; SMHS Project 1608 <span class="note">which ProjList_Mod IDs fund the new two-storey building, and what share of each is defensible</span>
       <span class="collsum" id="idSum">&hellip;</span>
       <button type="button" class="expand-all" id="idToggle">Show Allocation</button>
@@ -2890,7 +2937,53 @@ function renderGcDur() {
       <td><b>${fmt(tl)} &ndash; ${fmt(th)}</b></td>
       <td><span class="psf b3"><b>+${fmt(tl - tp)} &ndash; +${fmt(th - tp)}</b></span></td></tr>`;
 }
+const BUILDUPS = [
+  {n:"San Marino HS 1608 — CTE building (new) + Career Center / Library (modernization)", sf:31556, total:35759777,
+   note:"31,556 GSF building at $1,041/SF, plus 3,267 gsf renovation at $891/SF",
+   rows:[["Balfour direct cost of work, Medical Arts / CTE building",22176550,"their p.1 figure"],
+         ["Div 07 Thermal &amp; Moisture — ABSENT from their estimate",1344643,"17,730 sf roof and slab area &times; $75.84, the elementaries&rsquo; own rate"],
+         ["Div 32 Exterior Improvements gap",1420020,"31,556 sf &times; $45.00 &mdash; they priced $30.81 against $75.81 at both elementaries"],
+         ["Div 13 Special Construction — absent",923644,"31,556 sf &times; $29.27"],
+         ["Minor divisions 09/11/14/22",420326,"31,556 sf &times; $13.32 combined"],
+         ["Div 33 Utilities gap",205114,"31,556 sf &times; $6.50"],
+         ["= restored direct cost",26490297,"S"],
+         ["Cost-scaling markups @ 19.70%",5218120,"their markup pool less GC and preconstruction"],
+         ["General conditions — 18-month shared team, SMHS share",1063227,"prorated by GSF, not a third full team"],
+         ["Preconstruction $55,000 + allowances $20,000",75000,""],
+         ["= CTE building only",32846644,"S"],
+         ["Career Center / Library, 3,267 gsf @ $558/sf loaded",2913133,"FMP library rate $333.20 escalated, plus abatement and interface demolition"]]},
+  {n:"Valentine ES 1609 — two-storey classroom, MPR and kitchen building", sf:22044, total:21742836,
+   rows:[["Balfour direct cost of work",18422572,"all divisions present &mdash; no scope restored"],
+         ["Cost-scaling markups @ 14.42%",2656067,"their markup pool less GC and preconstruction"],
+         ["General conditions — 16 months, shared-team share",589196,"they priced 12 months of a full team"],
+         ["Preconstruction $55,000 + allowances $20,000",75000,""]]},
+  {n:"Carver ES 1610 — new TK &amp; KG building", sf:17580, total:16900941,
+   rows:[["Balfour direct cost of work",14590499,"all divisions present &mdash; no scope restored"],
+         ["Cost-scaling markups @ 13.19%",1924738,"their markup pool less GC and preconstruction"],
+         ["General conditions — 12 months, shared-team share",325705,"they priced 12 months of a full team"],
+         ["Preconstruction $45,000 + allowances $15,000",60000,"12 &times; $99,891 = $1,198,692 does not reconcile to their stated $1,230,696; the $32,004 is left as immaterial"]]}
+];
+function renderBuildUps() {
+  document.getElementById("bdWrap").innerHTML = BUILDUPS.map((b,i) => `
+    <div class="collbar sub"${i?' style="margin-top:16px"':''}>
+      <span class="collttl">${b.n}</span>
+      <span class="collsum">${fmt(b.total)}${b.note?"":" &nbsp;&middot;&nbsp; $"+Math.round(b.total/b.sf).toLocaleString()+"/SF"}</span>
+    </div>
+    <table class="gctable">
+      <thead><tr><th>Line</th><th>Amount</th><th>Basis</th></tr></thead>
+      <tbody>${b.rows.map(r => r[2]==="S"
+        ? `<tr class="actual"><td style="text-align:left"><b>${r[0]}</b></td><td><b>${fmt(r[1])}</b></td><td></td></tr>`
+        : `<tr><td style="text-align:left;font-weight:400;color:var(--ink-2)">${r[0]}</td><td>${fmt(r[1])}</td>
+             <td style="text-align:left;font-weight:400;color:var(--ink-3);font-size:11.5px">${r[2]}</td></tr>`).join("")}
+        <tr class="actual"><td style="text-align:left"><b>LLB BB Construction budget</b></td>
+          <td><b>${fmt(b.total)}</b></td><td style="text-align:left;font-weight:400;color:var(--ink-3);font-size:11.5px">${b.note || (b.sf.toLocaleString() + " GSF &middot; $" + Math.round(b.total/b.sf).toLocaleString() + "/SF")}</td></tr>
+      </tbody>
+    </table>`).join("");
+  const el=document.getElementById("bdSum");
+  if(el) el.textContent = fmt(BUILDUPS.reduce((a,b)=>a+b.total,0)) + " across three projects";
+}
 function renderFix() {
+  renderBuildUps();
   const rows = [
     {n: "Carver ES &mdash; New TK &amp; KG", as: 17805933, no: 17773929, sf: 17580,
      note: "Divisions complete, and single-storey, so gross area is also the roof and slab area &mdash; its $75.84/SF Division 07 needs no geometry correction. Comes in slightly <b>under</b> because the 12-month GC price marginally exceeds 12 months of actual general conditions. <i>Footnote: 12 &times; $99,891 = $1,198,692 does not exactly reconcile to Balfour&rsquo;s stated $1,230,696 GC total; the $32,004 difference is left unresolved as immaterial.</i>"},
@@ -3318,6 +3411,8 @@ const COLLAPSIBLES = [
   ["fmpSecToggle", "fmpCard",   "Show Section",    "Hide Section"],
   ["tiersToggle",  "fmpTiers",  "Show Budgets",    "Hide Budgets"],
   ["idToggle",     "idCard",    "Show Allocation", "Hide Allocation"],
+  ["bdToggle",     "bdCard",    "Show Build-Ups",  "Hide Build-Ups"],
+  ["llbWhyToggle", "llbWhyBody", "Show Background", "Hide Background"],
   ["guideToggle",  "guideBody", "Show Guidelines", "Hide Guidelines"],
   ["g1Toggle",     "g1Body",    "Show Notes",      "Hide Notes"],
   ["g2Toggle",     "g2Body",    "Show Notes",      "Hide Notes"],
