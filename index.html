@@ -98,6 +98,7 @@
 
   * { box-sizing: border-box; }
   /* toolbar pinned to the top of the viewport */
+  .masthead { position: sticky; top: 0; z-index: 70; }
   .toolbar {
     position: sticky; top: 0; z-index: 60; background: var(--bg);
     padding: 10px 0 10px; margin-top: 0;
@@ -111,7 +112,8 @@
   section > h2 { margin-top: 0; }
   section > .card { border: none; background: transparent; padding: 0; }
   @media print {
-    .toolbar { position: static; box-shadow: none; border-bottom: none; }
+    .masthead, .toolbar { position: static; box-shadow: none; }
+    .toolbar { border-bottom: none; }
     section { break-inside: avoid; padding: 6px 8px; margin-top: 6px; }
   }
   /* the hidden attribute must beat any explicit display rule (.watch is display:grid,
@@ -281,7 +283,9 @@
 
   /* LLB proposals-in-hand table */
   .llbwrap { margin-top: 12px; border: 1px solid var(--line); border-left: 3px solid var(--bad); border-radius: 6px; padding: 9px 11px; }
-  .llbcap { font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.05em; }
+  .llbcap { font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 10px; }
+  .llbcap > .eq { flex: 1 1 100%; }
+  .llbcap > button.expand-all { margin-left: auto; }
   .llbcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
   .llbtable { width: 100%; max-width: 100%; min-width: 0; table-layout: fixed; border-collapse: collapse; margin-top: 7px; font-variant-numeric: tabular-nums; }
   .llbtable th {
@@ -3529,6 +3533,57 @@ document.getElementById("btnCollapseAll").addEventListener("click", () => {
 document.addEventListener("click", e => {
   if (e.target.classList && e.target.classList.contains("expand-all")) setTimeout(syncAllBtn, 0);
 });
+// Every block inside the FMP guide gets its own collapse control, so the section
+// reads as a set of named sub-topics rather than one long scroll.
+(function wrapGuideBlocks() {
+  const guide = document.getElementById("fmpGuide");
+  if (!guide) return;
+  // the delivery-method band tables have no heading of their own
+  const firstTable = guide.querySelector("table.gtable");
+  if (firstTable && !firstTable.previousElementSibling?.classList?.contains("llbcap")) {
+    const cap = document.createElement("div");
+    cap.className = "llbcap";
+    cap.innerHTML = 'Delivery Method Estimated Costs <span class="eq">&mdash; new construction and modernization, both on a loaded total $/SF basis</span>';
+    firstTable.parentNode.insertBefore(cap, firstTable);
+  }
+  let n = 0;
+  [...guide.querySelectorAll(".llbcap")].forEach(cap => {
+    if (cap.querySelector("button.expand-all")) return;
+    const body = document.createElement("div");
+    body.className = "coll";
+    body.id = "gsub" + (++n);
+    body.setAttribute("hidden", "");
+    let sib = cap.nextElementSibling;
+    while (sib && !sib.classList.contains("llbcap") && !(sib.querySelector && sib.querySelector(".llbcap"))) {
+      const next = sib.nextElementSibling;
+      body.appendChild(sib);
+      sib = next;
+    }
+    if (!body.children.length) return;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "expand-all";
+    btn.textContent = "Show Detail";
+    cap.appendChild(btn);
+    cap.parentNode.insertBefore(body, cap.nextSibling);
+    btn.addEventListener("click", () => {
+      const wasHidden = body.hasAttribute("hidden");
+      if (wasHidden) body.removeAttribute("hidden"); else body.setAttribute("hidden", "");
+      btn.textContent = wasHidden ? "Hide Detail" : "Show Detail";
+    });
+  });
+})();
+
+// keep the toolbar pinned directly below the masthead, whatever height it renders at
+(function pinToolbar() {
+  const mh = document.querySelector(".masthead"), tb = document.querySelector(".toolbar");
+  if (!mh || !tb) return;
+  const place = () => { tb.style.top = mh.offsetHeight + "px"; };
+  place();
+  window.addEventListener("resize", place);
+  if (window.ResizeObserver) new ResizeObserver(place).observe(mh);
+})();
+
 // open collapsed
 setAll(false);
 
