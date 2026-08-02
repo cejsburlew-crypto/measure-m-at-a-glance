@@ -1498,8 +1498,12 @@
     </div>
   </section>
 
-  <section>
-    <h2>Bond Authorization &amp; Release <span class="note">program level</span></h2>
+  <section id="bondSection">
+    <h2>Bond Authorization &amp; Release <span class="note">program level</span>
+      <span class="collsum" id="bondSum">&hellip;</span>
+      <button type="button" class="expand-all" id="bondToggle">Show Ladder</button>
+    </h2>
+    <div class="coll" id="bondCard" hidden>
     <div class="card">
       <div class="legend" style="margin:0 0 12px">
         <span id="siteKey" style="display:contents"></span>
@@ -1520,10 +1524,12 @@
       <div class="ladder" id="ladder"></div>
       <div class="ladder-note" id="ladderNote"></div>
     </div>
+  </div>
   </section>
 
   <section>
     <h2 style="display:flex">Site Rollup
+      <span class="collsum" id="siteSum">&hellip;</span>
       <span class="note">click a site for its projects, a project for its delivery packages, a package for its PO detail</span>
       <button class="expand-all" id="toggleAll" type="button">Expand All</button>
     </h2>
@@ -1537,7 +1543,11 @@
     </div>
 
   <section id="coSection">
-    <h2>Challenges and Opportunities <span class="note">saved with version history in this browser &mdash; the latest version prints at the bottom of the PDF</span></h2>
+    <h2>Challenges and Opportunities <span class="note">saved with version history in this browser &mdash; the latest version prints at the bottom of the PDF</span>
+      <span class="collsum" id="coSum">&hellip;</span>
+      <button type="button" class="expand-all" id="coToggle">Show Notes</button>
+    </h2>
+    <div class="coll" id="coCard" hidden>
     <div class="card">
       <textarea id="coText" rows="4" placeholder="Add challenges, opportunities, and context for this reporting period&hellip;"></textarea>
       <div style="display:flex;gap:10px;align-items:center;margin-top:9px;flex-wrap:wrap">
@@ -1548,6 +1558,7 @@
       </div>
       <div id="coVersions" class="co-vers"></div>
     </div>
+  </div>
   </section>
   </section>
 
@@ -1954,8 +1965,8 @@ function renderAll() {
     released:   {lbl: "Released &mdash; Series A", sub: "funds all active projects", v: PROGRAM.released, color: "var(--gold)", pctLabel: pct(PROGRAM.released, PROGRAM.authorized) + " of auth."},
     budgets:    {lbl: "Estimated Project Budgets", sub: `${PROGRAM.projects} projects (${budgetedCount} with budgets), segmented by site`, v: T.budget, stack: siteStack(s => s.budget), pctLabel: pct(T.budget, PROGRAM.authorized) + " of auth."},
     uncommitted:{lbl: "Uncommitted Project Budgets", sub: "budgets &minus; committed, by site", v: T.budget - T.committed, stack: siteStack(s => s.budget - s.committed), vs: T.budget, vsLbl: "estimated project budgets", pctLabel: pct(T.budget - T.committed, T.budget) + " of budgets"},
-    committed:  {lbl: "Committed (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vs: T.budget, vsLbl: "estimated project budgets", pctLabel: pct(T.committed, T.budget) + " of budgets"},
-    committedP: {lbl: "Committed (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vsLbl: "authorization", pctLabel: pct(T.committed, PROGRAM.authorized) + " of auth. &middot; " + pct(T.committed, PROGRAM.released) + " of release"},
+    committed:  {lbl: "Commitments (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vs: T.budget, vsLbl: "estimated project budgets", pctLabel: pct(T.committed, T.budget) + " of budgets"},
+    committedP: {lbl: "Commitments (PO's)", sub: "draws on the Series A release, by site", v: T.committed, stack: siteStack(s => s.committed), vsLbl: "authorization", pctLabel: pct(T.committed, PROGRAM.authorized) + " of auth. &middot; " + pct(T.committed, PROGRAM.released) + " of release"},
     completed:  {lbl: "Completed Pay Requests", sub: "pay requests approved to date, by site", v: T.approved, stack: siteStack(s => s.approved), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.approved, T.committed) + " of committed"},
     inProcess:  {lbl: "In Process Pay Requests", sub: "pay requests in review, by site", v: T.open, stack: siteStack(s => s.open), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.open, T.committed) + " of committed"},
     remainInv:  {lbl: "Remaining to Be Invoiced", sub: "work not yet billed, by site", v: T.remaining, stack: siteStack(s => s.remaining), vs: T.committed, vsLbl: "committed PO's", pctLabel: pct(T.remaining, T.committed) + " of committed"}
@@ -1968,7 +1979,7 @@ function renderAll() {
     </div>` +
     lRow(R.budgets) +
     `<div class="lgroup" style="--acc:var(--uncommitted)">
-      <div class="gcap">Uncommitted <span class="eq">+</span> Committed (PO's) <span class="eq">=</span> Estimated Project Budgets (${fmtC(T.budget)})</div>
+      <div class="gcap">Uncommitted <span class="eq">+</span> Commitments (PO's) <span class="eq">=</span> Estimated Project Budgets (${fmtC(T.budget)})</div>
       ${lRow(R.uncommitted)}${lRow(R.committed)}
     </div>` +
     lRow(R.committedP) +
@@ -2011,6 +2022,9 @@ function renderAll() {
 
   document.getElementById("siteKey").innerHTML = siteList.map(s =>
     `<span><span class="sw" style="background:${SITE_COLOR[s.key]}"></span><span class="skl">${s.name}</span><span class="sks">${s.key === "DW" ? "FMP Excl." : s.key}</span></span>`).join("");
+  const bs = document.getElementById("bondSum");
+  if (bs) bs.textContent = fmt(PROGRAM.authorized) + " authorized \u00b7 " + fmt(PROGRAM.released)
+    + " released \u00b7 " + fmt(T.committed) + " committed";
   document.getElementById("ladderNote").innerHTML =
     `Parent rows are scaled to the ${fmt(PROGRAM.authorized)} authorization; bars inside each box are scaled to that box's parent total, so each boxed pair fills its parent's track. <b>Projects are funded by the bond release:</b>
      every purchase order draws against the ${fmt(PROGRAM.released)} Series A issuance, leaving ${fmtC(PROGRAM.released - T.committed)} available to commit.
@@ -2059,7 +2073,7 @@ function renderAll() {
       <td colspan="6"><span class="tcaret">&#9656;</span>${p.name} <span class="pos">&middot; ${p.poCount} PO${p.poCount === 1 ? "" : "'s"} &middot; ${fmt(p.budget)} budget</span>${p.budget - p.committed < 0 ? overChip(p.committed - p.budget) : ""}</td>
     </tr>
     <tr class="pdetail phead proj-${p.pid}">
-      <th>Est. Budget</th><th>Uncommitted</th><th>Committed (PO's)</th>
+      <th>Est. Budget</th><th>Uncommitted</th><th>Commitments (PO's)</th>
       <th>Completed Pay Requests</th><th>In Process Pay Requests</th><th>Remaining to Invoice</th>
     </tr>
     <tr class="pdetail pvals proj-${p.pid}">
@@ -2094,7 +2108,7 @@ function renderAll() {
         </div>
         <div class="shkv"><span class="k2">Est. budget</span><span class="v2">${isTotal ? fmtC(s.budget) : fmt(s.budget)}</span></div>
         <div class="shkv"><span class="k2">Uncommitted</span><span class="v2">${isTotal ? fmtC(s.budget - s.committed) : cellNeg(s.budget - s.committed)}</span></div>
-        <div class="shkv"><span class="k2">Committed (PO's)</span><span class="v2">${isTotal ? fmtC(s.committed) : fmt(s.committed)} <span class="spct">(${pct(s.committed, s.budget)})</span></span></div>
+        <div class="shkv"><span class="k2">Commitments (PO's)</span><span class="v2">${isTotal ? fmtC(s.committed) : fmt(s.committed)} <span class="spct">(${pct(s.committed, s.budget)})</span></span></div>
       </div>
       ${isTotal ? "" : `
       <div class="sbody">
@@ -2127,6 +2141,8 @@ function renderAll() {
       </div>
     </div>`;
   };
+  const ss=document.getElementById("siteSum");
+  if (ss) ss.textContent = siteList.length + " sites \u00b7 " + PROGRAM.projects + " projects \u00b7 " + fmt(T.budget) + " budgeted";
   document.getElementById("siteCards").innerHTML =
     siteList.map(s => siteCard({...s, nProjects: s.projects.length}, false)).join("") +
     siteCard({name: "Estimated Project Budgets", nProjects: PROGRAM.projects, budget: T.budget, committed: T.committed, approved: T.approved, open: T.open, remaining: T.remaining}, true) +
@@ -2538,6 +2554,10 @@ function coUiState() {
 }
 function renderNotes() {
   const list = coLoad();
+  const cs = document.getElementById("coSum");
+  if (cs) cs.textContent = list.length
+    ? list.length + (list.length === 1 ? " version" : " versions") + " \u00b7 latest " + list[list.length - 1].at
+    : "no notes yet";
   const vers = document.getElementById("coVersions");
   vers.innerHTML = list.length
     ? list.slice().reverse().map((n, i) => {
@@ -3428,6 +3448,8 @@ const COLLAPSIBLES = [
   ["fmpSecToggle", "fmpCard",   "Show Section",    "Hide Section"],
   ["tiersToggle",  "fmpTiers",  "Show Budgets",    "Hide Budgets"],
   ["idToggle",     "idCard",    "Show Allocation", "Hide Allocation"],
+  ["bondToggle",   "bondCard",  "Show Ladder",     "Hide Ladder"],
+  ["coToggle",     "coCard",    "Show Notes",      "Hide Notes"],
   ["bdToggle",     "bdCard",    "Show Build-Ups",  "Hide Build-Ups"],
   ["llbWhyToggle", "llbWhyBody", "Show Background", "Hide Background"],
   ["guideToggle",  "guideBody", "Show Guidelines", "Hide Guidelines"],
