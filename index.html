@@ -236,7 +236,11 @@
   .gctable th:first-child { text-align: left; }
   .gctable th .thsub { display: block; text-transform: none; letter-spacing: 0; font-weight: 400; }
   .gctable th:nth-child(1), .gctable td:nth-child(1) { width: 19%; }
-  .gctable td { padding: 5px 6px; border-bottom: 1px solid var(--line); font-size: 12px; text-align: right; overflow-wrap: anywhere; vertical-align: top; }
+  .gctable td { padding: 6px 8px; border-bottom: 1px solid var(--line); font-size: 12px; text-align: right; overflow-wrap: anywhere; vertical-align: top; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .gctable td:first-child { text-align: left; white-space: normal; width: 42%; }
+  .gctable tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--ink) 3%, transparent); }
+  .gctable tbody tr:hover td { background: color-mix(in srgb, var(--committed) 7%, transparent); }
+  .gctable .gcnote { display: block; font-weight: 400; color: var(--ink-3); font-size: 11px; white-space: normal; margin-top: 2px; }
   .gctable th { vertical-align: bottom; }
   .gctable td:first-child { text-align: left; color: var(--ink); font-weight: 600; }
   .gctable tr:last-child td { border-bottom: none; }
@@ -885,7 +889,7 @@
               $370&ndash;430/SF) are ours, and the wider Lease-Leaseback premium shown on renovation than on new build
               is a consequence of how we spaced them rather than an observed market spread.</span>
             <div class="ladder-note" style="margin:8px 0 0">
-              <b>Two scales are needed because SMHS is two different kinds of work.</b> The Medical Arts building is new
+              <b>Two scales are needed because SMHS is two different kinds of work.</b> The New Two-Story STEM Building is new
               construction and belongs on the scale above; the Career Center and Library is renovation and belongs here.
               These modernization bands are built from the FMP&rsquo;s own 2024 rates &mdash; light/minor $142.80/SF,
               moderate $214.20/SF, library and reconfigure $333.20&ndash;357.00/SF &mdash; loaded the way Balfour loads its
@@ -945,7 +949,7 @@
                 <thead><tr>
                   <th>Risk / Cost Component</th>
                   <th>Carver ES<span class="thsub">New TK &amp; KG</span></th>
-                  <th>Valentine ES<span class="thsub">Two-Storey Classroom</span></th>
+                  <th>Valentine ES<span class="thsub">Two-Story Classroom</span></th>
                   <th>San Marino HS<span class="thsub">Medical Arts</span></th>
                 </tr></thead>
                 <tbody id="bbBody"></tbody>
@@ -983,7 +987,7 @@
               <div class="llbhint" style="margin-bottom:12px"><b>The per-SF rates run backwards by building type.</b>
                 A two-storey building should cost <i>more</i> per square foot than a single-storey one &mdash; the FMP
                 itself says 17% more. Balfour prices the opposite: single-storey Carver at <b>$1,013/SF</b>, two-storey
-                Valentine at <b>$1,019/SF</b> (only 0.6% apart, not 17%), and the two-storey SMHS Medical Arts building
+                Valentine at <b>$1,019/SF</b> (only 0.6% apart, not 17%), and the two-storey SMHS New Two-Story STEM Building
                 at <b>$884/SF</b> &mdash; <span class="amt">13% below</span> the single-storey elementary. Carver is
                 effectively priced as though it were the two-storey building. Scale explains part of it, but not a
                 two-storey coming in cheaper per foot than a one-storey; the rest points to Carver being overpriced.
@@ -1244,12 +1248,12 @@
       <div class="ladder-note" style="margin:0 0 14px">
         <b>This is the largest single discretionary number on the program, and it is a board decision rather than a
         contractor variance.</b> The District can modernize the existing single-storey CTE / Science / Art lab wing, or
-        replace that teaching capacity with a new two-storey Medical Arts building. The <b>Career Center / Library
+        replace that teaching capacity with a new two-storey New Two-Story STEM Building. The <b>Career Center / Library
         modernization happens under either option</b>, so it is held constant below and cancels out of the difference
         &mdash; it is not a variable in this choice.
       </div>
 
-      <div class="llbcap">Option A &mdash; modernize the existing lab wing
+      <div class="llbcap">Option A &mdash; Modernize the Existing Lab Wing
         <span class="eq">&mdash; the District&rsquo;s own 2024 FMP worksheet lines for HS13, which sum exactly to the $10,576,063 carried in Transcend project 1608</span>
         <span class="cite">Sources: San Marino Unified School District, 2024 (RawExport, HS13 lines); Transcend PM, 2026 (project 1608). The &times;1.19 escalation is an author&rsquo;s derivation.</span>
       </div>
@@ -1311,7 +1315,7 @@
         <span class="collttl">All-in project cost &mdash; construction, architect and soft costs</span>
       </div>
       <table class="gctable">
-        <thead><tr><th>Cost layer</th><th>Option B &mdash; new build</th><th>Option A &mdash; modernize only</th><th>Saving</th></tr></thead>
+        <thead><tr><th>Cost layer</th><th>Option B &mdash; New Two-Story STEM Building</th><th>Option A &mdash; Modernize the Existing Lab Wing</th><th>Saving</th></tr></thead>
         <tbody id="mvnAllInBody"></tbody>
       </table>
       <div class="llbhint">Architect fees are the executed OPSC sliding-scale figures: new construction at
@@ -1655,7 +1659,7 @@
           <span class="rnote">Construction manager&rsquo;s determination that Division 07 Thermal &amp; Moisture
           Protection is footprint-driven and is therefore applied to half the gross area of a two-storey building,
           because the roof and the underslab vapour barrier each serve two floors. This is the basis for the 15,778 SF
-          area used at the San Marino HS Medical Arts building and is <b>not</b> an author&rsquo;s derivation.</span></p>
+          area used at the San Marino HS New Two-Story STEM Building and is <b>not</b> an author&rsquo;s derivation.</span></p>
       </div>
 
       <div class="refgrp">
@@ -2229,11 +2233,11 @@ function renderAll() {
       <br><br><b>Balfour&rsquo;s own numbers confirm no footprint basis anywhere in the estimate.</b> Division 31 Earthwork is footprint-driven, yet dividing each project&rsquo;s Division 31 total by its own $20.32/SF rate returns the <i>gross</i> area every time: SMHS $641,236 &divide; $20.32 = 31,557 SF against 31,556 GSF, Valentine $447,947 &divide; $20.32 = 22,045 SF against 22,044 GSF, Carver $357,236 &divide; $20.32 = 17,580 SF against 17,580 GSF. Carver landing on gross validates the test, since for a single-storey building footprint and gross genuinely coincide &mdash; and it then shows that both two-storey buildings had earthwork priced on roughly twice the area that actually drives it.
       <br><br><b>The half-area basis is confirmed by the District&rsquo;s construction manager</b> and is applied here as a determination, not an assumption: for a two-storey building the roof and the underslab vapour barrier each serve two floors, so both are footprint-driven rather than gross-area-driven. It is corroborated by the District&rsquo;s own 2024 FMP raw export, which halves footprint-driven scope on every two-storey building without exception &mdash; Valentine&rsquo;s two-storey classroom priced on 20,760 SF with its building pad at 10,380 SF, and the San Marino HS two-storey gymnasium on 35,910 SF with its pad at 17,955 SF &mdash; while every single-storey line in the same export pairs 1:1. Note also that no footprint, first-floor area or roof area is stated anywhere in Balfour&rsquo;s three Project Comparison Reports; their Metrics blocks give gross square feet only.`,
     `<b>Balfour&rsquo;s proposal prices one budget line out of six or seven &mdash; so no &ldquo;total project cost&rdquo; comparison against their number is valid.</b> Their proposal covers the <b>LLB BB Construction</b> line and nothing else. Sitting outside it, in the District&rsquo;s own budget lines: <b>soft costs</b> ($8,740,799 SMHS, $4,443,780 Carver, $5,515,970 Valentine), <b>architectural services and DPOR</b> ($1,199,426 SMHS, $898,000 Carver, $1,225,750 Valentine), <b>interim housing and portable leases</b> ($1,000,000 SMHS, $1,100,000 Valentine, $217,700 of Valentine portables), <b>preconstruction services</b> ($65,000 each), and <b>site investigation</b> ($91,500 SMHS geotechnical and fault borings, $4,265 SMHS survey, $7,250 Carver underground scanning). Together that is roughly <b>a fifth of each project</b>. Anyone comparing Balfour&rsquo;s $69.4M against the $110.7M or $126.7M programme figures &mdash; or against a single project&rsquo;s all-in budget &mdash; is comparing a construction contract against a fully loaded capital programme. Always name which line is being compared.`,
-    `<b>Balfour&rsquo;s proposal bundles two separate District projects into one total &mdash; so their project total cannot be compared against any single District budget.</b> Their report is titled &ldquo;San Marino HS Med Arts Bldg. and Career Center&rdquo; and closes at a <b>Project Total of $29,135,996</b>, being the Medical Arts building at <b>$27,881,756</b> plus the Career Center as an &ldquo;Add For&rdquo; line at <b>$1,254,240</b>. The District carries the STEM / Medical Arts building and the Library / Career Center modernization as <b>two distinct projects</b>. Any comparison of Balfour&rsquo;s $29,135,996 against a single District project budget is therefore invalid, because their figure spans two projects while the budget covers one. It also means <b>the Career Center was never scoped as a project in its own right by Balfour</b> &mdash; it is an add-on line inside another project&rsquo;s proposal, which is exactly why it carries no general conditions, no fee and no contingency. Require separate, independently priced proposals for the two scopes before GMP.
-      <br><br><b>Where the Career Center is funded is now settled &mdash; inside project 1608.</b> That project&rsquo;s <i>LLB BB Construction</i> budget line of <b>$35,096,190</b> is Medical Arts $32,183,057 plus the Career Center $2,913,133 to the dollar, and the project carries the FMP&rsquo;s <b>HS20</b> &ldquo;Existing Library Moderate modernization&rdquo; tag. Consistent with that, no separate budgeted Library project exists: the former standalone project <b>1804 is flagged &ldquo;ZZ DELETE&rdquo;</b> with no budget and project 483 &ldquo;Library Learning Commons&rdquo; is unbudgeted. So the library scope is <b>funded within project 1608 while being delivered as a separate project</b>. What remains open is only the area: the District&rsquo;s construction line funds Balfour&rsquo;s 5,226 GSF, while the District&rsquo;s own programme describes 3,267 sf. On the programmed area the normalized figure would be <b>$1,821,483</b> rather than $2,913,133 &mdash; a <b>$1,091,650</b> question, and the reason the area discrepancy still needs resolving even though the funding question does not.`,
+    `<b>Balfour&rsquo;s proposal bundles two separate District projects into one total &mdash; so their project total cannot be compared against any single District budget.</b> Their report is titled &ldquo;San Marino HS Med Arts Bldg. and Career Center&rdquo; and closes at a <b>Project Total of $29,135,996</b>, being the New Two-Story STEM Building at <b>$27,881,756</b> plus the Career Center as an &ldquo;Add For&rdquo; line at <b>$1,254,240</b>. The District carries the STEM / New Two-Story STEM Building and the Library / Career Center modernization as <b>two distinct projects</b>. Any comparison of Balfour&rsquo;s $29,135,996 against a single District project budget is therefore invalid, because their figure spans two projects while the budget covers one. It also means <b>the Career Center was never scoped as a project in its own right by Balfour</b> &mdash; it is an add-on line inside another project&rsquo;s proposal, which is exactly why it carries no general conditions, no fee and no contingency. Require separate, independently priced proposals for the two scopes before GMP.
+      <br><br><b>Where the Career Center is funded is now settled &mdash; inside project 1608.</b> That project&rsquo;s <i>LLB BB Construction</i> budget line of <b>$35,096,190</b> is the STEM building $32,846,644 plus the Career Center $2,913,133 to the dollar, and the project carries the FMP&rsquo;s <b>HS20</b> &ldquo;Existing Library Moderate modernization&rdquo; tag. Consistent with that, no separate budgeted Library project exists: the former standalone project <b>1804 is flagged &ldquo;ZZ DELETE&rdquo;</b> with no budget and project 483 &ldquo;Library Learning Commons&rdquo; is unbudgeted. So the library scope is <b>funded within project 1608 while being delivered as a separate project</b>. What remains open is only the area: the District&rsquo;s construction line funds Balfour&rsquo;s 5,226 GSF, while the District&rsquo;s own programme describes 3,267 sf. On the programmed area the normalized figure would be <b>$1,821,483</b> rather than $2,913,133 &mdash; a <b>$1,091,650</b> question, and the reason the area discrepancy still needs resolving even though the funding question does not.`,
     `<b>Building P footprint &mdash; 60% area discrepancy.</b> The District program describes the Career Center and Library renovation as <b>3,267 gross sf</b>; Balfour prices <b>5,226 GSF</b> &mdash; <span class="amt">+1,959 SF (+60%)</span>. Either the renovation footprint has grown beyond the program, or they are measuring the whole of Building P rather than the renovated portion. Resolve before GMP.`,
     `<b>SMHS priced as new construction against a modernization program.</b> The District scope and the Huckabee program (7/14/2026, Site Plan Option 2 &mdash; Modernization) deliver <b>20,993 gross sf of modernization</b>. Balfour priced <b>36,782 GSF</b> &mdash; a 31,556 GSF new two-story building plus 5,226 GSF of renovation, <span class="amt">15,789 GSF</span> beyond the program and on a different delivery basis. The scope basis must be reconciled before any number is compared.`,
-    `<b>The Career Center carries no general conditions, no fee and no markup of any kind.</b> Balfour&rsquo;s own report closes the Medical Arts building at <b>$27,881,755.52 / $883.56 per SF / 100.00%</b> &mdash; the direct-cost-and-markup structure is complete at that line &mdash; then appends the renovation beneath it as an &ldquo;<b>Add For</b> Building P Modernization, Career Center $1,254,240.00 / $240.00.&rdquo; Being outside the marked-up structure, that $240.00/SF contains no general conditions, no general requirements, no fee, no bonds, no insurance and no contingency, and the single SMHS general-conditions line of $1,261,836 is attached to the new building only. A renovation on an occupied campus, adjacent to a demolition and a structural tie-in, needs its own supervision, logistics and phasing cost. Either that scope is being absorbed silently by the building&rsquo;s general conditions, or it is simply missing &mdash; and at 5,226 GSF against a District program of 3,267 gross sf, it is missing on 60% more area than was ever scoped.`,
+    `<b>The Career Center carries no general conditions, no fee and no markup of any kind.</b> Balfour&rsquo;s own report closes the New Two-Story STEM Building at <b>$27,881,755.52 / $883.56 per SF / 100.00%</b> &mdash; the direct-cost-and-markup structure is complete at that line &mdash; then appends the renovation beneath it as an &ldquo;<b>Add For</b> Building P Modernization, Career Center $1,254,240.00 / $240.00.&rdquo; Being outside the marked-up structure, that $240.00/SF contains no general conditions, no general requirements, no fee, no bonds, no insurance and no contingency, and the single SMHS general-conditions line of $1,261,836 is attached to the new building only. A renovation on an occupied campus, adjacent to a demolition and a structural tie-in, needs its own supervision, logistics and phasing cost. Either that scope is being absorbed silently by the building&rsquo;s general conditions, or it is simply missing &mdash; and at 5,226 GSF against a District program of 3,267 gross sf, it is missing on 60% more area than was ever scoped.`,
     `<b>A one-story building and a two-story building priced at the same rate &mdash; the estimates are not project-specific.</b> Carver is single-storey TK/KG buildings; Valentine is a two-storey classroom, MPR and kitchen building. Their direct costs come in at <b>$829.95/SF</b> and <b>$835.72/SF</b> &mdash; <span class="amt">0.7% apart</span> &mdash; and their markups at <b>22.04%</b> and <b>21.98%</b> of direct cost, <span class="amt">0.05 of a percentage point apart</span>. A two-storey building carries hoisting, vertical material handling, stair and elevator coordination and a longer structural sequence; a set of separate single-storey buildings carries more foundations, more roof and more perimeter. Those do not produce the same rate or the same general-conditions ratio. The District&rsquo;s own FMP distinguishes them by <b>17.0%</b> ($696.15/SF two-storey versus $595.00/SF one-storey) &mdash; so the 2024 master plan estimate was more project-specific than this proposal. Measured against the FMP&rsquo;s type-correct rates, Carver&rsquo;s direct cost runs <span class="amt">+39.5%</span> while Valentine&rsquo;s runs <span class="amt">+20.0%</span>, which points to Carver being the overpriced project &mdash; or Valentine&rsquo;s two-storey scope being underpriced and exposed to change orders. Ask Balfour to produce genuinely separate estimates for the two building types.`,
     `<b>Identical unit rates across three different campuses.</b> 12 of 21 CSI divisions carry byte-identical $/SF in all three Project Comparison Reports &mdash; Concrete $46.88, Metals $58.80, Wood/Plastics $52.73, Openings $41.73, Electrical $92.37, Earthwork $20.32, General Requirements $8.75, Fire Suppression $8.38, Communications $15.63, Electronic Safety $16.13, Specialties $7.61, Thermal &amp; Moisture $75.84. Three sites, three sets of conditions, one rate card. Ask whether any project-specific estimating has been done.`,
     `<b>SMHS carries 3.7 points more markup than the other two, with no stated reason.</b> Markup on direct cost is 25.7% at SMHS versus 22.0% at both Valentine and Carver &mdash; roughly <span class="amt">$820,532</span> &mdash; even though the fee proposal lists identical rates for all three (3.25% fee, 1% bond, 1.20% liability, 3% contingency). Ask what the difference funds.`,
@@ -2695,7 +2699,7 @@ const LLB_KEY = "mm_llb_proposals_v2";
 // Balfour Beatty RFQ/P #2026-05 fee proposal, 3/12/2026. Percentages apply to the cost of work (GMP);
 // GC total = monthly GC x assumed duration. No SF or GMP is stated in the proposal.
 const BB = {
-  smhs:   {label: "San Marino HS &mdash; Medical Arts Building (new)", precon: 55000, fee: 3.25, gcMo: 105153, months: 12, gcTot: 1261836, bond: 1, gl: 1.20, contingency: 3, allow: 20000},
+  smhs:   {label: "San Marino HS &mdash; New Two-Story STEM Building Building (new)", precon: 55000, fee: 3.25, gcMo: 105153, months: 12, gcTot: 1261836, bond: 1, gl: 1.20, contingency: 3, allow: 20000},
   ves:    {label: "Valentine ES &mdash; Two-Story Classroom (MPR / Kitchen / 1&ndash;5)", precon: 55000, fee: 3.25, gcMo: 109896, months: 12, gcTot: 1318752, bond: 1, gl: 1.20, contingency: 3, allow: 20000},
   smhscc: {label: "San Marino HS &mdash; Career Center / Library (modernization)", precon: 0, fee: 3.25, gcMo: 0, months: 0, gcTot: 0, bond: 1, gl: 1.20, contingency: 3, allow: 0},
   carver: {label: "Carver ES &mdash; New TK &amp; KG Building", precon: 45000, fee: 3.25, gcMo: 99891, months: 12, gcTot: 1230696, bond: 1, gl: 1.20, contingency: 3, allow: 15000}
@@ -2777,7 +2781,7 @@ function renderLlb() {
     "<b>Markups</b> are the GC&rsquo;s, GR&rsquo;s, fee, bonds, insurance and contingency carried on top of the direct cost of work &mdash; " +
     "18&ndash;20% of each total here. Cost / SF is graded against the bands above. Every field is editable and saves in this browser, " +
     "so these update as the GMPs are established. <b>These are the same figures used in the FMP comparison above:</b> " +
-    "Carver $17,805,933 &middot; Valentine $22,472,400 &middot; SMHS Medical Arts $27,881,756, plus the SMHS Career Center " +
+    "Carver $17,805,933 &middot; Valentine $22,472,400 &middot; SMHS STEM building $27,881,756, plus the SMHS Career Center " +
     "at $1,254,240 (5,226 GSF) which is carried in the comparison table as a separate modernization line &mdash; " +
     "SMHS project total $29,135,996, three-project total $69,414,329.";
   document.querySelectorAll("#llbBody input").forEach(inp => {
@@ -2902,8 +2906,8 @@ const FMP_VS = [
   // marked up at SMHS's own cost-scaling rate, plus 4 further months of general conditions. The former
   // $31,915,632 used a $95.66/SF gap - Division 07 at its FULL rate and no Exterior Improvements at all
   // - and so understated this line by $267,425. The halved Division 07 basis governs both tables.
-  {b: "San Marino HS &mdash; Medical Arts building", sf: 31556, basis: ["NEW construction, two-storey", "FMP rate $696.15/SF", "normalized &mdash; the FMP held no new-construction rate for SMHS"],
-   fmp: 31556 * 696.15, act: 27881756, corr: 32183057, norm: true},
+  {b: "San Marino HS &mdash; New Two-Story STEM Building", sf: 31556, basis: ["NEW construction, two-storey", "FMP rate $696.15/SF", "normalized &mdash; the FMP held no new-construction rate for SMHS"],
+   fmp: 31556 * 696.15, act: 27881756, corr: 32846644, norm: true},
   // A SEPARATE District project that Balfour bundled into the Medical Arts proposal. Put on the
   // District's programmed 3,267 sf: the FMP base and the corrected column both use that area, while
   // the as-proposed column is Balfour's own dollar figure for the 5,226 GSF they claim - 60% more
@@ -2932,7 +2936,7 @@ function renderFmpVs() {
   const pcOf = r => 100 * (r.corr / r.fmp - 1);
   const psfOf = r => r.corr / r.sf;
   const byName = s => FMP_VS.find(r => r.b.indexOf(s) === 0);
-  const smhs = byName("San Marino HS &mdash; Medical Arts"), cc = byName("San Marino HS &mdash; Career Center");
+  const smhs = byName("San Marino HS &mdash; New Two-Story STEM Building"), cc = byName("San Marino HS &mdash; Career Center");
   const carver = byName("Carver"), ves = byName("Valentine");
   const newBuilds = [carver, ves, smhs];                     // the three new-construction rows
   const twoStorey = [ves, smhs];                             // of which these two are two-storey
@@ -2957,8 +2961,8 @@ function renderFmpVs() {
 const GC_DUR = [
   {n: "Carver ES &mdash; New TK &amp; KG", mo: 99891, priced: 1230696, lo: 12, hi: 14,
    flag: "12 &times; $99,891 = $1,198,692 does not exactly reconcile to Balfour&rsquo;s stated $1,230,696; the $32,004 difference is left unresolved as immaterial"},
-  {n: "Valentine ES &mdash; Two-Storey", mo: 109896, priced: 1318752, lo: 16, hi: 18},
-  {n: "San Marino HS &mdash; Medical Arts", mo: 105153, priced: 1261836, lo: 16, hi: 18}
+  {n: "Valentine ES &mdash; Two-Story", mo: 109896, priced: 1318752, lo: 16, hi: 18},
+  {n: "San Marino HS &mdash; New Two-Story STEM Building", mo: 105153, priced: 1261836, lo: 16, hi: 18}
 ];
 function renderGcDur() {
   let tp = 0, tl = 0, th = 0;
@@ -2979,9 +2983,9 @@ function renderGcDur() {
       <td><span class="psf b3"><b>+${fmt(tl - tp)} &ndash; +${fmt(th - tp)}</b></span></td></tr>`;
 }
 const BUILDUPS = [
-  {n:"San Marino HS 1608 — CTE building (new) + Career Center / Library (modernization)", sf:31556, total:35759777,
+  {n:"San Marino HS 1608 — New Two-Story STEM Building + Career Center / Library (modernization)", sf:31556, total:35759777,
    note:"31,556 GSF building at $1,041/SF, plus 3,267 gsf renovation at $891/SF",
-   rows:[["Balfour direct cost of work, Medical Arts / CTE building",22176550,"their p.1 figure"],
+   rows:[["Balfour direct cost of work, New Two-Story STEM Building",22176550,"their p.1 figure"],
          ["Div 07 Thermal &amp; Moisture — ABSENT from their estimate",1344643,"17,730 sf roof and slab area &times; $75.84, the elementaries&rsquo; own rate"],
          ["Div 32 Exterior Improvements gap",1420020,"31,556 sf &times; $45.00 &mdash; they priced $30.81 against $75.81 at both elementaries"],
          ["Div 13 Special Construction — absent",923644,"31,556 sf &times; $29.27"],
@@ -3030,10 +3034,10 @@ function renderFix() {
      note: "Divisions complete, and single-storey, so gross area is also the roof and slab area &mdash; its $75.84/SF Division 07 needs no geometry correction. Comes in slightly <b>under</b> because the 12-month GC price marginally exceeds 12 months of actual general conditions. <i>Footnote: 12 &times; $99,891 = $1,198,692 does not exactly reconcile to Balfour&rsquo;s stated $1,230,696 GC total; the $32,004 difference is left unresolved as immaterial.</i>"},
     {n: "Valentine ES &mdash; CR / MPR / Kitchen", as: 22472400, no: 22911984, sf: 22044,
      note: "No scope gaps. Entirely the general-conditions schedule &mdash; 12 months priced against 16 needed"},
-    {n: "San Marino HS &mdash; Medical Arts", as: 27881756, no: 32183057, sf: 31556,
+    {n: "San Marino HS &mdash; New Two-Story STEM Building", as: 27881756, no: 32846644, sf: 31556,
      note: "$1,196,604 absent Division 07 roofing and weatherproofing &mdash; restored on a <b>15,778 SF footprint</b>, half of the 31,556 GSF, because on a two-storey building the roof and the underslab vapour barrier each serve two floors and are therefore footprint-driven. <b>Half-area basis confirmed by the District&rsquo;s construction manager.</b> &middot; $1,420,020 Exterior Improvements at $30.81/SF against $75.81 at both elementaries &middot; $205,114 utilities &middot; $420,326 minor divisions &middot; then markup and 16-month GC. <b>Masonry and Special Construction are deliberately excluded</b> &mdash; both appear only at Carver and are building-specific, not omissions"},
     {n: "San Marino HS &mdash; Career Center", as: 1254240, no: 2913133, sf: 5226,
-     note: "Normalized on Balfour&rsquo;s <b>5,226 GSF</b> at $557.54/SF. That basis is not a choice made here &mdash; the District&rsquo;s own <i>LLB BB Construction</i> budget line for project 1608 is $35,096,190, which is Medical Arts $32,183,057 plus this line at $2,913,133 to the dollar, so the District is funding the 5,226-sf figure. On the District&rsquo;s programmed 3,267 sf the same rate gives $1,821,483; that alternative is carried as a watch-item question about the 60% area discrepancy rather than as the published number. <b>The library scope is funded inside project 1608 while being delivered as a separate project.</b> Priced on <b>renovation rates only</b> &mdash; FMP library/moderate modernization $333.20/SF escalated to $397, plus $25/SF abatement and $35/SF interface demolition, then GC&rsquo;s, fee, bonds and contingency at 22%. <span class=\"assump\"><b>Three of those four inputs are our own constructions.</b> The <b>$25/SF abatement</b> and <b>$35/SF interface-demolition</b> allowances appear in no source document &mdash; there is no hazardous-materials survey for Building P in hand, and no demolition take-off for the tie-in to the new building; both are planning placeholders for scope that is real but unquantified. The <b>22% load</b> is the average markup ratio observed on Balfour&rsquo;s other three projects, applied because this line carries no markup at all. Only the <b>$333.20/SF</b> base rate is source data, from the FMP; the escalation to $397 uses the same unverified 12.5% assumption as everything else on this page. This line is the least firm number in the table and should be read as an order of magnitude for scope Balfour has not priced, not as an estimate.</span> <b>No Division 07 thermal, no Division 04 masonry and no new-construction rate is applied to this line.</b> The uplift is because BB&rsquo;s $240/SF was an unloaded &ldquo;Add For&rdquo; allowance carrying no GC&rsquo;s, fee or contingency, and no abatement, seismic, ADA or MEP renewal"},
+     note: "Normalized on Balfour&rsquo;s <b>5,226 GSF</b> at $557.54/SF. That basis is not a choice made here &mdash; the District&rsquo;s own <i>LLB BB Construction</i> budget line for project 1608 is $35,096,190, which is the STEM building $32,846,644 plus this line at $2,913,133 to the dollar, so the District is funding the 5,226-sf figure. On the District&rsquo;s programmed 3,267 sf the same rate gives $1,821,483; that alternative is carried as a watch-item question about the 60% area discrepancy rather than as the published number. <b>The library scope is funded inside project 1608 while being delivered as a separate project.</b> Priced on <b>renovation rates only</b> &mdash; FMP library/moderate modernization $333.20/SF escalated to $397, plus $25/SF abatement and $35/SF interface demolition, then GC&rsquo;s, fee, bonds and contingency at 22%. <span class=\"assump\"><b>Three of those four inputs are our own constructions.</b> The <b>$25/SF abatement</b> and <b>$35/SF interface-demolition</b> allowances appear in no source document &mdash; there is no hazardous-materials survey for Building P in hand, and no demolition take-off for the tie-in to the new building; both are planning placeholders for scope that is real but unquantified. The <b>22% load</b> is the average markup ratio observed on Balfour&rsquo;s other three projects, applied because this line carries no markup at all. Only the <b>$333.20/SF</b> base rate is source data, from the FMP; the escalation to $397 uses the same unverified 12.5% assumption as everything else on this page. This line is the least firm number in the table and should be read as an order of magnitude for scope Balfour has not priced, not as an estimate.</span> <b>No Division 07 thermal, no Division 04 masonry and no new-construction rate is applied to this line.</b> The uplift is because BB&rsquo;s $240/SF was an unloaded &ldquo;Add For&rdquo; allowance carrying no GC&rsquo;s, fee or contingency, and no abatement, seismic, ADA or MEP renewal"},
     {n: "Carver site scope beyond the 5-ft line", as: 0, no: 3300105, sf: 0,
      note: "Play yards C36 $800,000 + C37 $650,000 and existing KG modernization C1 $1,000,000 at FMP construction cost, escalated 19%, loaded at Carver&rsquo;s own 13.19% &mdash; all in the District&rsquo;s project scope but outside Balfour&rsquo;s contract line"}
   ];
@@ -3112,7 +3116,7 @@ var FMP_TOTAL_2024;
 // Option A is the District's own 2024 FMP worksheet for HS13 (raw export row 426). Its five lines
 // sum to exactly $10,576,063, the figure carried in Transcend project 1608, so the build-up is
 // reconciled to source rather than reconstructed. Option B is Balfour's own area and pricing for
-// the new Medical Arts building. The Career Center / Library modernization is delivered under
+// the New Two-Story STEM Building. The Career Center / Library modernization is delivered under
 // either option, so it is held constant and cancels out of every difference below.
 const MVN = {
   optA: [
@@ -3125,9 +3129,9 @@ const MVN = {
   esc: 1.19,       // ASSUMPTION: 2024 FMP basis carried to a 2027 construction window. Not sourced.
   progSf: 20993,   // Huckabee Site Plan Option 2 program area. Appears nowhere in the FMP export.
   labSf: 14200,    // the FMP's own largest single treatment area on the HS13 line
-  newSf: 31556,    // Balfour's stated GSF for the Medical Arts building
+  newSf: 31556,    // Balfour's stated GSF for the New Two-Story STEM Building
   newAs: 27881756, // Balfour as proposed
-  newNorm: 32183057, // normalized, per the BB-vs-Normalized table above
+  newNorm: 32846644, // normalized, per the BB-vs-Normalized table above
   ccAs: 1254240, ccNorm: 2913133
 };
 function mvnFigures() {
@@ -3176,8 +3180,8 @@ function renderMvn() {
      n: "the 20,993 sf denominator, from the Huckabee Site Plan Option 2 program &mdash; not found in the FMP export"},
     {b: "Modernization over the District&rsquo;s stated lab area", c: f.escd, sf: MVN.labSf,
      n: "the FMP&rsquo;s own largest single treatment area on HS13"},
-    {b: "New construction &mdash; Medical Arts building, normalized", c: MVN.newNorm, sf: MVN.newSf,
-     n: "Balfour&rsquo;s own 31,556 GSF, normalized for the omissions identified above", hi: true}
+    {b: "New Two-Story STEM Building, normalized", c: MVN.newNorm, sf: MVN.newSf,
+     n: "Balfour&rsquo;s own 31,556 GSF &mdash; the District programme is 17,730 sf, an unresolved 78% difference", hi: true}
   ];
   document.getElementById("mvnPsfBody").innerHTML = psf.map(r => `<tr${r.hi ? ' class="actual"' : ""}>
       <td>${r.b}<span class="gcnote">${r.n}</span></td>
@@ -3186,10 +3190,10 @@ function renderMvn() {
 
   const sameDiff = f.sameNew - f.escd;
   document.getElementById("mvnSameBody").innerHTML = `
-    <tr><td>Option A &mdash; modernize<span class="gcnote">escalated FMP construction cost</span></td>
+    <tr><td>Option A &mdash; Modernize the Existing Lab Wing<span class="gcnote">escalated FMP construction cost</span></td>
       <td>${fmt(f.escd)}</td><td>$${Math.round(f.escd / MVN.progSf).toLocaleString()} / sf</td>
       <td><span class="psf b1">baseline</span></td></tr>
-    <tr class="actual"><td><b>Option B &mdash; build new</b><span class="gcnote">Balfour&rsquo;s normalized rate applied to the same 20,993 sf</span></td>
+    <tr class="actual"><td><b>Option B &mdash; New Two-Story STEM Building</b><span class="gcnote">Balfour&rsquo;s normalized rate applied to the same 20,993 sf</span></td>
       <td><b>${fmt(f.sameNew)}</b></td><td>$${Math.round(f.newPsf).toLocaleString()} / SF</td>
       <td><span class="psf b3"><b>+${fmt(sameDiff)} &nbsp;+${(100 * sameDiff / f.escd).toFixed(1)}%</b></span></td></tr>`;
 
@@ -3205,10 +3209,10 @@ function renderMvn() {
   document.getElementById("mvnMargRate").textContent = "$" + Math.round(f.marginal).toLocaleString();
 
   document.getElementById("mvnTotBody").innerHTML = `
-    <tr><td>Option A &mdash; modernize the lab wing<span class="gcnote">escalated FMP construction cost</span></td>
+    <tr><td>Option A &mdash; Modernize the Existing Lab Wing<span class="gcnote">escalated FMP construction cost</span></td>
       <td>${fmt(f.escd)}</td><td>${fmt(MVN.ccNorm)}</td><td>${fmt(f.totA)}</td>
       <td><span class="psf b1">baseline</span></td></tr>
-    <tr class="actual"><td><b>Option B &mdash; new Medical Arts building</b><span class="gcnote">normalized; as proposed it is ${fmt(MVN.newAs)}</span></td>
+    <tr class="actual"><td><b>Option B &mdash; New Two-Story STEM Building</b><span class="gcnote">normalized; as proposed it is ${fmt(MVN.newAs)}</span></td>
       <td><b>${fmt(MVN.newNorm)}</b></td><td>${fmt(MVN.ccNorm)}</td><td><b>${fmt(f.totB)}</b></td>
       <td><span class="psf b3"><b>+${fmt(f.diff)} &nbsp;+${(100 * f.diff / f.totA).toFixed(1)}%</b></span></td></tr>`;
 }
@@ -3256,8 +3260,8 @@ const nameOf = pid => { const p = PROJECTS.find(x => x.pid === pid); return p ? 
 // project's own LLB BB Construction budget line - NOT against its all-in budget, which also carries
 // soft costs, architectural services, interim housing, geotechnical work and preconstruction.
 const DB_ROWS = [
-  {pid: 1608, label: "San Marino HS &mdash; New Two-Storey STEM Building", norm: 32183057 + 2913133, bb: 29135996,
-   note: "normalized is Medical Arts $32,183,057 + Career Center $2,913,133. Balfour&rsquo;s figure is their bundled project total, which is the right comparison here because the District&rsquo;s construction line funds both scopes"},
+  {pid: 1608, label: "San Marino HS &mdash; New Two-Story STEM Building", norm: 32846644 + 2913133, bb: 29135996,
+   note: "normalized is Medical Arts $32,846,644 + Career Center $2,913,133. Balfour&rsquo;s figure is their bundled project total, which is the right comparison here because the District&rsquo;s construction line funds both scopes"},
   {pid: 1610, label: "Carver ES &mdash; New TK/KG Building &amp; Play Yard", norm: 17773929 + 3300105, bb: 17805933,
    note: "normalized is the building $17,773,929 + $3,300,105 of play yards and classroom modernization that sit outside Balfour&rsquo;s contract line but inside the District&rsquo;s project"},
   {pid: 1609, label: "Valentine ES &mdash; MPR, Kitchen, 1&ndash;5 Classrooms", norm: 22911984, bb: 22472400,
@@ -3306,7 +3310,7 @@ function renderDb() {
      identified earlier: absent Division 07 roofing at SMHS, and the play yards and classroom modernization sitting
      outside Balfour&rsquo;s contract line at Carver.
      <br><br><b>The Career Center question is settled by the budget itself.</b> Project 1608&rsquo;s construction line of
-     ${fmt(conLine(1608))} equals Medical Arts ${fmt(32183057)} plus the Career Center ${fmt(2913133)} exactly, and the
+     ${fmt(conLine(1608))} equals the STEM building ${fmt(32846644)} plus the Career Center ${fmt(2913133)} exactly, and the
      project carries the FMP&rsquo;s HS20 library tag. <b>The library scope is funded inside project 1608 while being
      delivered as a separate project</b> &mdash; which also means the 5,226 GSF basis is the one the District is paying
      for, notwithstanding that its own programme describes 3,267 sf. That area discrepancy remains a live question with
@@ -3536,8 +3540,9 @@ document.addEventListener("click", e => {
 // Every block inside the FMP guide gets its own collapse control, so the section
 // reads as a set of named sub-topics rather than one long scroll.
 (function wrapGuideBlocks() {
-  const guide = document.getElementById("fmpGuide");
-  if (!guide) return;
+  const scopes = ["fmpGuide", "mvnCard"].map(id => document.getElementById(id)).filter(Boolean);
+  if (!scopes.length) return;
+  const guide = scopes[0];
   // the delivery-method band tables have no heading of their own
   const firstTable = guide.querySelector("table.gtable");
   if (firstTable && !firstTable.previousElementSibling?.classList?.contains("llbcap")) {
@@ -3547,7 +3552,7 @@ document.addEventListener("click", e => {
     firstTable.parentNode.insertBefore(cap, firstTable);
   }
   let n = 0;
-  [...guide.querySelectorAll(".llbcap")].forEach(cap => {
+  scopes.flatMap(sc => [...sc.querySelectorAll(".llbcap")]).forEach(cap => {
     if (cap.querySelector("button.expand-all")) return;
     const body = document.createElement("div");
     body.className = "coll";
