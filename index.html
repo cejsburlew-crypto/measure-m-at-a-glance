@@ -97,6 +97,23 @@
   }
 
   * { box-sizing: border-box; }
+  /* toolbar pinned to the top of the viewport */
+  .toolbar {
+    position: sticky; top: 0; z-index: 60; background: var(--bg);
+    padding: 10px 0 10px; margin-top: 0;
+    border-bottom: 1px solid var(--line); box-shadow: 0 6px 14px -12px rgba(0,0,0,0.5);
+  }
+  /* each section boxed so they read as separate blocks */
+  section {
+    border: 1px solid var(--line); border-radius: 8px;
+    background: var(--surface); padding: 14px 16px; margin-top: 14px;
+  }
+  section > h2 { margin-top: 0; }
+  section > .card { border: none; background: transparent; padding: 0; }
+  @media print {
+    .toolbar { position: static; box-shadow: none; border-bottom: none; }
+    section { break-inside: avoid; padding: 6px 8px; margin-top: 6px; }
+  }
   /* the hidden attribute must beat any explicit display rule (.watch is display:grid,
      which silently defeated its own collapse toggle) */
   [hidden] { display: none !important; }
@@ -847,7 +864,7 @@
               anchored on the FMP&rsquo;s own construction rates escalated to 2026, and the two Lease-Leaseback bands
               are spaced above it using Balfour&rsquo;s own loaded pricing for these three buildings as the upper
               reference. They are a reading frame for judging a quoted $/SF, <b>not</b> market data, and the
-              &ldquo;+% vs DBB midpoint&rdquo; figures are simply arithmetic on boundaries we chose.</span>
+              &ldquo;+% vs DBB midpoint&rdquo; figures are simply arithmetic</span>
 
             <table class="gtable" style="margin-top:14px">
               <thead><tr>
@@ -1285,9 +1302,8 @@
         wing area at all. On the District&rsquo;s own 14,200 sf basis the rate is <b>$886/sf</b>, only about 13% below
         new construction, which makes Option B look considerably more reasonable. That single denominator moves the
         comparison by nearly <b>$300/sf</b>, and it must be resolved before either rate is used publicly.</span></div>
-    </div>
-  
-      <div class="collbar sub" style="margin-top:14px">
+    
+<div class="collbar sub" style="margin-top:14px">
         <span class="collttl">All-in project cost &mdash; construction, architect and soft costs</span>
       </div>
       <table class="gctable">
@@ -1303,7 +1319,8 @@
         a construction-only comparison suggests.
         <span class="cite">Sources: Huckabee and WestGroup fee proposals (OPSC sliding scales); San Marino Unified
         School District, 2024 (FMP HS13 lines); Balfour Beatty Construction, 2026b. The &times;1.19 escalation is an author&rsquo;s derivation; the 25% soft-cost basis is District direction.</span></div>
-</section>
+      </div>
+    </section>
 
   <section id="dbSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">District Budget vs Proposal vs Normalized
@@ -3466,15 +3483,32 @@ async function pollData() {
       ASOF = d.asOf;
       LIVE = true;
       // Collapse every expanded section; each toggle keeps its own label logic
-document.getElementById("btnCollapseAll").addEventListener("click", () => {
-  for (let pass = 0; pass < 4; pass++) {
-    const open = [...document.querySelectorAll("button.expand-all")]
-      .filter(b => /^hide/i.test(b.textContent.trim()));
-    if (!open.length) break;
-    open.forEach(b => b.click());
+function anyOpen() {
+  return [...document.querySelectorAll("button.expand-all")].some(b => /^hide/i.test(b.textContent.trim()));
+}
+function setAll(open) {
+  for (let pass = 0; pass < 5; pass++) {
+    const t = [...document.querySelectorAll("button.expand-all")]
+      .filter(b => open ? /^show/i.test(b.textContent.trim()) : /^hide/i.test(b.textContent.trim()));
+    if (!t.length) break;
+    t.forEach(b => b.click());
   }
-  window.scrollTo({top: 0, behavior: "smooth"});
+  syncAllBtn();
+}
+function syncAllBtn() {
+  const b = document.getElementById("btnCollapseAll");
+  if (b) b.textContent = anyOpen() ? "Collapse All" : "Expand All";
+}
+document.getElementById("btnCollapseAll").addEventListener("click", () => {
+  const willOpen = !anyOpen();
+  setAll(willOpen);
+  if (!willOpen) window.scrollTo({top: 0, behavior: "smooth"});
 });
+document.addEventListener("click", e => {
+  if (e.target.classList && e.target.classList.contains("expand-all")) setTimeout(syncAllBtn, 0);
+});
+// open collapsed
+setAll(false);
 
 renderAll();
     }
