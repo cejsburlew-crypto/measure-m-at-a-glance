@@ -1714,7 +1714,22 @@
       subcontract costs, plus any approved self-performed work, plus allowances, plus other project costs, and then the
       four percentages &mdash; Developer&rsquo;s fee (&sect;2.1.7), insurance and bonds (&sect;2.1.8) and contingency
       (&sect;2.1.9.1). <b>All four are blank in the template.</b> They are filled from the RFQ/P response.
-      <span class="assump"><b>The gap: there is no stated remedy if the GMP comes in over budget.</b>
+      <span class="assump"><b>A circularity worth knowing about, and the clause that saves it.</b>
+      &sect;10.1.5.9 says in a single sentence that DSA-approved plans <i>&ldquo;shall be utilized to receive
+      subcontractor bids <b>and develop the GMP</b>&hellip; including the requirement that Developer engage in
+      competitive bidding for&hellip; all scopes of work&hellip; that constitute more than one half of one percent
+      (0.5%) <b>of the GMP</b>.&rdquo;</i> The GMP is produced <i>by</i> the bids, so at the moment bids go out there is
+      no GMP to take 0.5% of. Searched throughout: <b>&ldquo;target GMP,&rdquo; &ldquo;working GMP,&rdquo;
+      &ldquo;estimated GMP,&rdquo; &ldquo;preliminary GMP&rdquo; and &ldquo;current estimate&rdquo; are all absent.</b>
+      As drafted the test has no usable denominator, and the only candidate is Balfour&rsquo;s own preconstruction
+      estimate &mdash; which would let the contractor set the threshold that governs its own obligation, with a higher
+      assumed GMP exempting more scopes.
+      <br><br><b>It does not bite, because &sect;10.1.5.10.6 has no floor.</b> Two bona fide bids are required for
+      subcontracts <i>&ldquo;up to $100,000&rdquo;</i> and three for those above. &ldquo;Up to&rdquo; begins at zero, so
+      every subcontract needs at least two bids regardless of size, with no reference to the GMP at all. The practical
+      step is to <b>confirm in writing at preconstruction that &sect;10.1.5.10.6 governs and that &sect;10.1.5.9
+      creates no de minimis exemption</b> &mdash; before Balfour has a reason to argue otherwise.
+      <br><br><b>The real gap: there is no stated remedy if the GMP comes in over budget.</b>
       Searched across all 200 pages of the Facilities Lease &mdash; &ldquo;exceeds the budget,&rdquo;
       &ldquo;over budget,&rdquo; &ldquo;does not accept&rdquo; and &ldquo;decline to proceed&rdquo; are <b>absent</b>.
       There is no District right to reject a GMP, no price-negotiation procedure, and no off-ramp tied to the number.
@@ -3361,7 +3376,7 @@ function renderRc() {
   const BO = [
     ["Competitive subcontractor bidding", "REQUIRED", "Exhibit D &sect;10.1.5.9", "mandatory for every scope exceeding <b>0.5% of the GMP</b>"],
     ["District present at bid opening", "REQUIRED", "Exhibit D &sect;10.1.5.9", "&ldquo;the District representative shall be present during the receipt of bids from subcontractors&rdquo;"],
-    ["Minimum bids per trade", "2 or 3", "Exhibit D &sect;10.1.5.10.6", "two bids up to $100,000; <b>three bids over $100,000</b>"],
+    ["Minimum bids per trade &mdash; <b>no floor</b>", "2 or 3", "Exhibit D &sect;10.1.5.10.6", "two bids for subcontracts <b>&ldquo;up to $100,000&rdquo;</b> and three over. &ldquo;Up to&rdquo; starts at zero, so this applies to <b>every</b> subcontract irrespective of size &mdash; and it is the clause that rescues the circular 0.5% test in &sect;10.1.5.9"],
     ["All bids disclosed and ranked", "REQUIRED", "Exhibit D &sect;10.1.5.10.4&ndash;.5", "every bid by trade, the proposed subcontractor on top and the rest in descending best-value order, plus a list of firms asked to bid that did not respond"],
     ["Self-performed work", "RESTRICTED", "Exhibit D &sect;10.1.5.10.7", "prior written District approval required; Balfour must submit its own price <b>24 hours before</b> receiving subcontractor bids, and still obtain two bona fide outside bids"],
     ["Buyout savings", "TO THE DISTRICT", "Exhibit C &sect;2.4.4 + &sect;2.1.9.4", "savings are added to the Contingency, and the <b>unused portion is retained by the District</b> at the end of the Project"],
@@ -3400,7 +3415,7 @@ function renderRc() {
 
   const LOCK = [
     ["Cost of the work &mdash; scopes <b>above</b> 0.5% of the phase GMP", "<b>YES</b> &mdash; competitively bid", "Exhibit D &sect;10.1.5.9", "real bids on DSA-approved plans with the District present. Every CSI division exceeds the threshold, so all major trades are captured"],
-    ["Cost of the work &mdash; scopes <b>below</b> 0.5%", "<b>no</b> &mdash; exempt from competitive bidding", "Exhibit D &sect;10.1.5.9", "thresholds are $89,030 at Carver, $112,362 at Valentine, $139,409 at SMHS. Small scopes within divisions may be awarded without competition, though &sect;10.4 open book still discloses them"],
+    ["Cost of the work &mdash; scopes <b>below</b> 0.5%", "<b>YES</b> &mdash; still bid, via a different clause", "Exhibit D &sect;10.1.5.10.6", "the 0.5% test in &sect;10.1.5.9 appears to exempt small scopes, but &sect;10.1.5.10.6 requires <b>two bids for subcontracts &ldquo;up to $100,000&rdquo;</b> &mdash; language with no floor. Nothing escapes"],
     ["Developer&rsquo;s fee", "no", "Exhibit C &sect;2.1.7 &mdash; blank in the template", "3.25% fills a blank the contract leaves open"],
     ["Bonds and insurance", "no", "Exhibit C &sect;2.1.8 &mdash; blank", "1.00% and 1.20% fill blanks"],
     ["Contingency percentage", "no", "Exhibit C &sect;2.1.9.1 &mdash; blank", "3.00% fills a blank"],
