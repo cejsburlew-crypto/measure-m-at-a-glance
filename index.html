@@ -1299,6 +1299,42 @@
     </div>
   </section>
 
+<section id="estSection">
+  <h2>Estimated Cost &mdash; All Three Projects <span class="note">one reconciled basis, carried to the construction midpoint</span>
+    <span class="collsum" id="estSum">&hellip;</span>
+    <button type="button" class="expand-all" id="estToggle">Show Estimate</button>
+  </h2>
+  <div class="card coll" id="estCard" hidden>
+    <div class="tscroll"><table class="gctable" id="estTbl"></table></div>
+    <div class="llbhint"><b>Four measures of the same three buildings.</b> The District&rsquo;s budget is the
+      <i>LLB BB Construction</i> line for each project in Transcend. Balfour&rsquo;s figure is their April 2026
+      proposal. The normalized figure restores omitted scope and prices general conditions as
+      <b>one shared team prorated by gross square footage</b> rather than three separate full teams. The final column
+      carries that forward to a <b>December 2027 construction midpoint</b> at the published CCCI, since Balfour&rsquo;s
+      proposal carries no escalation of its own.
+      <br><br><b>The headline: about <span class="amt">$4.7M</span> above the District&rsquo;s current construction
+      budgets, and about <span class="amt">$14.4M</span> above what Balfour has proposed</b> &mdash; the second gap being
+      mostly timing rather than scope.
+      <span class="assump"><b>Two bases are mixed here, deliberately.</b> The Balfour-derived components are April 2026
+      dollars and are escalated by 10.02% to the midpoint. The Career Center and the Carver site scope are built from
+      FMP rates already escalated 12.91% from December 2024, so they are <b>not</b> escalated a second time.
+      <br><br><b>Three things are NOT deducted here, though each is arguable.</b> They are questions for Balfour, not
+      findings, and baking them in would overstate the case:
+      <br>&bull; <b>$2,038,379</b> &mdash; Carver is a single-storey building priced off the FMP&rsquo;s <i>two</i>-storey
+      rate. Its $829.95/SF sits within 0.7% of two-storey Valentine, where the FMP&rsquo;s own differential is 17%.
+      <br>&bull; <b>~$6.8M</b> &mdash; general conditions, general requirements, overhead and profit that the FMP&rsquo;s
+      rate already contains, charged again as markup. This is a benchmark gap against the FMP, not a provable
+      line-item duplication in Balfour&rsquo;s own build-up, which they have never shown.
+      <br>&bull; <b>$4,317,665</b> &mdash; markup above every rate Balfour published.
+      <br><br>If any of the three is conceded, the expected outturn falls below the District&rsquo;s budget rather than
+      above it. That is the size of what is genuinely in play.</span>
+      <span class="cite">District budgets per Transcend PM <i>LLB BB Construction</i> lines for projects 1608, 1609 and
+      1610. Proposal figures per Balfour Beatty Construction (2026), <i>Pre-Interview Submittal Project Comparison
+      Reports</i>. Escalation per the <a href="https://www.dgs.ca.gov/RESD/Resources/Page-Content/Real-Estate-Services-Division-Resources-List-Folder/DGS-California-Construction-Cost-Index-CCCI" target="_blank" rel="noopener">California Construction Cost Index</a>.</span>
+    </div>
+  </div>
+</section>
+
 <section id="dbSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">District Budget vs Proposal vs Normalized
       <span class="note">the July 28 rebudget, and what it independently says about the normalized estimates</span>
@@ -3180,9 +3216,9 @@ const FMP_ESC = 0.0857;  // CCCI Dec 2024 (9,876) -> Dec 2026 (10,722). Was an u
 // either side - Balfour's totals carry their own GC's/GR's/fee/bonds/contingency but no District soft cost.
 const FMP_VS = [
   {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, basis: ["NEW construction, one-story", "FMP rate $595.00/SF"],
-   fmp: 17580 * 595.00, act: 17805933, corr: 17805933},
+   fmp: 17580 * 595.00, act: 17805933, corr: 16900942},
   {b: "Valentine ES &mdash; CR / MPR / Kitchen", sf: 22044, basis: ["NEW construction, two-story", "FMP rate $696.15/SF"],
-   fmp: 22044 * 696.15, act: 22472400, corr: 22911984},
+   fmp: 22044 * 696.15, act: 22472400, corr: 21742835},
   // corr matches the BB-vs-Normalized table exactly: restored scope of $102.74/SF (Division 07 HALVED
   // to $37.92/SF of gross + Exterior Improvements $45.00 + utilities $6.50 + minor divisions $13.32),
   // marked up at SMHS's own cost-scaling rate, plus 4 further months of general conditions. The former
@@ -3332,6 +3368,42 @@ const RC_PCT = 8.45;                 // fee 3.25 + bond 1.00 + GL 1.20 + conting
 const RC_D = RC.reduce((a, r) => a + r.direct, 0);
 const RC_M = RC.reduce((a, r) => a + r.markup, 0);
 const RC_RATE = RC.reduce((a, r) => a + r.markup / r.sf, 0) / RC.length;
+// ---- Reconciled estimate for all three projects, on one basis ----
+const EST_E2 = 11151 / 10135;   // Apr 2026 BB pricing -> Dec 2027 construction midpoint
+const EST = [
+  {n: "San Marino HS &mdash; STEM Building + Career Center", pid: 1608, bud: 35096190, bb: 29135996, bbBase: 32846644, fmpBase: 2348649},
+  {n: "Valentine ES &mdash; MPR, Kitchen, Classrooms 1&ndash;5", pid: 1609, bud: 22911984, bb: 22472400, bbBase: 21742835, fmpBase: 0},
+  {n: "Carver ES &mdash; TK/KG Building + Site Scope", pid: 1610, bud: 21074034, bb: 17805933, bbBase: 16900942, fmpBase: 2766295}
+];
+function renderEst() {
+  const row = e => {
+    const norm = e.bbBase + e.fmpBase;
+    const d27 = Math.round(e.bbBase * EST_E2) + e.fmpBase;
+    return {norm, d27, esc: d27 - norm, vb: d27 - e.bud};
+  };
+  const T = {bud: 0, bb: 0, norm: 0, d27: 0, esc: 0};
+  const body = EST.map(e => {
+    const r = row(e);
+    T.bud += e.bud; T.bb += e.bb; T.norm += r.norm; T.d27 += r.d27; T.esc += r.esc;
+    return `<tr><td style="text-align:left"><b>${e.n}</b><span class="gcnote" style="margin:0">project ${e.pid}</span></td>
+      <td>${fmt(e.bud)}</td><td>${fmt(e.bb)}</td><td>${fmt(r.norm)}</td>
+      <td>${fmt(r.esc)}</td><td><b>${fmt(r.d27)}</b></td>
+      <td><span class="psf ${r.vb > 0 ? "b3" : "b1"}">${r.vb > 0 ? "+" : "&minus;"}${fmt(Math.abs(r.vb))}</span></td></tr>`;
+  }).join("");
+  document.getElementById("estTbl").innerHTML =
+    `<thead><tr><th>Project</th><th>District<br>budget</th><th>Balfour<br>as proposed</th>
+      <th>Normalized<br>Apr 2026</th><th>+ escalation<br>to Dec 2027</th><th>Expected<br>outturn</th>
+      <th>vs District<br>budget</th></tr></thead><tbody>` + body +
+    `<tr class="actual"><td style="text-align:left"><b>TOTAL</b></td><td><b>${fmt(T.bud)}</b></td>
+      <td><b>${fmt(T.bb)}</b></td><td><b>${fmt(T.norm)}</b></td><td><b>${fmt(T.esc)}</b></td>
+      <td><b>${fmt(T.d27)}</b></td><td><b>+${fmt(T.d27 - T.bud)}</b></td></tr>
+     <tr><td style="text-align:left">Expected outturn against Balfour&rsquo;s proposal</td>
+      <td colspan="5"><span class="gcnote" style="margin:0">of which ${fmt(T.esc)} is escalation and ${fmt(T.norm - T.bb)} is normalized scope and general conditions</span></td>
+      <td><b>+${fmt(T.d27 - T.bb)}</b></td></tr></tbody>`;
+  const el = document.getElementById("estSum");
+  if (el) el.textContent = fmt(T.d27) + " expected \u00b7 " + fmt(T.bud) + " budgeted \u00b7 +" + fmt(T.d27 - T.bud);
+}
+
 function renderRc() {
   const psf = RC.map(r => r.markup / r.sf);
   document.getElementById("rcRate").innerHTML =
@@ -3447,6 +3519,7 @@ function renderFix() {
   renderThree();
   renderBuildUps();
   renderRc();
+  renderEst();
   const rows = [
     {n: "Carver ES &mdash; New TK &amp; KG", as: 17805933, no: 17773929, sf: 17580,
      note: "Divisions complete, and single-story, so gross area is also the roof and slab area &mdash; its $75.84/SF Division 07 needs no geometry correction. Comes in slightly <b>under</b> because the 12-month GC price marginally exceeds 12 months of actual general conditions. <i>Footnote: 12 &times; $99,891 = $1,198,692 does not exactly reconcile to Balfour&rsquo;s stated $1,230,696 GC total; the $32,004 difference is left unresolved as immaterial.</i>"},
@@ -3698,10 +3771,10 @@ const nameOf = pid => { const p = PROJECTS.find(x => x.pid === pid); return p ? 
 const DB_ROWS = [
   {pid: 1608, label: "San Marino HS &mdash; New Two-Story STEM Building", norm: 32846644 + 2348649, bb: 29135996,
    note: "normalized is the STEM building $32,846,644 + Career Center $2,348,649. Balfour&rsquo;s figure is their bundled project total, which is the right comparison here because the District&rsquo;s construction line funds both scopes"},
-  {pid: 1610, label: "Carver ES &mdash; New TK/KG Building &amp; Play Yard", norm: 17773929 + 2766295, bb: 17805933,
-   note: "normalized is the building $17,773,929 + $2,766,295 of play yards and classroom modernization that sit outside Balfour&rsquo;s contract line but inside the District&rsquo;s project"},
-  {pid: 1609, label: "Valentine ES &mdash; MPR, Kitchen, 1&ndash;5 Classrooms", norm: 22911984, bb: 22472400,
-   note: "no potential scope gaps identified; the normalization is entirely the general-conditions schedule"}
+  {pid: 1610, label: "Carver ES &mdash; New TK/KG Building &amp; Play Yard", norm: 16900942 + 2766295, bb: 17805933,
+   note: "normalized is the building $16,900,942 + $2,766,295 of play yards and classroom modernization that sit outside Balfour&rsquo;s contract line but inside the District&rsquo;s project"},
+  {pid: 1609, label: "Valentine ES &mdash; MPR, Kitchen, 1&ndash;5 Classrooms", norm: 21742835, bb: 22472400,
+   note: "no potential scope gaps identified; the normalization is entirely the general-conditions schedule. <b>Note the District&rsquo;s budget line of $22,911,984 is Balfour&rsquo;s proposal plus four further months of a <i>full</i> general-conditions team</b> &mdash; the normalization instead prorates one shared team across all three sites, which is why it sits $1,169,149 lower"}
 ];
 function renderDb() {
   let tc = 0, tn = 0, tb = 0;
@@ -3906,7 +3979,8 @@ const COLLAPSIBLES = [
   ["watchToggle",  "watch",     "Show Items",      "Hide Items"],
   ["refToggle",    "refCard",   "Show References", "Hide References"],
   ["dbToggle",     "dbCard",    "Show Comparison", "Hide Comparison"],
-  ["rcToggle",     "rcCard",    "Show Analysis",   "Hide Analysis"]
+  ["rcToggle",     "rcCard",    "Show Analysis",   "Hide Analysis"],
+  ["estToggle",    "estCard",   "Show Estimate",   "Hide Estimate"]
 ];
 COLLAPSIBLES.forEach(([bid, tid, showLbl, hideLbl]) => {
   const btn = document.getElementById(bid), tgt = document.getElementById(tid);
