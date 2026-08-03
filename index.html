@@ -2713,14 +2713,18 @@ function paintBands(arr, tbodyId, lo, hi, mark) {
   body.innerHTML = arr.map(b => {
     const left = pos(b.lo), w = (pos(b.hi) - pos(b.lo)).toFixed(1);
     const prem = b.k === "dbb" ? '<span class="gcnote">baseline for comparison</span>'
-      : `<span class="gcnote">+${(100*((b.lo+b.hi)/2/((arr[0].lo+arr[0].hi)/2)-1)).toFixed(1)}% vs DBB midpoint</span>`;
+      : `<span class="gcnote">${b.open
+          ? "from +" + (100*(b.lo/((arr[0].lo+arr[0].hi)/2)-1)).toFixed(1) + "% above the DBB midpoint, open-ended"
+          : "+" + (100*((b.lo+b.hi)/2/((arr[0].lo+arr[0].hi)/2)-1)).toFixed(1) + "% vs DBB midpoint"}</span>`;
     const inBand = mark != null && mark >= b.lo && mark < b.hi;
     const below = mark != null && b.k === "dbb" && mark < b.lo;
     const hit = (inBand || below)
       ? `<i class="bmark" style="left:${pos(mark)}%" title="Balfour prices the Career Center at $${mark}/SF${below ? " - below every band" : ""}"></i>` : "";
     return `<tr>
       <td>${b.label}${b.tag ? ` <span class="gtag">${b.tag}</span>` : ""}${prem}</td>
-      <td class="gsf">$${b.lo.toLocaleString()}&ndash;${b.hi.toLocaleString()}${b.open ? "+" : ""} / SF</td>
+      <td class="gsf">${b.open
+        ? "$" + b.lo.toLocaleString() + " and above"
+        : "$" + b.lo.toLocaleString() + "&ndash;" + b.hi.toLocaleString()} / SF</td>
       <td><span class="gscale"><i style="left:${left}%;width:${w}%;background:${b.color}"></i>${
         b.open ? `<i style="left:${pos(b.hi)}%;width:${(100-pos(b.hi)).toFixed(1)}%;background:${b.color};opacity:0.45"></i>` : ""}${hit}</span></td>
     </tr>`;
