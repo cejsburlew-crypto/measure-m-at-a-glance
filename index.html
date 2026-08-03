@@ -1238,7 +1238,143 @@
     </div><!-- /fmpCard -->
   </section>
 
-  <section id="mvnSection">
+<section id="bondSection">
+    <h2>Bond Authorization &amp; Release <span class="note">program level</span>
+      <span class="collsum" id="bondSum">&hellip;</span>
+      <button type="button" class="expand-all" id="bondToggle">Show Ladder</button>
+    </h2>
+    <div class="coll" id="bondCard" hidden>
+    <div class="card">
+      <div class="legend" style="margin:0 0 12px">
+        <span id="siteKey" style="display:contents"></span>
+        <span><span class="sw" style="background:var(--track)"></span>Full track = its parent total (the one named in the %)</span>
+      </div>
+      <div class="ladder-note" style="margin:0 0 14px">
+      <b>Necessary FMP Exclusions</b> &mdash; the Facilities Master Plan estimate excluded certain services that are
+      critical to delivering the program (construction management, CEQA, geotechnical and survey services,
+      pre-qualification and bond financial software, districtwide assessments). They are carried here as their own
+      cost center, which is why its commitments run ahead of the nominal budget line &mdash; a budget true-up, not an overrun.
+    </div>
+      <div class="bondfacts">
+        <span><b>$200,000,000</b> Measure M Bond</span>
+        <span>Passed <b>November 2024</b> &middot; <b>71%</b> voter approval</span>
+        <span>Funds source: <b>2024 Measure M &mdash; Series A</b></span>
+        <span id="bfAsof">Data as of <b>July 23, 2026</b></span>
+      </div>
+      <div class="ladder" id="ladder"></div>
+      <div class="ladder-note" id="ladderNote"></div>
+    </div>
+  </div>
+  </section>
+
+<section id="siteSection">
+    <h2 style="display:flex">Site Rollup
+      <span class="collsum" id="siteSum">&hellip;</span>
+      <span class="note">click a site for its projects, a project for its delivery packages, a package for its PO detail</span>
+      <button class="expand-all" id="toggleAll" type="button">Expand All</button>
+    </h2>
+    <div id="siteCards"></div>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--invoiced)"></span>Completed Pay Requests</span>
+      <span><span class="sw" style="background:var(--review)"></span>In Process Pay Requests</span>
+      <span><span class="sw" style="background:var(--ink-3)"></span>Remaining to Be Invoiced</span>
+      <span><span class="sw" style="background:var(--track)"></span>Uncommitted Budget</span>
+      <span style="color:var(--ink-3)">Donut = share of each site&rsquo;s estimated budget; the three committed slices sum to Committed PO's. Uncommitted = Est. Budget &minus; Committed; <b>over budget</b> means PO's exceed the current estimate, so Uncommitted runs negative until the budget is trued up.</span>
+    </div>
+  </section>
+
+<section id="dbSection">
+    <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">District Budget vs Proposal vs Normalized
+      <span class="note">the July 28 rebudget, and what it independently says about the normalized estimates</span>
+      <span class="collsum" id="dbSum">&hellip;</span>
+      <button type="button" class="expand-all" id="dbToggle" style="margin-left:auto">Show Comparison</button>
+    </h2>
+    <div class="card coll" id="dbCard" hidden>
+      <div class="ladder-note" style="margin:0 0 14px">
+        <b>The District revised its budgets sharply on July 28, and each project&rsquo;s construction budget line is now
+        exactly the normalized estimate &mdash; to the dollar, on all three.</b> The comparison below is made against the
+        <b>LLB BB Construction</b> line inside each project, not against the all-in project budget. That distinction is
+        the whole point of this section: an all-in budget also carries soft costs, architectural services and DPOR,
+        interim housing, geotechnical work and preconstruction, none of which Balfour&rsquo;s proposal prices. Comparing
+        a construction-only proposal against an all-in budget overstates the District&rsquo;s coverage by roughly a fifth
+        and is a mistake this page previously made.
+        <span class="assump"><b>The exact match means the District has adopted the normalized figures as its budget
+        basis &mdash; it is not independent confirmation that those figures are correct.</b> Numbers that agree to the
+        dollar share an origin. Treat this as evidence of what the District is funding, never as a second opinion on the
+        analysis.</span>
+      </div>
+
+      <div class="llbcap">The District&rsquo;s construction budget line against normalized cost and against Balfour&rsquo;s proposal
+        <span class="eq">&mdash; compared against the <b>LLB BB Construction</b> line only, which is the sole line Balfour&rsquo;s proposal covers</span>
+        <span class="cite">Sources: Transcend PM, 2026, July 28, program budget tree (budget lines); Balfour Beatty Construction, 2026b (proposal)</span>
+      </div>
+      <table class="gctable">
+        <thead><tr>
+          <th>Project</th><th>LLB BB Construction<span class="thsub">budget line</span></th>
+          <th>Normalized Estimate</th><th>Difference</th>
+          <th>BB Proposal</th><th>Budget above BB</th>
+        </tr></thead>
+        <tbody id="dbBody"></tbody>
+      </table>
+      <div class="llbhint" style="margin-bottom:12px" id="dbConcl"></div>
+
+      <div class="llbcap" style="margin-top:14px">What each project&rsquo;s budget actually contains
+        <span class="eq">&mdash; the line items behind the all-in figure, showing how much of a project sits outside the construction contract</span>
+        <span class="cite">Source: Transcend PM, 2026, July 28, <code>get_program_budget_tree</code>; each project&rsquo;s lines sum to its stated total to the cent</span>
+      </div>
+      <table class="gctable">
+        <thead><tr>
+          <th>Budget Line</th><th>San Marino HS<span class="thsub">project 1608</span></th>
+          <th>Carver ES<span class="thsub">project 1610</span></th>
+          <th>Valentine ES<span class="thsub">project 1609</span></th>
+        </tr></thead>
+        <tbody id="dbLineBody"></tbody>
+      </table>
+      <div class="llbhint" style="margin-bottom:12px" id="dbLineNote"></div>
+
+      <div class="llbcap" style="margin-top:14px">What moved between July 26 and July 28
+        <span class="eq">&mdash; computed from the two published feeds, largest movements first</span>
+        <span class="cite">Source: Transcend PM, 2026, July 28, compared against the July 26 feed</span>
+      </div>
+      <table class="gctable">
+        <thead><tr><th>Project</th><th>July 26</th><th>July 28</th><th>Change</th></tr></thead>
+        <tbody id="dbMoveBody"></tbody>
+      </table>
+
+      <div class="llbcap" style="margin-top:14px">Roofing &mdash; reduced at three sites in the same update
+        <span class="eq">&mdash; shown against what the 2024 FMP originally carried for roofing at each site</span>
+        <span class="cite">Sources: Transcend PM, 2026, July 28; San Marino Unified School District, 2024 (ProjList_Mod roofing line items C3, V3, H3, HS3)</span>
+      </div>
+      <table class="gctable">
+        <thead><tr>
+          <th>Site</th><th>FMP Roofing Line<span class="thsub">construction &rarr; loaded +33%</span></th>
+          <th>Budget July 26</th><th>Budget July 28</th><th>Change</th><th>vs FMP Loaded</th>
+        </tr></thead>
+        <tbody id="dbRoofBody"></tbody>
+      </table>
+      <div class="llbhint" style="margin-bottom:12px" id="dbRoofNote"></div>
+    </div>
+  </section>
+
+<section id="bdSection">
+    <h2>How each LLB Construction budget is built <span class="note">every line traceable to Balfour&rsquo;s own figures, their own rates, or a District decision</span>
+      <span class="collsum" id="bdSum">&hellip;</span>
+      <button type="button" class="expand-all" id="bdToggle">Show Build-Ups</button>
+    </h2>
+    <div class="card coll" id="bdCard" hidden>
+      <div id="bdWrap"></div>
+      <div class="llbhint">Direct costs and markup pools are Balfour&rsquo;s own, from their Project Comparison Reports.
+        The cost-scaling markup rate for each project is derived by removing time-based general conditions and fixed
+        preconstruction from their markup pool, so restored scope carries their rate and nothing is double-counted.
+        General conditions are re-priced as one shared site team of $109,896 per month, prorated by gross square feet
+        among the projects active in each month across an 18-month program &mdash; not three full teams.
+        <span class="cite">Sources: Balfour Beatty Construction, 2026a (fee proposal, general conditions) and 2026b
+        (Project Comparison Reports); San Marino Unified School District, 2024 (FMP rates); Burlew, J. (2026, July 28),
+        personal communication (Division 07 footprint basis, shared-team assumption, schedule).</span></div>
+    </div>
+  </section>
+
+<section id="mvnSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">Modernize or Build New &mdash; San Marino HS
       <span class="note">the same teaching space delivered two ways &mdash; a scope decision, not a budget variance</span>
       <span class="collsum" id="mvnSum">&hellip;</span>
@@ -1330,97 +1466,6 @@
       </div>
     </section>
 
-  <section id="dbSection">
-    <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">District Budget vs Proposal vs Normalized
-      <span class="note">the July 28 rebudget, and what it independently says about the normalized estimates</span>
-      <span class="collsum" id="dbSum">&hellip;</span>
-      <button type="button" class="expand-all" id="dbToggle" style="margin-left:auto">Show Comparison</button>
-    </h2>
-    <div class="card coll" id="dbCard" hidden>
-      <div class="ladder-note" style="margin:0 0 14px">
-        <b>The District revised its budgets sharply on July 28, and each project&rsquo;s construction budget line is now
-        exactly the normalized estimate &mdash; to the dollar, on all three.</b> The comparison below is made against the
-        <b>LLB BB Construction</b> line inside each project, not against the all-in project budget. That distinction is
-        the whole point of this section: an all-in budget also carries soft costs, architectural services and DPOR,
-        interim housing, geotechnical work and preconstruction, none of which Balfour&rsquo;s proposal prices. Comparing
-        a construction-only proposal against an all-in budget overstates the District&rsquo;s coverage by roughly a fifth
-        and is a mistake this page previously made.
-        <span class="assump"><b>The exact match means the District has adopted the normalized figures as its budget
-        basis &mdash; it is not independent confirmation that those figures are correct.</b> Numbers that agree to the
-        dollar share an origin. Treat this as evidence of what the District is funding, never as a second opinion on the
-        analysis.</span>
-      </div>
-
-      <div class="llbcap">The District&rsquo;s construction budget line against normalized cost and against Balfour&rsquo;s proposal
-        <span class="eq">&mdash; compared against the <b>LLB BB Construction</b> line only, which is the sole line Balfour&rsquo;s proposal covers</span>
-        <span class="cite">Sources: Transcend PM, 2026, July 28, program budget tree (budget lines); Balfour Beatty Construction, 2026b (proposal)</span>
-      </div>
-      <table class="gctable">
-        <thead><tr>
-          <th>Project</th><th>LLB BB Construction<span class="thsub">budget line</span></th>
-          <th>Normalized Estimate</th><th>Difference</th>
-          <th>BB Proposal</th><th>Budget above BB</th>
-        </tr></thead>
-        <tbody id="dbBody"></tbody>
-      </table>
-      <div class="llbhint" style="margin-bottom:12px" id="dbConcl"></div>
-
-      <div class="llbcap" style="margin-top:14px">What each project&rsquo;s budget actually contains
-        <span class="eq">&mdash; the line items behind the all-in figure, showing how much of a project sits outside the construction contract</span>
-        <span class="cite">Source: Transcend PM, 2026, July 28, <code>get_program_budget_tree</code>; each project&rsquo;s lines sum to its stated total to the cent</span>
-      </div>
-      <table class="gctable">
-        <thead><tr>
-          <th>Budget Line</th><th>San Marino HS<span class="thsub">project 1608</span></th>
-          <th>Carver ES<span class="thsub">project 1610</span></th>
-          <th>Valentine ES<span class="thsub">project 1609</span></th>
-        </tr></thead>
-        <tbody id="dbLineBody"></tbody>
-      </table>
-      <div class="llbhint" style="margin-bottom:12px" id="dbLineNote"></div>
-
-      <div class="llbcap" style="margin-top:14px">What moved between July 26 and July 28
-        <span class="eq">&mdash; computed from the two published feeds, largest movements first</span>
-        <span class="cite">Source: Transcend PM, 2026, July 28, compared against the July 26 feed</span>
-      </div>
-      <table class="gctable">
-        <thead><tr><th>Project</th><th>July 26</th><th>July 28</th><th>Change</th></tr></thead>
-        <tbody id="dbMoveBody"></tbody>
-      </table>
-
-      <div class="llbcap" style="margin-top:14px">Roofing &mdash; reduced at three sites in the same update
-        <span class="eq">&mdash; shown against what the 2024 FMP originally carried for roofing at each site</span>
-        <span class="cite">Sources: Transcend PM, 2026, July 28; San Marino Unified School District, 2024 (ProjList_Mod roofing line items C3, V3, H3, HS3)</span>
-      </div>
-      <table class="gctable">
-        <thead><tr>
-          <th>Site</th><th>FMP Roofing Line<span class="thsub">construction &rarr; loaded +33%</span></th>
-          <th>Budget July 26</th><th>Budget July 28</th><th>Change</th><th>vs FMP Loaded</th>
-        </tr></thead>
-        <tbody id="dbRoofBody"></tbody>
-      </table>
-      <div class="llbhint" style="margin-bottom:12px" id="dbRoofNote"></div>
-    </div>
-  </section>
-
-    <section id="bdSection">
-    <h2>How each LLB Construction budget is built <span class="note">every line traceable to Balfour&rsquo;s own figures, their own rates, or a District decision</span>
-      <span class="collsum" id="bdSum">&hellip;</span>
-      <button type="button" class="expand-all" id="bdToggle">Show Build-Ups</button>
-    </h2>
-    <div class="card coll" id="bdCard" hidden>
-      <div id="bdWrap"></div>
-      <div class="llbhint">Direct costs and markup pools are Balfour&rsquo;s own, from their Project Comparison Reports.
-        The cost-scaling markup rate for each project is derived by removing time-based general conditions and fixed
-        preconstruction from their markup pool, so restored scope carries their rate and nothing is double-counted.
-        General conditions are re-priced as one shared site team of $109,896 per month, prorated by gross square feet
-        among the projects active in each month across an 18-month program &mdash; not three full teams.
-        <span class="cite">Sources: Balfour Beatty Construction, 2026a (fee proposal, general conditions) and 2026b
-        (Project Comparison Reports); San Marino Unified School District, 2024 (FMP rates); Burlew, J. (2026, July 28),
-        personal communication (Division 07 footprint basis, shared-team assumption, schedule).</span></div>
-    </div>
-  </section>
-
 <section id="idSection">
     <h2>FMP Line-Item Allocation &mdash; SMHS Project 1608 <span class="note">which ProjList_Mod IDs fund the new two-storey building, and what share of each is defensible</span>
       <span class="collsum" id="idSum">&hellip;</span>
@@ -1450,7 +1495,7 @@
     </div>
   </section>
 
-  <section id="tcSection">
+<section id="tcSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">Evaluating True Project Cost <span class="note">Lease-Leaseback proposal checklist &mdash; what actually moves the final number</span>
       <span class="collsum" id="tcSum">&hellip;</span>
       <button type="button" class="expand-all" id="tcToggle" style="margin-left:auto">Show Checklist</button>
@@ -1506,51 +1551,7 @@
     </div>
   </section>
 
-  <section id="bondSection">
-    <h2>Bond Authorization &amp; Release <span class="note">program level</span>
-      <span class="collsum" id="bondSum">&hellip;</span>
-      <button type="button" class="expand-all" id="bondToggle">Show Ladder</button>
-    </h2>
-    <div class="coll" id="bondCard" hidden>
-    <div class="card">
-      <div class="legend" style="margin:0 0 12px">
-        <span id="siteKey" style="display:contents"></span>
-        <span><span class="sw" style="background:var(--track)"></span>Full track = its parent total (the one named in the %)</span>
-      </div>
-      <div class="ladder-note" style="margin:0 0 14px">
-      <b>Necessary FMP Exclusions</b> &mdash; the Facilities Master Plan estimate excluded certain services that are
-      critical to delivering the program (construction management, CEQA, geotechnical and survey services,
-      pre-qualification and bond financial software, districtwide assessments). They are carried here as their own
-      cost center, which is why its commitments run ahead of the nominal budget line &mdash; a budget true-up, not an overrun.
-    </div>
-      <div class="bondfacts">
-        <span><b>$200,000,000</b> Measure M Bond</span>
-        <span>Passed <b>November 2024</b> &middot; <b>71%</b> voter approval</span>
-        <span>Funds source: <b>2024 Measure M &mdash; Series A</b></span>
-        <span id="bfAsof">Data as of <b>July 23, 2026</b></span>
-      </div>
-      <div class="ladder" id="ladder"></div>
-      <div class="ladder-note" id="ladderNote"></div>
-    </div>
-  </div>
-  </section>
-
-  <section>
-    <h2 style="display:flex">Site Rollup
-      <span class="collsum" id="siteSum">&hellip;</span>
-      <span class="note">click a site for its projects, a project for its delivery packages, a package for its PO detail</span>
-      <button class="expand-all" id="toggleAll" type="button">Expand All</button>
-    </h2>
-    <div id="siteCards"></div>
-    <div class="legend">
-      <span><span class="sw" style="background:var(--invoiced)"></span>Completed Pay Requests</span>
-      <span><span class="sw" style="background:var(--review)"></span>In Process Pay Requests</span>
-      <span><span class="sw" style="background:var(--ink-3)"></span>Remaining to Be Invoiced</span>
-      <span><span class="sw" style="background:var(--track)"></span>Uncommitted Budget</span>
-      <span style="color:var(--ink-3)">Donut = share of each site&rsquo;s estimated budget; the three committed slices sum to Committed PO's. Uncommitted = Est. Budget &minus; Committed; <b>over budget</b> means PO's exceed the current estimate, so Uncommitted runs negative until the budget is trued up.</span>
-    </div>
-
-  <section id="coSection">
+<section id="coSection">
     <h2>Challenges and Opportunities <span class="note">saved with version history in this browser &mdash; the latest version prints at the bottom of the PDF</span>
       <span class="collsum" id="coSum">&hellip;</span>
       <button type="button" class="expand-all" id="coToggle">Show Notes</button>
@@ -1568,9 +1569,8 @@
     </div>
   </div>
   </section>
-  </section>
 
-  <section id="watchSection">
+<section id="watchSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">Watch Items <span class="note">Balfour proposal items to reconcile, then exceptions computed from the data &mdash; shown on screen, excluded from PDF export</span>
       <span class="collsum" id="watchSum">&hellip;</span>
       <button type="button" class="expand-all" id="watchToggle" style="margin-left:auto">Hide Items</button>
@@ -1578,7 +1578,7 @@
     <div class="watch coll" id="watch"></div>
   </section>
 
-  <section id="plSection">
+<section id="plSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">2024 FMP Project List <span class="note">ProjList_Mod &mdash; assign each to a Transcend project and every total on this page follows</span>
       <span class="collsum" id="plSum">&hellip;</span>
       <button type="button" class="expand-all" id="plToggle" style="margin-left:auto">Show List</button>
@@ -1602,9 +1602,7 @@
     </div>
   </section>
 
-
-
-  <section id="refSection">
+<section id="refSection">
     <h2 style="display:flex;align-items:baseline;flex-wrap:wrap">References and Basis of Analysis
       <span class="note">every figure on this page traces to a source document, a worksheet row, or an author&rsquo;s derivation declared as such</span>
       <span class="collsum" id="refSum">&hellip;</span>
