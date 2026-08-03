@@ -3242,7 +3242,11 @@ function renderFmpVs() {
       <td>${r.b}<span class="gcnote">${r.sf.toLocaleString()} GSF</span>${r.basis.map(x => `<span class="gcnote">${x}</span>`).join("")}</td>
       <td>${fmt(r.fmp)}</td>
       <td>${fmt(r.act)}<span class="gcnote">${p > 0 ? "+" : ""}${p.toFixed(1)}% vs FMP</span></td>
-      <td><b>${fmt(r.corr)}</b>${r.corr !== r.act ? `<span class="gcnote">+${fmt(r.corr - r.act)} restored</span>` : `<span class="gcnote">no adjustment</span>`}</td>
+      <td><b>${fmt(r.corr)}</b>${r.corr === r.act
+        ? `<span class="gcnote">no adjustment</span>`
+        : (r.corr > r.act
+           ? `<span class="gcnote">+${fmt(r.corr - r.act)} omitted scope restored</span>`
+           : `<span class="gcnote">&minus;${fmt(r.act - r.corr)} general conditions reduced to a shared team</span>`)}</td>
       <td><span class="psf ${cls(pc)}">${pc > 0 ? "+" : ""}${pc.toFixed(1)}%</span></td>
       <td><span class="psf ${cls(resid)}">${resid > 0 ? "+" : ""}${resid.toFixed(1)}%</span></td>
       <td>$${Math.round(r.fmp / r.sf)} &rarr; $${Math.round(r.corr / r.sf)}</td>
@@ -3368,40 +3372,58 @@ const RC_PCT = 8.45;                 // fee 3.25 + bond 1.00 + GL 1.20 + conting
 const RC_D = RC.reduce((a, r) => a + r.direct, 0);
 const RC_M = RC.reduce((a, r) => a + r.markup, 0);
 const RC_RATE = RC.reduce((a, r) => a + r.markup / r.sf, 0) / RC.length;
-// ---- Reconciled estimate for all three projects, on one basis ----
-const EST_E2 = 11151 / 10135;   // Apr 2026 BB pricing -> Dec 2027 construction midpoint
+// ---- Reconciled estimate: FMP escalated | Balfour as proposed | normalized with escalation ----
+const EST_ESC = 1.1291;          // FMP Dec 2024 basis -> Dec 2027 construction midpoint
+const EST_E2  = 11151 / 10135;   // Balfour Apr 2026 pricing -> Dec 2027 construction midpoint
 const EST = [
-  {n: "San Marino HS &mdash; STEM Building + Career Center", pid: 1608, bud: 35096190, bb: 29135996, bbBase: 32846644, fmpBase: 2348649},
-  {n: "Valentine ES &mdash; MPR, Kitchen, Classrooms 1&ndash;5", pid: 1609, bud: 22911984, bb: 22472400, bbBase: 21742835, fmpBase: 0},
-  {n: "Carver ES &mdash; TK/KG Building + Site Scope", pid: 1610, bud: 21074034, bb: 17805933, bbBase: 16900942, fmpBase: 2766295}
+  {n: "San Marino HS", pid: 1608, bud: 35096190, bb: 29135996,
+   parts: [{d: "New Two-Story STEM Building", fmp: 696.15 * 31556, base: 32846644, norm: 32846644 * EST_E2},
+           {d: "Career Center / Library", fmp: 333.20 * 5226, norm: 2348649}]},
+  {n: "Valentine ES", pid: 1609, bud: 22911984, bb: 22472400,
+   parts: [{d: "MPR, kitchen, classrooms 1&ndash;5", fmp: 696.15 * 22044, base: 21742835, norm: 21742835 * EST_E2}]},
+  {n: "Carver ES", pid: 1610, bud: 21074034, bb: 17805933,
+   parts: [{d: "New TK / KG building", fmp: 595.00 * 17580, base: 16900942, norm: 16900942 * EST_E2},
+           {d: "Site scope outside Balfour&rsquo;s contract", fmp: 2450000, norm: 2766295}]}
 ];
+// escalation carried in column 3 = the BB-derived components only; the FMP-derived ones
+// (Career Center, Carver site scope) are already at Dec 2027 and are not escalated twice.
+const EST_ESCALATION = EST.reduce((a, e) =>
+  a + e.parts.reduce((b, p) => b + (p.base ? Math.round(p.base * EST_E2) - p.base : 0), 0), 0);
 function renderEst() {
-  const row = e => {
-    const norm = e.bbBase + e.fmpBase;
-    const d27 = Math.round(e.bbBase * EST_E2) + e.fmpBase;
-    return {norm, d27, esc: d27 - norm, vb: d27 - e.bud};
-  };
-  const T = {bud: 0, bb: 0, norm: 0, d27: 0, esc: 0};
+  const T = {c1: 0, c2: 0, c3: 0, bud: 0};
   const body = EST.map(e => {
-    const r = row(e);
-    T.bud += e.bud; T.bb += e.bb; T.norm += r.norm; T.d27 += r.d27; T.esc += r.esc;
+    const c1 = e.parts.reduce((a, p) => a + Math.round(p.fmp * EST_ESC), 0);
+    const c3 = e.parts.reduce((a, p) => a + Math.round(p.norm), 0);
+    T.c1 += c1; T.c2 += e.bb; T.c3 += c3; T.bud += e.bud;
+    const sub = e.parts.length > 1
+      ? e.parts.map(p => `<tr class="estsub"><td style="text-align:left">&nbsp;&nbsp;${p.d}</td>
+          <td>${fmt(Math.round(p.fmp * EST_ESC))}</td><td>&mdash;</td><td>${fmt(Math.round(p.norm))}</td><td></td></tr>`).join("")
+      : "";
     return `<tr><td style="text-align:left"><b>${e.n}</b><span class="gcnote" style="margin:0">project ${e.pid}</span></td>
-      <td>${fmt(e.bud)}</td><td>${fmt(e.bb)}</td><td>${fmt(r.norm)}</td>
-      <td>${fmt(r.esc)}</td><td><b>${fmt(r.d27)}</b></td>
-      <td><span class="psf ${r.vb > 0 ? "b3" : "b1"}">${r.vb > 0 ? "+" : "&minus;"}${fmt(Math.abs(r.vb))}</span></td></tr>`;
+      <td>${fmt(c1)}</td><td>${fmt(e.bb)}</td><td><b>${fmt(c3)}</b></td>
+      <td><span class="psf ${c3 > c1 ? "b3" : "b1"}">+${fmt(c3 - c1)}</span></td></tr>` + sub;
   }).join("");
   document.getElementById("estTbl").innerHTML =
-    `<thead><tr><th>Project</th><th>District<br>budget</th><th>Balfour<br>as proposed</th>
-      <th>Normalized<br>Apr 2026</th><th>+ escalation<br>to Dec 2027</th><th>Expected<br>outturn</th>
-      <th>vs District<br>budget</th></tr></thead><tbody>` + body +
-    `<tr class="actual"><td style="text-align:left"><b>TOTAL</b></td><td><b>${fmt(T.bud)}</b></td>
-      <td><b>${fmt(T.bb)}</b></td><td><b>${fmt(T.norm)}</b></td><td><b>${fmt(T.esc)}</b></td>
-      <td><b>${fmt(T.d27)}</b></td><td><b>+${fmt(T.d27 - T.bud)}</b></td></tr>
-     <tr><td style="text-align:left">Expected outturn against Balfour&rsquo;s proposal</td>
-      <td colspan="5"><span class="gcnote" style="margin:0">of which ${fmt(T.esc)} is escalation and ${fmt(T.norm - T.bb)} is normalized scope and general conditions</span></td>
-      <td><b>+${fmt(T.d27 - T.bb)}</b></td></tr></tbody>`;
+    `<thead><tr>
+      <th>Project</th>
+      <th>1 &middot; FMP estimated cost<br><span class="thsub">the District&rsquo;s own 2024 rates, escalated 12.91% to Dec 2027</span></th>
+      <th>2 &middot; Balfour estimated cost<br><span class="thsub">as proposed, April 2026, no escalation carried</span></th>
+      <th>3 &middot; Normalized<br><span class="thsub">omissions restored, general conditions on the real schedule, escalated 10.02% to Dec 2027</span></th>
+      <th>3 &minus; 1</th></tr></thead><tbody>` + body +
+    `<tr class="actual"><td style="text-align:left"><b>TOTAL</b></td>
+      <td><b>${fmt(T.c1)}</b></td><td><b>${fmt(T.c2)}</b></td><td><b>${fmt(T.c3)}</b></td>
+      <td><b>+${fmt(T.c3 - T.c1)}</b></td></tr>
+     <tr><td style="text-align:left">Balfour over the District&rsquo;s own escalated plan</td>
+      <td colspan="3"><span class="gcnote" style="margin:0">column 2 against column 1</span></td>
+      <td><b>+${fmt(T.c2 - T.c1)} &nbsp; +${(100 * (T.c2 / T.c1 - 1)).toFixed(1)}%</b></td></tr>
+     <tr><td style="text-align:left">Expected outturn over Balfour&rsquo;s proposal</td>
+      <td colspan="3"><span class="gcnote" style="margin:0">column 3 against column 2 &mdash; of which ${fmt(EST_ESCALATION)} is escalation alone</span></td>
+      <td><b>+${fmt(T.c3 - T.c2)} &nbsp; +${(100 * (T.c3 / T.c2 - 1)).toFixed(1)}%</b></td></tr>
+     <tr class="actual"><td style="text-align:left"><b>District construction budget</b><span class="gcnote" style="margin:0">Transcend <i>LLB BB Construction</i> lines</span></td>
+      <td colspan="3"><b>${fmt(T.bud)}</b></td>
+      <td><b>${T.c3 > T.bud ? "+" : "&minus;"}${fmt(Math.abs(T.c3 - T.bud))} &nbsp; ${(100 * (T.c3 / T.bud - 1)).toFixed(1)}%</b></td></tr></tbody>`;
   const el = document.getElementById("estSum");
-  if (el) el.textContent = fmt(T.d27) + " expected \u00b7 " + fmt(T.bud) + " budgeted \u00b7 +" + fmt(T.d27 - T.bud);
+  if (el) el.textContent = "FMP " + fmt(T.c1) + " \u00b7 Balfour " + fmt(T.c2) + " \u00b7 expected " + fmt(T.c3);
 }
 
 function renderRc() {
