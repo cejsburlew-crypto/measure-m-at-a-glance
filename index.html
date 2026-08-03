@@ -907,8 +907,7 @@
               <b>Two scales are needed because SMHS is two different kinds of work.</b> The New Two-Story STEM Building is new
               construction and belongs on the scale above; the Career Center and Library is renovation and belongs here.
               These modernization bands are built from the FMP&rsquo;s own 2024 rates &mdash; light/minor $142.80/SF,
-              moderate $214.20/SF, library and reconfigure $333.20&ndash;357.00/SF &mdash; loaded the way Balfour loads its
-              work (&times;1.22) and escalated to 2026 (&times;1.125).
+              moderate $214.20/SF, library and reconfigure $333.20&ndash;357.00/SF &mdash; escalated to a 2027 window (&times;1.19). <b>Correction:</b> these bands previously ran $270&ndash;430/SF, which did not reconcile to the FMP &mdash; the FMP&rsquo;s own moderate-modernization rate escalates to $255/SF, below the old band floor. They are now anchored on that rate with the same premiums used for new construction. <b>Library-grade renovation sits higher:</b> the FMP&rsquo;s $333.20&ndash;357.00/SF escalates to $397&ndash;425/SF, so the Career Center, being library grade, should be judged against that range rather than these bands.
               <b>Read the marker with care &mdash; it is not on the same basis as the bands.</b> Balfour&rsquo;s $240.00/SF is an
               &ldquo;Add For&rdquo; line carrying <i>no</i> general conditions, fee or contingency, while these bands are
               loaded totals. Compared like with like &mdash; against the FMP&rsquo;s construction-only library rate of
@@ -2695,12 +2694,15 @@ const BAND_MIN = 800, BAND_MAX = 1150;
 // MODERNIZATION scale. Anchored on the FMP's own 2024 construction rates - light/minor $142.80,
 // moderate $214.20, library/reconfigure $333.20-357.00 per SF - carried to a loaded total the same
 // way Balfour loads its work (x1.22 markup) and escalated to 2026 (x1.125). Contiguous, no overlap.
+// Anchored the same way as the new-construction set: the FMP's own moderate-modernization
+// rate of $214.20/SF escalated to 2027 (x1.19) = $255/SF, with the same +10% / +23%
+// Lease-Leaseback premiums. Library-grade work sits higher and is noted separately.
 const BANDS_MOD = [
-  {k: "dbb",     label: "Design-Bid-Build &mdash; moderate modernization", tag: "FMP basis", lo: 270, hi: 320, color: "var(--tier-high)"},
-  {k: "typical", label: "Lease-Leaseback &mdash; Typical Market",     lo: 320, hi: 370, color: "var(--review)"},
-  {k: "heavy",   label: "Lease-Leaseback &mdash; Heavy Risk Loading", lo: 370, hi: 430, color: "var(--bad)", open: true}
+  {k: "dbb",     label: "Design-Bid-Build &mdash; moderate modernization", tag: "FMP basis", lo: 242, hi: 268, color: "var(--tier-high)"},
+  {k: "typical", label: "Lease-Leaseback &mdash; Typical Market",     lo: 268, hi: 294, color: "var(--review)"},
+  {k: "heavy",   label: "Lease-Leaseback &mdash; Heavy Risk Loading", lo: 294, hi: 334, color: "var(--bad)", open: true}
 ];
-const MOD_MIN = 220, MOD_MAX = 450;
+const MOD_MIN = 220, MOD_MAX = 360;
 const bandMid = b => (b.lo + b.hi) / 2;
 const premiumVs = (b, base) => 100 * (bandMid(b) / bandMid(base) - 1);
 const bandOf = v => v < BANDS[0].hi ? BANDS[0] : (v < BANDS[1].hi ? BANDS[1] : BANDS[2]);
