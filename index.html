@@ -247,6 +247,7 @@
   .pltable { min-width: 0; table-layout: fixed; }
   .pltable td, .pltable th { overflow-wrap: anywhere; white-space: normal; }
   section, .card, .llbwrap, .coll { min-width: 0; max-width: 100%; }
+  .tscroll > table { min-width: 660px; }
   .tscroll { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
   .tscroll table { min-width: 0; }
   @media print { .tscroll { overflow: visible; } }
@@ -1586,6 +1587,95 @@
       </div>
     </div>
   </section>
+
+<section id="rcSection">
+  <h2>How Balfour Priced It <span class="note">one rate card, seven markups, and no protection on buyout savings</span>
+    <span class="collsum" id="rcSum">&hellip;</span>
+    <button type="button" class="expand-all" id="rcToggle">Show Analysis</button>
+  </h2>
+  <div class="card coll" id="rcCard" hidden>
+
+    <div class="collbar sub"><span class="collttl">1. One rate card &mdash; the markup is a flat rate on area, not a percentage of cost</span></div>
+    <div class="tscroll"><table class="gctable" id="rcRate"></table></div>
+    <div class="llbhint"><b>The percentage appears to vary. The dollars per square foot do not.</b>
+      A single rate of <b>$182.47/SF</b> predicts all three markups to within 1%. There is no differentiation
+      for elementary against high school, none for single-storey against two-storey, and none for project size.
+      <br><br><b>This dissolves the 25.73% anomaly at San Marino HS.</b> Its markup percentage is high for a purely
+      arithmetic reason: its direct cost per square foot is <i>low</i> ($702.77 against about $832) because
+      Division 07 and several other divisions are missing. The same $181/SF markup over a smaller base returns a
+      larger percentage. Restore the missing scope and SMHS direct becomes $839.47/SF against Valentine&rsquo;s
+      $835.72 &mdash; a <b>0.4%</b> difference across a single-storey elementary, a two-storey elementary and a
+      two-storey high school on three different campuses.
+      <br><br><b>Why it matters that general conditions are time-based.</b> General conditions are priced at
+      dollars per month multiplied by duration. They cannot scale with floor area. Yet the total markup lands on a
+      flat rate per square foot regardless. That can only happen if the markup was set as an area rate <i>first</i>
+      and then allocated backwards into fee, general conditions, bonds, insurance and contingency &mdash; rather
+      than built up from those components and summed. The unreconciled residual is the plug that brings each
+      project onto the rate.
+      <span class="cite">Balfour Beatty Construction (2026). <i>Pre-Interview Submittal, Project Comparison Reports</i>
+      (exported 9 April 2026) and <i>Fee Proposal Summary by Project</i>, p. 61. Areas and dollars are Balfour&rsquo;s own.</span>
+    </div>
+
+    <div class="collbar sub" style="margin-top:16px"><span class="collttl">2. The seven markups, and which are already inside the FMP rate</span></div>
+    <div class="tscroll"><table class="gctable" id="rcMk"></table></div>
+    <div class="llbhint">The FMP&rsquo;s basis of estimate states its unit costs are
+      <i>&ldquo;inclusive of General Conditions, General Requirements, Overhead and Profit&rdquo;</i> and assumes
+      <i>&ldquo;a competitive bid environment at subcontractor and GC level&rdquo;</i> under
+      <i>&ldquo;a traditional design-bid-build procurement methodology.&rdquo;</i> A rate that a contractor would
+      bid competitively necessarily carries that contractor&rsquo;s own bond and liability insurance, which is why
+      those two are marked as duplicated even though the FMP does not name them.
+      <br><br><b>Contingency and preconstruction are not duplicated</b> &mdash; they are not contractor costs inside
+      a unit rate. They would conventionally sit in the FMP&rsquo;s +33% soft-cost load, but
+      <b>the FMP never itemises what its 33% covers</b>: the only reference anywhere in the workbook is the column
+      heading. That inference is reasonable and it is not sourced, so it should not be presented as fact.
+      <span class="assump"><b>The 18-month figure is a normalisation, not their price.</b> Balfour priced 12 months
+      and states the duration is &ldquo;assumed for calculations, to be revised.&rdquo; Their own fee sheet adds that
+      <i>&ldquo;a significant amount of General Conditions can be saved by bundling all three projects and leveraging
+      staff management and oversight for all three&rdquo;</i> &mdash; so three separate full teams is their pricing
+      basis, not their operating plan.</span>
+    </div>
+
+    <div class="collbar sub" style="margin-top:16px"><span class="collttl">3. Buyout savings &mdash; the proposal creates no obligation to return them</span></div>
+    <div class="tscroll"><table class="gctable" id="rcBo"></table></div>
+    <div class="llbhint"><b>How buyout works.</b> The contract price is set at the GMP using estimated pricing.
+      Only afterwards does the contractor go to market and actually solicit subcontractor bids &mdash; the
+      &ldquo;buyout.&rdquo; Where a trade comes in below the amount carried in the GMP, the difference is buyout
+      savings. Who keeps it is determined entirely by the contract form:
+      <br>&bull; <b>Stipulated sum / lump sum</b> &mdash; the contractor keeps all of it. The District agreed a price;
+      how it is delivered is the contractor&rsquo;s business.
+      <br>&bull; <b>Cost-plus with a GMP ceiling</b> &mdash; the District pays actual cost of work plus fee up to the
+      ceiling, so savings return automatically because unspent money is simply never invoiced.
+      <br>&bull; <b>GMP with a shared-savings clause</b> &mdash; split on a stated formula.
+      <br><br><b>Balfour&rsquo;s fee is &ldquo;% of total cost of work (GMP)&rdquo; &mdash; a percentage of the ceiling,
+      not of money actually spent.</b> That is the structure under which buyout savings accrue to the contractor
+      rather than the District, and nothing in the 68-page response displaces it. The word
+      &ldquo;buyout&rdquo; does not appear once. Neither does &ldquo;shared savings,&rdquo;
+      &ldquo;audit,&rdquo; &ldquo;subcontractor bids&rdquo; or &ldquo;competitive bid.&rdquo;
+      <b>&ldquo;Cost of Work&rdquo; is used as the basis for the fee, the bond and the insurance but is never defined.</b>
+      The single open-book commitment on p.58 is scoped to <i>general conditions</i> only &mdash; not to the cost of
+      work and not to subcontractor pricing.
+      <br><br><b>The exposure is the risk premium itself.</b> Balfour&rsquo;s cost of work sits about 17% above the
+      FMP&rsquo;s own fully-loaded rate after escalation. If the trades buy out anywhere near FMP-equivalent
+      pricing, that spread &mdash; on the order of <span class="amt">$4.7M</span> across Carver and Valentine alone
+      &mdash; is realised after the price is fixed. Absent a savings provision it stays with the contractor.
+      <span class="assump"><b>This is a contract question, not a proposal question, and it needs the District&rsquo;s
+      counsel rather than this analysis.</b> The proposal is not the agreement. Savings treatment lives in the
+      Construction Services Agreement, and the District should confirm what its own CSA says about savings,
+      reconciliation, audit rights and the definition of Cost of Work <b>before</b> award &mdash; and add the
+      provision if it is absent. Two of Balfour&rsquo;s three cited examples of returning money to a district
+      describe <i>unused contractor contingency</i> on other districts&rsquo; projects, which is a different
+      mechanism from buyout and was presumably contractual there.</span>
+    </div>
+
+    <div class="collbar sub" style="margin-top:16px"><span class="collttl">4. Priced items Balfour states are not final</span></div>
+    <div class="tscroll"><table class="gctable" id="rcTbd"></table></div>
+    <div class="llbhint">Each of these is a number in the proposal that Balfour has qualified in the proposal itself.
+      They are not errors &mdash; they are disclosed movement, and every one of them moves in a single direction.
+      <span class="cite">All four quoted from Balfour Beatty Construction (2026). <i>Fee Proposal Summary by Project</i>
+      and General Conditions detail sheets, pp. 61&ndash;67.</span>
+    </div>
+  </div>
+</section>
 
 <section id="coSection">
     <h2>Challenges and Opportunities <span class="note">saved with version history in this browser &mdash; the latest version prints at the bottom of the PDF</span>
@@ -3157,9 +3247,91 @@ function renderThree() {
       <td>${fmt(r.c)}</td><td>${r.sf.toLocaleString()} sf</td>
       <td><span class="psf ${r.hi ? "b3" : "b1"}">$${Math.round(r.c / r.sf).toLocaleString()} / SF</span></td></tr>`).join("");
 }
+// ---- How Balfour priced it: one rate card, seven markups, no buyout protection ----
+const RC = [
+  {n: "Carver ES", t: "elementary &middot; <b>one</b>-storey", sf: 17580, direct: 14590498.55, markup: 3215434.43, gcMo: 99891, gc: 1198692, fx: 60000},
+  {n: "Valentine ES", t: "elementary &middot; two-storey", sf: 22044, direct: 18422572.24, markup: 4049827.89, gcMo: 109896, gc: 1318752, fx: 75000},
+  {n: "San Marino HS", t: "<b>high school</b> &middot; two-storey", sf: 31556, direct: 22176549.74, markup: 5705205.78, gcMo: 105153, gc: 1261836, fx: 75000}
+];
+const RC_PCT = 8.45;                 // fee 3.25 + bond 1.00 + GL 1.20 + contingency 3.00, all disclosed
+const RC_D = RC.reduce((a, r) => a + r.direct, 0);
+const RC_M = RC.reduce((a, r) => a + r.markup, 0);
+const RC_RATE = RC.reduce((a, r) => a + r.markup / r.sf, 0) / RC.length;
+function renderRc() {
+  const psf = RC.map(r => r.markup / r.sf);
+  document.getElementById("rcRate").innerHTML =
+    `<thead><tr><th>Project</th><th>GSF</th><th>Direct<br>$/SF</th><th>Markup</th>
+      <th>Markup %<br>of direct</th><th>Markup<br>$/SF</th><th>Predicted at $${RC_RATE.toFixed(2)}/SF</th></tr></thead><tbody>` +
+    RC.map(r => {
+      const p = RC_RATE * r.sf;
+      return `<tr><td style="text-align:left"><b>${r.n}</b><span class="gcnote" style="margin:0">${r.t}</span></td>
+        <td>${r.sf.toLocaleString()}</td>
+        <td>$${(r.direct / r.sf).toFixed(2)}</td><td>${fmt(r.markup)}</td>
+        <td>${(100 * r.markup / r.direct).toFixed(2)}%</td>
+        <td><b>$${(r.markup / r.sf).toFixed(2)}</b></td>
+        <td>${fmt(p)}<span class="gcnote" style="margin:0">${(100 * (r.markup - p) / r.markup).toFixed(2)}% off</span></td></tr>`;
+    }).join("") +
+    `<tr class="actual"><td style="text-align:left"><b>Spread, markup per square foot</b></td><td colspan="4"></td>
+      <td colspan="2"><b>$${Math.min(...psf).toFixed(2)} to $${Math.max(...psf).toFixed(2)} &mdash; ${(100 * (Math.max(...psf) / Math.min(...psf) - 1)).toFixed(2)}% apart</b></td></tr></tbody>`;
+
+  const MK = [
+    ["General conditions <span class='gcnote'>$99,891&ndash;$109,896 per month &times; 12 months as proposed</span>", RC.reduce((a, r) => a + r.gc, 0), "fixed $", true, "named explicitly in the FMP inclusion list"],
+    ["Construction fee &mdash; overhead and profit", RC_D * 0.0325, "3.25%", true, "the FMP list names &ldquo;Overhead and Profit&rdquo;"],
+    ["Payment and performance bond", RC_D * 0.0100, "1.00%", true, "not named, but a competitively bid rate carries the bidder&rsquo;s own bond"],
+    ["General liability insurance", RC_D * 0.0120, "1.20%", true, "not named, but conventionally part of overhead"],
+    ["Contingency", RC_D * 0.0300, "3.00%", false, "not a contractor cost in a unit rate. Plausibly inside the FMP&rsquo;s +33%, which the FMP never itemises"],
+    ["Preconstruction services and allowances", RC.reduce((a, r) => a + r.fx, 0), "fixed $", false, "a professional service. Would sit in the +33% soft cost &mdash; also unverifiable"],
+    ["<b>Undisclosed residual</b> <span class='gcnote'>markup charged less every rate Balfour published</span>", RC_M - (RC_D * RC_PCT / 100 + RC.reduce((a, r) => a + r.gc + r.fx, 0)), "&mdash;", null, "cannot be assessed &mdash; Balfour does not say what it is"]
+  ];
+  const dup = MK.filter(m => m[3] === true).reduce((a, m) => a + m[1], 0);
+  const add6 = RC.reduce((a, r) => a + r.gcMo * 6, 0);
+  document.getElementById("rcMk").innerHTML =
+    `<thead><tr><th>Markup</th><th>Rate</th><th>Amount</th><th>% of<br>cost of work</th><th>In the<br>FMP rate?</th><th>Basis</th></tr></thead><tbody>` +
+    MK.map(m => `<tr><td style="text-align:left">${m[0]}</td><td>${m[2]}</td><td>${fmt(m[1])}</td>
+      <td>${(100 * m[1] / RC_D).toFixed(2)}%</td>
+      <td>${m[3] === true ? "<b>YES</b>" : (m[3] === false ? "no" : "<b>?</b>")}</td>
+      <td style="text-align:left"><span class="gcnote" style="margin:0">${m[4]}</span></td></tr>`).join("") +
+    `<tr class="actual"><td style="text-align:left"><b>TOTAL MARKUP</b></td><td></td><td><b>${fmt(RC_M)}</b></td>
+      <td><b>${(100 * RC_M / RC_D).toFixed(2)}%</b></td><td colspan="2"><b>every $1.00 of &ldquo;direct cost&rdquo; costs the District $${(1 + RC_M / RC_D).toFixed(3)}</b></td></tr>
+     <tr><td style="text-align:left"><b>Duplicated &mdash; 12-month general conditions</b></td><td></td><td><b>${fmt(dup)}</b></td>
+      <td><b>${(100 * dup / RC_D).toFixed(2)}%</b></td><td colspan="2"></td></tr>
+     <tr><td style="text-align:left"><b>Duplicated &mdash; normalised to 18 months</b><span class="gcnote">the added six months alone is ${fmt(add6)}</span></td><td></td>
+      <td><b>${fmt(dup + add6)}</b></td><td><b>${(100 * (dup + add6) / RC_D).toFixed(2)}%</b></td><td colspan="2"></td></tr></tbody>`;
+
+  const BO = [
+    ["&ldquo;buyout&rdquo; / &ldquo;buy-out&rdquo;", "ABSENT", "no reference anywhere in 68 pages"],
+    ["&ldquo;shared savings&rdquo; / savings clause", "ABSENT", "no mechanism to split or return savings"],
+    ["&ldquo;audit&rdquo; / right to audit", "ABSENT", "no right to inspect what the trades actually cost"],
+    ["&ldquo;subcontractor bids&rdquo; / &ldquo;competitive bid&rdquo;", "ABSENT", "no obligation to competitively bid the trades"],
+    ["Definition of &ldquo;Cost of Work&rdquo;", "<b>UNDEFINED</b>", "used as the basis for the fee, the bond and the insurance &mdash; but never defined"],
+    ["Open-book commitment, p.58", "SCOPED", "&ldquo;all <i>general conditions</i> aligned with the RFP&rdquo; &mdash; general conditions only, not the cost of work"],
+    ["Money returned to a district", "OTHER PROJECTS", "Chino Valley and San Diego USD, described as <i>unused contractor contingency</i> &mdash; a different mechanism, on other districts&rsquo; contracts"]
+  ];
+  document.getElementById("rcBo").innerHTML =
+    `<thead><tr><th>What would create an obligation to return savings</th><th>In the proposal</th><th>Note</th></tr></thead><tbody>` +
+    BO.map(b => `<tr><td style="text-align:left">${b[0]}</td><td>${b[1].includes("ABSENT") || b[1].includes("UNDEFINED") ? `<span class="psf b3">${b[1]}</span>` : b[1]}</td>
+      <td style="text-align:left"><span class="gcnote" style="margin:0">${b[2]}</span></td></tr>`).join("") + "</tbody>";
+
+  const TBD = [
+    ["Construction duration", "12 months", "&ldquo;Assumed for calculations, to be revised per addenda #1 during precon&rdquo;", "every added month is $99,891&ndash;$109,896"],
+    ["Contingency percentage", "3.00%", "&ldquo;Final % to be determined during preconstruction&rdquo;", "each point is " + fmt(RC_D * 0.01)],
+    ["Subcontractor bonds", "<b>not priced</b>", "&ldquo;n/a &mdash; to be procured during GMP establishment.&rdquo; SDI offered in lieu at 1.25% at GMP", "1.25% of the cost of work is " + fmt(RC_D * 0.0125)],
+    ["General conditions basis", "three full teams", "&ldquo;A significant amount of General Conditions can be saved by bundling all three projects&rdquo; &mdash; Balfour&rsquo;s own note", "their words, not ours: the priced basis is not the operating plan"]
+  ];
+  document.getElementById("rcTbd").innerHTML =
+    `<thead><tr><th>Item</th><th>As priced</th><th>What Balfour says about it</th><th>Direction of movement</th></tr></thead><tbody>` +
+    TBD.map(t => `<tr><td style="text-align:left"><b>${t[0]}</b></td><td>${t[1]}</td>
+      <td style="text-align:left"><span class="gcnote" style="margin:0">${t[2]}</span></td>
+      <td style="text-align:left"><span class="gcnote" style="margin:0">${t[3]}</span></td></tr>`).join("") + "</tbody>";
+
+  const el = document.getElementById("rcSum");
+  if (el) el.textContent = "markup $" + RC_RATE.toFixed(2) + "/SF flat \u00b7 " + (100 * RC_M / RC_D).toFixed(1) + "% total \u00b7 no buyout clause";
+}
+
 function renderFix() {
   renderThree();
   renderBuildUps();
+  renderRc();
   const rows = [
     {n: "Carver ES &mdash; New TK &amp; KG", as: 17805933, no: 17773929, sf: 17580,
      note: "Divisions complete, and single-story, so gross area is also the roof and slab area &mdash; its $75.84/SF Division 07 needs no geometry correction. Comes in slightly <b>under</b> because the 12-month GC price marginally exceeds 12 months of actual general conditions. <i>Footnote: 12 &times; $99,891 = $1,198,692 does not exactly reconcile to Balfour&rsquo;s stated $1,230,696 GC total; the $32,004 difference is left unresolved as immaterial.</i>"},
@@ -3618,7 +3790,8 @@ const COLLAPSIBLES = [
   ["mvnToggle",    "mvnCard",   "Show Comparison", "Hide Comparison"],
   ["watchToggle",  "watch",     "Show Items",      "Hide Items"],
   ["refToggle",    "refCard",   "Show References", "Hide References"],
-  ["dbToggle",     "dbCard",    "Show Comparison", "Hide Comparison"]
+  ["dbToggle",     "dbCard",    "Show Comparison", "Hide Comparison"],
+  ["rcToggle",     "rcCard",    "Show Analysis",   "Hide Analysis"]
 ];
 COLLAPSIBLES.forEach(([bid, tid, showLbl, hideLbl]) => {
   const btn = document.getElementById(bid), tgt = document.getElementById(tid);
