@@ -237,6 +237,16 @@
   .gctable th:first-child { text-align: left; }
   .gctable th .thsub { display: block; text-transform: none; letter-spacing: 0; font-weight: 400; }
   .gctable th:nth-child(1), .gctable td:nth-child(1) { width: 19%; }
+  /* nothing may exceed the page width */
+  .cite { display: block; max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
+  .pltable { min-width: 0; table-layout: fixed; }
+  .pltable td, .pltable th { overflow-wrap: anywhere; white-space: normal; }
+  section, .card, .llbwrap, .coll { min-width: 0; max-width: 100%; }
+  .tscroll { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
+  .tscroll table { min-width: 0; }
+  @media print { .tscroll { overflow: visible; } }
+  .gctable { font-size: 11.5px; }
+  .gctable th { padding: 0 6px 4px; font-size: 10.5px; }
   .gctable td { padding: 6px 8px; border-bottom: 1px solid var(--line); font-size: 12px; text-align: right; overflow-wrap: anywhere; vertical-align: top; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .gctable td:first-child { text-align: left; white-space: normal; width: 42%; }
   .gctable tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--ink) 3%, transparent); }
@@ -1422,7 +1432,7 @@
         <span class="cite">Sources: Balfour Beatty Construction, 2026b; San Marino Unified School District, 2024</span>
       </div>
       <table class="gctable">
-        <thead><tr><th>Option</th><th>Building Scope</th><th>Career Center<span class="thsub">constant</span></th><th>SMHS Total</th><th>Difference</th></tr></thead>
+        <thead><tr><th>Option</th><th>Building Scope</th><th>Career Center<span class="thsub">constant</span></th><th>Technology<span class="thsub">constant</span></th><th>SMHS Total</th><th>Difference</th></tr></thead>
         <tbody id="mvnTotBody"></tbody>
       </table>
 
@@ -3126,18 +3136,25 @@ const MVN = {
     {d: "HS13 &mdash; seismic retrofit",                          sf: 6034,  rate: 200.00},
     {d: "HS13 &mdash; reconfigure",                               sf: 10860, rate: 357.00},
     {d: "HS13 &mdash; seismic retrofit",                          sf: 10860, rate: 200.00},
-    {d: "HS20 &mdash; existing library, delivered as the Career Center", amt: 986272},
     {d: "HS5 &mdash; building systems (35.2% share drawn to this project)", amt: 612180},
     {d: "HS1 &mdash; existing classrooms",                        amt: 600000},
     {d: "HS2 &mdash; exteriors (35.9% share drawn)",              amt: 319549},
-    {d: "HS31 &mdash; safety locks to existing doors",            amt: 63000}
+    {d: "HS31 &mdash; safety locks to existing doors",            amt: 63000},
+    {d: "HS6 &mdash; low voltage upgrades", amt: 930000, tech: true},
+    {d: "HS52 &mdash; classroom technology, 54 rooms", amt: 1125000, tech: true},
+    {d: "HS7 &mdash; backbone, wireless access points, switches", amt: 425000, tech: true},
+    {d: "HS8 &mdash; fiber optic connectivity", amt: 425000, tech: true}
   ],
+  // Technology is required under either option, so it is carried on BOTH sides of the
+  // comparison. It nets out of the difference and only changes the percentage base.
+  techEsc: 3456950,
   esc: 1.19,       // ASSUMPTION: 2024 FMP basis carried to a 2027 construction window. Not sourced.
   progSf: 20993,   // Huckabee Site Plan Option 2 program area. Appears nowhere in the FMP export.
   labSf: 14200,    // the FMP's own largest single treatment area on the HS13 line
   newSf: 31556,    // Balfour's stated GSF for the New Two-Story STEM Building
   newAs: 27881756, // Balfour as proposed
-  newNorm: 32846644, // normalized, per the BB-vs-Normalized table above
+  newNorm: 32846644,
+  optBTech: true, // normalized, per the BB-vs-Normalized table above
   ccAs: 1254240, ccNorm: 2913133
 };
 function mvnFigures() {
@@ -3145,7 +3162,9 @@ function mvnFigures() {
   const escd = Math.round(constr * MVN.esc);
   const newPsf = MVN.newNorm / MVN.newSf;
   const sameNew = Math.round(newPsf * MVN.progSf);
-  const totA = escd + MVN.ccNorm, totB = MVN.newNorm + MVN.ccNorm;
+  // Technology is required under either option, so it sits on BOTH sides and nets out of the
+  // difference; the Career Center is carried at its normalized cost on both, never as HS20 as well.
+  const totA = escd + MVN.ccNorm, totB = MVN.newNorm + MVN.ccNorm + MVN.techEsc;
   const addSf = MVN.newSf - MVN.progSf;
   const diff = totB - totA;
   return {constr, escd, newPsf, sameNew, totA, totB, addSf, diff, marginal: diff / addSf};
@@ -3217,10 +3236,10 @@ function renderMvn() {
 
   document.getElementById("mvnTotBody").innerHTML = `
     <tr><td>Option A &mdash; Modernize the Existing Lab Wing<span class="gcnote">escalated FMP construction cost</span></td>
-      <td>${fmt(f.escd)}</td><td>${fmt(MVN.ccNorm)}</td><td>${fmt(f.totA)}</td>
+      <td>${fmt(f.escd)}<span class="gcnote">technology included</span></td><td>${fmt(MVN.ccNorm)}</td><td>included</td><td>${fmt(f.totA)}</td>
       <td><span class="psf b1">baseline</span></td></tr>
     <tr class="actual"><td><b>Option B &mdash; New Two-Story STEM Building</b><span class="gcnote">normalized; as proposed it is ${fmt(MVN.newAs)}</span></td>
-      <td><b>${fmt(MVN.newNorm)}</b></td><td>${fmt(MVN.ccNorm)}</td><td><b>${fmt(f.totB)}</b></td>
+      <td><b>${fmt(MVN.newNorm)}</b></td><td>${fmt(MVN.ccNorm)}</td><td>${fmt(MVN.techEsc)}</td><td><b>${fmt(f.totB)}</b></td>
       <td><span class="psf b3"><b>+${fmt(f.diff)} &nbsp;+${(100 * f.diff / f.totA).toFixed(1)}%</b></span></td></tr>`;
 }
 
@@ -3548,6 +3567,17 @@ document.addEventListener("click", e => {
 // reads as a set of named sub-topics rather than one long scroll.
 // Normalize every collapsible bar to the same shape as the Approved Project Budgets header:
 // uppercase title, rollup pill, right-aligned toggle, descriptive text on its own line beneath.
+// Wide tables scroll inside their own container rather than running off the page.
+(function scrollWrapTables() {
+  document.querySelectorAll("table").forEach(t => {
+    if (t.parentElement && t.parentElement.classList.contains("tscroll")) return;
+    const w = document.createElement("div");
+    w.className = "tscroll";
+    t.parentNode.insertBefore(w, t);
+    w.appendChild(t);
+  });
+})();
+
 (function normalizeBars() {
   document.querySelectorAll(".collbar").forEach(bar => {
     const ttl = bar.querySelector(".collttl");
