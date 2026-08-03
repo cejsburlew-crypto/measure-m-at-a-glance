@@ -288,7 +288,7 @@
   /* LLB proposals-in-hand table */
   .llbwrap { margin-top: 12px; border: 1px solid var(--line); border-left: 3px solid var(--bad); border-radius: 6px; padding: 9px 11px; }
   .llbcap { font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 10px; }
-  .llbcap > .eq { flex: 1 1 100%; }
+  .llbcap > .eq, .collbar > .eq { flex: 1 1 100%; margin: 0; }
   .llbcap > button.expand-all { margin-left: auto; }
   .llbcap .eq { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
   .llbtable { width: 100%; max-width: 100%; min-width: 0; table-layout: fixed; border-collapse: collapse; margin-top: 7px; font-variant-numeric: tabular-nums; }
@@ -3539,6 +3539,17 @@ document.addEventListener("click", e => {
 });
 // Every block inside the FMP guide gets its own collapse control, so the section
 // reads as a set of named sub-topics rather than one long scroll.
+// Normalize every collapsible bar to the same shape as the Approved Project Budgets header:
+// uppercase title, rollup pill, right-aligned toggle, descriptive text on its own line beneath.
+(function normalizeBars() {
+  document.querySelectorAll(".collbar").forEach(bar => {
+    const ttl = bar.querySelector(".collttl");
+    if (!ttl) return;
+    const eq = ttl.querySelector(".eq");
+    if (eq) bar.insertBefore(eq, bar.querySelector(".collsum") || bar.querySelector("button.expand-all") || null);
+  });
+})();
+
 (function wrapGuideBlocks() {
   const scopes = ["fmpGuide", "mvnCard"].map(id => document.getElementById(id)).filter(Boolean);
   if (!scopes.length) return;
