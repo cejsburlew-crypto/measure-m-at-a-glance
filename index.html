@@ -1300,7 +1300,7 @@
   </section>
 
 <section id="estSection">
-  <h2>Estimated Cost &mdash; All Three Projects <span class="note">one reconciled basis, carried to the construction midpoint</span>
+  <h2>Evaluation &mdash; Balfour Proposed vs Normalized <span class="note">what they priced, what is missing, and what timing adds</span>
     <span class="collsum" id="estSum">&hellip;</span>
     <button type="button" class="expand-all" id="estToggle">Show Estimate</button>
   </h2>
@@ -3372,62 +3372,53 @@ const RC_PCT = 8.45;                 // fee 3.25 + bond 1.00 + GL 1.20 + conting
 const RC_D = RC.reduce((a, r) => a + r.direct, 0);
 const RC_M = RC.reduce((a, r) => a + r.markup, 0);
 const RC_RATE = RC.reduce((a, r) => a + r.markup / r.sf, 0) / RC.length;
-// ---- Reconciled estimate: FMP escalated | Balfour as proposed | normalized with escalation ----
-const EST_ESC = 1.1291;          // FMP Dec 2024 basis -> Dec 2027 construction midpoint
-const EST_E2  = 11151 / 10135;   // Balfour Apr 2026 pricing -> Dec 2027 construction midpoint
-const EST = [
-  {n: "San Marino HS", pid: 1608, bud: 35096190, bb: 29135996,
-   parts: [{d: "New Two-Story STEM Building", fmp: 696.15 * 31556, base: 33514531, norm: 33514531 * EST_E2, bb: 27881756},
-           {d: "Career Center / Library", fmp: 333.20 * 5226, norm: 2348649, bb: 1254240,
-            n: "Balfour DID price this &mdash; $240.00/SF on 5,226 GSF &mdash; but as an &ldquo;Add For&rdquo; line outside the marked-up structure, carrying no GC&rsquo;s, fee, bonds, insurance or contingency. It is the only line in the proposal with zero markup."}]},
-  {n: "Valentine ES", pid: 1609, bud: 22911984, bb: 22472400,
-   parts: [{d: "MPR, kitchen, classrooms 1&ndash;5", fmp: 696.15 * 22044, base: 22962836, norm: 22962836 * EST_E2}]},
-  {n: "Carver ES", pid: 1610, bud: 21074034, bb: 17805933,
-   parts: [{d: "New TK / KG building", fmp: 595.00 * 17580, base: 17854282, norm: 17854282 * EST_E2, bb: 17805933},
-           {d: "Site scope outside Balfour&rsquo;s contract", fmp: 2450000, norm: 2766295, bb: 0,
-            n: "play yards and classroom modernization inside the District&rsquo;s project but genuinely outside Balfour&rsquo;s contract line &mdash; the one component they did not price"}]}
+// ---- Evaluation: Balfour proposed | scope missing | general conditions | escalation | normalized ----
+// Every row is derived from the published normalized figures, so the columns always tie.
+const EVAL = [
+  {n: "Carver ES &mdash; New TK/KG building", pid: 1610,
+   bb: 17805933, apr: 17854282, norm: 19644114,
+   gc: 48349,
+   note: "all 21 CSI divisions present &mdash; <b>nothing missing</b>. The only change is general conditions: Balfour priced 12 months, this carries <b>14</b> at their own $99,891/month, less their share of the $450,000 bundling saving they themselves quantified"},
+  {n: "Carver ES &mdash; site scope outside their contract", pid: 1610,
+   bb: 0, apr: 2450000, norm: 2766295, gc: 0,
+   note: "play yards C36 + C37 and classroom modernization C1, at FMP construction cost. <b>Balfour did not price this at all</b> &mdash; it sits inside the District&rsquo;s project and outside their contract line. Escalated 12.91% from the FMP&rsquo;s December 2024 basis, with no contractor load added"},
+  {n: "Valentine ES &mdash; MPR, kitchen, classrooms 1&ndash;5", pid: 1609,
+   bb: 22472400, apr: 22962836, norm: 25264784, gc: 490436,
+   note: "all divisions present &mdash; <b>nothing missing</b>. General conditions at <b>18</b> months against their 12, at their own $109,896/month, less their bundling saving. The District&rsquo;s own budget line of $22,911,984 lands within <b>$50,852</b> of this &mdash; independent corroboration"},
+  {n: "San Marino HS &mdash; New Two-Story STEM Building", pid: 1608,
+   bb: 27881756, apr: 33514531, norm: 36874251, gc: 469278,
+   note: "<b>Division 07 Thermal &amp; Moisture has no row at all</b> ($1,344,643 on a 17,730 sf footprint), Division 32 Exterior Improvements priced at $30.81/SF against $75.81 at both elementaries ($1,420,020), Division 13 Special Construction absent ($923,644), minor divisions 09/11/14/22 short ($420,326) and a utilities gap ($205,114) &mdash; then <b>their own 19.70% markup applied to that restored scope</b> ($849,750). General conditions at 18 months against their 12"},
+  {n: "San Marino HS &mdash; Library and Career Center MODERNIZATION", pid: 1608,
+   bb: 1254240, apr: 2123826, norm: 2348649, gc: 0,
+   note: "Balfour <b>did</b> price this &mdash; a flat <b>$240.00/SF</b> on 5,226 GSF &mdash; but as an &ldquo;Add For&rdquo; line outside the marked-up structure, the only line in the whole proposal carrying <b>zero</b> markup, and with no abatement, seismic, ADA or MEP renewal. Repriced on the FMP&rsquo;s own library rate of $333.20/SF plus $25/SF abatement and $35/SF interface demolition at 22%, giving <b>$449.42/SF</b>"}
 ];
-// escalation carried in column 3 = the BB-derived components only; the FMP-derived ones
-// (Career Center, Carver site scope) are already at Dec 2027 and are not escalated twice.
-const EST_ESCALATION = EST.reduce((a, e) =>
-  a + e.parts.reduce((b, p) => b + (p.base ? Math.round(p.base * EST_E2) - p.base : 0), 0), 0);
 function renderEst() {
-  const T = {c1: 0, c2: 0, c3: 0, bud: 0};
-  const body = EST.map(e => {
-    const c1 = e.parts.reduce((a, p) => a + Math.round(p.fmp * EST_ESC), 0);
-    const c3 = e.parts.reduce((a, p) => a + Math.round(p.norm), 0);
-    T.c1 += c1; T.c2 += e.bb; T.c3 += c3; T.bud += e.bud;
-    const sub = e.parts.length > 1
-      ? e.parts.map(p => `<tr class="estsub"><td style="text-align:left">&nbsp;&nbsp;${p.d}${p.n ? `<span class="gcnote" style="margin:0">${p.n}</span>` : ""}</td>
-          <td>${fmt(Math.round(p.fmp * EST_ESC))}</td>
-          <td>${p.bb ? fmt(p.bb) : "<i>not priced</i>"}</td>
-          <td>${fmt(Math.round(p.norm))}</td><td></td></tr>`).join("")
-      : "";
-    return `<tr><td style="text-align:left"><b>${e.n}</b><span class="gcnote" style="margin:0">project ${e.pid}</span></td>
-      <td>${fmt(c1)}</td><td>${fmt(e.bb)}</td><td><b>${fmt(c3)}</b></td>
-      <td><span class="psf ${c3 > c1 ? "b3" : "b1"}">+${fmt(c3 - c1)}</span></td></tr>` + sub;
+  const T = {bb: 0, miss: 0, gc: 0, esc: 0, norm: 0};
+  const body = EVAL.map(r => {
+    const miss = r.apr - r.bb - r.gc;      // whatever the April-2026 basis carries beyond their price and the GC change
+    const esc = r.norm - r.apr;
+    T.bb += r.bb; T.miss += miss; T.gc += r.gc; T.esc += esc; T.norm += r.norm;
+    const z = v => v ? fmt(v) : '<span class="psf none">&mdash;</span>';
+    return `<tr><td style="text-align:left"><b>${r.n}</b><span class="gcnote" style="margin:0">project ${r.pid}</span></td>
+      <td>${r.bb ? fmt(r.bb) : "<i>not priced</i>"}</td><td>${z(miss)}</td><td>${z(r.gc)}</td>
+      <td>${fmt(esc)}</td><td><b>${fmt(r.norm)}</b></td></tr>
+      <tr class="estsub"><td colspan="6" style="text-align:left"><span class="gcnote" style="margin:0">${r.note}</span></td></tr>`;
   }).join("");
   document.getElementById("estTbl").innerHTML =
-    `<thead><tr>
-      <th>Project</th>
-      <th>1 &middot; FMP estimated cost<br><span class="thsub">the District&rsquo;s own 2024 rates, escalated 12.91% to Dec 2027</span></th>
-      <th>2 &middot; Balfour estimated cost<br><span class="thsub">as proposed, April 2026, no escalation carried</span></th>
-      <th>3 &middot; Normalized<br><span class="thsub">omissions restored, general conditions on the real schedule, escalated 10.02% to Dec 2027</span></th>
-      <th>3 &minus; 1</th></tr></thead><tbody>` + body +
-    `<tr class="actual"><td style="text-align:left"><b>TOTAL</b></td>
-      <td><b>${fmt(T.c1)}</b></td><td><b>${fmt(T.c2)}</b></td><td><b>${fmt(T.c3)}</b></td>
-      <td><b>+${fmt(T.c3 - T.c1)}</b></td></tr>
-     <tr><td style="text-align:left">Balfour over the District&rsquo;s own escalated plan</td>
-      <td colspan="3"><span class="gcnote" style="margin:0">column 2 against column 1</span></td>
-      <td><b>+${fmt(T.c2 - T.c1)} &nbsp; +${(100 * (T.c2 / T.c1 - 1)).toFixed(1)}%</b></td></tr>
-     <tr><td style="text-align:left">Expected outturn over Balfour&rsquo;s proposal</td>
-      <td colspan="3"><span class="gcnote" style="margin:0">column 3 against column 2 &mdash; of which ${fmt(EST_ESCALATION)} is escalation alone</span></td>
-      <td><b>+${fmt(T.c3 - T.c2)} &nbsp; +${(100 * (T.c3 / T.c2 - 1)).toFixed(1)}%</b></td></tr>
-     <tr class="actual"><td style="text-align:left"><b>District construction budget</b><span class="gcnote" style="margin:0">Transcend <i>LLB BB Construction</i> lines</span></td>
-      <td colspan="3"><b>${fmt(T.bud)}</b></td>
-      <td><b>${T.c3 > T.bud ? "+" : "&minus;"}${fmt(Math.abs(T.c3 - T.bud))} &nbsp; ${(100 * (T.c3 / T.bud - 1)).toFixed(1)}%</b></td></tr></tbody>`;
+    `<thead><tr><th>Component</th>
+      <th>Balfour<br>proposed</th>
+      <th>Scope missing<br>or repriced</th>
+      <th>General<br>conditions</th>
+      <th>Escalation<br><span class="thsub">to a Dec 2027 midpoint</span></th>
+      <th>NORMALIZED</th></tr></thead><tbody>` + body +
+    `<tr class="actual"><td style="text-align:left"><b>TOTAL &mdash; all three sites</b></td>
+      <td><b>${fmt(T.bb)}</b></td><td><b>${fmt(T.miss)}</b></td><td><b>${fmt(T.gc)}</b></td>
+      <td><b>${fmt(T.esc)}</b></td><td><b>${fmt(T.norm)}</b></td></tr>
+     <tr><td style="text-align:left">Normalized over Balfour&rsquo;s proposal</td>
+      <td colspan="4"><span class="gcnote" style="margin:0">${fmt(T.miss)} scope &nbsp;+&nbsp; ${fmt(T.gc)} general conditions &nbsp;+&nbsp; ${fmt(T.esc)} escalation</span></td>
+      <td><b>+${fmt(T.norm - T.bb)} &nbsp; +${(100 * (T.norm / T.bb - 1)).toFixed(1)}%</b></td></tr></tbody>`;
   const el = document.getElementById("estSum");
-  if (el) el.textContent = "FMP " + fmt(T.c1) + " \u00b7 Balfour " + fmt(T.c2) + " \u00b7 expected " + fmt(T.c3);
+  if (el) el.textContent = "Balfour " + fmt(T.bb) + " \u00b7 normalized " + fmt(T.norm) + " \u00b7 +" + (100 * (T.norm / T.bb - 1)).toFixed(1) + "%";
 }
 
 function renderRc() {
