@@ -3377,13 +3377,15 @@ const EST_ESC = 1.1291;          // FMP Dec 2024 basis -> Dec 2027 construction 
 const EST_E2  = 11151 / 10135;   // Balfour Apr 2026 pricing -> Dec 2027 construction midpoint
 const EST = [
   {n: "San Marino HS", pid: 1608, bud: 35096190, bb: 29135996,
-   parts: [{d: "New Two-Story STEM Building", fmp: 696.15 * 31556, base: 32846644, norm: 32846644 * EST_E2},
-           {d: "Career Center / Library", fmp: 333.20 * 5226, norm: 2348649}]},
+   parts: [{d: "New Two-Story STEM Building", fmp: 696.15 * 31556, base: 32846644, norm: 32846644 * EST_E2, bb: 27881756},
+           {d: "Career Center / Library", fmp: 333.20 * 5226, norm: 2348649, bb: 1254240,
+            n: "Balfour DID price this &mdash; $240.00/SF on 5,226 GSF &mdash; but as an &ldquo;Add For&rdquo; line outside the marked-up structure, carrying no GC&rsquo;s, fee, bonds, insurance or contingency. It is the only line in the proposal with zero markup."}]},
   {n: "Valentine ES", pid: 1609, bud: 22911984, bb: 22472400,
    parts: [{d: "MPR, kitchen, classrooms 1&ndash;5", fmp: 696.15 * 22044, base: 21742835, norm: 21742835 * EST_E2}]},
   {n: "Carver ES", pid: 1610, bud: 21074034, bb: 17805933,
-   parts: [{d: "New TK / KG building", fmp: 595.00 * 17580, base: 16900942, norm: 16900942 * EST_E2},
-           {d: "Site scope outside Balfour&rsquo;s contract", fmp: 2450000, norm: 2766295}]}
+   parts: [{d: "New TK / KG building", fmp: 595.00 * 17580, base: 16900942, norm: 16900942 * EST_E2, bb: 17805933},
+           {d: "Site scope outside Balfour&rsquo;s contract", fmp: 2450000, norm: 2766295, bb: 0,
+            n: "play yards and classroom modernization inside the District&rsquo;s project but genuinely outside Balfour&rsquo;s contract line &mdash; the one component they did not price"}]}
 ];
 // escalation carried in column 3 = the BB-derived components only; the FMP-derived ones
 // (Career Center, Carver site scope) are already at Dec 2027 and are not escalated twice.
@@ -3396,8 +3398,10 @@ function renderEst() {
     const c3 = e.parts.reduce((a, p) => a + Math.round(p.norm), 0);
     T.c1 += c1; T.c2 += e.bb; T.c3 += c3; T.bud += e.bud;
     const sub = e.parts.length > 1
-      ? e.parts.map(p => `<tr class="estsub"><td style="text-align:left">&nbsp;&nbsp;${p.d}</td>
-          <td>${fmt(Math.round(p.fmp * EST_ESC))}</td><td>&mdash;</td><td>${fmt(Math.round(p.norm))}</td><td></td></tr>`).join("")
+      ? e.parts.map(p => `<tr class="estsub"><td style="text-align:left">&nbsp;&nbsp;${p.d}${p.n ? `<span class="gcnote" style="margin:0">${p.n}</span>` : ""}</td>
+          <td>${fmt(Math.round(p.fmp * EST_ESC))}</td>
+          <td>${p.bb ? fmt(p.bb) : "<i>not priced</i>"}</td>
+          <td>${fmt(Math.round(p.norm))}</td><td></td></tr>`).join("")
       : "";
     return `<tr><td style="text-align:left"><b>${e.n}</b><span class="gcnote" style="margin:0">project ${e.pid}</span></td>
       <td>${fmt(c1)}</td><td>${fmt(e.bb)}</td><td><b>${fmt(c3)}</b></td>
