@@ -3216,16 +3216,16 @@ const FMP_ESC = 0.0857;  // CCCI Dec 2024 (9,876) -> Dec 2026 (10,722). Was an u
 // either side - Balfour's totals carry their own GC's/GR's/fee/bonds/contingency but no District soft cost.
 const FMP_VS = [
   {b: "Carver ES &mdash; New TK &amp; KG", sf: 17580, basis: ["NEW construction, one-story", "FMP rate $595.00/SF"],
-   fmp: 17580 * 595.00, act: 17805933, corr: 16900942},
+   fmp: 17580 * 595.00, act: 17805933, corr: 17854282},
   {b: "Valentine ES &mdash; CR / MPR / Kitchen", sf: 22044, basis: ["NEW construction, two-story", "FMP rate $696.15/SF"],
-   fmp: 22044 * 696.15, act: 22472400, corr: 21742835},
+   fmp: 22044 * 696.15, act: 22472400, corr: 22962836},
   // corr matches the BB-vs-Normalized table exactly: restored scope of $102.74/SF (Division 07 HALVED
   // to $37.92/SF of gross + Exterior Improvements $45.00 + utilities $6.50 + minor divisions $13.32),
   // marked up at SMHS's own cost-scaling rate, plus 4 further months of general conditions. The former
   // $31,915,632 used a $95.66/SF gap - Division 07 at its FULL rate and no Exterior Improvements at all
   // - and so understated this line by $267,425. The halved Division 07 basis governs both tables.
   {b: "San Marino HS &mdash; New Two-Story STEM Building", sf: 31556, basis: ["NEW construction, two-story", "FMP rate $696.15/SF", "normalized &mdash; the FMP held no new-construction rate for SMHS"],
-   fmp: 31556 * 696.15, act: 27881756, corr: 32846644, norm: true},
+   fmp: 31556 * 696.15, act: 27881756, corr: 33514531, norm: true},
   // A SEPARATE District project that Balfour bundled into the Medical Arts proposal. Put on the
   // District's programd 3,267 sf: the FMP base and the corrected column both use that area, while
   // the as-proposed column is Balfour's own dollar figure for the 5,226 GSF they claim - 60% more
@@ -3305,8 +3305,8 @@ function renderGcDur() {
       <td><span class="psf b3"><b>+${fmt(tl - tp)} &ndash; +${fmt(th - tp)}</b></span></td></tr>`;
 }
 const BUILDUPS = [
-  {n:"San Marino HS &mdash; New Two-Story STEM Building + Career Center / Library (modernization)", sf:31556, total:35195293,
-   note:"31,556 GSF building at $1,041/SF, plus 5,226 GSF renovation at $449/SF",
+  {n:"San Marino HS &mdash; New Two-Story STEM Building + Career Center / Library (modernization)", sf:31556, total:39222900,
+   note:"31,556 GSF building at $1,169/SF, plus 5,226 GSF renovation at $449/SF",
    rows:[["Balfour direct cost of work, New Two-Story STEM Building",22176550,"their p.1 figure"],
          ["Div 07 Thermal &amp; Moisture &mdash; ABSENT from their estimate",1344643,"17,730 sf roof and slab area &times; $75.84, the elementaries&rsquo; own rate"],
          ["Div 32 Exterior Improvements gap",1420020,"31,556 sf &times; $45.00 &mdash; they priced $30.81 against $75.81 at both elementaries"],
@@ -3315,19 +3315,19 @@ const BUILDUPS = [
          ["Div 33 Utilities gap",205114,"31,556 sf &times; $6.50"],
          ["= restored direct cost",26490297,"S"],
          ["Cost-scaling markups @ 19.70%<span class='gcnote'>their own markup pool less time-based general conditions and fixed preconstruction, divided by their direct cost</span>",5218120,"their markup pool less GC and preconstruction"],
-         ["General conditions &mdash; 18-month shared team, SMHS share",1063227,"prorated by GSF, not a third full team"],
+         ["General conditions &mdash; 18 months at their own $105,153/month",1731114,"1,892,754 less a $161,640 share of the $450,000 bundling saving <b>Balfour themselves quantified</b>"],
          ["Preconstruction $55,000 + allowances $20,000",75000,""],
-         ["= STEM building only",32846644,"S"],
+         ["= STEM building only",33514531,"S"],
          ["Career Center / Library, 5,226 GSF @ $449/sf",2348649,"FMP library rate $333.20 escalated 12.91% to $376.22 with NO markup added &mdash; the FMP rate is already inclusive of GC&rsquo;s, GR&rsquo;s, overhead and profit &mdash; plus $25/SF abatement and $35/SF interface demolition, which are not FMP rates and do carry the 22% load"]]},
-  {n:"Valentine ES &mdash; two-story classroom, MPR and kitchen building", sf:22044, total:21742836,
+  {n:"Valentine ES &mdash; two-story classroom, MPR and kitchen building", sf:22044, total:22962836,
    rows:[["Balfour direct cost of work",18422572,"all divisions present &mdash; no scope restored"],
          ["Cost-scaling markups @ 14.42%<span class='gcnote'>their own markup pool less time-based general conditions and fixed preconstruction, divided by their direct cost</span>",2656067,"their markup pool less GC and preconstruction"],
-         ["General conditions &mdash; 16 months, shared-team share",589196,"they priced 12 months of a full team"],
+         ["General conditions &mdash; 18 months at their own $109,896/month",1809197,"1,978,128 less a $168,931 share of the $450,000 bundling saving <b>Balfour themselves quantified</b>; they priced only 12 months"],
          ["Preconstruction $55,000 + allowances $20,000",75000,""]]},
-  {n:"Carver ES &mdash; new TK &amp; KG building", sf:17580, total:16900941,
+  {n:"Carver ES &mdash; new TK &amp; KG building", sf:17580, total:17854282,
    rows:[["Balfour direct cost of work",14590499,"all divisions present &mdash; no scope restored"],
          ["Cost-scaling markups @ 13.19%<span class='gcnote'>their own markup pool less time-based general conditions and fixed preconstruction, divided by their direct cost</span>",1924738,"their markup pool less GC and preconstruction"],
-         ["General conditions &mdash; 12 months, shared-team share",325705,"they priced 12 months of a full team"],
+         ["General conditions &mdash; 14 months at their own $99,891/month",1279045,"1,398,474 less a $119,429 share of the $450,000 bundling saving <b>Balfour themselves quantified</b>; they priced only 12 months"],
          ["Preconstruction $45,000 + allowances $15,000",60000,"12 &times; $99,891 = $1,198,692 does not reconcile to their stated $1,230,696; the $32,004 is left as immaterial"]]}
 ];
 function renderBuildUps() {
@@ -3377,13 +3377,13 @@ const EST_ESC = 1.1291;          // FMP Dec 2024 basis -> Dec 2027 construction 
 const EST_E2  = 11151 / 10135;   // Balfour Apr 2026 pricing -> Dec 2027 construction midpoint
 const EST = [
   {n: "San Marino HS", pid: 1608, bud: 35096190, bb: 29135996,
-   parts: [{d: "New Two-Story STEM Building", fmp: 696.15 * 31556, base: 32846644, norm: 32846644 * EST_E2, bb: 27881756},
+   parts: [{d: "New Two-Story STEM Building", fmp: 696.15 * 31556, base: 33514531, norm: 33514531 * EST_E2, bb: 27881756},
            {d: "Career Center / Library", fmp: 333.20 * 5226, norm: 2348649, bb: 1254240,
             n: "Balfour DID price this &mdash; $240.00/SF on 5,226 GSF &mdash; but as an &ldquo;Add For&rdquo; line outside the marked-up structure, carrying no GC&rsquo;s, fee, bonds, insurance or contingency. It is the only line in the proposal with zero markup."}]},
   {n: "Valentine ES", pid: 1609, bud: 22911984, bb: 22472400,
-   parts: [{d: "MPR, kitchen, classrooms 1&ndash;5", fmp: 696.15 * 22044, base: 21742835, norm: 21742835 * EST_E2}]},
+   parts: [{d: "MPR, kitchen, classrooms 1&ndash;5", fmp: 696.15 * 22044, base: 22962836, norm: 22962836 * EST_E2}]},
   {n: "Carver ES", pid: 1610, bud: 21074034, bb: 17805933,
-   parts: [{d: "New TK / KG building", fmp: 595.00 * 17580, base: 16900942, norm: 16900942 * EST_E2, bb: 17805933},
+   parts: [{d: "New TK / KG building", fmp: 595.00 * 17580, base: 17854282, norm: 17854282 * EST_E2, bb: 17805933},
            {d: "Site scope outside Balfour&rsquo;s contract", fmp: 2450000, norm: 2766295, bb: 0,
             n: "play yards and classroom modernization inside the District&rsquo;s project but genuinely outside Balfour&rsquo;s contract line &mdash; the one component they did not price"}]}
 ];
@@ -3662,7 +3662,7 @@ const MVN = {
   labSf: 14200,    // the FMP's own largest single treatment area on the HS13 line
   newSf: 31556,    // Balfour's stated GSF for the New Two-Story STEM Building
   newAs: 27881756, // Balfour as proposed
-  newNorm: 32846644,
+  newNorm: 33514531,
   optBTech: true, // normalized, per the BB-vs-Normalized table above
   ccAs: 1254240, ccNorm: 2348649
 };
@@ -3680,7 +3680,7 @@ function mvnFigures() {
 }
 function renderMvnAllIn() {
   const MODC = 12585515 + 2348649;        // FMP HS13 escalated + Career Center / Library
-  const NEWC = 35195293;                  // normalized New Two-Story STEM Building + Career Center / Library
+  const NEWC = 39222900;                  // normalized New Two-Story STEM Building + Career Center / Library
   const DPOR_NEW = 1933781, DPOR_MOD = 1284653;   // OPSC scales, Huckabee 10% discount
   const softOf = c => c * 0.25;   // soft cost budget = 25% of LLB construction cost
   const rows = [
@@ -3795,12 +3795,12 @@ const nameOf = pid => { const p = PROJECTS.find(x => x.pid === pid); return p ? 
 // project's own LLB BB Construction budget line - NOT against its all-in budget, which also carries
 // soft costs, architectural services, interim housing, geotechnical work and preconstruction.
 const DB_ROWS = [
-  {pid: 1608, label: "San Marino HS &mdash; New Two-Story STEM Building", norm: 32846644 + 2348649, bb: 29135996,
-   note: "normalized is the STEM building $32,846,644 + Career Center $2,348,649. Balfour&rsquo;s figure is their bundled project total, which is the right comparison here because the District&rsquo;s construction line funds both scopes"},
-  {pid: 1610, label: "Carver ES &mdash; New TK/KG Building &amp; Play Yard", norm: 16900942 + 2766295, bb: 17805933,
-   note: "normalized is the building $16,900,942 + $2,766,295 of play yards and classroom modernization that sit outside Balfour&rsquo;s contract line but inside the District&rsquo;s project"},
-  {pid: 1609, label: "Valentine ES &mdash; MPR, Kitchen, 1&ndash;5 Classrooms", norm: 21742835, bb: 22472400,
-   note: "no potential scope gaps identified; the normalization is entirely the general-conditions schedule. <b>Note the District&rsquo;s budget line of $22,911,984 is Balfour&rsquo;s proposal plus four further months of a <i>full</i> general-conditions team</b> &mdash; the normalization instead prorates one shared team across all three sites, which is why it sits $1,169,149 lower"}
+  {pid: 1608, label: "San Marino HS &mdash; New Two-Story STEM Building", norm: 33514531 + 2348649, bb: 29135996,
+   note: "normalized is the STEM building $33,514,531 + Career Center $2,348,649. Balfour&rsquo;s figure is their bundled project total, which is the right comparison here because the District&rsquo;s construction line funds both scopes"},
+  {pid: 1610, label: "Carver ES &mdash; New TK/KG Building &amp; Play Yard", norm: 17854282 + 2766295, bb: 17805933,
+   note: "normalized is the building $17,854,282 + $2,766,295 of play yards and classroom modernization that sit outside Balfour&rsquo;s contract line but inside the District&rsquo;s project"},
+  {pid: 1609, label: "Valentine ES &mdash; MPR, Kitchen, 1&ndash;5 Classrooms", norm: 22962836, bb: 22472400,
+   note: "no potential scope gaps identified; the normalization is entirely the general-conditions schedule. Balfour priced <b>12 months</b>; this carries <b>18</b> at their own monthly rate, less their own bundling saving. The District&rsquo;s budget line of $22,911,984 is Balfour&rsquo;s proposal plus four further months of a full team, which lands within $50,852 of this normalization &mdash; independent corroboration of the duration"}
 ];
 function renderDb() {
   let tc = 0, tn = 0, tb = 0;
